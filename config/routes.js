@@ -67,6 +67,11 @@ module.exports = function(app, passport, auth) {
     app.put('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.update);
     app.del('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy);
 
+    //NBA routes
+    var players = require('../app/controllers/players');
+    app.get('/players/:name', players.show);
+    app.get('/teams/:team', players.team);
+    app.get('/teams', players.all);
     //Finish with setting up the articleId param
     app.param('articleId', articles.article);
 
