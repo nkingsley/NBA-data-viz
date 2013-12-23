@@ -25,7 +25,7 @@ angular.module('mean.chart')
       })
     }
   }
-  });
+  })
   
   .directive('chartForm', function(){
   return {
