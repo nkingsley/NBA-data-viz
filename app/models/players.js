@@ -12,5 +12,4 @@ var mongoose = require('mongoose'),
       }
       schema[headerline[i]] = type;
     }
-    console.log(schema);
 mongoose.model('Player', new mongoose.Schema(schema,{collection: 'players'}));
