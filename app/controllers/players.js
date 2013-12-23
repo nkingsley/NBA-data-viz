@@ -1,9 +1,10 @@
 var mongoose = require('mongoose'),
     Player = mongoose.model('Player'),
     _ = require('lodash');
-
+    console.log(Player);
 exports.show = function(req,res){
-  mongoose.model('Player').find({Player: new RegExp('^'+req.params.name+'$', "i")},function(err,data){
+  Player.find({Player: new RegExp('^'+req.params.name+'$', "i")},function(err,data){
+    console.log(err);
     res.setHeader('Content-Type', 'application/JSON');
     res.end(JSON.stringify(data));
   });
@@ -15,7 +16,6 @@ exports.team = function(req,res){
     res.end(JSON.stringify(data));
   });
 };
-
 exports.all = function(req,res){
   mongoose.model('Player').find(function(err,data){
     res.setHeader('Content-Type', 'application/JSON');
