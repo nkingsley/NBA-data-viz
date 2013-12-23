@@ -1,10 +1,8 @@
 var mongoose = require('mongoose'),
     Player = mongoose.model('Player'),
     _ = require('lodash');
-    console.log(Player);
 exports.show = function(req,res){
   Player.find({Player: new RegExp('^'+req.params.name+'$', "i")},function(err,data){
-    console.log(err);
     res.setHeader('Content-Type', 'application/JSON');
     res.end(JSON.stringify(data));
   });
