@@ -2,7 +2,7 @@
 
 d3.custom.scatterPlot = function module() {
   var margin = {top: 20, right: 20, bottom: 30, left: 40},
-      width = 500,
+      width = 700,
       height = 500,
       ease = 'cubic-in-out';  // from reusable chart
   var svg, duration = 500;  // from resusable_chart
@@ -30,7 +30,7 @@ d3.custom.scatterPlot = function module() {
       var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
-        .tickFormat(d3.format("0.3r"));;
+        .tickFormat(d3.format("0.3r"));
 
       var color = d3.scale.category10();
 
@@ -39,12 +39,32 @@ d3.custom.scatterPlot = function module() {
           .append('svg')
           .classed('chart', true);
         var container = svg.append('g').classed('container-group', true);
+        console.log("svg", svg);
+        console.log("container", container);
         container.append('g').classed('chart-group', true);
-        container.append('g').classed('x-axis-group axis', true);
-        container.append('g').classed('y-axis-group axis', true);
+        container
+          .append('g')
+          .classed('x-axis-group axis', true)
+          .append("text")
+          .attr("class", "label")
+          .attr("x", width - 60)
+          .attr("y", -6)
+          .style("text-anchor", "end")
+          .text("Star Value");
+
+        container
+          .append('g')
+          .classed('y-axis-group axis', true)
+          .append("text")
+          .attr("class", "label")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Wins/Games Played");
+
       }
 
-      // svg.attr({width: width, height: height})
       svg.transition().duration(duration).attr({width: width, height: height});
       svg.select('.container-group')
         .attr({transform: 'translate(' + margin.left + ',' + margin.top + ')'});
@@ -55,32 +75,20 @@ d3.custom.scatterPlot = function module() {
         .ease(ease)
         .attr({transform: 'translate(0,' + (chartH) + ')'})
         .call(xAxis)
-        // .append("text")
-        //   .attr("class", "label")
-        //   .attr("x", width)
-        //   .attr("y", -6)
-        //   .style("text-anchor", "end")
-        //   .text("Sepal Width (cm)");
-
-      svg.select('.y-axis-group.axis')
+        
+      var yAxisSel = svg.select('.y-axis-group.axis')
         .transition()
         .duration(duration)
         .ease(ease)
-        .call(yAxis)
-        // .append("text")
-        //   .attr("class", "label")
-        //   .attr("transform", "rotate(-90)")
-        //   .attr("y", 6)
-        //   .attr("dy", ".71em")
-        //   .style("text-anchor", "end")
-        //   .text("Sepal Length (cm)");
+        .call(yAxis);
 
       var dots = svg.select('.chart-group')
         .selectAll('.dot')
         .data(_data);
+
       dots.enter().append("circle")
           .classed('dot', true)
-          .attr("r", 3.5)
+          .attr("r", 6)
           .attr("cx", function(d) { return x(d.sepalWidth); })
           .attr("cy", function(d) { return y(d.sepalLength); })
           .style("fill", function(d) { return color(d.species); });

@@ -1,14 +1,11 @@
 body {
-  font: 14px sans-serif;
+  font: 14px sans-serif
+  color: #ccc;
 }
 .axis path, .axis line {
   fill: none;
-  stroke: black;
+  stroke: #ccc;
   shape-rendering: crispEdges;
-}
-.axis path{
-  fill: none;
-  stroke: none;
 }
 .bar {
   fill: steelblue;
