@@ -22,9 +22,9 @@ angular.module('mean.chart')
 
       scope.$watch('height', function(d, i){
         chartEl.call(chart.height(scope.height));
-      })
+      });
     }
-  }
+  };
   })
   
   .directive('chartForm', function(){
@@ -38,5 +38,5 @@ angular.module('mean.chart')
         }
       },
       templateUrl: '/views/chartFormTemplate.html'
-  }
+  };
 });
