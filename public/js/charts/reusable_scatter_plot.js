@@ -22,15 +22,17 @@ d3.custom.scatterPlot = function module() {
         .domain(d3.extent(_data, function(d) { return d.sepalLength; })).nice()
         .range([chartH, 0]);
 
-      var color = d3.scale.category10();
-
       var xAxis = d3.svg.axis()
         .scale(x)
-        .orient("bottom");
+        .orient("bottom")
+        .tickFormat(d3.format("0.3r"));
 
       var yAxis = d3.svg.axis()
         .scale(y)
-        .orient("left");
+        .orient("left")
+        .tickFormat(d3.format("0.3r"));;
+
+      var color = d3.scale.category10();
 
       if(!svg) {
         svg = d3.select(this)
