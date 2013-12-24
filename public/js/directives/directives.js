@@ -1,5 +1,6 @@
 angular.module('mean.chart')
-  .directive('barChart', function(){
+
+.directive('barChart', function(){
   var chart = d3.custom.barChart();
   return {
     restrict: 'E',
@@ -25,18 +26,12 @@ angular.module('mean.chart')
       })
     }
   }
-  })
-  
-  .directive('chartForm', function(){
+})
+
+.directive('chartForm', function(){
   return {
-      restrict: 'E',
-      replace: true,
-      controller: function AppCtrl ($scope) {
-        $scope.update = function(d, i){ $scope.data = randomData(); };
-        function randomData(){
-            return d3.range(~~(Math.random()*50)+1).map(function(d, i){return ~~(Math.random()*1000);});
-        }
-      },
-      templateUrl: '/views/chartFormTemplate.html'
+    restrict: 'E',
+    controller: 'mainCtrl',
+    templateUrl: '/views/chartFormTemplate.html'
   }
 });
