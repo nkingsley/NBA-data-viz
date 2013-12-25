@@ -1,7 +1,7 @@
 // d3.custom = {};
 
 d3.custom.scatterPlot = function module() {
-  var margin = {top: 30, right: 20, bottom: 40, left: 80},
+  var margin = {top: 40, right: 45, bottom: 40, left: 75},
       width = 720,
       height = 500,
       ease = 'cubic-in-out';  // from reusable chart
@@ -59,7 +59,7 @@ d3.custom.scatterPlot = function module() {
           .attr("class", "label")
           .attr("transform", "rotate(-90)")
           .attr("x", -155)
-          .attr("y", -65)
+          .attr("y", -60)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("Wins/Games Played");
@@ -70,7 +70,6 @@ d3.custom.scatterPlot = function module() {
       svg.select('.container-group')
         .attr({transform: 'translate(' + margin.left + ',' + margin.top + ')'});
 
-      var padding = 10;
       svg.select('.x-axis-group.axis')
         .attr({transform: 'translate(0,' + chartH + ')'})
         .transition()

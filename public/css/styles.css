@@ -12,6 +12,12 @@ body {
   stroke: #ccc;
   shape-rendering: crispEdges;
 }
+.tick {
+  font-size: 12px;
+}
+.axis .label {
+  font-weight: normal;
+}
 .bar {
   fill: steelblue;
 }
