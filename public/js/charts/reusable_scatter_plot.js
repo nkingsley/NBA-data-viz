@@ -1,8 +1,8 @@
 // d3.custom = {};
 
 d3.custom.scatterPlot = function module() {
-  var margin = {top: 20, right: 20, bottom: 30, left: 40},
-      width = 700,
+  var margin = {top: 30, right: 20, bottom: 40, left: 80},
+      width = 720,
       height = 500,
       ease = 'cubic-in-out';  // from reusable chart
   var svg, duration = 500;  // from resusable_chart
@@ -15,11 +15,11 @@ d3.custom.scatterPlot = function module() {
         chartH = height - margin.top - margin.bottom;
       
       var x = d3.scale.linear()
-        .domain(d3.extent(_data, function(d) { return d.sepalWidth; })).nice()
+        .domain(d3.extent(_data, function(d) { return d.starVal; })).nice()
         .range([0, chartW]);
 
       var y = d3.scale.linear()
-        .domain(d3.extent(_data, function(d) { return d.sepalLength; })).nice()
+        .domain([0, 1])
         .range([chartH, 0]);
 
       var xAxis = d3.svg.axis()
@@ -32,7 +32,7 @@ d3.custom.scatterPlot = function module() {
         .orient("left")
         .tickFormat(d3.format("0.3r"));
 
-      var color = d3.scale.category10();
+      var color = d3.scale.category20();
 
       if(!svg) {
         svg = d3.select(this)
@@ -47,8 +47,8 @@ d3.custom.scatterPlot = function module() {
           .classed('x-axis-group axis', true)
           .append("text")
           .attr("class", "label")
-          .attr("x", width - 60)
-          .attr("y", -6)
+          .attr("x", width / 2 - 20)
+          .attr("y", 40)
           .style("text-anchor", "end")
           .text("Star Value");
 
@@ -58,7 +58,8 @@ d3.custom.scatterPlot = function module() {
           .append("text")
           .attr("class", "label")
           .attr("transform", "rotate(-90)")
-          .attr("y", 6)
+          .attr("x", -155)
+          .attr("y", -65)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("Wins/Games Played");
@@ -69,12 +70,13 @@ d3.custom.scatterPlot = function module() {
       svg.select('.container-group')
         .attr({transform: 'translate(' + margin.left + ',' + margin.top + ')'});
 
+      var padding = 10;
       svg.select('.x-axis-group.axis')
+        .attr({transform: 'translate(0,' + chartH + ')'})
         .transition()
         .duration(duration)
         .ease(ease)
-        .attr({transform: 'translate(0,' + (chartH) + ')'})
-        .call(xAxis)
+        .call(xAxis);
         
       var yAxisSel = svg.select('.y-axis-group.axis')
         .transition()
@@ -88,10 +90,11 @@ d3.custom.scatterPlot = function module() {
 
       dots.enter().append("circle")
           .classed('dot', true)
-          .attr("r", 6)
-          .attr("cx", function(d) { return x(d.sepalWidth); })
-          .attr("cy", function(d) { return y(d.sepalLength); })
-          .style("fill", function(d) { return color(d.species); });
+          .attr("r", 12)
+          .attr("cx", function(d) { return x(d.starVal); })
+          .attr("cy", function(d) { return y(d.winPct); })
+          .style("fill", function(d) { return color(d.abbreviation); })
+          .attr("opacity", 0.9);
 
       // var legend = svg.selectAll(".legend")
       //     .data(color.domain())

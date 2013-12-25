@@ -7,6 +7,7 @@ angular.module('mean.chart')
     template: '<div class="chart"></div>',
     scope:{
       height: '=height',
+      width: '=width',
       data: '=data',
       hovered: '&hovered'
     },
