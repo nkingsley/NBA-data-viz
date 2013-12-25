@@ -95,6 +95,16 @@ d3.custom.scatterPlot = function module() {
           .style("fill", function(d) { return color(d.abbreviation); })
           .attr("opacity", 0.9);
 
+      svg.select(".chart-group")
+        .selectAll('.team-label')
+        .data(_data)
+        .enter().append("text")
+        .classed('team-label', true)
+        .attr("x", function(d) { return x(d.starVal); })
+        .attr("y", function(d) { return y(d.winPct) + 3; })
+        .text(function(d) { return d.abbreviation; })
+        .attr("text-anchor", "middle");
+
       // var legend = svg.selectAll(".legend")
       //     .data(color.domain())
       //   .enter().append("g")

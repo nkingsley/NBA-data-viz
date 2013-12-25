@@ -24,3 +24,6 @@ body {
 .dot {
   /* stroke: #000;*/
 }
+.team-label {
+  font-size: 8px;
+}
