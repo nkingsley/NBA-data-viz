@@ -39,8 +39,6 @@ d3.custom.scatterPlot = function module() {
           .append('svg')
           .classed('chart', true);
         var container = svg.append('g').classed('container-group', true);
-        console.log("svg", svg);
-        console.log("container", container);
         container.append('g').classed('chart-group', true);
         container
           .append('g')
@@ -93,7 +91,7 @@ d3.custom.scatterPlot = function module() {
           .attr("cx", function(d) { return x(d.starVal); })
           .attr("cy", function(d) { return y(d.winPct); })
           .style("fill", function(d) { return color(d.abbreviation); })
-          .attr("opacity", 0.9);
+          .attr("opacity", 0.8);
 
       svg.select(".chart-group")
         .selectAll('.team-label')

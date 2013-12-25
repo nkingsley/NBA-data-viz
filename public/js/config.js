@@ -15,14 +15,11 @@ angular.module('mean').config(['$routeProvider',
             templateUrl: 'views/articles/view.html'
         }).
         when('/', {
-            templateUrl: 'views/index.html'
-        }).
-        when('/chart', {
             templateUrl: 'views/chart.html'
         }).
-        when('/scatter', {
-            templateUrl: 'views/scatter.html'
-        }).
+        // when('/chart', {
+        //     templateUrl: 'views/chart.html'
+        // }).
         otherwise({
             redirectTo: '/'
         });

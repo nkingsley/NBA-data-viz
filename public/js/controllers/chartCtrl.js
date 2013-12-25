@@ -34,7 +34,7 @@ var teams = [
 
 
 angular.module('mean.chart')
-  .controller('scatterCtrl', function AppCtrl ($http, $scope) {
+  .controller('chartCtrl', function AppCtrl ($http, $scope) {
     teams.forEach(function(team) {
       team.starVal = Math.random() * 2;
     });
