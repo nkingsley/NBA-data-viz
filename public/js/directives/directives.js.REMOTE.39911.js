@@ -1,6 +1,5 @@
 angular.module('mean.chart')
-
-.directive('barChart', function(){
+  .directive('barChart', function(){
   var chart = d3.custom.barChart();
   return {
     restrict: 'E',
@@ -25,17 +24,6 @@ angular.module('mean.chart')
         chartEl.call(chart.height(scope.height));
       });
     }
-<<<<<<< HEAD
-  }
-})
-
-.directive('chartForm', function(){
-  return {
-    restrict: 'E',
-    controller: 'mainCtrl',
-    templateUrl: '/views/chartFormTemplate.html'
-  }
-=======
   };
   })
   
@@ -51,5 +39,4 @@ angular.module('mean.chart')
       },
       templateUrl: '/views/chartFormTemplate.html'
   };
->>>>>>> 6fbc3de9264c0bdc54f5adeed4526a7ab80bf418
 });

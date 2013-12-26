@@ -1,15 +1,29 @@
 body {
-  font: 14px sans-serif;
+  font: 14px sans-serif
+  color: #ccc;
+}
+.chart-container {
+  width: 740px;
+  height: 515px;
+  border: 1px solid #ccc;
 }
 .axis path, .axis line {
   fill: none;
-  stroke: black;
+  stroke: #ccc;
   shape-rendering: crispEdges;
 }
-.axis path{
-  fill: none;
-  stroke: none;
+.tick {
+  font-size: 12px;
+}
+.axis .label {
+  font-weight: normal;
 }
 .bar {
   fill: steelblue;
+}
+.dot {
+  /* stroke: #000;*/
+}
+.team-label {
+  font-size: 8px;
 }
