@@ -25,7 +25,6 @@ angular.module('mean.chart')
         chartEl.call(chart.height(scope.height));
       });
     }
-<<<<<<< HEAD
   }
 })
 
@@ -35,21 +34,4 @@ angular.module('mean.chart')
     controller: 'mainCtrl',
     templateUrl: '/views/chartFormTemplate.html'
   }
-=======
-  };
-  })
-  
-  .directive('chartForm', function(){
-  return {
-      restrict: 'E',
-      replace: true,
-      controller: function AppCtrl ($scope) {
-        $scope.update = function(d, i){ $scope.data = randomData(); };
-        function randomData(){
-            return d3.range(~~(Math.random()*50)+1).map(function(d, i){return ~~(Math.random()*1000);});
-        }
-      },
-      templateUrl: '/views/chartFormTemplate.html'
-  };
->>>>>>> 6fbc3de9264c0bdc54f5adeed4526a7ab80bf418
 });
