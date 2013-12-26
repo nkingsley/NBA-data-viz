@@ -416,15 +416,6 @@ angular.module('mean.chart')
       "PTS_Per_Half_Court_Touch": {weight:1}
     };
 
-    var teams = {
-      "MIA":{
-        "Players":[$scope.lebron],
-        "Wins": 10,
-        "Losses": 10,
-        "STAR": 0
-      }
-    };
-
     $scope.options = {width: 500, height: 300};
     $scope.data = [1, 2, 3, 4];
     
