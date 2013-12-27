@@ -87,7 +87,8 @@ d3.custom.scatterPlot = function module() {
 
       dots.enter().append("circle")
           .classed('dot', true)
-          .attr("r", 12)
+          .attr("r", 15)
+          // .attr("r", 12)
           .attr("cx", function(d) { return x(d.starVal); })
           .attr("cy", function(d) { return y(d.winPct); })
           .style("fill", function(d) { return color(d.abbreviation); })
