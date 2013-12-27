@@ -15,7 +15,7 @@ d3.custom.scatterPlot = function module() {
         chartH = height - margin.top - margin.bottom;
       
       var x = d3.scale.linear()
-        .domain(d3.extent(_data, function(d) { return d.starVal; })).nice()
+        .domain([25000000, 45000000])
         .range([0, chartW]);
 
       var y = d3.scale.linear()
@@ -88,10 +88,9 @@ d3.custom.scatterPlot = function module() {
       dots.enter().append("circle")
           .classed('dot', true)
           .attr("r", 15)
-          // .attr("r", 12)
           .attr("cx", function(d) { return x(d.starVal); })
           .attr("cy", function(d) { return y(d.winPct); })
-          .style("fill", function(d) { return color(d.abbreviation); })
+          .style("fill", function(d) { return d.teamColor1; })
           .attr("opacity", 0.8);
 
       svg.select(".chart-group")
@@ -102,6 +101,7 @@ d3.custom.scatterPlot = function module() {
         .attr("x", function(d) { return x(d.starVal); })
         .attr("y", function(d) { return y(d.winPct) + 3; })
         .text(function(d) { return d.abbreviation; })
+        .style("fill", function(d) { return d.teamColor2; })
         .attr("text-anchor", "middle");
 
       // var legend = svg.selectAll(".legend")
