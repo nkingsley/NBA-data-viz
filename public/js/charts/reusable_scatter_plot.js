@@ -61,7 +61,6 @@ d3.custom.scatterPlot = function module() {
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("Wins/Games Played");
-
       }
 
       svg.transition().duration(duration).attr({width: width, height: height});
@@ -75,7 +74,7 @@ d3.custom.scatterPlot = function module() {
         .ease(ease)
         .call(xAxis);
         
-      var yAxisSel = svg.select('.y-axis-group.axis')
+      svg.select('.y-axis-group.axis')
         .transition()
         .duration(duration)
         .ease(ease)

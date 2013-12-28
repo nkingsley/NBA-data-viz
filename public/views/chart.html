@@ -1,4 +1,4 @@
-<div data-ng-controller="chartCtrl" class="chart-container">
+<div data-ng-controller="chartCtrl">
   <button ng-click="calculateAllTeamStarVals()">Update Data</button>
   <table>
     <tr ng-repeat="(statName, statNum) in stats">
@@ -7,5 +7,7 @@
       <td><h3>{{statNum.weight}}</h3></td>
     </tr>
   </table>
-  <scatter-plot height="options.height" width="options.width" data="data" hovered="hovered(args)"></scatter-plot>
+  <div class="chart-container">
+    <scatter-plot height="options.height" width="options.width" data="data" hovered="hovered(args)"></scatter-plot>
+  </div>
 </div>
