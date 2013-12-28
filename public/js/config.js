@@ -17,9 +17,9 @@ angular.module('mean').config(['$routeProvider',
         when('/', {
             templateUrl: 'views/chart.html'
         }).
-        // when('/chart', {
-        //     templateUrl: 'views/chart.html'
-        // }).
+        when('/normData', {
+            templateUrl: 'views/index.html'
+        }).
         otherwise({
             redirectTo: '/'
         });
