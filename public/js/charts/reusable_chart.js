@@ -11,13 +11,13 @@ var svg, duration = 500;
 var dispatch = d3.dispatch('customHover');
 function exports(_selection) {
   _selection.each(function(_data) {
-
+    console.log("CALLED BARCHART FN: ",_data);
     var chartW = width - margin.left - margin.right,
       chartH = height - margin.top - margin.bottom;
 
     var x1 = d3.scale.ordinal()
       .domain(_data.map(function(d, i){ return i; }))
-      .rangeRoundBands([0, chartW], .1);
+      .rangeRoundBands([0, chartW], 0.1);
 
     var y1 = d3.scale.linear()
       .domain([0, d3.max(_data, function(d, i){ return d; })])
@@ -43,7 +43,7 @@ function exports(_selection) {
       container.append('g').classed('y-axis-group axis', true);
     }
 
-    svg.transition().duration(duration).attr({width: width, height: height})
+    svg.transition().duration(duration).attr({width: width, height: height});
     svg.select('.container-group')
       .attr({transform: 'translate(' + margin.left + ',' + margin.top + ')'});
 
@@ -61,7 +61,7 @@ function exports(_selection) {
       .call(yAxis);
 
     var gapSize = x1.rangeBand() / 100 * gap;
-    var barW = x1.rangeBand() - gapSize;
+    barW = x1.rangeBand() - gapSize;
     var bars = svg.select('.chart-group')
       .selectAll('.bar')
       .data(_data);
