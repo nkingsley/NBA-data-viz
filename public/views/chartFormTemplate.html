@@ -1,5 +1,8 @@
-<div class="form">
-  Height: {{options.height}}<br />
-  <input type="range" ng-model="options.height" min="100" max="800"/>
-  <br /><button ng-click="update()">Update Data</button>
-  <br />Hoverish bar data: {{barValue}}</div>
+<button ng-click="calculatePlayerStar()">Update Data</button>
+<table>
+  <tr ng-repeat="(statName, statNum) in stats">
+    <td><input ng-model="statNum.weight" type="range" min="-5" max="5" step="0.5" value="0"/></h3></td>
+    <td><h3>{{statName}}</h3></td>
+    <td><h3>{{statNum.weight}}</h3></td>
+  </tr>
+</table>

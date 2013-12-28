@@ -1,13 +1,12 @@
 angular.module('mean.chart')
-
-.directive('barChart', function(){
-  var chart = d3.custom.barChart();
+  .directive('scatterPlot', function(){
+  var chart = d3.custom.scatterPlot();
   return {
     restrict: 'E',
     replace: true,
     template: '<div class="chart"></div>',
     scope:{
-      height: '=height',
+      // height: '=height',
       data: '=data',
       hovered: '&hovered'
     },
@@ -18,20 +17,10 @@ angular.module('mean.chart')
       });
 
       scope.$watch('data', function (newVal, oldVal) {
-        chartEl.datum(newVal).call(chart);
-      });
-
-      scope.$watch('height', function(d, i){
-        chartEl.call(chart.height(scope.height));
-      });
+        if (newVal) {
+          chartEl.datum(newVal).call(chart);
+        }
+      }, true);
     }
-  }
-})
-
-.directive('chartForm', function(){
-  return {
-    restrict: 'E',
-    controller: 'mainCtrl',
-    templateUrl: '/views/chartFormTemplate.html'
-  }
+  };
 });
