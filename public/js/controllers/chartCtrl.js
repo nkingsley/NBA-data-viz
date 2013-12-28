@@ -416,16 +416,6 @@ angular.module('mean.chart')
       "PTS_Per_Half_Court_Touch": {weight:1}
     };
 
-    $scope.options = {width: 500, height: 300};
-    $scope.data = [1, 2, 3, 4];
-    
-    $scope.hovered = function(d){
-      $scope.barValue = d;
-      $scope.$apply();
-    };
-
-    $scope.barValue = 'None';
-
     $scope.calculateAllTeamStarVals = function (){
       $scope.teams.forEach(function (team){
         $scope.calculateTeamStar(team);
@@ -440,7 +430,7 @@ angular.module('mean.chart')
           teamStarVal += $scope.calculatePlayerStar(player);
         });
         team.starVal = teamStarVal;
-        console.log(team.abbreviation,team.starVal);
+        // console.log(team.abbreviation,team.starVal);
       });
     };
 

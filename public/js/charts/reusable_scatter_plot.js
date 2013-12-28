@@ -8,9 +8,11 @@ d3.custom.scatterPlot = function module() {
   var svg, duration = 500;  // from resusable_chart
 
   var dispatch = d3.dispatch('customHover');
-  function exports(_selection) {
-    _selection.each(function(_data) {
 
+  function exports(_selection) {
+    console.log("SCATTERPLOT CALLED: ",_selection);
+    _selection.each(function(_data) {
+      debugger;
       var chartW = width - margin.left - margin.right,
         chartH = height - margin.top - margin.bottom;
       
@@ -31,8 +33,6 @@ d3.custom.scatterPlot = function module() {
         .scale(y)
         .orient("left")
         .tickFormat(d3.format("0.3r"));
-
-      var color = d3.scale.category20();
 
       if(!svg) {
         svg = d3.select(this)
@@ -75,7 +75,7 @@ d3.custom.scatterPlot = function module() {
         .ease(ease)
         .call(xAxis);
         
-      var yAxisSel = svg.select('.y-axis-group.axis')
+      svg.select('.y-axis-group.axis')
         .transition()
         .duration(duration)
         .ease(ease)
@@ -122,32 +122,37 @@ d3.custom.scatterPlot = function module() {
       //     .attr("dy", ".35em")
       //     .style("text-anchor", "end")
       //     .text(function(d) { return d; });
-  });
-}
-// I think these are the options based into the directive via the
-// $scope.options object
-exports.width = function(_x) {
-  if (!arguments.length) return width;
-  width = parseInt(_x);
-  return this;
-};
-exports.height = function(_x) {
-  if (!arguments.length) return height;
-  height = parseInt(_x);
-  duration = 0;
-  return this;
-};
-exports.gap = function(_x) {
-  if (!arguments.length) return gap;
-  gap = _x;
-  return this;
-};
-exports.ease = function(_x) {
-  if (!arguments.length) return ease;
-  ease = _x;
-  return this;
-};
-d3.rebind(exports, dispatch, 'on');
+    });
+  }
+  // I think these are the options based into the directive via the
+  // $scope.options object
+  exports.width = function(_x) {
+    if (!arguments.length) return width;
+    width = parseInt(_x);
+    return this;
+  };
+
+  exports.height = function(_x) {
+    if (!arguments.length) return height;
+    height = parseInt(_x);
+    duration = 0;
+    return this;
+  };
+
+  exports.gap = function(_x) {
+    if (!arguments.length) return gap;
+    gap = _x;
+    return this;
+  };
+
+  exports.ease = function(_x) {
+    if (!arguments.length) return ease;
+    ease = _x;
+    return this;
+  };
+
+  d3.rebind(exports, dispatch, 'on');
+
   return exports;
 };
 
