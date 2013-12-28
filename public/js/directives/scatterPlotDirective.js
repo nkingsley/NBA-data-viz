@@ -6,11 +6,8 @@ angular.module('mean.chart')
       replace: true,
       template: '<div class="chart"></div>',
       scope:{
-        height: '=height',
-        width: '=width',
+        // height: '=height',
         data: '=data',
-        teams: '=teams',
-        stats: '=stats',
         hovered: '&hovered'
       },
       link: function(scope, element, attrs) {
@@ -19,15 +16,11 @@ angular.module('mean.chart')
           scope.hovered({args:d});
         });
 
-        scope.$watch('data', function (newVal) {
-          console.log("DATA CHANGED", newVal);
-          chartEl.datum(newVal).call(chart);
-          // chart(chartEl);
+        scope.$watch('data', function (newVal, oldVal) {
+          if (newVal) {
+            chartEl.datum(newVal).call(chart);
+          }
         }, true);
-
-        // scope.$watch('x-pos', function(d, i){
-        //   chartEl.call(chart.x-(scope.height));
-        // });
       }
     };
   });

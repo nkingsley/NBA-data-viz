@@ -93,16 +93,52 @@ d3.custom.scatterPlot = function module() {
           .style("fill", function(d) { return d.teamColor1; })
           .attr("opacity", 0.8);
 
-      svg.select(".chart-group")
+      // update dot position on data change
+      dots.transition()
+          .duration(duration)
+          .ease(ease)
+          .attr("r", 15)
+          .attr("cx", function(d) { return x(d.starVal); })
+          .attr("cy", function(d) { return y(d.winPct); })
+          .style("fill", function(d) { return d.teamColor1; });
+
+      dots.exit().transition().style({opacity: 0}).remove();
+
+      var teamLabels = svg.select(".chart-group")
         .selectAll('.team-label')
-        .data(_data)
-        .enter().append("text")
+        .data(_data);
+
+
+      teamLabels.enter().append("text")
         .classed('team-label', true)
         .attr("x", function(d) { return x(d.starVal); })
         .attr("y", function(d) { return y(d.winPct) + 3; })
         .text(function(d) { return d.abbreviation; })
         .style("fill", function(d) { return d.teamColor2; })
         .attr("text-anchor", "middle");
+
+      // update label position on data change
+      dots.transition()
+          .duration(duration)
+          .ease(ease)
+          .attr("r", 15)
+          .attr("cx", function(d) { return x(d.starVal); })
+          .attr("cy", function(d) { return y(d.winPct); })
+          .style("fill", function(d) { return d.teamColor1; });
+
+      dots.exit().transition().style({opacity: 0}).remove();
+
+      teamLabels.transition()
+        .duration(duration)
+        .ease(ease)
+        .attr("x", function(d) { return x(d.starVal); })
+        .attr("y", function(d) { return y(d.winPct) + 3; })
+        .text(function(d) { return d.abbreviation; })
+        .style("fill", function(d) { return d.teamColor2; })
+        .attr("text-anchor", "middle");
+
+      teamLabels.exit().transition().style({opacity: 0}).remove();
+
 
       // var legend = svg.selectAll(".legend")
       //     .data(color.domain())
