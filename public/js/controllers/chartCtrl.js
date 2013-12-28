@@ -417,44 +417,48 @@ angular.module('mean.chart')
     };
 
     $scope.options = {width: 500, height: 300};
-    $scope.data = [1, 2, 3, 4];
+    // $scope.data = [1, 2, 3, 4];
     
-    $scope.hovered = function(d){
-      $scope.barValue = d;
-      $scope.$apply();
-    };
+    // $scope.hovered = function(d){
+    //   $scope.barValue = d;
+    //   $scope.$apply();
+    // };
 
-    $scope.barValue = 'None';
+    // $scope.barValue = 'None';
 
     $scope.calculateAllTeamStarVals = function (){
+      console.log("calculateAllTeamStarVals");
       $scope.teams.forEach(function (team){
-        $scope.calculateTeamStar(team);
+        // $scope.calculateTeamStar(team);
+        team.starVal += 5000000;
       });
-      console.log($scope.teams);
+      console.log($scope.data);
     };
 
     $scope.calculateTeamStar = function (team) {
+      console.log("inside calculateTeamStar");
       $http.get('http://localhost:3000/teams/'+team.abbreviation).success(function (teamData){
         var teamStarVal = 0;
         teamData.forEach(function (player) {
           teamStarVal += $scope.calculatePlayerStar(player);
         });
         team.starVal = teamStarVal;
-        console.log(team.abbreviation,team.starVal);
+        // console.log(team.abbreviation,team.starVal);
       });
     };
 
     $scope.calculatePlayerStar = function (player, weights) {
+      console.log("inside calculatePlayerStar");
       weights = weights || $scope.stats;
       var starStatistic = 0;
-      for (key in weights){
+      for (var key in weights){
         starStatistic += player[key]*parseFloat(weights[key].weight);
       }
       return player["Total_MIN"]*starStatistic;
     };
-    
-    $scope.options = {height: 500, width: 900};
+
     $scope.data = $scope.teams;
+    console.log($scope.data);
 
     $scope.hovered = function(d){
       console.log(d);

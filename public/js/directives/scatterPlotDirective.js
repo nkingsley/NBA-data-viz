@@ -6,8 +6,7 @@ angular.module('mean.chart')
     replace: true,
     template: '<div class="chart"></div>',
     scope:{
-      height: '=height',
-      width: '=width',
+      // height: '=height',
       data: '=data',
       hovered: '&hovered'
     },
@@ -18,12 +17,10 @@ angular.module('mean.chart')
       });
 
       scope.$watch('data', function (newVal, oldVal) {
-        chartEl.datum(newVal).call(chart);
-      });
-
-      // scope.$watch('x-pos', function(d, i){
-      //   chartEl.call(chart.x-(scope.height));
-      // });
+        if (newVal) {
+          chartEl.datum(newVal).call(chart);
+        }
+      }, true);
     }
   };
 });
