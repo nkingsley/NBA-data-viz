@@ -164,7 +164,6 @@ d3.custom.scatterPlot = function module() {
 
       teamLabels.exit().transition().style({opacity: 0}).remove();
 
-
       // var legend = svg.selectAll(".legend")
       //     .data(color.domain())
       //   .enter().append("g")
