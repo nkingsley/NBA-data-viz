@@ -80,33 +80,69 @@ d3.custom.scatterPlot = function module() {
         .ease(ease)
         .call(yAxis);
 
+      // Dots
+      // ======================================================================
       var dots = svg.select('.chart-group')
         .selectAll('.dot')
         .data(_data);
 
       dots.enter().append("circle")
-          .classed('dot', true)
-          .attr("r", 15)
-          .attr("cx", function(d) { return x(d.starVal); })
-          .attr("cy", function(d) { return y(d.winPct); })
-          .style("fill", function(d) { return d.teamColor1; })
-          .attr("opacity", 0.8);
+        .classed('dot', true)
+        .attr("r", 15)
+        .attr("cx", function(d) { return x(d.starVal); })
+        .attr("cy", function(d) { return y(d.winPct); })
+        .style("fill", function(d) { return d.teamColor1; })
+        .attr("opacity", 0.8);
 
       // update dot position on data change
       dots.transition()
+        .duration(duration)
+        .ease(ease)
+        .attr("r", 15)
+        .attr("cx", function(d) { return x(d.starVal); })
+        .attr("cy", function(d) { return y(d.winPct); })
+        .style("fill", function(d) { return d.teamColor1; });
+
+      dots.exit().transition().style({opacity: 0}).remove(); 
+
+      // Behaviors
+      var darken = function(el) {
+        d3.select(el)
+          .transition()
           .duration(duration)
-          .ease(ease)
-          .attr("r", 15)
-          .attr("cx", function(d) { return x(d.starVal); })
-          .attr("cy", function(d) { return y(d.winPct); })
-          .style("fill", function(d) { return d.teamColor1; });
+          .attr("opacity", 1.0);
+      };
 
-      dots.exit().transition().style({opacity: 0}).remove();
+      var lighten = function(el) {
+        d3.select(el)
+          .transition()
+          .duration(duration)
+          .attr("opacity", 0.3);
+      };
 
+      var fadeDotsIn = function() {
+        dots
+        .transition()
+        .duration(duration)
+        .attr("opacity", 0.8);
+      };
+
+      dots.on("mouseover", function(){
+        var dot = this;
+        dots.each(function() {
+          if (dot === this) { 
+            darken(this);
+          } else {
+            lighten(this);
+          }
+        });
+      }).on("mouseout", fadeDotsIn);
+
+      // Team Labels
+      // ======================================================================
       var teamLabels = svg.select(".chart-group")
         .selectAll('.team-label')
         .data(_data);
-
 
       teamLabels.enter().append("text")
         .classed('team-label', true)
@@ -117,16 +153,6 @@ d3.custom.scatterPlot = function module() {
         .attr("text-anchor", "middle");
 
       // update label position on data change
-      dots.transition()
-          .duration(duration)
-          .ease(ease)
-          .attr("r", 15)
-          .attr("cx", function(d) { return x(d.starVal); })
-          .attr("cy", function(d) { return y(d.winPct); })
-          .style("fill", function(d) { return d.teamColor1; });
-
-      dots.exit().transition().style({opacity: 0}).remove();
-
       teamLabels.transition()
         .duration(duration)
         .ease(ease)
