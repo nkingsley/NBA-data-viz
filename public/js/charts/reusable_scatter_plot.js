@@ -127,7 +127,8 @@ d3.custom.scatterPlot = function module() {
         .attr("opacity", 0.8);
       };
 
-      dots.on("mouseover", function(){
+      var dotMouseOver = function(d, i) {
+        console.log(this);
         var dot = this;
         dots.each(function() {
           if (dot === this) { 
@@ -136,7 +137,11 @@ d3.custom.scatterPlot = function module() {
             lighten(this);
           }
         });
-      }).on("mouseout", fadeDotsIn);
+      };
+
+      dots
+        .on("mouseover", dotMouseOver)
+        .on("mouseout", fadeDotsIn);
 
       // Team Labels
       // ======================================================================
@@ -151,6 +156,10 @@ d3.custom.scatterPlot = function module() {
         .text(function(d) { return d.abbreviation; })
         .style("fill", function(d) { return d.teamColor2; })
         .attr("text-anchor", "middle");
+
+      teamLabels.on("mouseover", function(d, i) {
+        dotMouseOver.call(dots[0][i]);
+      }).on("mouseout", fadeDotsIn);
 
       // update label position on data change
       teamLabels.transition()

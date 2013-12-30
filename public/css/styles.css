@@ -21,10 +21,9 @@ body {
 .bar {
   fill: steelblue;
 }
-.dot {
-  /* stroke: #000;*/
+.dot, .team-label {
+  cursor: pointer;
 }
 .team-label {
   font-size: 8px;
-  cursor: pointer;
 }
