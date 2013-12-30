@@ -26,4 +26,5 @@ body {
 }
 .team-label {
   font-size: 8px;
+  cursor: pointer;
 }
