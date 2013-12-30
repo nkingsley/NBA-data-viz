@@ -21,8 +21,8 @@ angular.module('mean.chart')
 
       scope.$watch('data', function (newVal, oldVal) {
         if (newVal) {
-          console.log("chart width", chart.width());
           chartEl.datum(newVal).call(chart);
+          //chart.datumChange();
         }
       }, true);
     }
