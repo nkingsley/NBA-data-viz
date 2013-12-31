@@ -6,12 +6,15 @@ angular.module('mean.chart')
     replace: true,
     template: '<div class="chart"></div>',
     scope:{
-      // height: '=height',
+      height: '=height',
+      width: '=width',
       data: '=data',
       hovered: '&hovered'
     },
     link: function(scope, element, attrs) {
       var chartEl = d3.select(element[0]);
+      chart.height(scope.height);
+      chart.width(scope.width);
       chart.on('customHover', function(d, i){
         scope.hovered({args:d});
       });
@@ -19,6 +22,7 @@ angular.module('mean.chart')
       scope.$watch('data', function (newVal, oldVal) {
         if (newVal) {
           chartEl.datum(newVal).call(chart);
+          // chart.datumChange();
         }
       }, true);
     }
