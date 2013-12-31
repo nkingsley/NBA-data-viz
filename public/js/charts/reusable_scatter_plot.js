@@ -83,20 +83,33 @@ d3.custom.scatterPlot = function module() {
       // Dots
       // ======================================================================
       var openingTransitionDots = function() {
-        dots
+        console.log("openingTransitionDots")
+          dots
           .transition()
           .duration(2000)
           .ease("bounce")
-          .attr("cy", function(d) { return y(d.winPct); })
+          .attr("cy", function(d) { return y(d.winPct); })  
       };
 
       var openingTransitionTeamLabels = function() {
+        console.log("openingTransitionLabels")
+        if (!once) {
         teamLabels
           .transition()
           .duration(2000)
           .ease("bounce")
           .attr("y", function(d) { return y(d.winPct) + 3; });
+        }
       };
+      var dataChangeTransition = function() {
+        dots.transition()
+          .duration(750)
+          .ease(ease)
+          .attr("r", 15)
+          .attr("cx", function(d) { return x(d.starVal); })
+          .attr("cy", function(d) { return y(d.winPct); })
+          .style("fill", function(d) { return d.teamColor1; })
+      }
 
       var dots = svg.select('.chart-group')
         .selectAll('.dot')
@@ -106,8 +119,8 @@ d3.custom.scatterPlot = function module() {
         .classed('dot', true)
         .attr("r", 15)
         .attr("cx", function(d) { return x(d.starVal); })
-        .attr("cy", function(d) { return y(d.winPct); })
-        // .attr("cy", function(d) { return y(1); })
+        // .attr("cy", function(d) { return y(d.winPct); })
+        .attr("cy", function(d) { return y(1); })
         .style("fill", function(d) { return d.teamColor1; })
         .attr("opacity", 0.8);
         // openingTransitionDots();
@@ -172,8 +185,8 @@ d3.custom.scatterPlot = function module() {
       teamLabels.enter().append("text")
         .classed('team-label', true)
         .attr("x", function(d) { return x(d.starVal); })
-        // .attr("y", function(d) { return y(1) + 3; })
-        .attr("y", function(d) { return y(d.winPct) + 3; })
+        .attr("y", function(d) { return y(1) + 3; })
+        // .attr("y", function(d) { return y(d.winPct) + 3; })
         .text(function(d) { return d.abbreviation; })
         .style("fill", function(d) { return d.teamColor2; })
         .attr("text-anchor", "middle");
@@ -188,6 +201,7 @@ d3.custom.scatterPlot = function module() {
         .duration(750)
         .ease(ease)
         .attr("x", function(d) { return x(d.starVal); })
+        // .attr("y", function(d) { return y(1) + 3; })
         .attr("y", function(d) { return y(d.winPct) + 3; })
         .text(function(d) { return d.abbreviation; })
         .style("fill", function(d) { return d.teamColor2; })

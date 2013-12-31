@@ -22,7 +22,7 @@ angular.module('mean.chart')
       scope.$watch('data', function (newVal, oldVal) {
         if (newVal) {
           chartEl.datum(newVal).call(chart);
-          //chart.datumChange();
+          // chart.datumChange();
         }
       }, true);
     }
