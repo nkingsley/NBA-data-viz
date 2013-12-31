@@ -83,16 +83,14 @@ d3.custom.scatterPlot = function module() {
       // Dots
       // ======================================================================
       var openingTransitionDots = function() {
-        console.log("openingTransitionDots")
           dots
           .transition()
           .duration(2000)
           .ease("bounce")
-          .attr("cy", function(d) { return y(d.winPct); })  
+          .attr("cy", function(d) { return y(d.winPct); });
       };
 
       var openingTransitionTeamLabels = function() {
-        console.log("openingTransitionLabels")
         if (!once) {
         teamLabels
           .transition()
@@ -108,8 +106,8 @@ d3.custom.scatterPlot = function module() {
           .attr("r", 15)
           .attr("cx", function(d) { return x(d.starVal); })
           .attr("cy", function(d) { return y(d.winPct); })
-          .style("fill", function(d) { return d.teamColor1; })
-      }
+          .style("fill", function(d) { return d.teamColor1; });
+      };
 
       var dots = svg.select('.chart-group')
         .selectAll('.dot')
@@ -134,7 +132,7 @@ d3.custom.scatterPlot = function module() {
         .attr("r", 15)
         .attr("cx", function(d) { return x(d.starVal); })
         .attr("cy", function(d) { return y(d.winPct); })
-        .style("fill", function(d) { return d.teamColor1; })
+        .style("fill", function(d) { return d.teamColor1; });
 
       dots.exit().transition().style({opacity: 0}).remove(); 
 

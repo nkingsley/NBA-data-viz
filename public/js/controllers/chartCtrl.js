@@ -416,7 +416,7 @@ angular.module('mean.chart')
       "PTS_Per_Half_Court_Touch": {weight:1}
     };
 
-    $scope.options = {width: 720, height: 500};
+    $scope.options = {width: 940, height: 500};
     // $scope.data = [1, 2, 3, 4];
     
     // $scope.hovered = function(d){
