@@ -128,7 +128,6 @@ d3.custom.scatterPlot = function module() {
       };
 
       var dotMouseOver = function(d, i) {
-        console.log(this);
         var dot = this;
         dots.each(function() {
           if (dot === this) { 
