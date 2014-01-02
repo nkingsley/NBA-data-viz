@@ -1,5 +1,3 @@
-// d3.custom = {};
-
 d3.custom.scatterPlot = function module() {
   var margin = {top: 40, right: 45, bottom: 40, left: 75},
       width = 500,
@@ -15,7 +13,7 @@ d3.custom.scatterPlot = function module() {
         chartH = height - margin.top - margin.bottom;
       
       var x = d3.scale.linear()
-        .domain([25000000, 45000000])
+        .domain([20000000, 45000000])
         .range([0, chartW]);
 
       var y = d3.scale.linear()
@@ -245,4 +243,3 @@ exports.ease = function(_x) {
 d3.rebind(exports, dispatch, 'on', 'datumChange');
   return exports;
 };
-

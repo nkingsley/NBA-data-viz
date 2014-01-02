@@ -1,6 +1,10 @@
 <div data-ng-controller="chartCtrl">
   
 <!--   <table>
+<div data-ng-controller="chartCtrl" class="chart-container">
+  <button ng-click="calculateAllTeamStarVals()">Update Data</button>
+  <scatter-plot height="options.height" width="options.width" data="data" hovered="hovered(args)"></scatter-plot>
+  <table>
     <tr ng-repeat="(statName, statNum) in stats">
       <td><input ng-model="statNum.weight" type="range" min="-5" max="5" step="0.5" value="0"/></h3></td>
       <td><h3>{{statName}}</h3></td>
