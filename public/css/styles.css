@@ -3,7 +3,7 @@ body {
   color: #ccc;
 }
 .chart-container {
-  width: 740px;
+  width: 940px;
   height: 515px;
   border: 1px solid #ccc;
 }
@@ -21,9 +21,26 @@ body {
 .bar {
   fill: steelblue;
 }
-.dot {
-  /* stroke: #000;*/
+.dot, .team-label {
+  cursor: pointer;
 }
 .team-label {
   font-size: 8px;
+}
+.sliders {
+  list-style: none;
+  margin: 0;
+}
+.sliders li label {
+  font-size: 12px;
+  line-height: 16px;
+}
+.slider-shell {
+  margin-bottom: 5px;
+}
+.weight {
+  margin-left: 20px;
+}
+.update {
+  float:right;
 }

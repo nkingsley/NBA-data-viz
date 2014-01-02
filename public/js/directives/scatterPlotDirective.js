@@ -13,17 +13,18 @@ angular.module('mean.chart')
     },
     link: function(scope, element, attrs) {
       var chartEl = d3.select(element[0]);
+      chart.height(scope.height);
+      chart.width(scope.width);
       chart.on('customHover', function(d, i){
         scope.hovered({args:d});
       });
 
       scope.$watch('data', function (newVal, oldVal) {
-        chartEl.datum(newVal).call(chart);
-      });
-
-      // scope.$watch('x-pos', function(d, i){
-      //   chartEl.call(chart.x-(scope.height));
-      // });
+        if (newVal) {
+          chartEl.datum(newVal).call(chart);
+          // chart.datumChange();
+        }
+      }, true);
     }
   };
 });

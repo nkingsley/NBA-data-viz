@@ -109,6 +109,6 @@ exports.ease = function(_x) {
   ease = _x;
   return this;
 };
-d3.rebind(exports, dispatch, 'on');
+d3.rebind(exports, dispatch, 'on', 'datumChange');
   return exports;
 };
