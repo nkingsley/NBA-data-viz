@@ -34,12 +34,19 @@ d3.custom.scatterPlot = function module() {
 
       var color = d3.scale.category20();
 
+      var xDiag = d3.scale.linear().range([0, chartW]);
+      var yDiag = d3.scale.linear().range([chartH, 0]);
+
+      var line = d3.svg.line()
+        .x(function(d) { return xDiag(d.x); })
+        .y(function(d) { return yDiag(d.y); });
+
+
       if(!svg) {
         svg = d3.select(this)
           .append('svg')
           .classed('chart', true);
-        var container = svg.append('g').classed('container-group', true);
-        container.append('g').classed('chart-group', true);
+        var container = svg.append('g').classed('container-group', true); 
         container
           .append('g')
           .classed('x-axis-group axis', true)
@@ -61,6 +68,17 @@ d3.custom.scatterPlot = function module() {
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("Wins/Games Played");
+
+        container
+          .append('path')
+          .datum([{x:0, y:0}, {x:1, y:1}])
+          .classed("diagonal", true)
+          .attr("d", line);
+
+        container
+          .append('g')
+          .classed('chart-group', true);
+
       }
 
       svg.transition().duration(duration).attr({width: width, height: height});
@@ -79,6 +97,7 @@ d3.custom.scatterPlot = function module() {
         .duration(duration)
         .ease(ease)
         .call(yAxis);
+
 
       // Dots
       // ======================================================================
