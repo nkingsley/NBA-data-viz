@@ -3,14 +3,14 @@ angular.module('mean.chart')
     $scope.global = Global;
     $scope.global.stats.then(function(data){
       $scope.teamStats = data.teams;
-      $scope.teamStatsNorm = data.teamsNorm
+      $scope.teamStatsNorm = data.teamsNorm;
       $scope.stats = {};
       for (var statName in $scope.teamStatsNorm.ATL['Al Horford']){
         $scope.stats[statName] = {weight: 1};
       }
-      $scope.calculateAllTeamStarVals()
-      console.log($scope.teams)
-    })
+      $scope.calculateAllTeamStarVals();
+      console.log($scope.teams);
+    });
     $scope.options = {width: 940, height: 500};
     // $scope.data = [1, 2, 3, 4];
     
@@ -36,24 +36,23 @@ angular.module('mean.chart')
       var teamsCumeStats = {};
       for (var team in teamsStatsNorm){
         if(!teamsCumeStats[teamsStatsNorm[team]]){
-          teamsCumeStats[team] = {}
+          teamsCumeStats[team] = {};
         }
         for (var player in teamsStatsNorm[team]){
           for(var stat in teamsStatsNorm[team][player]){
             if(!teamsCumeStats[team][stat]){
-              teamsCumeStats[team][stat] = teamsStatsNorm[team][player][stat]
+              teamsCumeStats[team][stat] = teamsStatsNorm[team][player][stat];
             } else {
-              teamsCumeStats[team][stat] += teamsStatsNorm[team][player][stat]
+              teamsCumeStats[team][stat] += teamsStatsNorm[team][player][stat];
             }
           }
         }
       }
-      return teamsCumeStats
-      //return $scope.calculateTeamStar(teamsCumeStats);
-    }
+      return teamsCumeStats;
+    };
 
     $scope.getStatMaxMin = function(t){
-      var statsMaxMin = {}
+      var statsMaxMin = {};
 
       for (var i in t){
         for (var j in t[i]){
@@ -61,23 +60,23 @@ angular.module('mean.chart')
             statsMaxMin[j] = {
               'max': t[i][j],
               'min': t[i][j],
-              'range': statsMaxMin['max']-statsMaxMin['min']
+              'range': statsMaxMin.max-statsMaxMin.min
+            };
+          } else {
+            if(t[i][j] > statsMaxMin[j].max){
+              statsMaxMin[j].max = t[i][j];
+              statsMaxMin[j].range = statsMaxMin[j].max - statsMaxMin[j].min;
             }
-          } else{
-        if(t[i][j] > statsMaxMin[j]['max']){
-          statsMaxMin[j]['max'] = t[i][j];
-          statsMaxMin[j]['range'] = statsMaxMin[j]['max'] - statsMaxMin[j]['min'];
-        }
-        if(t[i][j] < statsMaxMin[j]['min']){
-          statsMaxMin[j]['min'] = t[i][j];
-          statsMaxMin[j]['range'] = statsMaxMin[j]['max'] - statsMaxMin[j]['min'];
-        }
-      }
+            if(t[i][j] < statsMaxMin[j].min){
+              statsMaxMin[j].min = t[i][j];
+              statsMaxMin[j].range = statsMaxMin[j].max - statsMaxMin[j].min;
+            }
+          }
         }          
       }
 
-      return statsMaxMin      
-    }
+      return statsMaxMin;   
+    };
 
     $scope.calculateTeamsNorm = function(cumulativeTeamsStats, teamsMaxMin){
       var teamNorms = {};
@@ -86,23 +85,23 @@ angular.module('mean.chart')
         if(!teamNorms[team]){
           teamNorms[team] = {};
         }
-        for(j in cumulativeTeamsStats[team]){ 
+        for(var j in cumulativeTeamsStats[team]){ 
           if (!teamNorms[team][j]){
-            teamNorms[team][j]
+            teamNorms[team][j]= 0;
           }         
-          teamNorms[team][j] = 1-(teamsMaxMin[j]['max'] - (cumulativeTeamsStats[team][j]))/teamsMaxMin[j]['range']
+          teamNorms[team][j] = 1-(teamsMaxMin[j].max - (cumulativeTeamsStats[team][j]))/teamsMaxMin[j].range;
         }
             
       }
-      return teamNorms
+      return teamNorms;
 
-    }
+    };
       
     $scope.calculateTeamStar = function (team, normStats) {
       var star = 0;
-      var weightedStat
-      var counter = 0
-      var totalStat = 0
+      var weightedStat;
+      var counter = 0;
+      var totalStat = 0;
       for (var stat in normStats[team.abbreviation]){
         if(stat === 'MIN'){
           continue;
@@ -111,7 +110,7 @@ angular.module('mean.chart')
         totalStat += weightedStat;
         counter++;
       }
-      star = totalStat/counter
+      star = totalStat/counter;
       return star;
     };
 
@@ -123,7 +122,7 @@ angular.module('mean.chart')
 
         starStatistic += player[key]*parseFloat(weights[key].weight);
       }
-      return player["Total_MIN"]*starStatistic;
+      return player.Total_MIN*starStatistic;
     };
 
     $scope.hovered = function(d){
@@ -401,7 +400,7 @@ angular.module('mean.chart')
       teamColor3: "#002244",
       starVal: 35000000
     }
-    ]
+    ];
 
   }]);
 
