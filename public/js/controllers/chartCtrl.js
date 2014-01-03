@@ -9,6 +9,7 @@ angular.module('mean.chart')
         $scope.stats[statName] = {weight: 1};
       }
       $scope.calculateAllTeamStarVals()
+      console.log($scope.teams)
     })
     $scope.options = {width: 940, height: 500};
     // $scope.data = [1, 2, 3, 4];
@@ -24,7 +25,6 @@ angular.module('mean.chart')
       var cumulativeTeamsStats = $scope.cumulativeTeamsStats($scope.teamStatsNorm);
       var teamsMaxMin = $scope.getStatMaxMin(cumulativeTeamsStats);
       var teamsNormStats = $scope.calculateTeamsNorm(cumulativeTeamsStats, teamsMaxMin);
-      debugger
       for (var i = 0 ; i < $scope.teams.length ; i++){
         
         $scope.teams[i].starVal = $scope.calculateTeamStar($scope.teams[i], teamsNormStats);
@@ -103,7 +103,6 @@ angular.module('mean.chart')
       var weightedStat
       var counter = 0
       var totalStat = 0
-      console.log(normStats)
       for (var stat in normStats[team.abbreviation]){
         if(stat === 'MIN'){
           continue;
@@ -403,7 +402,6 @@ angular.module('mean.chart')
       starVal: 35000000
     }
     ]
-  
 
   }]);
 

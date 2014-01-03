@@ -28,3 +28,4 @@ angular.module('mean.chart')
     }
   };
 });
+

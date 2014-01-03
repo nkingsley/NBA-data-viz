@@ -11,7 +11,7 @@ var svg, duration = 500;
 var dispatch = d3.dispatch('customHover');
 function exports(_selection) {
   _selection.each(function(_data) {
-
+    console.log("CALLED BARCHART FN: ",_data);
     var chartW = width - margin.left - margin.right,
       chartH = height - margin.top - margin.bottom;
 
