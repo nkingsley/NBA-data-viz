@@ -8,6 +8,7 @@ angular.module('mean.chart')
       for (var statName in $scope.teamStatsNorm.ATL['Al Horford']){
         $scope.stats[statName] = {weight: 1};
       }
+      $scope.calculateAllTeamStarVals()
     })
     $scope.options = {width: 940, height: 500};
     // $scope.data = [1, 2, 3, 4];
@@ -400,7 +401,7 @@ angular.module('mean.chart')
       starVal: 35000000
     }
     ]
-
+  
 
   }]);
 
