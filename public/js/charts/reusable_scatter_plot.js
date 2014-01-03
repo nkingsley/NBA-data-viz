@@ -1,11 +1,11 @@
 d3.custom.scatterPlot = function module() {
   var margin = {top: 40, right: 45, bottom: 40, left: 75},
-      width = 720,
+      width = 500,
       height = 500,
       ease = 'cubic-in-out';  // from reusable chart
   var svg, duration = 500;  // from resusable_chart
 
-  var dispatch = d3.dispatch('customHover');
+  var dispatch = d3.dispatch('customHover', 'datumChange');
   function exports(_selection) {
     _selection.each(function(_data) {
 
@@ -59,7 +59,6 @@ d3.custom.scatterPlot = function module() {
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text("Wins/Games Played");
-
       }
 
       svg.transition().duration(duration).attr({width: width, height: height});
@@ -73,70 +72,137 @@ d3.custom.scatterPlot = function module() {
         .ease(ease)
         .call(xAxis);
         
-      var yAxisSel = svg.select('.y-axis-group.axis')
+      svg.select('.y-axis-group.axis')
         .transition()
         .duration(duration)
         .ease(ease)
         .call(yAxis);
+
+      // Dots
+      // ======================================================================
+      var openingTransitionDots = function() {
+          dots
+          .transition()
+          .duration(2000)
+          .ease("bounce")
+          .attr("cy", function(d) { return y(d.winPct); });
+      };
+
+      var openingTransitionTeamLabels = function() {
+        if (!once) {
+        teamLabels
+          .transition()
+          .duration(2000)
+          .ease("bounce")
+          .attr("y", function(d) { return y(d.winPct) + 3; });
+        }
+      };
+      var dataChangeTransition = function() {
+        dots.transition()
+          .duration(750)
+          .ease(ease)
+          .attr("r", 15)
+          .attr("cx", function(d) { return x(d.starVal); })
+          .attr("cy", function(d) { return y(d.winPct); })
+          .style("fill", function(d) { return d.teamColor1; });
+      };
 
       var dots = svg.select('.chart-group')
         .selectAll('.dot')
         .data(_data);
 
       dots.enter().append("circle")
-          .classed('dot', true)
-          .attr("r", 15)
-          .attr("cx", function(d) { return x(d.starVal); })
-          .attr("cy", function(d) { return y(d.winPct); })
-          .style("fill", function(d) { return d.teamColor1; })
-          .attr("opacity", 0.8);
+        .classed('dot', true)
+        .attr("r", 15)
+        .attr("cx", function(d) { return x(d.starVal); })
+        // .attr("cy", function(d) { return y(d.winPct); })
+        .attr("cy", function(d) { return y(1); })
+        .style("fill", function(d) { return d.teamColor1; })
+        .attr("opacity", 0.8);
+        // openingTransitionDots();
 
-      // update dot position on data change
+      
+      // exports.on('datumChange', dataChangeTransition);
+      // execute transition when datum changes
       dots.transition()
+        .duration(750)
+        .ease(ease)
+        .attr("r", 15)
+        .attr("cx", function(d) { return x(d.starVal); })
+        .attr("cy", function(d) { return y(d.winPct); })
+        .style("fill", function(d) { return d.teamColor1; });
+
+      dots.exit().transition().style({opacity: 0}).remove(); 
+
+      // Behaviors
+      var darken = function(el) {
+        d3.select(el)
+          .transition()
           .duration(duration)
-          .ease(ease)
-          .attr("r", 15)
-          .attr("cx", function(d) { return x(d.starVal); })
-          .attr("cy", function(d) { return y(d.winPct); })
-          .style("fill", function(d) { return d.teamColor1; });
+          .attr("opacity", 1.0);
+      };
 
-      dots.exit().transition().style({opacity: 0}).remove();
+      var lighten = function(el) {
+        d3.select(el)
+          .transition()
+          .duration(duration)
+          .attr("opacity", 0.3);
+      };
 
+      var fadeDotsIn = function() {
+        dots
+        .transition()
+        .duration(duration)
+        .attr("opacity", 0.8);
+      };
+
+      var dotMouseOver = function(d, i) {
+        var dot = this;
+        dots.each(function() {
+          if (dot === this) { 
+            darken(this);
+          } else {
+            lighten(this);
+          }
+        });
+      };
+
+      dots
+        .on("mouseover", dotMouseOver)
+        .on("mouseout", fadeDotsIn);
+
+      // Team Labels
+      // ======================================================================
       var teamLabels = svg.select(".chart-group")
         .selectAll('.team-label')
         .data(_data);
 
-
       teamLabels.enter().append("text")
         .classed('team-label', true)
         .attr("x", function(d) { return x(d.starVal); })
-        .attr("y", function(d) { return y(d.winPct) + 3; })
+        .attr("y", function(d) { return y(1) + 3; })
+        // .attr("y", function(d) { return y(d.winPct) + 3; })
         .text(function(d) { return d.abbreviation; })
         .style("fill", function(d) { return d.teamColor2; })
         .attr("text-anchor", "middle");
+        // openingTransitionTeamLabels();
+
+      teamLabels.on("mouseover", function(d, i) {
+        dotMouseOver.call(dots[0][i]);
+      }).on("mouseout", fadeDotsIn);
 
       // update label position on data change
-      dots.transition()
-          .duration(duration)
-          .ease(ease)
-          .attr("r", 15)
-          .attr("cx", function(d) { return x(d.starVal); })
-          .attr("cy", function(d) { return y(d.winPct); })
-          .style("fill", function(d) { return d.teamColor1; });
-
-      dots.exit().transition().style({opacity: 0}).remove();
-
       teamLabels.transition()
-        .duration(duration)
+        .duration(750)
         .ease(ease)
         .attr("x", function(d) { return x(d.starVal); })
+        // .attr("y", function(d) { return y(1) + 3; })
         .attr("y", function(d) { return y(d.winPct) + 3; })
         .text(function(d) { return d.abbreviation; })
         .style("fill", function(d) { return d.teamColor2; })
         .attr("text-anchor", "middle");
 
       teamLabels.exit().transition().style({opacity: 0}).remove();
-
 
       // var legend = svg.selectAll(".legend")
       //     .data(color.domain())
@@ -158,8 +224,7 @@ d3.custom.scatterPlot = function module() {
       //     .text(function(d) { return d; });
   });
 }
-// I think these are the options based into the directive via the
-// $scope.options object
+
 exports.width = function(_x) {
   if (!arguments.length) return width;
   width = parseInt(_x);
@@ -168,12 +233,6 @@ exports.width = function(_x) {
 exports.height = function(_x) {
   if (!arguments.length) return height;
   height = parseInt(_x);
-  duration = 0;
-  return this;
-};
-exports.gap = function(_x) {
-  if (!arguments.length) return gap;
-  gap = _x;
   return this;
 };
 exports.ease = function(_x) {
@@ -181,6 +240,6 @@ exports.ease = function(_x) {
   ease = _x;
   return this;
 };
-d3.rebind(exports, dispatch, 'on');
+d3.rebind(exports, dispatch, 'on', 'datumChange');
   return exports;
 };

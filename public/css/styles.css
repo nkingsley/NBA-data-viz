@@ -3,7 +3,7 @@ body {
   color: #ccc;
 }
 .chart-container {
-  width: 740px;
+  width: 938px;
   height: 515px;
   border: 1px solid #ccc;
 }
@@ -21,9 +21,46 @@ body {
 .bar {
   fill: steelblue;
 }
-.dot {
-  /* stroke: #000;*/
+.dot, .team-label {
+  cursor: pointer;
 }
 .team-label {
   font-size: 8px;
+}
+.sliders {
+  list-style: none;
+  margin: 0;
+}
+.sliders li label {
+  font-size: 12px;
+  line-height: 16px;
+}
+.sliders li {
+  padding: 5px;
+  display: inline-block;
+  width: 298px;
+  height: 43px;
+  background-color: #f5f5f5;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+.btn-shell {
+  background-color: #fff;
+  padding: 8px;
+  margin-bottom: 5px;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+
+.weight {
+  margin-left: 50px;
+}
+.update {
+  float:right;
+}
+
+.team-badge {
+  width: 50px;
+  height: 50px;
 }
