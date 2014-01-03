@@ -23,12 +23,6 @@ angular.module('mean.chart')
 
     // $scope.barValue = 'None';
 
-    $scope.$on('change', function(evt) {
-      evt.stopPropagation();
-      evt.preventDefault();
-      console.log("a slider is moving");
-    });
-
     $scope.calculateAllTeamStarVals = function (){
       var cumulativeTeamsStats = $scope.cumulativeTeamsStats($scope.teamStatsNorm);
       var teamsMaxMin = $scope.getStatMaxMin(cumulativeTeamsStats);
