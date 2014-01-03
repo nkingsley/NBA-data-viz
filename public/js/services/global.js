@@ -13,7 +13,7 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',
 
         //following section gets the max/min/range for each stat across the league to calculate the normalized stat
         for (var j in data[0]){
-          if(j === "Player" || j === "Position" || j === "Team" || j ==="_id"){
+          if(j === "Player" || j === "Position" || j === "Team" || j ==="_id" || j==="Player_PTS_on_Drives"){
             continue;
           } else {
             statsObj.maxMinRangeObj[j] = {
@@ -65,7 +65,7 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',
           var playerStats = data[i];
           var playerStatsNorm = {};
           for(j in playerStats){
-            if(j === "Player" || j === "Position" || j === "Team" || j ==="_id"){
+            if(j === "Player" || j === "Position" || j === "Team" || j ==="_id" || j==="Player_PTS_on_Drives"){
               continue;
             }else{
               //new key name for the normalized value
