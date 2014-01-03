@@ -7,7 +7,8 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',
         $http.get('/teams').success(function(data){
         statsObj.maxMinRangeObj = {}; // to normalize
         statsObj.timeObj = {}; //total team playing times
-        statsObj.teamsObj={}; // stats organized by team, player with multipliers
+        statsObj.teamsObj={}; // stats organized by team, player
+        statsObj.teamsObjNorm = {}; //stats organized by team, player normalized by time played
 
 
         //following section gets the max/min/range for each stat across the league to calculate the normalized stat
@@ -56,15 +57,19 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',
           if(!statsObj.teamsObj[team]){
             statsObj.teamsObj[team] = {};
           }
+          if(!statsObj.teamsObjNorm[team]){
+            statsObj.teamsObjNorm[team] = {}
+          }
           //creates the player within each team
           player = data[i]['Player'];
           var playerStats = data[i];
+          var playerStatsNorm = {}
           for(j in playerStats){
             if(j === "Player" || j === "Position" || j === "Team" || j ==="_id"){
               continue;
             }else{
               //new key name for the normalized value
-              newKey = j+"_norm";
+              newKey = j.replace(/_/g , ' ');
               //calculates the % of a teams total time a player played
               var playerPctTime = playerStats['MIN']/statsObj.timeObj[playerStats['Team']];
               //turns the stat into a per-minute stat
@@ -72,13 +77,16 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',
               //Normalizes the per min stat based on the max at value 1, min at value 0, 
               var normalized = 1 - (statsObj.maxMinRangeObj[j]['max']-(playerStats[j]/playerStats['MIN']))/statsObj.maxMinRangeObj[j]['range'];
               //sets the stat_norm to the normalized, time-adjusted value
-              playerStats[newKey] = playerPctTime * normalized;
+              if(j !== 'MIN'){
+                playerStatsNorm[newKey] = playerPctTime * normalized;
+              }
             }
           }
+          statsObj.teamsObjNorm[team][player] = playerStatsNorm;
           statsObj.teamsObj[team][player] = playerStats;
         }
-        console.log(statsObj.teamsObj)
-        d.resolve(statsObj.teamsObj);
+        console.log(statsObj.teamsObjNorm)
+        d.resolve({teams: statsObj.teamsObj, teamsNorm: statsObj.teamsObjNorm});
       });
 
 

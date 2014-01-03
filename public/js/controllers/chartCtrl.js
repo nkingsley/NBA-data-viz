@@ -2,15 +2,131 @@ angular.module('mean.chart')
   .controller('chartCtrl', ['$scope', '$http', 'Global', function ($scope, $http, Global) {
     $scope.global = Global;
     $scope.global.stats.then(function(data){
-      $scope.teamStats = data;
+      $scope.teamStats = data.teams;
+      $scope.teamStatsNorm = data.teamsNorm
       $scope.stats = {};
-      for (var statName in $scope.teamStats.ATL['Al Horford']){
-        if(statName.slice(-5) !== "_norm"){
-          $scope.stats[statName] = {weight: 1};
+      for (var statName in $scope.teamStatsNorm.ATL['Al Horford']){
+        $scope.stats[statName] = {weight: 1};
+      }
+    })
+    $scope.options = {width: 940, height: 500};
+    // $scope.data = [1, 2, 3, 4];
+    
+    // $scope.hovered = function(d){
+    //   $scope.barValue = d;
+    //   $scope.$apply();
+    // };
+
+    // $scope.barValue = 'None';
+
+    $scope.calculateAllTeamStarVals = function (){
+      var cumulativeTeamsStats = $scope.cumulativeTeamsStats($scope.teamStatsNorm);
+      var teamsMaxMin = $scope.getStatMaxMin(cumulativeTeamsStats);
+      var teamsNormStats = $scope.calculateTeamsNorm(cumulativeTeamsStats, teamsMaxMin);
+      for (var i = 0 ; i < $scope.teams.length ; i++){
+        
+        $scope.teams[i].starVal = $scope.calculateTeamStar($scope.teams[i], teamsNormStats);
+        
+      }
+    };
+    
+    $scope.cumulativeTeamsStats = function(teamsStatsNorm) {
+      var teamsCumeStats = {};
+      for (var team in teamsStatsNorm){
+        if(!teamsCumeStats[teamsStatsNorm[team]]){
+          teamsCumeStats[team] = {}
+        }
+        for (var player in teamsStatsNorm[team]){
+          for(var stat in teamsStatsNorm[team][player]){
+            if(!teamsCumeStats[team][stat]){
+              teamsCumeStats[team][stat] = teamsStatsNorm[team][player][stat]
+            } else {
+              teamsCumeStats[team][stat] += teamsStatsNorm[team][player][stat]
+            }
+          }
         }
       }
-      console.log($scope.stats)
-    })
+      return teamsCumeStats
+      //return $scope.calculateTeamStar(teamsCumeStats);
+    }
+
+    $scope.getStatMaxMin = function(t){
+      var statsMaxMin = {}
+
+      for (var i in t){
+        for (var j in t[i]){
+          if (!statsMaxMin[j]) {
+            statsMaxMin[j] = {
+              'max': t[i][j],
+              'min': t[i][j],
+              'range': statsMaxMin['max']-statsMaxMin['min']
+            }
+          } else{
+        if(t[i][j] > statsMaxMin[j]['max']){
+          statsMaxMin[j]['max'] = t[i][j];
+          statsMaxMin[j]['range'] = statsMaxMin[j]['max'] - statsMaxMin[j]['min'];
+        }
+        if(t[i][j] < statsMaxMin[j]['min']){
+          statsMaxMin[j]['min'] = t[i][j];
+          statsMaxMin[j]['range'] = statsMaxMin[j]['max'] - statsMaxMin[j]['min'];
+        }
+      }
+        }          
+      }
+
+      return statsMaxMin      
+    }
+
+    $scope.calculateTeamsNorm = function(cumulativeTeamsStats, teamsMaxMin){
+      var teamNorms = {};
+      for (var team in cumulativeTeamsStats){
+        //creates each team in teamNorms)
+        if(!teamNorms[team]){
+          teamNorms[team] = {};
+        }
+        for(j in cumulativeTeamsStats[team]){ 
+          if (!teamNorms[team][j]){
+            teamNorms[team][j]
+          }         
+          teamNorms[team][j] = 1-(teamsMaxMin[j]['max'] - (cumulativeTeamsStats[team][j]))/teamsMaxMin[j]['range']
+        }
+            
+      }
+      return teamNorms
+
+    }
+      
+    $scope.calculateTeamStar = function (team, normStats) {
+      var star = 0;
+      var weightedStat
+      var counter = 0
+      var totalStat = 0
+      for (var stat in normStats[team.abbreviation]){
+        if(stat === 'MIN'){
+          continue;
+        }
+        weightedStat = normStats[team.abbreviation][stat] * $scope.stats[stat].weight;
+        totalStat += weightedStat;
+        counter++;
+      }
+      star = totalStat/counter
+      return star;
+    };
+
+    $scope.calculatePlayerStar = function (player, weights) {
+      console.log("inside calculatePlayerStar");
+      weights = weights || $scope.stats;
+      var starStatistic = 0;
+      for (var teams in weights){
+
+        starStatistic += player[key]*parseFloat(weights[key].weight);
+      }
+      return player["Total_MIN"]*starStatistic;
+    };
+
+    $scope.hovered = function(d){
+      console.log(d);
+    };
     $scope.teams = [
     {
       abbreviation:"ATL",
@@ -24,7 +140,7 @@ angular.module('mean.chart')
     {
       abbreviation:"BOS",
       franchise:"Boston Celtics",
-      winPct:0.333,
+      winPct:0.414,
       teamColor1: "#009E60",
       teamColor2: "#FFFFFF",
       teamColor3: "#000000",
@@ -33,7 +149,7 @@ angular.module('mean.chart')
     {
       abbreviation:"BKN",
       franchise:"Brooklyn Nets",
-      winPct:0.414,
+      winPct:0.333,
       teamColor1: "#000000",
       teamColor2: "#FFFFFF",
       teamColor3: "#000000",
@@ -60,7 +176,7 @@ angular.module('mean.chart')
     {
       abbreviation:"CLE",
       franchise:"Cleveland Cavaliers",
-      winPct:0.37,
+      winPct:0.370,
       teamColor1: "#b3121d",
       teamColor2: "#FFD700",
       teamColor3: "#000080",
@@ -123,7 +239,7 @@ angular.module('mean.chart')
     {
       abbreviation:"LAC",
       franchise:"Los Angeles Clippers",
-      winPct:0.69,
+      winPct:0.690,
       teamColor1: "#EE2944",
       teamColor2: "#146AA2",
       teamColor3: "#FFFFFF",
@@ -163,6 +279,7 @@ angular.module('mean.chart')
       teamColor1: "#003614",
       teamColor2: "#E32636",
       teamColor3: "#C0C0C0",
+    
       starVal: 35000000
     },
     {
@@ -222,7 +339,7 @@ angular.module('mean.chart')
     {
       abbreviation:"PHX",
       franchise:"Phoenix Suns",
-      winPct:0.63,
+      winPct:0.630,
       teamColor1: "#FF8800",
       teamColor2: "#423189",
       teamColor3: "#000000",
@@ -276,62 +393,15 @@ angular.module('mean.chart')
     {
       abbreviation:"WAS",
       franchise:"Washington Wizards",
-      winPct:0.48,
+      winPct:0.480,
       teamColor1: "#C60C30",
       teamColor2: "#FFFFFF",
       teamColor3: "#002244",
       starVal: 35000000
     }
-    ];
+    ]
 
 
-    $scope.options = {width: 940, height: 500};
-    // $scope.data = [1, 2, 3, 4];
-    
-    // $scope.hovered = function(d){
-    //   $scope.barValue = d;
-    //   $scope.$apply();
-    // };
-
-    // $scope.barValue = 'None';
-
-    $scope.calculateAllTeamStarVals = function (){
-      console.log("calculateAllTeamStarVals");
-      $scope.teams.forEach(function (team){
-        // $scope.calculateTeamStar(team);
-        team.starVal += 5000000;
-      });
-      console.log($scope.data);
-    };
-
-    $scope.calculateTeamStar = function (team) {
-      console.log("inside calculateTeamStar");
-      $http.get('http://localhost:3000/teams/'+team.abbreviation).success(function (teamData){
-        var teamStarVal = 0;
-        teamData.forEach(function (player) {
-          teamStarVal += $scope.calculatePlayerStar(player);
-        });
-        team.starVal = teamStarVal;
-        // console.log(team.abbreviation,team.starVal);
-      });
-    };
-
-    $scope.calculatePlayerStar = function (player, weights) {
-      console.log("inside calculatePlayerStar");
-      weights = weights || $scope.stats;
-      var starStatistic = 0;
-      for (var key in weights){
-        starStatistic += player[key]*parseFloat(weights[key].weight);
-      }
-      return player["Total_MIN"]*starStatistic;
-    };
-
-    $scope.data = $scope.teams;
-    console.log($scope.data);
-
-    $scope.hovered = function(d){
-      console.log(d);
-    };
   }]);
 
 
