@@ -96,4 +96,10 @@ body {
   display:none;
 }
 
+.diagonal {
+  fill: none;
+  stroke: #999;
+  stroke-width: 3px;
+}
+
 
