@@ -1,5 +1,5 @@
-<div data-ng-controller="chartCtrl">
-  
+<div data-ng-controller="chartCtrl" >
+
 <!--   <table>
 <div data-ng-controller="chartCtrl" class="chart-container">
   <button ng-click="calculateAllTeamStarVals()">Update Data</button>
@@ -13,7 +13,7 @@
   </table>
  -->  
   <div class="chart-container">
-    <scatter-plot height="options.height" width="options.width" data="data" hovered="hovered(args)"></scatter-plot>  
+    <scatter-plot height="options.height" width="options.width" data="teams" hovered="hovered(args)"></scatter-plot>  
   </div>
   <div class="btn-shell">
     <button class="btn btn-primary" ng-click="calculateAllTeamStarVals()">Update Data</button>
