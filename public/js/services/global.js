@@ -16,6 +16,7 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',
           if(j === "Player" || j === "Position" || j === "Team" || j ==="_id" || j==="Player_PTS_on_Drives"){
             continue;
           } else {
+            debugger
             statsObj.maxMinRangeObj[j] = {
               'max': data[0][j]/data[0].MIN,
               'min': data[0][j]/data[0].MIN,
