@@ -27,7 +27,7 @@ body {
 .team-label {
   font-size: 8px;
 }
-.sliders {
+.sliders, .players {
   list-style: none;
   margin: 0;
 }
@@ -44,6 +44,16 @@ body {
   margin-bottom: 5px;
   margin-right: 5px;
 }
+
+.players li {
+  padding: 5px;
+  display: inline-block;
+  width: 170px;
+  background-color: #f5f5f5;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+
 .btn-shell {
   background-color: #fff;
   padding: 8px;
@@ -64,3 +74,26 @@ body {
   width: 50px;
   height: 50px;
 }
+
+/* attempting to get animation to work */
+.teams-move {
+  -webkit-transition:all linear 0.5s;
+  -moz-transition:all linear 0.5s;
+  -ms-transition:all linear 0.5s;
+  -o-transition:all linear 0.5s;
+  transition:all linear 0.5s;
+  background-color: 'yellow';
+}
+
+.teams-move.teams-move-active {
+  background-color: #fff;
+}
+
+.team-tooltip {
+  position: absolute;
+}
+.hidden {
+  display:none;
+}
+
+

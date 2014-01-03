@@ -446,13 +446,35 @@ angular.module('mean.chart')
       "PTS_Per_Half_Court_Touch": {weight:1}
     };
 
+    $scope.players = [
+      { name: "lebron james", headShot: "lebron_james.png" },
+      { name: "lebron james", headShot: "lebron_james.png" },
+      { name: "lebron james", headShot: "lebron_james.png" },
+      { name: "lebron james", headShot: "lebron_james.png" },
+      { name: "lebron james", headShot: "lebron_james.png" }
+    ];
+
+
     $scope.options = {width: 940, height: 500};
+
+    $scope.showToolTip = function() {
+
+    };
+
+    $scope.updateTeamStarVals = function (){
+      console.log("updateTeamStarVals")
+      $scope.teams.forEach(function (team){
+        team.starVal += Math.floor(Math.random() * ( 5000000 - (-5000000)  + 1) + -5000000);
+        console.log(team.starVal);
+      });
+    };
 
     $scope.calculateAllTeamStarVals = function (){
       $scope.teams.forEach(function (team){
         $scope.calculateTeamStar(team);
       });
     };
+
 
     $scope.calculateTeamStar = function (team) {
       $http.get('http://localhost:3000/teams/'+team.abbreviation)
