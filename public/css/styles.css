@@ -1,9 +1,15 @@
 body {
   font: 14px sans-serif
   color: #ccc;
+  background-color: #fafafa;
+}
+.container {
+  width: 1170px;
 }
 .chart-container {
-  width: 938px;
+  float: left;
+  background-color: #fff;
+  width: 840px;
   height: 515px;
   border: 1px solid #ccc;
 }
@@ -35,15 +41,18 @@ body {
 
 /* Slider Styles
  * ==========================================================================*/
+.slider-container {
+  float: left;
+  margin-left: 14px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.33)
+}
 .slider-shell {
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  border-left: 1px solid #ccc;
+  width: 300px;
 }
 .top-slider {
   background-color: #f7f7f7;
   padding: 8px;
-  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
 }
 .nested-sliders-shell {
   background-color: #fff;
@@ -54,10 +63,10 @@ body {
   list-style:none;
 }
 .weight {
-  margin-left: 45px;
+  margin-left: 30px;
 }
 
-/* Slider Styles
+/* Power Rank Table Styles
  * ==========================================================================*/
 .team-badge {
   width: 50px;
@@ -70,7 +79,6 @@ body {
 .hidden {
   display:none;
 }
-
 
 .players {
   list-style: none;
