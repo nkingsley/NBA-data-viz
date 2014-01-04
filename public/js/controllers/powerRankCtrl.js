@@ -462,7 +462,7 @@ angular.module('mean.chart')
     };
 
     $scope.updateTeamStarVals = function (){
-      console.log("updateTeamStarVals")
+      console.log("updateTeamStarVals");
       $scope.teams.forEach(function (team){
         team.starVal += Math.floor(Math.random() * ( 5000000 - (-5000000)  + 1) + -5000000);
         console.log(team.starVal);
