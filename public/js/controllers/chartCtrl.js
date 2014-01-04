@@ -21,6 +21,9 @@ angular.module('mean.chart')
       $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats);
     });
 
+    // for collasping grouped sliders
+    $scope.isCollapsed = true;
+
   }]);
 
 

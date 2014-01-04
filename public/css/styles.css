@@ -27,33 +27,54 @@ body {
 .team-label {
   font-size: 8px;
 }
-.sliders, .players {
+.diagonal {
+  fill: none;
+  stroke: #999;
+  stroke-width: 3px;
+}
+
+/* Slider Styles
+ * ==========================================================================*/
+.slider-shell {
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+}
+.top-slider {
+  background-color: #f7f7f7;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+}
+.nested-sliders-shell {
+  background-color: #fff;
+}
+.nested-sliders {
+  margin: 0;
+  padding: 8px 8px 8px 16px;
+  list-style:none;
+}
+.weight {
+  margin-left: 45px;
+}
+
+/* Slider Styles
+ * ==========================================================================*/
+.team-badge {
+  width: 50px;
+  height: 50px;
+}
+
+.team-tooltip {
+  position: absolute;
+}
+.hidden {
+  display:none;
+}
+
+
+.players {
   list-style: none;
   margin: 0;
-}
-/*.sliders .grouped-sliders {
-  min-height: 58px;
-  padding: 5px;
-  display: inline-block;
-  width: 298px;
-  height: 58px;
-  background-color: #f5f5f5;
-  margin-bottom: 5px;
-  margin-right: 5px;
-}
-*/
-.sliders li label {
-  font-size: 12px;
-  line-height: 16px;
-}
-.sliders li {
-  padding: 5px;
-  display: inline-block;
-  width: 260px;
-  height: 43px;
-  background-color: #f5f5f5;
-  margin-bottom: 5px;
-  margin-right: 5px;
 }
 
 .players li {
@@ -64,75 +85,4 @@ body {
   margin-bottom: 5px;
   margin-right: 5px;
 }
-
-.btn-shell {
-  background-color: #fff;
-  padding: 8px;
-  margin-bottom: 5px;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-  border-left: 1px solid #ccc;
-}
-
-.weight {
-  margin-left: 45px;
-}
-.update {
-  float:right;
-}
-
-.team-badge {
-  width: 50px;
-  height: 50px;
-}
-
-/* attempting to get animation to work */
-/* .teams-move {
-  -webkit-transition:all linear 0.5s;
-  -moz-transition:all linear 0.5s;
-  -ms-transition:all linear 0.5s;
-  -o-transition:all linear 0.5s;
-  transition:all linear 0.5s;
-  background-color: 'yellow';
-}
-
-.teams-move.teams-move-active {
-  background-color: #fff;
-} */
-
-.team-tooltip {
-  position: absolute;
-}
-.hidden {
-  display:none;
-}
-
-.diagonal {
-  fill: none;
-  stroke: #999;
-  stroke-width: 3px;
-}
-
-.col1 {
-  width: 460px;
-  display: inline-block;
-}
-.col2 {
-  width: 460px;
-  float: right;
-}
-.accordion-group {
-  background-color: #f7f7f7;
-  border-radius: 2px;
-}
-.accordion-body {
-  background-color: #fff;
-}
-
-.accordion-body ul {
-  list-style: none;
-  margin-left: 6px;
-}
-
-
 
