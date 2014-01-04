@@ -10,20 +10,34 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',  function($q, $ht
     statsObj.teamsObj = {}; // stats organized by team, player
     statsObj.teamsObjNorm = {}; //stats organized by team, player normalized by time played
 
+        //following section gets the max/min/range for each stat across the league to calculate the normalized stat
+        for (var j in data[0]){
+          if(j === "Player" || j === "Position" || j === "Team" || j ==="_id" || j==="Player_PTS_on_Drives"){
+            continue;
+          } else {
+            statsObj.maxMinRangeObj[j] = {
+              'max': data[0][j]/data[0].MIN,
+              'min': data[0][j]/data[0].MIN,
+              'range': 0
+            };
+            for (var i = 1 ; i < data.length; i++){
+              if (data[i][j]/data[i].MIN > statsObj.maxMinRangeObj[j].max){
+                statsObj.maxMinRangeObj[j].max = data[i][j]/data[i].MIN;
+              }
+              if (data[i][j]/data[i].MIN < statsObj.maxMinRangeObj[j].min){
+                statsObj.maxMinRangeObj[j].min = data[i][j]/data[i].MIN;
+              }
+            }
+            statsObj.maxMinRangeObj[j].range = statsObj.maxMinRangeObj[j].max-statsObj.maxMinRangeObj[j].min;
 
-    //following section gets the max/min/range for each stat across the league to calculate the normalized stat
-    for (var j in data[0]){
-      if(j === "Player" || j === "Position" || j === "Team" || j ==="_id" || j==="Player_PTS_on_Drives"){
-        continue;
-      } else {
-        statsObj.maxMinRangeObj[j] = {
-          'max': data[0][j]/data[0].MIN,
-          'min': data[0][j]/data[0].MIN,
-          'range': 0
-        };
-        for (var i = 1 ; i < data.length; i++){
-          if (data[i][j]/data[i].MIN > statsObj.maxMinRangeObj[j].max){
-            statsObj.maxMinRangeObj[j].max = data[i][j]/data[i].MIN;
+          }
+        }
+        
+        //following section calculates the total amt of time each team has played in minutes for when we need to calc the % time each player played
+        for (var i =0; i < data.length; i++){
+          team = data[i].Team;
+          if(team === "TOTAL"){
+            continue;
           }
           if (data[i][j]/data[i].MIN < statsObj.maxMinRangeObj[j].min){
             statsObj.maxMinRangeObj[j].min = data[i][j]/data[i].MIN;
