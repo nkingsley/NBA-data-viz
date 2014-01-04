@@ -183,7 +183,7 @@ angular.module('mean.chart')
         }
         weightedStat += normStats[team][stat] * parseFloat($scope.stats[stat].weight);
       }
-      star = weightedStat/totalValue;
+      (totalValue === 0) ? star = 0 : star = weightedStat/totalValue;
       return star;
     };
 
