@@ -31,6 +31,17 @@ body {
   list-style: none;
   margin: 0;
 }
+/*.sliders .grouped-sliders {
+  min-height: 58px;
+  padding: 5px;
+  display: inline-block;
+  width: 298px;
+  height: 58px;
+  background-color: #f5f5f5;
+  margin-bottom: 5px;
+  margin-right: 5px;
+}
+*/
 .sliders li label {
   font-size: 12px;
   line-height: 16px;
@@ -38,7 +49,7 @@ body {
 .sliders li {
   padding: 5px;
   display: inline-block;
-  width: 298px;
+  width: 260px;
   height: 43px;
   background-color: #f5f5f5;
   margin-bottom: 5px;
@@ -76,7 +87,7 @@ body {
 }
 
 /* attempting to get animation to work */
-.teams-move {
+/* .teams-move {
   -webkit-transition:all linear 0.5s;
   -moz-transition:all linear 0.5s;
   -ms-transition:all linear 0.5s;
@@ -87,7 +98,7 @@ body {
 
 .teams-move.teams-move-active {
   background-color: #fff;
-}
+} */
 
 .team-tooltip {
   position: absolute;
@@ -101,5 +112,27 @@ body {
   stroke: #999;
   stroke-width: 3px;
 }
+
+.col1 {
+  width: 460px;
+  display: inline-block;
+}
+.col2 {
+  width: 460px;
+  float: right;
+}
+.accordion-group {
+  background-color: #f7f7f7;
+  border-radius: 2px;
+}
+.accordion-body {
+  background-color: #fff;
+}
+
+.accordion-body ul {
+  list-style: none;
+  margin-left: 6px;
+}
+
 
 
