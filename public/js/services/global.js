@@ -4,6 +4,8 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',
         var _this = this;
         var statsObj = {};
         var d = $q.defer();
+        var teams
+        var player
         $http.get('/teams').success(function(data){
         statsObj.maxMinRangeObj = {}; // to normalize
         statsObj.timeObj = {}; //total team playing times
@@ -70,13 +72,13 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',
               continue;
             }else{
               //new key name for the normalized value
-              newKey = j.replace(/_/g , ' ');
+              var newKey = j.replace(/_/g , ' ');
               //calculates the % of a teams total time a player played
               var playerPctTime = playerStats.MIN/statsObj.timeObj[playerStats.Team];
               //turns the stat into a per-minute stat
               var perMinStat = playerStats[j]/playerStats.MIN;
               //Normalizes the per min stat based on the max at value 1, min at value 0, 
-              var normalized = 1 - (statsObj.maxMinRangeObj[j].max-(playerStats[j]/playerStats.MIN)/statsObj.maxMinRangeObj[j].range);
+              var normalized = 1 - ((statsObj.maxMinRangeObj[j].max-(playerStats[j]/playerStats.MIN))/statsObj.maxMinRangeObj[j].range);
               //sets the stat_norm to the normalized, time-adjusted value
               if(j !== 'MIN'){
                 playerStatsNorm[newKey] = playerPctTime * normalized;
