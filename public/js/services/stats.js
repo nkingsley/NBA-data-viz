@@ -276,6 +276,16 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
       starVal: 0
     }];
 
+    exports.calculateAllTeamStarVals = function (teamStatsNorm, teams, statWeights){
+      var cumulativeTeamsStats = exports.cumulativeTeamsStats(teamStatsNorm);
+      var teamsMaxMin = exports.getStatMaxMin(cumulativeTeamsStats);
+      var teamsNormStats = exports.calculateTeamsNorm(cumulativeTeamsStats, teamsMaxMin);
+      for (var i = 0 ; i < teams.length ; i++){
+        teams[i].starVal = exports.calculateTeamStar(teams[i].abbreviation, teamsNormStats, statWeights);
+      }
+      return teams;
+    };
+
     exports.cumulativeTeamsStats = function(teamsStatsNorm) {
       var teamsCumeStats = {};
       for (var team in teamsStatsNorm){
@@ -363,6 +373,51 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
       }
       return player.Total_MIN*starStatistic;
     };
+
+    exports.nestedSliders = {
+      Passing:{
+        main:1,
+        oldMain:1
+      },
+      Shooting:{
+        main:1,
+        oldMain:1
+      },
+      Defense:{
+        main:1,
+        oldMain:1
+      },
+      Rebounding:{
+        main:1,
+        oldMain:1
+      },
+      Athleticism:{
+        main:1,
+        oldMain:1
+      },
+      Unsorted:{
+        main:1,
+        oldMain:1
+      }
+    };
+
+    exports.changeSliders = function(nestedSliders, groupName) {
+      var nest = nestedSliders[groupName];
+      for (statName in nest){
+        var stat = nest[statName];
+        if (statName === "main" || statName === "oldMain"){
+          continue;
+        }
+        stat.weight = parseFloat(stat.weight) + (parseFloat(nest.main) - parseFloat(nest.oldMain));
+        if (stat.weight < 0){
+          stat.weight = 0;
+        }
+        if (stat.weight > 5){
+          stat.weight = 5;
+        }
+      }
+      nest.oldMain = parseFloat(nest.main);
+    }
 
     return exports;
   }]);
