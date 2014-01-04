@@ -283,7 +283,6 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
       for (var i = 0 ; i < teams.length ; i++){
         teams[i].starVal = exports.calculateTeamStar(teams[i].abbreviation, teamsNormStats, statWeights);
       }
-      return teams;
     };
 
     exports.cumulativeTeamsStats = function(teamsStatsNorm) {
