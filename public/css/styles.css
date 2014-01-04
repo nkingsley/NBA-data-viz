@@ -54,6 +54,9 @@ body {
   padding: 8px;
   border-top: 1px solid #ccc;
 }
+.top-slider label {
+  font-weight: bold;
+}
 .nested-sliders-shell {
   background-color: #fff;
 }
@@ -61,6 +64,9 @@ body {
   margin: 0;
   padding: 8px 8px 8px 16px;
   list-style:none;
+}
+.badge {
+  border-radius: 6px;
 }
 .weight {
   margin-left: 30px;
