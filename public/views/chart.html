@@ -2,19 +2,25 @@
   <div class="chart-container">
     <scatter-plot height="options.height" width="options.width" data="teams" hovered="hovered(args)"></scatter-plot>  
   </div>
-  <ul class="sliders">
-    <li ng-repeat = "(groupName, group) in nestedSliders">
-      <label>{{groupName}}</label>
-      <input type = "range" ng-change = "changeSliders(groupName);calculateAllTeamStarVals()" min = "0" max = "5" step = "0.5" ng-model = "group.main"/>
-      <span class="weight badge">{{group.main}}</span>
-      <a ng-click = "group.show = !group.show">expand</a>
-      <ul ng-show = "group.show">
-        <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
-          <label>{{statName}}</label>
-          <input ng-model="statNum.weight" type="range" min="0" max="5" step="0.5" ng-change="calculateAllTeamStarVals()"/>
-          <span class="weight badge">{{statNum.weight}}</span>
-        </li>
-      </ul>
-    </li>
-  </ul>
+  <accordion close-others="false">
+      <accordion-group ng-repeat="(groupName, group) in nestedSliders" is-open="isopen">
+        <accordion-heading>
+          <label>{{groupName}}</label>
+          <input type = "range" ng-change = "changeSliders(groupName);calculateAllTeamStarVals()" min = "0" max = "5" step = "0.5" ng-model = "group.main"/>
+          <span class="weight badge">{{group.main}}</span>
+          <br>
+          <span class="glyphicon glyphicon-star"></span>
+          <!-- <a ng-click = "group.show = !group.show">expand</a> -->
+        </accordion-heading>
+        <ul>
+        <!-- <ul ng-show = "group.show"> -->
+          <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
+            <label>{{statName}}</label>
+            <input ng-model="statNum.weight" type="range" min="0" max="5" step="0.5" ng-change="calculateAllTeamStarVals()"/>
+            <span class="weight badge">{{statNum.weight}}</span>
+          </li>
+        </ul>
+      </accordion-group>
+      </div>
+  </accordion>
 </div>
