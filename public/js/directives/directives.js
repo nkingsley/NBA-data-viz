@@ -25,13 +25,13 @@ angular.module('mean.chart')
         chartEl.call(chart.height(scope.height));
       });
     }
-  }
-})
+  };
+});
 
 .directive('chartForm', function(){
   return {
     restrict: 'E',
     controller: 'mainCtrl',
     templateUrl: '/views/chartFormTemplate.html'
-  }
+  };
 });
