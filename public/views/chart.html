@@ -8,8 +8,6 @@
           <label>{{groupName}}</label>
           <input type = "range" ng-change = "changeSliders(groupName);calculateAllTeamStarVals()" min = "0" max = "5" step = "0.5" ng-model = "group.main"/>
           <span class="weight badge">{{group.main}}</span>
-          <br>
-          <span class="glyphicon glyphicon-star"></span>
           <!-- <a ng-click = "group.show = !group.show">expand</a> -->
         </accordion-heading>
         <ul>
