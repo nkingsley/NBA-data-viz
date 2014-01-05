@@ -10,8 +10,9 @@ angular.module('mean.chart')
     Global.stats.then(function(data){
       $scope.teamStats = data.teams;
       $scope.teamStatsNorm = data.teamsNorm;
+      $scope.statsInfo = data.statsInfo
       $scope.stats = {};
-      for (var statName in $scope.teamStatsNorm.ATL['Al Horford']){
+      for (var statName in $scope.statsInfo){
         if(statName === 'GP' || statName === 'MIN'){
           continue;
         }

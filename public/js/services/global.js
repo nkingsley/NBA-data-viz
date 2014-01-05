@@ -16,7 +16,8 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',  function($q, $ht
       if(j === "Player" || j === "Position" || j === "Team" || j ==="_id" || j === "NA_MIN_Total_NEU" || j === "NA_GP_Total_NEU"){
         continue;
       } else {
-        statsObj.maxMinRangeObj[j] = {
+        statName = j.slice(4, -4).replace(/_/g , ' ');
+        statsObj.maxMinRangeObj[statName] = {
           'imp': j.slice(-4).replace(/_/g , ''),
           'cat': j.slice(0, 4).replace(/_/g , ''),
           'max': data[0][j]/data[0].NA_MIN_Total_NEU,
@@ -25,17 +26,18 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',  function($q, $ht
         };
         for (var i = 1 ; i < data.length; i++){
           minutes = data[i].NA_MIN_Total_NEU
-          if (data[i][j]/minutes > statsObj.maxMinRangeObj[j].max){
-            statsObj.maxMinRangeObj[j].max = data[i][j]/minutes;
+          if (data[i][j]/minutes > statsObj.maxMinRangeObj[statName].max){
+            statsObj.maxMinRangeObj[statName].max = data[i][j]/minutes;
           }
-          if (data[i][j]/minutes < statsObj.maxMinRangeObj[j].min){
-            statsObj.maxMinRangeObj[j].min = data[i][j]/minutes;
+          if (data[i][j]/minutes < statsObj.maxMinRangeObj[statName].min){
+            statsObj.maxMinRangeObj[statName].min = data[i][j]/minutes;
           }
         }
-        statsObj.maxMinRangeObj[j].range = statsObj.maxMinRangeObj[j].max-statsObj.maxMinRangeObj[j].min;
+        statsObj.maxMinRangeObj[statName].range = statsObj.maxMinRangeObj[statName].max-statsObj.maxMinRangeObj[statName].min;
 
       }
     }
+    console.log(statsObj.maxMinRangeObj)
   
     //following section calculates the total amt of time each team has played in
     // minutes for when we need to calc the % time each player played
@@ -70,14 +72,19 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',  function($q, $ht
           continue;
         }else{
           //new key name for the normalized value
-          var statName = j.slice(4, -4)
+          var statName = j.slice(4, -4).replace(/_/g, ' ');
           var newKey = statName.replace(/_/g , ' ');
           //calculates the % of a teams total time a player played
           var playerPctTime = minutes/statsObj.timeObj[playerStatsObj.Team];
           //turns the stat into a per-minute stat
           var perMinStat = playerStatsObj[j]/minutes;
-          //Normalizes the per min stat based on the max at value 1, min at value 0, 
-          var normalized = 1 - ((statsObj.maxMinRangeObj[j].max-(perMinStat))/statsObj.maxMinRangeObj[j].range);
+          //Normalizes the per min stat based on the max at value 1, min at value 0, or max at -1, min at 0 if a neg stat, 
+          debugger
+          if(statsObj.maxMinRangeObj[statName]['imp'] === "POS"){
+            var normalized = 1 - ((statsObj.maxMinRangeObj[statName].max-(perMinStat))/statsObj.maxMinRangeObj[statName].range);
+          } else {
+            var normalized = -1*(1 - ((statsObj.maxMinRangeObj[statName].max-(perMinStat))/statsObj.maxMinRangeObj[statName].range));
+          }
           //sets the stat_norm to the normalized, time-adjusted value
           if(j !== 'NA_MIN_Total_NEU'){
             playerStatsNorm[newKey] = playerPctTime * normalized;
@@ -87,9 +94,11 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',  function($q, $ht
       }
       statsObj.teamsObjNorm[team][player] = playerStatsNorm;
       statsObj.teamsObj[team][player] = playerStats;
+      console.log(statsObj.teamsObjNorm)
     }
-    d.resolve({teams: statsObj.teamsObj, teamsNorm: statsObj.teamsObjNorm});
+    d.resolve({teams: statsObj.teamsObj, teamsNorm: statsObj.teamsObjNorm, statsInfo: statsObj.maxMinRangeObj});
   });
+
 
 
 

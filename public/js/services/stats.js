@@ -373,7 +373,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     };
 
     exports.nestedSliders = {
-      Passing:{
+      Possession:{
         main:1,
         oldMain:1
       },
