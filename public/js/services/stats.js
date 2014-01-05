@@ -2,7 +2,6 @@
 angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
  
   var exports = {};
-  
   exports.teams = [
     {
       abbreviation:"ATL",
