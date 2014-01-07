@@ -37,7 +37,6 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',  function($q, $ht
 
       }
     }
-    console.log(statsObj.maxMinRangeObj)
   
     //following section calculates the total amt of time each team has played in
     // minutes for when we need to calc the % time each player played
@@ -79,7 +78,6 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',  function($q, $ht
           //turns the stat into a per-minute stat
           var perMinStat = playerStatsObj[j]/minutes;
           //Normalizes the per min stat based on the max at value 1, min at value 0, or max at -1, min at 0 if a neg stat, 
-          debugger
           if(statsObj.maxMinRangeObj[statName]['imp'] === "POS"){
             var normalized = 1 - ((statsObj.maxMinRangeObj[statName].max-(perMinStat))/statsObj.maxMinRangeObj[statName].range);
           } else {
@@ -94,7 +92,6 @@ angular.module('mean.chart').factory("Global", ['$q', '$http',  function($q, $ht
       }
       statsObj.teamsObjNorm[team][player] = playerStatsNorm;
       statsObj.teamsObj[team][player] = playerStats;
-      console.log(statsObj.teamsObjNorm)
     }
     d.resolve({teams: statsObj.teamsObj, teamsNorm: statsObj.teamsObjNorm, statsInfo: statsObj.maxMinRangeObj});
   });
