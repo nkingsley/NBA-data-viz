@@ -1,7 +1,7 @@
 module.exports = {
     db: "mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036",
     app: {
-        name: "MEAN - A Modern Stack - Development"
+        name: "NBA Stats"
     },
     facebook: {
         clientID: "APP_ID",
