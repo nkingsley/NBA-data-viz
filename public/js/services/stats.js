@@ -276,9 +276,11 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     }];
 
     exports.calculateAllTeamStarVals = function (teamStatsNorm, teams, statWeights){
+      console.log("STATWEIGHTS SO THAT WE CAN DEBUG*******!!!!!!&%#$(*@%&#$(*%^: ", statWeights)
       var cumulativeTeamsStats = exports.cumulativeTeamsStats(teamStatsNorm);
       var teamsMaxMin = exports.getStatMaxMin(cumulativeTeamsStats);
       var teamsNormStats = exports.calculateTeamsNorm(cumulativeTeamsStats, teamsMaxMin);
+      debugger
       for (var i = 0 ; i < teams.length ; i++){
         teams[i].starVal = exports.calculateTeamStar(teams[i].abbreviation, teamsNormStats, statWeights);
       }
@@ -347,7 +349,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     };
       
     exports.calculateTeamStar = function (team, normStats, statWeights) {
-      debugger
+      console.log('Calculating this team starvals');
       var star = 0;
       var weightedStat = 0;
       var totalValue = 0;
@@ -365,7 +367,6 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     };
 
     exports.calculatePlayerStar = function (player, weights) {
-      console.log("inside calculatePlayerStar");
       weights = weights || stat.stats;
       var starStatistic = 0;
       for (var teams in weights){
@@ -373,7 +374,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
       }
       return player.Total_MIN*starStatistic;
     };
-    debugger
+
     exports.nestedSliders = {
       Possession:{
         main:1,
@@ -395,40 +396,35 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
         main:1,
         oldMain:1
       },
-      Unsorted:{
-        main:1,
-        oldMain:1
-      }
     };
+
     exports.assignNestedSliders = function (statWeights, nestedSliders){
-      debugger
       for (var statName in statWeights) {
         switch(statWeights[statName].cat) {
           case "POS"  : 
-            nestedSliders.Possession[statName] = {'weight': statWeights[statName].weight};
+            nestedSliders.Possession[statName] = statWeights[statName];
             break;
           case "SHT":
-            nestedSliders.Shooting[statName] = {'weight': statWeights[statName].weight};
+            nestedSliders.Shooting[statName] = statWeights[statName];
             break; 
           case "DEF":
-            nestedSliders.Defense[statName] = {'weight': statWeights[statName].weight};
+            nestedSliders.Defense[statName] = statWeights[statName];
             break;
           case "REB"  : 
-            nestedSliders.Rebounding[statName] = {'weight': statWeights[statName].weight};
+            nestedSliders.Rebounding[statName] = statWeights[statName];
             break;
           case "ATH":
-            nestedSliders.Athleticism[statName] = {'weight': statWeights[statName].weight};
+            nestedSliders.Athleticism[statName] = statWeights[statName];
             break;
-          default:
-            nestedSliders.Unsorted[statName] = {'weight': statWeights[statName].weight};
         }
       }
-      console.log(nestedSliders)
+      console.log("DEBUG:  NESTED SLIDERS =======> ",nestedSliders)
       return nestedSliders;
     }
     
 
     exports.changeSliders = function(nestedSliders, groupName) {
+      debugger
       console.log(nestedSliders, groupName)
       var nest = nestedSliders[groupName];
       for (statName in nest){
@@ -436,12 +432,12 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
         if (statName === "main" || statName === "oldMain"){
           continue;
         }
-        stat = parseFloat(stat) + (parseFloat(nest.main) - parseFloat(nest.oldMain));
-        if (stat < 0){
-          stat = 0;
+        stat.weight = parseFloat(stat.weight) + (parseFloat(nest.main) - parseFloat(nest.oldMain));
+        if (stat.weight < 0){
+          stat.weight = 0;
         }
-        if (stat > 5){
-          stat = 5;
+        if (stat.weight > 5){
+          stat.weight = 5;
         }
       }
       nest.oldMain = parseFloat(nest.main);
