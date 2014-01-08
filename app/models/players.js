@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
     headerline = headerline.split('\n')[0].split(',');
     var schema = {}, type;
     for (var i = 0 ; i < headerline.length; i++){
-      if (headerline[i] === "Player" ||headerline[i] === "Team" || headerline[i] === "Position"){
+      if (headerline[i] === "Player" || headerline[i] === "Team" || headerline[i] === "Position"){
             type = String;
       } else{
             type = Number;
