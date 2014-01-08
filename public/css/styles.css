@@ -99,22 +99,21 @@ body {
   width: 50px;
   height: 50px;
 }
-.team-head-shots {
-  width: 360px;
-  float:left;
+.player-head-shot {
+  width: 117px;
 }
-.team-head-shots img {
+.player-head-shot img {
   width: 103px;
   height: 103px;
 }
-.player-stats {
-  width: 457px;
+/*.player-stats {
+  width: 720px;
   height: 579px;
   float: left;
   border-left: 1px solid #ccc;
   padding: 10px;
 }
-
+*/
 
 .players {
   list-style: none;

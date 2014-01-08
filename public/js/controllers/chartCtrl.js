@@ -57,9 +57,6 @@ angular.module('mean.chart')
     //     }
     //   }
     // };
-    // for collasping team details
-    $scope.isKollapsed = true;
-
   }]);
 
 
