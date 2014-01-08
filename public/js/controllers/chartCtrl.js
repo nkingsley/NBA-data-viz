@@ -4,6 +4,7 @@ angular.module('mean.chart')
     $scope.options = {width: 840, height: 500};
     $scope.teams = Stats.teams;
     $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
+    $scope.playerStars = Stats.playerStars
     $scope.changeSliders = Stats.changeSliders;
     $scope.nestedSliders = Stats.nestedSliders;
 
@@ -20,6 +21,7 @@ angular.module('mean.chart')
       }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.stats, $scope.nestedSliders);
       $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats);
+      $scope.playerStars($scope.teamStatsNorm, $scope.stats)
     });
 
     // for collasping grouped sliders

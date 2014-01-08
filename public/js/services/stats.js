@@ -362,13 +362,28 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
       return star;
     };
 
-    exports.calculatePlayerStar = function (player, weights) {
-      weights = weights || stat.stats;
-      var starStatistic = 0;
-      for (var teams in weights){
-        starStatistic += player[key]*parseFloat(weights[key].weight);
+    exports.playerStars = function (teamStatsNorm, statWeights) {
+      var playerStarObj = {}
+      var totalValue = 0
+      var weightedStat
+      var playerStarValue
+      for (var statName in statWeights){
+        totalValue += parseFloat(statWeights[statName].weight);
       }
-      return player.Total_MIN*starStatistic;
+      for (var team in teamStatsNorm){
+        playerStarObj[team] = {}
+        for (var player in teamStatsNorm[team]){
+          weightedStat = 0;
+          debugger
+          for (var stat in teamStatsNorm[team][player]){
+            weightedStat += teamStatsNorm[team][player][stat] * parseFloat(statWeights[stat].weight);
+          }
+          playerStarValue = weightedStat/totalValue
+          playerStarObj[team][player] = playerStarValue;
+        }
+      }
+      console.log(playerStarObj)
+      return playerStarObj
     };
 
     exports.nestedSliders = {
