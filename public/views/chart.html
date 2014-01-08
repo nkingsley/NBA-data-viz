@@ -1,32 +1,20 @@
 <div data-ng-controller="chartCtrl" >
-  <!-- <div class="intro-container">
-    <h2>Super Cool Title</h2>
-    <p>Asymmetrical scenester ethnic Cosby sweater, master cleanse fap dreamcatcher Shoreditch. Asymmetrical readymade post-ironic roof party. YOLO yr try-hard, Brooklyn Vice cliche Carles. Photo booth lomo YOLO McSweeney's before they sold out, brunch Terry Richardson artisan. Vegan pour-over cornhole lomo irony disrupt. VHS pickled tote bag, stumptown retro XOXO kale chips locavore +1 Pinterest messenger bag. Gastropub jean shorts Echo Park, four loko craft beer put a bird on it pop-up pickled bespoke Williamsburg slow-carb.
-    </p>
-  </div>
-  <div class="btn-container">
-    <div class="btn-group">
-        <button type="button" class="btn btn-primary" btn-radio>Scatter Plot</button>
-        <button type="button" class="btn btn-primary" btn-radio>Power Ranking</button>
-    </div>
-  </div> -->
   <div class="chart-container">
+    <h1>ρ = {{rhoVal | number:4}}</h1>
     <scatter-plot height="options.height" width="options.width" data="teams" hovered="hovered(args)"></scatter-plot>  
   </div>
     <div class="slider-container">
       <div class="slider-shell" ng-repeat="(groupName, group) in nestedSliders">
         <div class="top-slider">
           <label><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
-          <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculateAllTeamStarVals(teamStatsNorm,teams,stats);playerStars(teamStatsNorm, stats)" min="0" max="10" step="0.5" ng-model="group.main"/>
+          <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculateAllTeamStarVals(teamStatsNorm,teams,stats);playerStars(teamStatsNorm, stats); updateRho();" min="0" max="10" step="0.5" ng-model="group.main"/>
           <span class="weight badge">{{group.main}}</span>
         </div>
         <div class="nested-sliders-shell" collapse="isCollapsed">
-          <!-- <a ng-click = "group.show = !group.show">expand</a> -->
           <ul class="nested-sliders">
-          <!-- <ul ng-show = "group.show"> -->
             <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
               <label>{{statName}}</label>
-              <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-change="calculateAllTeamStarVals(teamStatsNorm,teams,stats);playerStars(teamStatsNorm, stats)"/>
+              <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-change="calculateAllTeamStarVals(teamStatsNorm,teams,stats);playerStars(teamStatsNorm, stats); updateRho();"/>
               <span class="weight badge">{{statNum.weight}}</span>
             </li>
           </ul>
