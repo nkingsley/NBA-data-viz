@@ -4,13 +4,12 @@ d3.custom.scatterPlot = function module() {
   var margin = {top: 40, right: 45, bottom: 40, left: 75},
       width = 500,
       height = 500,
-      ease = 'cubic-in-out';  // from reusable chart
-  var svg, duration = 500;  // from resusable_chart
+      ease = 'cubic-in-out';
+  var svg, duration = 500;
 
   var dispatch = d3.dispatch('customHover', 'datumChange');
   function exports(_selection) {
     _selection.each(function(_data) {
-      console.log("exports: ", _data, svg);
 
       var chartW = width - margin.left - margin.right,
         chartH = height - margin.top - margin.bottom;
@@ -37,19 +36,10 @@ d3.custom.scatterPlot = function module() {
 
       var color = d3.scale.category20();
 
-      // var xDiag = d3.scale.linear().range([0, chartW]);
-      // var yDiag = d3.scale.linear().range([chartH, 0]);
-
-      // var line = d3.svg.line()
-      //   .x(function(d) { return xDiag(d.x); })
-      //   .y(function(d) { return yDiag(d.y); });
-
-
-      if(!svg) {
-        console.log("exports: no-svg")
+      if(this.childElementCount === 0) {
         svg = d3.select(this)
           .append('svg')
-          .classed('chart', true);
+          .classed('svg-chart', true);
         var container = svg.append('g').classed('container-group', true); 
         container
           .append('g')
@@ -73,18 +63,12 @@ d3.custom.scatterPlot = function module() {
           .style("text-anchor", "end")
           .text("Wins/Games Played");
 
-        // container
-        //   .append('path')
-        //   .datum([{x:0, y:0}, {x:1, y:1}])
-        //   .classed("diagonal", true)
-        //   .attr("d", line);
-
         container
           .append('g')
           .classed('chart-group', true);
 
       }
-
+      console.log("container: ", container);
       svg.transition().duration(duration).attr({width: width, height: height});
       svg.select('.container-group')
         .attr({transform: 'translate(' + margin.left + ',' + margin.top + ')'});
@@ -102,53 +86,23 @@ d3.custom.scatterPlot = function module() {
         .ease(ease)
         .call(yAxis);
 
-
       // Dots
       // ======================================================================
-      var openingTransitionDots = function() {
-          dots
-          .transition()
-          .duration(2000)
-          .ease("bounce")
-          .attr("cy", function(d) { return y(d.winPct); });
-      };
-
-      var openingTransitionTeamLabels = function() {
-        if (!once) {
-        teamLabels
-          .transition()
-          .duration(2000)
-          .ease("bounce")
-          .attr("y", function(d) { return y(d.winPct) + 3; });
-        }
-      };
-      var dataChangeTransition = function() {
-        dots.transition()
-          .duration(750)
-          .ease(ease)
-          .attr("r", 15)
-          .attr("cx", function(d) { return x(d.starVal); })
-          .attr("cy", function(d) { return y(d.winPct); })
-          .style("fill", function(d) { return d.teamColor1; });
-      };
-
       var dots = svg.select('.chart-group')
         .selectAll('.dot')
-        // key function for object constancy
         .data(_data, function (d) { return d.abbreviation; });
 
       dots.enter().append("circle")
         .classed('dot', true)
         .attr("r", 15)
         .attr("cx", function(d) { return x(d.starVal); })
-        // .attr("cy", function(d) { return y(d.winPct); })
         .attr("cy", function(d) { return y(1); })
         .style("fill", function(d) { return d.teamColor1; })
         .attr("opacity", 0.8);
-        // openingTransitionDots();
 
-      
-      // exports.on('datumChange', dataChangeTransition);
+      console.log(dots);
+      console.log(svg);
+
       // execute transition when datum changes
       dots.transition()
         .duration(750)
@@ -201,18 +155,15 @@ d3.custom.scatterPlot = function module() {
       // ======================================================================
       var teamLabels = svg.select(".chart-group")
         .selectAll('.team-label')
-        // key function for object constancy
         .data(_data, function (d) { return d.abbreviation; });
 
       teamLabels.enter().append("text")
         .classed('team-label', true)
         .attr("x", function(d) { return x(d.starVal); })
         .attr("y", function(d) { return y(1) + 3; })
-        // .attr("y", function(d) { return y(d.winPct) + 3; })
         .text(function(d) { return d.abbreviation; })
         .style("fill", function(d) { return d.teamColor2; })
         .attr("text-anchor", "middle");
-        // openingTransitionTeamLabels();
 
       teamLabels.on("mouseover", function(d, i) {
         dotMouseOver.call(dots[0][i]);
