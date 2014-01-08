@@ -6,6 +6,9 @@ body {
 .container {
   width: 1170px;
 }
+.intro-container {
+  width: 840px;
+}
 .chart-container {
   float: left;
   background-color: #fff;
@@ -17,6 +20,9 @@ body {
   float: left;
   background-color: #fff;
   width: 840px;
+}
+.btn-container {
+  margin: 10px 0;
 }
 
 .axis path, .axis line {

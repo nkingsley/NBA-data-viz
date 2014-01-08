@@ -405,7 +405,6 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
         playerStarObj[team] = {}
         for (var player in teamStatsNorm[team]){
           weightedStat = 0;
-          debugger
           for (var stat in teamStatsNorm[team][player]){
             weightedStat += teamStatsNorm[team][player][stat] * parseFloat(statWeights[stat].weight);
           }
@@ -413,7 +412,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
           playerStarObj[team][player] = playerStarValue;
         }
       }
-      console.log(playerStarObj)
+      // console.log(playerStarObj)
       return playerStarObj
     };
 
@@ -441,7 +440,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     };
 
     exports.assignNestedSliders = function (statWeights, nestedSliders){
-      console.log("assignNestedSliders: ", statWeights);
+      // console.log("assignNestedSliders: ", statWeights);
       for (var statName in statWeights) {
         switch(statWeights[statName].cat) {
           case "POS"  : 
@@ -461,14 +460,13 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
             break;
         }
       }
-      console.log("nestedSliders ========> ", nestedSliders)
+      // console.log("nestedSliders ========> ", nestedSliders)
       return nestedSliders;
     }
     
 
     exports.changeSliders = function(nestedSliders, groupName) {
       var nest = nestedSliders[groupName];
-      debugger;
       for (statName in nest){
         var stat = nest[statName];
         if (statName === "main" || statName === "oldMain"){
@@ -478,8 +476,8 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
         if (stat.weight < 0){
           stat.weight = 0;
         }
-        if (stat.weight > 5){
-          stat.weight = 5;
+        if (stat.weight > 10){
+          stat.weight = 10;
         }
       }
       nest.oldMain = parseFloat(nest.main);
