@@ -1,5 +1,4 @@
 angular.module('mean.chart')
-
 .directive('barChart', function(){
   var chart = d3.custom.barChart();
   return {
@@ -27,7 +26,6 @@ angular.module('mean.chart')
     }
   };
 });
-
 .directive('chartForm', function(){
   return {
     restrict: 'E',

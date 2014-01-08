@@ -393,27 +393,41 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
       return star;
     };
 
-    exports.playerStars = function (teamStatsNorm, statWeights) {
-      var playerStarObj = {}
-      var totalValue = 0
-      var weightedStat
-      var playerStarValue
-      for (var statName in statWeights){
-        totalValue += parseFloat(statWeights[statName].weight);
-      }
+    exports.playerWeightedStats = function (teamStatsNorm, statWeights) {
+      var playerWeightedStatsObj = {};
+      var totalValue = 0;
+      var weightedStat;
+      var playerStarValue;
+
       for (var team in teamStatsNorm){
-        playerStarObj[team] = {}
+        playerWeightedStatsObj[team] = {};
         for (var player in teamStatsNorm[team]){
-          weightedStat = 0;
+          playerWeightedStatsObj[team][player] = [];
+          var topFiveStats = playerWeightedStatsObj[team][player];
           for (var stat in teamStatsNorm[team][player]){
-            weightedStat += teamStatsNorm[team][player][stat] * parseFloat(statWeights[stat].weight);
+            weightedStat = teamStatsNorm[team][player][stat]*statWeights[stat].weight;
+            if(topFiveStats.length === 0){
+              topFiveStats.push({'statName': stat, 'stat': weightedStat});
+            } else {
+              for (var i = 0 ; i < topFiveStats.length; i++){
+                if(Math.abs(weightedStat) > Math.abs(topFiveStats[i].stat)*statWeights[stat].weight){
+                  topFiveStats.splice(i, 0, {'statName': stat, 'stat': weightedStat});
+                  if(topFiveStats.length > 5){
+                    topFiveStats.shift();
+                  }
+                  break;
+                }  
+                if(i === topFiveStats.length-1 && topFiveStats.length < 5){
+                  topFiveStats.push({'statName': stat, 'stat': weightedStat})
+                  break;
+                }
+              }
+            }
           }
-          playerStarValue = weightedStat/totalValue
-          playerStarObj[team][player] = playerStarValue;
         }
       }
-      // console.log(playerStarObj);
-      return playerStarObj
+      return playerWeightedStatsObj;
+
     };
 
     exports.nestedSliders = {
@@ -460,13 +474,13 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
             break;
         }
       }
-      // console.log("nestedSliders ========> ", nestedSliders)
       return nestedSliders;
-    }
+    };
+    
 
     exports.changeSliders = function(nestedSliders, groupName) {
       var nest = nestedSliders[groupName];
-      for (statName in nest){
+      for (var statName in nest){
         var stat = nest[statName];
         if (statName === "main" || statName === "oldMain"){
           continue;
@@ -480,7 +494,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
         }
       }
       nest.oldMain = parseFloat(nest.main);
-    }
+    };
 
     return exports;
   }]);
