@@ -1,7 +1,7 @@
 body {
   font: 14px sans-serif
   color: #ccc;
-  background-color: #fafafa;
+  background-color: #fcfcfc;
 }
 .container {
   width: 1170px;
@@ -13,6 +13,12 @@ body {
   height: 515px;
   border: 1px solid #ccc;
 }
+.power-rank-container {
+  float: left;
+  background-color: #fff;
+  width: 840px;
+}
+
 .axis path, .axis line {
   fill: none;
   stroke: #ccc;
@@ -50,7 +56,7 @@ body {
   width: 300px;
 }
 .top-slider {
-  background-color: #f7f7f7;
+  background-color: #fafafa;
   padding: 8px;
   border-top: 1px solid #ccc;
 }
@@ -74,6 +80,9 @@ body {
 
 /* Power Rank Table Styles
  * ==========================================================================*/
+.hdr-team-rank {
+  float: left
+}
 .team-badge {
   width: 50px;
   height: 50px;
@@ -89,7 +98,6 @@ body {
 .players {
   list-style: none;
   margin: 0;
-  
 }
 
 .players li {

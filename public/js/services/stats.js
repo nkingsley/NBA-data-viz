@@ -7,6 +7,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"ATL",
       franchise:"Atlanta Hawks",
+      logo_url: "atl_hawks.gif",
       winPct:0.536,
       teamColor1: "#000080",
       teamColor2: "#FF0000",
@@ -16,6 +17,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"BOS",
       franchise:"Boston Celtics",
+      logo_url: "bstn_celtics.gif",
       winPct:0.414,
       teamColor1: "#009E60",
       teamColor2: "#FFFFFF",
@@ -25,6 +27,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"BKN",
       franchise:"Brooklyn Nets",
+      logo_url: "bkn_nets.gif",
       winPct:0.333,
       teamColor1: "#000000",
       teamColor2: "#FFFFFF",
@@ -34,6 +37,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"CHA",
       franchise:"Charlotte Bobcats",
+      logo_url: "chlt_bobcats.gif",
       winPct:0.483,
       teamColor1: "#002B5C",
       teamColor2: "#5191CD",
@@ -43,6 +47,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"CHI",
       franchise:"Chicago Bulls",
+      logo_url: "chi_bulls.gif",
       winPct:0.385,
       teamColor1: "#D4001F",
       teamColor2: "#000000",
@@ -52,6 +57,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"CLE",
       franchise:"Cleveland Cavaliers",
+      logo_url: "cvld_cavs.gif",
       winPct:0.370,
       teamColor1: "#b3121d",
       teamColor2: "#FFD700",
@@ -61,6 +67,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"DAL",
       franchise:"Dallas Mavericks",
+      logo_url: "dls_mavericks.gif",
       winPct:0.571,
       teamColor1: "#0b60ad",
       teamColor2: "#072156",
@@ -70,6 +77,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"DEN",
       franchise:"Denver Nuggets",
+      logo_url: "dvr_nuggets.gif",
       winPct:0.519,
       teamColor1: "#4b90cd",
       teamColor2: "#fdb827",
@@ -79,6 +87,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"DET",
       franchise:"Detroit Pistons",
+      logo_url: "det_pistons.gif",
       winPct:0.467,
       teamColor1: "#00519a",
       teamColor2: "#EB003C",
@@ -88,6 +97,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"GSW",
       franchise:"Golden State Warriors",
+      logo_url: "gs_warriors.png",
       winPct:0.552,
       teamColor1: "#04529c",
       teamColor2: "#FFCC33",
@@ -97,6 +107,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"HOU",
       franchise:"Houston Rockets",
+      logo_url: "hstn_rockets.gif",
       winPct:0.621,
       teamColor1: "#CE1138",
       teamColor2: "#CCCCCC",
@@ -106,6 +117,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"IND",
       franchise:"Indiana Pacers",
+      logo_url: "ind_pacers.gif",
       winPct:0.821,
       teamColor1: "#092c57",
       teamColor2: "#ffc322",
@@ -115,6 +127,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"LAC",
       franchise:"Los Angeles Clippers",
+      logo_url: "la_clippers.gif",
       winPct:0.690,
       teamColor1: "#EE2944",
       teamColor2: "#146AA2",
@@ -124,6 +137,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"LAL",
       franchise:"Los Angeles Lakers",
+      logo_url: "lakers.gif",
       winPct:0.464,
       teamColor1: "#4A2583",
       teamColor2: "#F5AF1B",
@@ -133,6 +147,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"MEM",
       franchise:"Memphis Grizzlies",
+      logo_url: "mphs_grizzlies.gif",
       winPct:0.444,
       teamColor1: "#001F70",
       teamColor2: "#7399C6",
@@ -142,6 +157,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"MIA",
       franchise:"Miami Heat",
+      logo_url: "mia_heat.gif",
       winPct:0.778,
       teamColor1: "#1E3344",
       teamColor2: "#B62630",
@@ -151,6 +167,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"MIL",
       franchise:"Milwaukee Bucks",
+      logo_url: "mil_bucks.gif",
       winPct:0.214,
       teamColor1: "#003614",
       teamColor2: "#E32636",
@@ -161,6 +178,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"MIN",
       franchise:"Minnesota Timberwolves",
+      logo_url: "minn_timberwolves.gif",
       winPct:0.464,
       teamColor1: "#0F4D92",
       teamColor2: "#8c92ac",
@@ -170,6 +188,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"NOP",
       franchise:"New Orleans Pelicans",
+      logo_url: "no_pelicans.png",
       winPct:0.462,
       teamColor1: "#072248",
       teamColor2: "#A1854D",
@@ -179,6 +198,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"NYK",
       franchise:"New York Knicks",
+      logo_url: "ny_knicks.gif",
       winPct:0.333,
       teamColor1: "#0953a0",
       teamColor2: "#FF7518",
@@ -188,6 +208,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"OKC",
       franchise:"Oklahoma City Thunder",
+      logo_url: "ok_thunder.gif",
       winPct:0.815,
       teamColor1: "#007DC3",
       teamColor2: "#F05133",
@@ -197,6 +218,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"ORL",
       franchise:"Orlando Magic",
+      logo_url: "orl_magic.gif",
       winPct:0.286,
       teamColor1: "#0047AB",
       teamColor2: "#000000",
@@ -206,6 +228,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"PHI",
       franchise:"Philadelphia 76ers",
+      logo_url: "phil_76ers.gif",
       winPct:0.286,
       teamColor1: "#D0103A",
       teamColor2: "#0046AD",
@@ -215,6 +238,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"PHX",
       franchise:"Phoenix Suns",
+      logo_url: "phnx_suns.png",
       winPct:0.630,
       teamColor1: "#FF8800",
       teamColor2: "#423189",
@@ -224,6 +248,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"POR",
       franchise:"Portland Trail Blazers",
+      logo_url: "por_trail_blazers.gif",
       winPct:0.821,
       teamColor1: "#F0163A",
       teamColor2: "#B6BFBF",
@@ -233,6 +258,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"SAC",
       franchise:"Sacramento Kings",
+      logo_url: "sac_kings.gif",
       winPct:0.296,
       teamColor1: "#753BBD",
       teamColor2: "#000000",
@@ -242,6 +268,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"SAS",
       franchise:"San Antonio Spurs",
+      logo_url: "sa_spurs.gif",
       winPct:0.786,
       teamColor1: "#000000",
       teamColor2: "#BEC8C9",
@@ -251,6 +278,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"TOR",
       franchise:"Toronto Raptors",
+      logo_url: "tor_raptors.gif",
       winPct:0.423,
       teamColor1: "#B31B1B",
       teamColor2: "#000000",
@@ -260,6 +288,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"UTA",
       franchise:"Utah Jazz",
+      logo_url: "utah_jazz.gif",
       winPct:0.258,
       teamColor1: "#00275D",
       teamColor2: "#FF9100",
@@ -269,6 +298,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     {
       abbreviation:"WAS",
       franchise:"Washington Wizards",
+      logo_url: "utah_jazz.gif",
       winPct:0.480,
       teamColor1: "#C60C30",
       teamColor2: "#FFFFFF",
@@ -401,6 +431,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     };
 
     exports.assignNestedSliders = function (statWeights, nestedSliders){
+      console.log("assignNestedSliders: ", statWeights);
       for (var statName in statWeights) {
         switch(statName) {
           case "AST"  : 
@@ -452,11 +483,13 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
             nestedSliders.Unsorted[statName] = statWeights[statName];
         }
       }
+      console.log("nestedSliders ========> ", nestedSliders)
       return nestedSliders;
     }
 
     exports.changeSliders = function(nestedSliders, groupName) {
       var nest = nestedSliders[groupName];
+      debugger;
       for (statName in nest){
         var stat = nest[statName];
         if (statName === "main" || statName === "oldMain"){
