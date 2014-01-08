@@ -27,6 +27,9 @@ angular.module('mean.chart')
     // for collasping grouped sliders
     $scope.isCollapsed = true;
 
+    // for collasping team details
+    $scope.isKollapsed = true;
+
   }]);
 
 
