@@ -86,20 +86,35 @@ body {
 
 /* Power Rank Table Styles
  * ==========================================================================*/
-.hdr-team-rank {
-  float: left
+.rank {
+  font-weight: bold;
+}
+.star-val {
+  color: #777;
+}
+.table td.super-slim {
+  padding: 0;
 }
 .team-badge {
   width: 50px;
   height: 50px;
 }
+.team-head-shots {
+  width: 360px;
+  float:left;
+}
+.team-head-shots img {
+  width: 103px;
+  height: 103px;
+}
+.player-stats {
+  width: 457px;
+  height: 579px;
+  float: left;
+  border-left: 1px solid #ccc;
+  padding: 10px;
+}
 
-.team-tooltip {
-  position: absolute;
-}
-.hidden {
-  display:none;
-}
 
 .players {
   list-style: none;
