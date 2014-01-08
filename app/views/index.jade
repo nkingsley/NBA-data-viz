@@ -1,6 +1,15 @@
 extends layouts/default
 
 block content
+  .intro-container
+    h2 Super Cool Title
+    p Asymmetrical scenester ethnic Cosby sweater, master cleanse fap dreamcatcher Shoreditch. Asymmetrical readymade post-ironic roof party. YOLO yr try-hard, Brooklyn Vice cliche Carles. Photo booth lomo YOLO McSweeney's before they sold out, brunch Terry Richardson artisan. Vegan pour-over cornhole lomo irony disrupt. VHS pickled tote bag, stumptown retro XOXO kale chips locavore +1 Pinterest messenger bag. Gastropub jean shorts Echo Park, four loko craft beer put a bird on it pop-up pickled bespoke Williamsburg slow-carb.
+  .btn-container
+    .btn-group
+      a(href='/#!/')
+        button(type="button", class="btn btn-primary") Power Ranking
+      a(href='/#!/scatter')  
+        button(type="button", class="btn btn-primary") Scatter Plots
   section(data-ng-view)
   script(type="text/javascript").
     window.user = !{user};

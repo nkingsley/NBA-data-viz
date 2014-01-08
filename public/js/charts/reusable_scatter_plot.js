@@ -10,12 +10,15 @@ d3.custom.scatterPlot = function module() {
   var dispatch = d3.dispatch('customHover', 'datumChange');
   function exports(_selection) {
     _selection.each(function(_data) {
+      console.log("exports: ", _data, svg);
 
       var chartW = width - margin.left - margin.right,
         chartH = height - margin.top - margin.bottom;
       
       var x = d3.scale.linear()
         .domain([0, 1])
+        // .domain([d3.min(_data, function(d) { return d.starVal; }),
+        //   d3.max(_data, function(d) { return d.starVal; })])
         .range([0, chartW]);
 
       var y = d3.scale.linear()
@@ -34,15 +37,16 @@ d3.custom.scatterPlot = function module() {
 
       var color = d3.scale.category20();
 
-      var xDiag = d3.scale.linear().range([0, chartW]);
-      var yDiag = d3.scale.linear().range([chartH, 0]);
+      // var xDiag = d3.scale.linear().range([0, chartW]);
+      // var yDiag = d3.scale.linear().range([chartH, 0]);
 
-      var line = d3.svg.line()
-        .x(function(d) { return xDiag(d.x); })
-        .y(function(d) { return yDiag(d.y); });
+      // var line = d3.svg.line()
+      //   .x(function(d) { return xDiag(d.x); })
+      //   .y(function(d) { return yDiag(d.y); });
 
 
       if(!svg) {
+        console.log("exports: no-svg")
         svg = d3.select(this)
           .append('svg')
           .classed('chart', true);
@@ -69,11 +73,11 @@ d3.custom.scatterPlot = function module() {
           .style("text-anchor", "end")
           .text("Wins/Games Played");
 
-        container
-          .append('path')
-          .datum([{x:0, y:0}, {x:1, y:1}])
-          .classed("diagonal", true)
-          .attr("d", line);
+        // container
+        //   .append('path')
+        //   .datum([{x:0, y:0}, {x:1, y:1}])
+        //   .classed("diagonal", true)
+        //   .attr("d", line);
 
         container
           .append('g')
@@ -130,7 +134,8 @@ d3.custom.scatterPlot = function module() {
 
       var dots = svg.select('.chart-group')
         .selectAll('.dot')
-        .data(_data);
+        // key function for object constancy
+        .data(_data, function (d) { return d.abbreviation; });
 
       dots.enter().append("circle")
         .classed('dot', true)
@@ -196,7 +201,8 @@ d3.custom.scatterPlot = function module() {
       // ======================================================================
       var teamLabels = svg.select(".chart-group")
         .selectAll('.team-label')
-        .data(_data);
+        // key function for object constancy
+        .data(_data, function (d) { return d.abbreviation; });
 
       teamLabels.enter().append("text")
         .classed('team-label', true)

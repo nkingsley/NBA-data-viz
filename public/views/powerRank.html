@@ -1,40 +1,78 @@
-<div data-ng-controller="powerRankCtrl">
-  <table class="table table-bordered table-hover">
-    <tr>
-      <th>Rank</th>
-      <th>Team</th>
-      <th>Details</th>
-    </tr>
-    <tr ng-repeat="team in teams | orderBy: '-starVal'" ng-animate="{move: 'teams-move'}" ng-click="showToolTip()">
-      <td class="team-rank">{{team.starVal}}</td>
-      <td class="team-badge"><img ng-src="img/nba_logos/{{team.logo_url}}"></td>
-      <td class="team-details">{{team.franchise}}</td>
-    </tr>
-  </table>
-  <div class="team-tooltip hidden">
-    <ul class="players">
-      <li ng-repeat="player in players" class="player">
-        <h4>{{player.name}}</h4>
-        <div class="head-shot">
-          <img ng-src="img/nba_logos/{{player.headShot}}">
-        </div>
-        <div class="stats-detail hidden">
-          <h4>Stats</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eu vestibulum quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam gravida hendrerit risus vitae venenatis. Suspendisse potenti. Fusce ut massa vel quam porttitor mattis.</p>
-        </div>
-      </li>
-    </ul>
+<div data-ng-controller="chartCtrl" >
+<div class="power-rank-container">
+    <table class="table table-bordered">
+      <tr>
+        <th>Rank</th>
+        <th colspan="2">Team</th>
+      </tr>
+      <tr ng-repeat-start="team in teams | orderBy: '-starVal'" ng-animate="{move: 'teams-move'}" ng-click="isCollapsed = !isCollapsed">
+        <td class="team-rank"><span class="rank">{{$index + 1}}</span> <span class="star-val">(Star Value: {{team.starVal | number:3}})</span></td>
+        <td class="team-badge"><img ng-src="img/nba_logos/{{team.logo_url}}"></td>
+        <td class="team-details">{{team.franchise}}</td>
+      </tr>
+      <tr ng-repeat-end>
+        <td colspan="3" class="super-slim">
+          <div class="team-details" collapse="isCollapsed">
+            <div class="team-head-shots">
+              <table>
+                <tr>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                </tr>
+                <tr>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                </tr>
+                <tr>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                </tr>
+                <tr>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                </tr>
+                <tr>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                  <td><img src="img/nba_logos/lebron_james.png"></td>
+                </tr>
+              </table>
+            </div>
+            <div class="player-stats">
+              <h4>Player Stats</h4>
+              <p>
+              Clicking on player's head shot will update this area with that player's stats.
+              </p>
+              <p>Mlkshk chia farm-to-table pour-over direct trade. Organic squid swag chia, quinoa vinyl chillwave VHS Helvetica single-origin coffee narwhal Godard. Put a bird on it Vice meh, meggings kitsch Blue Bottle post-ironic tousled pickled. Leggings hashtag kale chips messenger bag. Godard aesthetic deep v vinyl, forage pour-over kogi mustache. Gastropub Neutra jean shorts, bitters distillery trust fund squid iPhone artisan Pitchfork. Four loko fingerstache occupy deep v.
+
+              90's VHS cred drinking vinegar Pinterest XOXO, chambray fashion axe leggings. Twee blog master cleanse chillwave small batch fashion axe. Distillery skateboard pickled, bitters Carles deep v kale chips lomo flannel Pitchfork blog next level. Austin jean shorts bicycle rights paleo Vice disrupt art party, cray readymade Godard fashion axe put a bird on it. Odd Future salvia pug, butcher Wes Anderson Tonx kogi Pinterest tousled. YOLO Portland cray farm-to-table, fingerstache raw denim Thundercats wayfarers letterpress food truck +1 church-key gastropub tofu. Seitan roof party irony sriracha, semiotics +1 banjo tousled Tonx scenester flexitarian lomo Helvetica.</p>
+          </div>
+        </td>
+      </tr>
+    </table>
   </div>
-  <!-- <div class="table-container">
-    <scatter-plot height="options.height" width="options.width" data="data" hovered="hovered(args)"></scatter-plot>  
-  </div> -->
-  <div class="btn-shell">
-    <button class="btn btn-primary" ng-click="updateTeamStarVals()">Update Data</button>
+  <div class="slider-container">
+    <div class="slider-shell" ng-repeat="(groupName, group) in nestedSliders">
+      <div class="top-slider">
+        <label><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
+        <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculateAllTeamStarVals(teamStatsNorm,teams,stats);" min="0" max="5" step="0.5" ng-model="group.main"/>
+        <span class="weight badge badge-info">{{group.main}}</span>
+      </div>
+      <div class="nested-sliders-shell" collapse="isCollapsed">
+        <!-- <a ng-click = "group.show = !group.show">expand</a> -->
+        <ul class="nested-sliders">
+        <!-- <ul ng-show = "group.show"> -->
+          <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
+            <label>{{statName}}</label>
+            <input ng-model="statNum.weight" type="range" min="0" max="5" step="0.5" ng-change="calculateAllTeamStarVals(teamStatsNorm,teams,stats)"/>
+            <span class="weight badge badge-info">{{statNum.weight}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <ul class="sliders">
-    <li ng-repeat="(statName, statNum) in stats">
-      <label>{{statName}}</label>
-      <input ng-model="statNum.weight" type="range" min="-5" max="5" step="0.5" value="0"/>
-      <span class="weight badge">{{statNum.weight}}</span>
-    </li>
 </div>
