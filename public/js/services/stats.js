@@ -412,7 +412,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
           playerStarObj[team][player] = playerStarValue;
         }
       }
-      // console.log(playerStarObj)
+      // console.log(playerStarObj);
       return playerStarObj
     };
 

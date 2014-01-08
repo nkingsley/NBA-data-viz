@@ -13,43 +13,29 @@
       <tr ng-repeat-end>
         <td colspan="3" class="super-slim">
           <div class="team-details" collapse="isCollapsed">
-            <div class="team-head-shots">
-              <table>
-                <tr>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                </tr>
-                <tr>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                </tr>
-                <tr>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                </tr>
-                <tr>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                </tr>
-                <tr>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                  <td><img src="img/nba_logos/lebron_james.png"></td>
-                </tr>
-              </table>
-            </div>
-            <div class="player-stats">
-              <h4>Player Stats</h4>
-              <p>
-              Clicking on player's head shot will update this area with that player's stats.
-              </p>
-              <p>Mlkshk chia farm-to-table pour-over direct trade. Organic squid swag chia, quinoa vinyl chillwave VHS Helvetica single-origin coffee narwhal Godard. Put a bird on it Vice meh, meggings kitsch Blue Bottle post-ironic tousled pickled. Leggings hashtag kale chips messenger bag. Godard aesthetic deep v vinyl, forage pour-over kogi mustache. Gastropub Neutra jean shorts, bitters distillery trust fund squid iPhone artisan Pitchfork. Four loko fingerstache occupy deep v.
-
-              90's VHS cred drinking vinegar Pinterest XOXO, chambray fashion axe leggings. Twee blog master cleanse chillwave small batch fashion axe. Distillery skateboard pickled, bitters Carles deep v kale chips lomo flannel Pitchfork blog next level. Austin jean shorts bicycle rights paleo Vice disrupt art party, cray readymade Godard fashion axe put a bird on it. Odd Future salvia pug, butcher Wes Anderson Tonx kogi Pinterest tousled. YOLO Portland cray farm-to-table, fingerstache raw denim Thundercats wayfarers letterpress food truck +1 church-key gastropub tofu. Seitan roof party irony sriracha, semiotics +1 banjo tousled Tonx scenester flexitarian lomo Helvetica.</p>
+            <table ng-repeat"player in players">
+              <tr>
+                <td class="player-head-shot"><img src="img/nba_logos/lebron_james.png"></td>
+                <td>
+                  <table class="table table-bordered">
+                    <tr>
+                      <th>STAT #1</th>
+                      <th>STAT #2</th>
+                      <th>STAT #3</th>
+                      <th>STAT #4</th>
+                      <th>STAT #5</th>
+                    </tr>
+                    <tr>
+                      <td>0.777</td>
+                      <td>0.333</td>
+                      <td>0.222</td>
+                      <td>0.999</td>
+                      <td>0.111</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </table>
           </div>
         </td>
       </tr>
