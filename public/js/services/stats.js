@@ -463,7 +463,6 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
       // console.log("nestedSliders ========> ", nestedSliders)
       return nestedSliders;
     }
-    
 
     exports.changeSliders = function(nestedSliders, groupName) {
       var nest = nestedSliders[groupName];
@@ -486,59 +485,3 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
     return exports;
   }]);
 
-
-
-    // exports.assignNestedSliders = function (statWeights, nestedSliders){
-    //   for (var statName in statWeights) {
-    //     switch(statName) {
-    //       case "AST"  : 
-    //       case "Assist opportunities" : 
-    //       case "Passes" : 
-    //       case "Points created by assist" : 
-    //       case "FT Assists" : 
-    //       case "Secondary Assists":
-    //       case "PTS":
-    //         nestedSliders.Possession[statName] = statWeights[statName];
-    //         break;
-    //       case "Catch and Shoot 3FG Missed"  : 
-    //       case "Catch and Shoot 3FG Made" : 
-    //       case "Catch and Shoot FG Missed" : 
-    //       case "Catch and Shoot FG Made" : 
-    //       case "Catch and Shoot PTS" : 
-    //       case "Close Shots PTS" : 
-    //       case "Pull Up Shots FG3 Missed" : 
-    //       case "Pull Up Shots FG3 Made" : 
-    //       case "Pull Up Shots FG Missed" : 
-    //       case "Pull Up Shots FG Made" : 
-    //       case "Pull Up Shots PTS":
-    //         nestedSliders.Shooting[statName] = statWeights[statName];
-    //         break;
-    //       case "BLK"  : 
-    //       case "Opp FG Missed at Rim" : 
-    //       case "Opp FG Made at Rim" : 
-    //       case "PF" : 
-    //       case "STL":
-    //         nestedSliders.Defense[statName] = statWeights[statName];
-    //         break;
-    //       case "REB"  : 
-    //       case "REB Missed" : 
-    //       case "Uncontested REB" : 
-    //       case "Contested REB":
-    //         nestedSliders.Rebounding[statName] = statWeights[statName];
-    //         break;
-    //       case "Distance Traveled miles":
-    //       case "Elbow Touches":
-    //       case "Touches":
-    //       case "Front Court Touches":
-    //       case "Drives":
-    //       case "Drives PTS":
-    //       case "TOV":
-    //       case "Close Touches":
-    //         nestedSliders.Athleticism[statName] = statWeights[statName];
-    //         break;
-    //       default:
-    //         nestedSliders.Unsorted[statName] = statWeights[statName];
-    //     }
-    //   }
-    //   return nestedSliders;
-    // }

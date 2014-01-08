@@ -134,7 +134,8 @@ d3.custom.scatterPlot = function module() {
 
       var dots = svg.select('.chart-group')
         .selectAll('.dot')
-        .data(_data);
+        // key function for object constancy
+        .data(_data, function (d) { return d.abbreviation; });
 
       dots.enter().append("circle")
         .classed('dot', true)
@@ -200,7 +201,8 @@ d3.custom.scatterPlot = function module() {
       // ======================================================================
       var teamLabels = svg.select(".chart-group")
         .selectAll('.team-label')
-        .data(_data);
+        // key function for object constancy
+        .data(_data, function (d) { return d.abbreviation; });
 
       teamLabels.enter().append("text")
         .classed('team-label', true)
