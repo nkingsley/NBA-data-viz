@@ -33,6 +33,63 @@ angular.module('mean.chart')
       $scope.rhoVal = $scope.spearman.rho($scope.teams);
     }
 
+    $scope.players = [
+      { playerName: "Lebron James",
+        topFiveStats: [
+          { statName: "Stat #1", statVal: 0.777 },
+          { statName: "Stat #2", statVal: 0.555 },
+          { statName: "Stat #3", statVal: 0.777 },
+          { statName: "Stat #4", statVal: 0.333 },
+          { statName: "Stat #5", statVal: 0.777 }
+        ]
+      },
+      { playerName: "Dwayne Wade",
+        topFiveStats: [
+          { statName: "Stat #1", statVal: 0.777 },
+          { statName: "Stat #2", statVal: 0.555 },
+          { statName: "Stat #3", statVal: 0.777 },
+          { statName: "Stat #4", statVal: 0.333 },
+          { statName: "Stat #5", statVal: 0.777 }
+        ]
+      },
+      { playerName: "Kobe Bryant",
+        topFiveStats: [
+          { statName: "Stat #1", statVal: 0.777 },
+          { statName: "Stat #2", statVal: 0.555 },
+          { statName: "Stat #3", statVal: 0.777 },
+          { statName: "Stat #4", statVal: 0.333 },
+          { statName: "Stat #5", statVal: 0.777 }
+        ]
+      },
+      { playerName: "Stephen Curry",
+        topFiveStats: [
+          { statName: "Stat #1", statVal: 0.777 },
+          { statName: "Stat #2", statVal: 0.555 },
+          { statName: "Stat #3", statVal: 0.777 },
+          { statName: "Stat #4", statVal: 0.333 },
+          { statName: "Stat #5", statVal: 0.777 }
+        ]
+      },
+      { playerName: "Andrew Bogut",
+        topFiveStats: [
+          { statName: "Stat #1", statVal: 0.777 },
+          { statName: "Stat #2", statVal: 0.555 },
+          { statName: "Stat #3", statVal: 0.777 },
+          { statName: "Stat #4", statVal: 0.333 },
+          { statName: "Stat #5", statVal: 0.777 }
+        ]
+      },
+    ];
+
+    $scope.makeHeadShotUrl = function(name) {
+      var url = "http://i.cdn.turner.com/nba/nba/.element/img/2.0/sect/statscube/players/large/";
+      var name_parts = name.split(" ");
+      var new_name = name_parts.join("_");
+      
+      return url + new_name.toLowerCase();
+    };
+   
+
     // $scope.findOptimal = function (){
     //   for (var shootingSliderPosition = 0; shootingSliderPosition <= 5; shootingSliderPosition++) {
     //     for (var reboundingSliderPosition = 0; reboundingSliderPosition <= 5; reboundingSliderPosition++) {

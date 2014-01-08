@@ -5,32 +5,29 @@
         <th>Rank</th>
         <th colspan="2">Team</th>
       </tr>
-      <tr ng-repeat-start="team in teams | orderBy: '-starVal'" ng-animate="{move: 'teams-move'}" ng-click="isCollapsed = !isCollapsed">
-        <td class="team-rank"><span class="rank">{{$index + 1}}</span> <span class="star-val">(Star Value: {{team.starVal | number:3}})</span></td>
+      <tr class="team" ng-repeat-start="team in teams | orderBy: '-starVal'" ng-animate="{move: 'teams-move'}" >
+        <td class="team-rank"><span class="rank">{{$index + 1}}</span> <span class="star-val">(Star Value: {{team.starVal | number:3}})</span>
+        <p class="player-badge-shell">
+          <span class="badge badge-info" ng-click="isCollapsed = !isCollapsed">Player stats</span>
+        </p>
+        </td>
         <td class="team-badge"><img ng-src="img/nba_logos/{{team.logo_url}}"></td>
         <td class="team-details">{{team.franchise}}</td>
       </tr>
       <tr ng-repeat-end>
         <td colspan="3" class="super-slim">
-          <div class="team-details" collapse="isCollapsed">
-            <table ng-repeat"player in players">
+          <div collapse="isCollapsed">
+            <table class="player-details" ng-repeat="player in players">
               <tr>
-                <td class="player-head-shot"><img src="img/nba_logos/lebron_james.png"></td>
+                <td class="player-head-shot"><img ng-src="makeHeadShotUrl(player.playerName)"></td>
                 <td>
-                  <table class="table table-bordered">
-                    <tr>
-                      <th>STAT #1</th>
-                      <th>STAT #2</th>
-                      <th>STAT #3</th>
-                      <th>STAT #4</th>
-                      <th>STAT #5</th>
+                  <h4>{{player.playerName}}</h4>
+                  <table class="player-stats">
+                    <tr class="player-stats-header">
+                      <th ng-repeat="stat in player.topFiveStats">{{stat.statName}}</th>
                     </tr>
                     <tr>
-                      <td>0.777</td>
-                      <td>0.333</td>
-                      <td>0.222</td>
-                      <td>0.999</td>
-                      <td>0.111</td>
+                      <td ng-repeat="stat in player.topFiveStats">{{stat.statVal}}</td>
                     </tr>
                   </table>
                 </td>
