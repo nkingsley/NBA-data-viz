@@ -1,40 +1,42 @@
-<div data-ng-controller="powerRankCtrl">
-  <table class="table table-bordered table-hover">
-    <tr>
-      <th>Rank</th>
-      <th>Team</th>
-      <th>Details</th>
-    </tr>
-    <tr ng-repeat="team in teams | orderBy: '-starVal'" ng-animate="{move: 'teams-move'}" ng-click="showToolTip()">
-      <td class="team-rank">{{team.starVal}}</td>
-      <td class="team-badge"><img ng-src="img/nba_logos/{{team.logo_url}}"></td>
-      <td class="team-details">{{team.franchise}}</td>
-    </tr>
-  </table>
-  <div class="team-tooltip hidden">
-    <ul class="players">
-      <li ng-repeat="player in players" class="player">
-        <h4>{{player.name}}</h4>
-        <div class="head-shot">
-          <img ng-src="img/nba_logos/{{player.headShot}}">
-        </div>
-        <div class="stats-detail hidden">
-          <h4>Stats</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin eu vestibulum quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam gravida hendrerit risus vitae venenatis. Suspendisse potenti. Fusce ut massa vel quam porttitor mattis.</p>
-        </div>
-      </li>
-    </ul>
-  </div>
-  <!-- <div class="table-container">
-    <scatter-plot height="options.height" width="options.width" data="data" hovered="hovered(args)"></scatter-plot>  
+<div data-ng-controller="chartCtrl" >
+<div class="power-rank-container">
+  <!-- <div clas="power-rank-header">
+    <div class="hdr-team-rank">Rank</div>
+    <div class="hdr-team-badge">Team</div>
+    <div class="hdr-team-details">Details</div>
   </div> -->
-  <div class="btn-shell">
-    <button class="btn btn-primary" ng-click="updateTeamStarVals()">Update Data</button>
+    <table class="table table-bordered table-hover">
+      <tr>
+        <th>Rank</th>
+        <th>Team</th>
+        <th>Details</th>
+      </tr>
+      <tr ng-repeat="team in teams | orderBy: '-starVal'" ng-animate="{move: 'teams-move'}" ng-click="showToolTip()">
+        <td class="team-rank">{{team.starVal | number:3}}</td>
+        <td class="team-badge"><img ng-src="img/nba_logos/{{team.logo_url}}"></td>
+        <td class="team-details">{{team.franchise}}</td>
+      </tr>
+    </table>
   </div>
-  <ul class="sliders">
-    <li ng-repeat="(statName, statNum) in stats">
-      <label>{{statName}}</label>
-      <input ng-model="statNum.weight" type="range" min="-5" max="5" step="0.5" value="0"/>
-      <span class="weight badge">{{statNum.weight}}</span>
-    </li>
+
+  <div class="slider-container">
+    <div class="slider-shell" ng-repeat="(groupName, group) in nestedSliders">
+      <div class="top-slider">
+        <label><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
+        <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculateAllTeamStarVals(teamStatsNorm,teams,stats);" min="0" max="5" step="0.5" ng-model="group.main"/>
+        <span class="weight badge badge-info">{{group.main}}</span>
+      </div>
+      <div class="nested-sliders-shell" collapse="isCollapsed">
+        <!-- <a ng-click = "group.show = !group.show">expand</a> -->
+        <ul class="nested-sliders">
+        <!-- <ul ng-show = "group.show"> -->
+          <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
+            <label>{{statName}}</label>
+            <input ng-model="statNum.weight" type="range" min="0" max="5" step="0.5" ng-change="calculateAllTeamStarVals(teamStatsNorm,teams,stats)"/>
+            <span class="weight badge badge-info">{{statNum.weight}}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
