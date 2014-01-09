@@ -32,24 +32,25 @@ angular.module('mean.chart')
 
     $scope.updateRho = function (){
       $scope.rhoVal = $scope.spearman.rho($scope.teams);
-    }
-
-    // $scope.getTeam = function(team) {
-    //   return playerWeightedStats[team];
-    // }
-      
+    };  
 
     $scope.makeHeadShotUrl = function(name, isCollapsed) {
       if(isCollapsed) { return ""; }
-      var removePeriods = function(str) {
-        return str.replace(/\./g,' ')
-      }
+
+      var removePunctuation = function(str) {
+        return str.replace(/[.']/g,'')
+      };
+
       var url = "http://i.cdn.turner.com/nba/nba/.element/img/2.0/sect/statscube/players/large/";
-      name = removePeriods(name);
-      var name_parts = name.split(" ");
-      var new_name = name_parts.join("_");
-      
-      return url + new_name.toLowerCase() + '.png';
+      var firstLast = null;
+      var formatted_name = null;
+
+      firstLast = name.split(" ");
+      for (var i = 0; i < firstLast.length; i++) {
+        firstLast[i] = removePunctuation(firstLast[i]);
+      }
+      formatted_name = firstLast.join("_");
+      return url + formatted_name.toLowerCase() + '.png';
     };
    
 

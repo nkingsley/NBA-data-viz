@@ -43,7 +43,7 @@
       <div class="top-slider">
         <label><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
         <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculateAllTeamStarVals(teamStatsNorm,teams,stats);
-        calculatePlayerWeightedStats(teamStatsNorm, stats)" min="0" max="10" step="0.5" ng-model="group.main"/>
+          calculatePlayerWeightedStats(teamStatsNorm, stats)" min="0" max="10" step="0.5" ng-model="group.main"/>
         <span class="weight badge badge-info">{{group.main}}</span>
       </div>
       <div class="nested-sliders-shell" collapse="isCollapsed">
