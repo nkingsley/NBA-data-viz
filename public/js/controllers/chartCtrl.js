@@ -51,6 +51,7 @@ angular.module('mean.chart')
       }
       formatted_name = firstLast.join("_");
       return url + formatted_name.toLowerCase() + '.png';
+      console.log(_);
     };
    
 

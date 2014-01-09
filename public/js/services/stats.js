@@ -403,7 +403,6 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
           teamCumeTotals[team]+=(Math.abs(cumulativeTeamsStats[team][stats]))*(statWeights[stats].weight)
         }
       }
-      debugger
       return teamCumeTotals
     }
 
@@ -475,7 +474,7 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
       //     }
       //   }
       // }
-      console.log("calculatePlayerWeightedStats: ", exports.playerWeightedStats);
+      // console.log("calculatePlayerWeightedStats: ", exports.playerWeightedStats);
       // return playerWeightedStats;
     };
 
