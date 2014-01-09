@@ -19,7 +19,7 @@
           <div collapse="isCollapsed">
             <table class="player-details" ng-repeat="(key, player) in playerWeightedStats[team.abbreviation]">
               <tr>
-                <td class="player-head-shot"><img ng-src="{{makeHeadShotUrl(key)}}"></td>
+                <td class="player-head-shot"><img ng-src="{{makeHeadShotUrl(key, isCollapsed)}}"></td>
                 <td>
                   <h4>{{key}}</h4>
                   <table class="player-stats">

@@ -39,8 +39,13 @@ angular.module('mean.chart')
     // }
       
 
-    $scope.makeHeadShotUrl = function(name) {
+    $scope.makeHeadShotUrl = function(name, isCollapsed) {
+      if(isCollapsed) { return ""; }
+      var removePeriods = function(str) {
+        return str.replace(/\./g,' ')
+      }
       var url = "http://i.cdn.turner.com/nba/nba/.element/img/2.0/sect/statscube/players/large/";
+      name = removePeriods(name);
       var name_parts = name.split(" ");
       var new_name = name_parts.join("_");
       
