@@ -112,7 +112,7 @@ body {
   border-bottom: 1px solid #ccc;
 }
 .player-head-shot {
-  width: 103px;
+  width: 128px;
 }
 .player-head-shot img {
   width: 128px;
@@ -121,7 +121,7 @@ body {
 .player-stats {
   border: 1px solid #ccc;
   padding: 8px;
-  width: 699px;
+  width: 674px;
   table-layout:fixed;
 }
 .player-stats-header {
