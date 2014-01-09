@@ -27,7 +27,7 @@
                       <th ng-repeat="stat in player">{{stat.statName}}</th>
                     </tr>
                     <tr>
-                      <td ng-repeat="stat in player">{{stat.stat | number:3}}</td>
+                      <td ng-repeat="stat in player">{{stat.stat | number:3}}{{"%"}}</td>
                     </tr>
                   </table>
                 </td>

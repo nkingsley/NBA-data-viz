@@ -392,26 +392,42 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
       (totalValue === 0) ? star = 0 : star = weightedStat/totalValue;
       return star;
     };
+    
+    exports.getTeamCumeTotals = function(teamsStatsNorm, statWeights) {
+      var cumulativeTeamsStats = exports.cumulativeTeamsStats(teamsStatsNorm)
+      var teamCumeTotals = {}
+      for (var team in cumulativeTeamsStats){
+        teamCumeTotals[team] = 0
+        for(var stats in cumulativeTeamsStats[team]){
+          
+          teamCumeTotals[team]+=(Math.abs(cumulativeTeamsStats[team][stats]))*(statWeights[stats].weight)
+        }
+      }
+      debugger
+      return teamCumeTotals
+    }
+
 
     exports.playerWeightedStats = {};
     exports.calculatePlayerWeightedStats = function (teamStatsNorm, statWeights) {
       var totalValue = 0;
       var weightedStat;
-      var playerStarValue;
+      var playerCume;
+      var teamTotals = exports.getTeamCumeTotals(teamStatsNorm, statWeights)
 
       for (var team in teamStatsNorm){
         exports.playerWeightedStats[team] = {};
         for (var player in teamStatsNorm[team]){
-          exports.playerWeightedStats[team][player] = [];
+          exports.playerWeightedStats[team][player] = [];;
           var topFiveStats = exports.playerWeightedStats[team][player];
           for (var stat in teamStatsNorm[team][player]){
             weightedStat = teamStatsNorm[team][player][stat]*statWeights[stat].weight;
             if(topFiveStats.length === 0){
-              topFiveStats.push({'statName': stat, 'stat': weightedStat});
+              topFiveStats.push({'statName': stat, 'stat': 100*weightedStat/teamTotals[team]});
             } else {
               for (var i = 0 ; i < topFiveStats.length; i++){
                 if(Math.abs(weightedStat) > Math.abs(topFiveStats[i].stat)*statWeights[stat].weight){
-                  topFiveStats.splice(i, 0, {'statName': stat, 'stat': weightedStat});
+                  topFiveStats.splice(i, 0, {'statName': stat, 'stat': 100*weightedStat/teamTotals[team]});
                   if(topFiveStats.length > 5){
                     topFiveStats.shift();
                   }
