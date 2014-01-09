@@ -4,6 +4,7 @@ angular.module('mean.chart')
     $scope.teams = Stats.teams;
     $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
     $scope.playerWeightedStats = Stats.playerWeightedStats;
+    $scope.calculatePlayerWeightedStats = Stats.calculatePlayerWeightedStats;  
     $scope.changeSliders = Stats.changeSliders;
     $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
@@ -22,7 +23,7 @@ angular.module('mean.chart')
       }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.stats, $scope.nestedSliders);
       $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats);
-      $scope.playerWeightedStats($scope.teamStatsNorm, $scope.stats);
+      $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats);
       $scope.updateRho();
     });
 
@@ -33,60 +34,17 @@ angular.module('mean.chart')
       $scope.rhoVal = $scope.spearman.rho($scope.teams);
     }
 
-    $scope.players = [
-      { playerName: "Lebron James",
-        topFiveStats: [
-          { statName: "Stat #1", statVal: 0.777 },
-          { statName: "Stat #2", statVal: 0.555 },
-          { statName: "Stat #3", statVal: 0.777 },
-          { statName: "Stat #4", statVal: 0.333 },
-          { statName: "Stat #5", statVal: 0.777 }
-        ]
-      },
-      { playerName: "Dwayne Wade",
-        topFiveStats: [
-          { statName: "Stat #1", statVal: 0.777 },
-          { statName: "Stat #2", statVal: 0.555 },
-          { statName: "Stat #3", statVal: 0.777 },
-          { statName: "Stat #4", statVal: 0.333 },
-          { statName: "Stat #5", statVal: 0.777 }
-        ]
-      },
-      { playerName: "Kobe Bryant",
-        topFiveStats: [
-          { statName: "Stat #1", statVal: 0.777 },
-          { statName: "Stat #2", statVal: 0.555 },
-          { statName: "Stat #3", statVal: 0.777 },
-          { statName: "Stat #4", statVal: 0.333 },
-          { statName: "Stat #5", statVal: 0.777 }
-        ]
-      },
-      { playerName: "Stephen Curry",
-        topFiveStats: [
-          { statName: "Stat #1", statVal: 0.777 },
-          { statName: "Stat #2", statVal: 0.555 },
-          { statName: "Stat #3", statVal: 0.777 },
-          { statName: "Stat #4", statVal: 0.333 },
-          { statName: "Stat #5", statVal: 0.777 }
-        ]
-      },
-      { playerName: "Andrew Bogut",
-        topFiveStats: [
-          { statName: "Stat #1", statVal: 0.777 },
-          { statName: "Stat #2", statVal: 0.555 },
-          { statName: "Stat #3", statVal: 0.777 },
-          { statName: "Stat #4", statVal: 0.333 },
-          { statName: "Stat #5", statVal: 0.777 }
-        ]
-      },
-    ];
+    // $scope.getTeam = function(team) {
+    //   return playerWeightedStats[team];
+    // }
+      
 
     $scope.makeHeadShotUrl = function(name) {
       var url = "http://i.cdn.turner.com/nba/nba/.element/img/2.0/sect/statscube/players/large/";
       var name_parts = name.split(" ");
       var new_name = name_parts.join("_");
       
-      return url + new_name.toLowerCase();
+      return url + new_name.toLowerCase() + '.png';
     };
    
 

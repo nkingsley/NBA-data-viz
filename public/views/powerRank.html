@@ -17,17 +17,17 @@
       <tr ng-repeat-end>
         <td colspan="3" class="super-slim">
           <div collapse="isCollapsed">
-            <table class="player-details" ng-repeat="player in players">
+            <table class="player-details" ng-repeat="(key, player) in playerWeightedStats[team.abbreviation]">
               <tr>
-                <td class="player-head-shot"><img ng-src="makeHeadShotUrl(player.playerName)"></td>
+                <td class="player-head-shot"><img ng-src="{{makeHeadShotUrl(key)}}"></td>
                 <td>
-                  <h4>{{player.playerName}}</h4>
+                  <h4>{{key}}</h4>
                   <table class="player-stats">
                     <tr class="player-stats-header">
-                      <th ng-repeat="stat in player.topFiveStats">{{stat.statName}}</th>
+                      <th ng-repeat="stat in player">{{stat.statName}}</th>
                     </tr>
                     <tr>
-                      <td ng-repeat="stat in player.topFiveStats">{{stat.statVal}}</td>
+                      <td ng-repeat="stat in player">{{stat.stat | number:3}}</td>
                     </tr>
                   </table>
                 </td>
@@ -42,7 +42,8 @@
     <div class="slider-shell" ng-repeat="(groupName, group) in nestedSliders">
       <div class="top-slider">
         <label><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
-        <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculateAllTeamStarVals(teamStatsNorm,teams,stats);" min="0" max="5" step="0.5" ng-model="group.main"/>
+        <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculateAllTeamStarVals(teamStatsNorm,teams,stats);
+        calculatePlayerWeightedStats(teamStatsNorm, stats)" min="0" max="10" step="0.5" ng-model="group.main"/>
         <span class="weight badge badge-info">{{group.main}}</span>
       </div>
       <div class="nested-sliders-shell" collapse="isCollapsed">
@@ -51,7 +52,7 @@
         <!-- <ul ng-show = "group.show"> -->
           <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
             <label>{{statName}}</label>
-            <input ng-model="statNum.weight" type="range" min="0" max="5" step="0.5" ng-change="calculateAllTeamStarVals(teamStatsNorm,teams,stats)"/>
+            <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-change="calculateAllTeamStarVals(teamStatsNorm,teams,stats)"/>
             <span class="weight badge badge-info">{{statNum.weight}}</span>
           </li>
         </ul>
