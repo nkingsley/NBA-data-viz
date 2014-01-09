@@ -92,40 +92,42 @@ body {
 .star-val {
   color: #777;
 }
+.team {
+  background-color: #fff;
+}
 .table td.super-slim {
   padding: 0;
+}
+.player-badge-shell {
+  margin-top: 10px;
+  margin-bottom: 0;
+  cursor: pointer;
 }
 .team-badge {
   width: 50px;
   height: 50px;
 }
+.player-details {
+  width: 838px;
+  border-bottom: 1px solid #ccc;
+}
 .player-head-shot {
-  width: 117px;
+  width: 103px;
 }
 .player-head-shot img {
-  width: 103px;
+  width: 128px;
   height: 103px;
 }
-/*.player-stats {
-  width: 720px;
-  height: 579px;
-  float: left;
-  border-left: 1px solid #ccc;
-  padding: 10px;
+.player-stats {
+  border: 1px solid #ccc;
+  padding: 8px;
+  width: 699px;
+  table-layout:fixed;
 }
-*/
-
-.players {
-  list-style: none;
-  margin: 0;
+.player-stats-header {
+  border: 1px solid #ccc;
+  background-color: #f3f3f3;
+  font-size: 12px;
 }
 
-.players li {
-  padding: 5px;
-  display: inline-block;
-  width: 170px;
-  background-color: #f5f5f5;
-  margin-bottom: 5px;
-  margin-right: 5px;
-}
 

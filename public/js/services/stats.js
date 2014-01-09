@@ -407,28 +407,27 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
       return teamCumeTotals
     }
 
-    exports.playerWeightedStats = function (teamStatsNorm, statWeights, teamCumeTotals) {
-      var teamTotals = exports.getTeamCumeTotals(teamStatsNorm, statWeights)
-      var playerWeightedStatsObj = {};
+
+    exports.playerWeightedStats = {};
+    exports.calculatePlayerWeightedStats = function (teamStatsNorm, statWeights) {
+      var totalValue = 0;
       var weightedStat;
       var playerCume;
-      var cume
+      var teamTotals = exports.getTeamCumeTotals(teamStatsNorm, statWeights)
 
       for (var team in teamStatsNorm){
-        playerWeightedStatsObj[team] = {};
+        exports.playerWeightedStats[team] = {};
         for (var player in teamStatsNorm[team]){
-          playerWeightedStatsObj[team][player] = {total: 0, topFiveStats: []};
-          var topFiveStats = playerWeightedStatsObj[team][player].topFiveStats;
-          var cume = playerWeightedStatsObj[team][player].total
+          exports.playerWeightedStats[team][player] = [];;
+          var topFiveStats = exports.playerWeightedStats[team][player];
           for (var stat in teamStatsNorm[team][player]){
             weightedStat = teamStatsNorm[team][player][stat]*statWeights[stat].weight;
-            cume += Math.abs(weightedStat)
             if(topFiveStats.length === 0){
-              topFiveStats.push({'statName': stat, 'stat': 100*weightedStat/teamTotals[team]+"%"});
+              topFiveStats.push({'statName': stat, 'stat': 100*weightedStat/teamTotals[team]});
             } else {
               for (var i = 0 ; i < topFiveStats.length; i++){
                 if(Math.abs(weightedStat) > Math.abs(topFiveStats[i].stat)*statWeights[stat].weight){
-                  topFiveStats.splice(i, 0, {'statName': stat, 'stat': 100*weightedStat/teamTotals[team] + "%"});
+                  topFiveStats.splice(i, 0, {'statName': stat, 'stat': 100*weightedStat/teamTotals[team]});
                   if(topFiveStats.length > 5){
                     topFiveStats.shift();
                   }
@@ -443,9 +442,41 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
           }
         }
       }
-      console.log(playerWeightedStatsObj)
-      return playerWeightedStatsObj;
 
+      // playerWeightedStatsObj = {};
+      // var totalValue = 0;
+      // var weightedStat;
+      // var playerStarValue;
+
+      // for (var team in teamStatsNorm){
+      //   playerWeightedStatsObj[team] = {};
+      //   for (var player in teamStatsNorm[team]){
+      //     playerWeightedStatsObj[team][player] = [];
+      //     var topFiveStats = playerWeightedStatsObj[team][player];
+      //     for (var stat in teamStatsNorm[team][player]){
+      //       weightedStat = teamStatsNorm[team][player][stat]*statWeights[stat].weight;
+      //       if(topFiveStats.length === 0){
+      //         topFiveStats.push({'statName': stat, 'stat': weightedStat});
+      //       } else {
+      //         for (var i = 0 ; i < topFiveStats.length; i++){
+      //           if(Math.abs(weightedStat) > Math.abs(topFiveStats[i].stat)*statWeights[stat].weight){
+      //             topFiveStats.splice(i, 0, {'statName': stat, 'stat': weightedStat});
+      //             if(topFiveStats.length > 5){
+      //               topFiveStats.shift();
+      //             }
+      //             break;
+      //           }  
+      //           if(i === topFiveStats.length-1 && topFiveStats.length < 5){
+      //             topFiveStats.push({'statName': stat, 'stat': weightedStat})
+      //             break;
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
+      console.log("calculatePlayerWeightedStats: ", exports.playerWeightedStats);
+      // return playerWeightedStats;
     };
 
     exports.nestedSliders = {

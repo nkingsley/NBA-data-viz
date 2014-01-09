@@ -4,6 +4,7 @@ angular.module('mean.chart')
     $scope.teams = Stats.teams;
     $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
     $scope.playerWeightedStats = Stats.playerWeightedStats;
+    $scope.calculatePlayerWeightedStats = Stats.calculatePlayerWeightedStats;  
     $scope.changeSliders = Stats.changeSliders;
     $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
@@ -22,7 +23,7 @@ angular.module('mean.chart')
       }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.stats, $scope.nestedSliders);
       $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats);
-      $scope.playerWeightedStats($scope.teamStatsNorm, $scope.stats);
+      $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats);
       $scope.updateRho();
     });
 
@@ -32,6 +33,20 @@ angular.module('mean.chart')
     $scope.updateRho = function (){
       $scope.rhoVal = $scope.spearman.rho($scope.teams);
     }
+
+    // $scope.getTeam = function(team) {
+    //   return playerWeightedStats[team];
+    // }
+      
+
+    $scope.makeHeadShotUrl = function(name) {
+      var url = "http://i.cdn.turner.com/nba/nba/.element/img/2.0/sect/statscube/players/large/";
+      var name_parts = name.split(" ");
+      var new_name = name_parts.join("_");
+      
+      return url + new_name.toLowerCase() + '.png';
+    };
+   
 
     // $scope.findOptimal = function (){
     //   for (var shootingSliderPosition = 0; shootingSliderPosition <= 5; shootingSliderPosition++) {
