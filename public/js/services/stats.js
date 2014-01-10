@@ -1,7 +1,8 @@
 // service delivering stat information for any controller that requires it
-angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
+angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Global) {
  
   var exports = {};
+
   exports.teams = [
     {
       abbreviation:"ATL",
@@ -540,7 +541,6 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
       return teamCumeTotals
     }
 
-
     exports.playerWeightedStats = {};
     exports.calculatePlayerWeightedStats = function (teamStatsNorm, statWeights, statsByTeam) {
       var totalValue = 0;
@@ -575,40 +575,6 @@ angular.module('mean.chart').factory("Stats", ['Global',  function (Global) {
           }
         }
       }
-
-      // playerWeightedStatsObj = {};
-      // var totalValue = 0;
-      // var weightedStat;
-      // var playerStarValue;
-
-      // for (var team in teamStatsNorm){
-      //   playerWeightedStatsObj[team] = {};
-      //   for (var player in teamStatsNorm[team]){
-      //     playerWeightedStatsObj[team][player] = [];
-      //     var topFiveStats = playerWeightedStatsObj[team][player];
-      //     for (var stat in teamStatsNorm[team][player]){
-      //       weightedStat = teamStatsNorm[team][player][stat]*statWeights[stat].weight;
-      //       if(topFiveStats.length === 0){
-      //         topFiveStats.push({'statName': stat, 'stat': weightedStat});
-      //       } else {
-      //         for (var i = 0 ; i < topFiveStats.length; i++){
-      //           if(Math.abs(weightedStat) > Math.abs(topFiveStats[i].stat)*statWeights[stat].weight){
-      //             topFiveStats.splice(i, 0, {'statName': stat, 'stat': weightedStat});
-      //             if(topFiveStats.length > 5){
-      //               topFiveStats.shift();
-      //             }
-      //             break;
-      //           }  
-      //           if(i === topFiveStats.length-1 && topFiveStats.length < 5){
-      //             topFiveStats.push({'statName': stat, 'stat': weightedStat})
-      //             break;
-      //           }
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
-      // return playerWeightedStats;
     };
 
     exports.nestedSliders = {

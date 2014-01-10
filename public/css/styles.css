@@ -1,7 +1,7 @@
 body {
   font: 14px sans-serif
   color: #ccc;
-  background-color: #fcfcfc;
+  background-color: #f3f3f3;
 }
 .container {
   width: 1170px;
@@ -20,9 +20,13 @@ body {
   float: left;
   background-color: #fff;
   width: 840px;
+  margin-bottom: 20px;
 }
 .btn-container {
   margin: 10px 0;
+}
+.btn-container .chart-select {
+  margin-left: 300px;
 }
 
 .axis path, .axis line {
@@ -56,6 +60,7 @@ body {
 .slider-container {
   float: left;
   margin-left: 14px;
+  margin-top: 39px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33)
 }
 .slider-shell {
@@ -77,6 +82,9 @@ body {
   padding: 8px 8px 8px 16px;
   list-style:none;
 }
+.nested-sliders label {
+  font-size: 12px;
+}
 .badge {
   border-radius: 6px;
 }
@@ -86,6 +94,13 @@ body {
 
 /* Power Rank Table Styles
  * ==========================================================================*/
+.teams {
+  margin-bottom: 0;
+  border-radius: 2px;
+}
+.teams-header {
+   background-color: #eee;
+}
 .rank {
   font-weight: bold;
 }
@@ -95,6 +110,26 @@ body {
 .team {
   background-color: #fff;
 }
+
+/* table row animation styles */
+.team.ng-enter,
+.team.ng-move,
+.team.ng-leave {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
+}
+
+.team.ng-enter,
+.team.ng-move,
+.team.ng-leave.ng-leave-active {
+  opacity:0;
+}
+.team.ng-leave,
+.team.ng-move,
+.team.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
 .table td.super-slim {
   padding: 0;
 }
@@ -112,22 +147,29 @@ body {
   border-bottom: 1px solid #ccc;
 }
 .player-head-shot {
-  width: 103px;
+  width: 128px;
 }
 .player-head-shot img {
   width: 128px;
   height: 103px;
 }
+.player-stats-container {
+  background-color: #fafafa;
+}
 .player-stats {
   border: 1px solid #ccc;
   padding: 8px;
-  width: 699px;
+  width: 674px;
   table-layout:fixed;
+  background-color: #fff;
 }
 .player-stats-header {
   border: 1px solid #ccc;
   background-color: #f3f3f3;
   font-size: 12px;
 }
+
+
+
 
 

@@ -1,8 +1,9 @@
 //Global service for global variables
-angular.module('mean.chart').factory("Global", ['$q', '$http',  function($q, $http) {
+angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $http) {
   var _this = this;
   var statsObj = {};
   var d = $q.defer();
+
   $http.get('/teams').success(function(data){
     var team, player, minutes;
     statsObj.maxMinRangeObj = {}; // to normalize
