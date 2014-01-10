@@ -31,12 +31,12 @@ There are two ways to visualize:
 * <strong>Platform</strong> - [Node.js](http://www.nodejs.org/)
 * <strong>Server</strong> - [Express](http://www.expressjs.com/‎)
 * <strong>Persistence</strong> - [MongoDB](http://www.mongodb.org/)
-* <strong>ORM</strong> - [Mongoose](http://www.mongoosejs.com/)
+* <strong>ODM</strong> - [Mongoose](http://www.mongoosejs.com/)
 
 ### Developed by
-* [Santiago Archila](https://github.com/sarchila)
-* [Noah Cason-Zesiger](https://github.com/noahjcz)
 * [Kamla Kasichainula](https://github.com/kamalama)
+* [Noah Cason-Zesiger](https://github.com/noahjcz)
+* [Santiago Archila](https://github.com/sarchila)
 * [Wayne Montague](https://github.com/stateoflux)
 
 ### Huge thanks
