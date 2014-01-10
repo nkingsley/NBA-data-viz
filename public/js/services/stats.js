@@ -479,34 +479,35 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
 
     exports.playerWeightedStats = {};
 
-    exports.calculatePlayerWeightedStats = function (teamStatsNorm, statWeights, statsByTeam) {
+    exports.calculatePlayerWeightedStats = function (teamStatsNorm, statWeights, statsByTeam, openTeam) {
       var totalValue = 0;
       var weightedStat;
       var playerCume;
       var teamTotals = exports.getTeamCumeTotals(statsByTeam, statWeights)
 
-      for (var team in teamStatsNorm){
-        exports.playerWeightedStats[team] = {};
-        for (var player in teamStatsNorm[team]){
-          exports.playerWeightedStats[team][player] = [];;
-          var topFiveStats = exports.playerWeightedStats[team][player];
-          for (var stat in teamStatsNorm[team][player]){
-            weightedStat = teamStatsNorm[team][player][stat]*statWeights[stat].weight;
-            if(topFiveStats.length === 0){
-              topFiveStats.push({'statName': stat, 'stat': 100*weightedStat/teamTotals[team]});
-            } else {
-              for (var i = 0 ; i < topFiveStats.length; i++){
-                if(Math.abs(weightedStat) > Math.abs(topFiveStats[i].stat)*statWeights[stat].weight){
-                  topFiveStats.splice(i, 0, {'statName': stat, 'stat': 100*weightedStat/teamTotals[team]});
-                  if(topFiveStats.length > 5){
-                    topFiveStats.shift();
-                  }
-                  break;
-                }  
-                if(i === topFiveStats.length-1 && topFiveStats.length < 5){
-                  topFiveStats.push({'statName': stat, 'stat': weightedStat})
-                  break;
+      if (!openTeam) return;
+      
+      var team = teamStatsNorm[openTeam];
+      exports.playerWeightedStats[openTeam] = {};
+      for (var player in team){
+        exports.playerWeightedStats[openTeam][player] = [];;
+        var topFiveStats = exports.playerWeightedStats[openTeam][player];
+        for (var stat in team[player]){
+          weightedStat = team[player][stat]*statWeights[stat].weight;
+          if(topFiveStats.length === 0){
+            topFiveStats.push({'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]});
+          } else {
+            for (var i = 0 ; i < topFiveStats.length; i++){
+              if(Math.abs(weightedStat) > Math.abs(topFiveStats[i].stat)*statWeights[stat].weight){
+                topFiveStats.splice(i, 0, {'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]});
+                if(topFiveStats.length > 5){
+                  topFiveStats.shift();
                 }
+                break;
+              }  
+              if(i === topFiveStats.length-1 && topFiveStats.length < 5){
+                topFiveStats.push({'statName': stat, 'stat': weightedStat})
+                break;
               }
             }
           }
