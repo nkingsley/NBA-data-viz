@@ -1,5 +1,5 @@
 module.exports = function(app, passport, auth) {
-    //User Routes
+    // User Routes
     var users = require('../app/controllers/users');
     app.get('/signin', users.signin);
     app.get('/signup', users.signup);
@@ -15,7 +15,7 @@ module.exports = function(app, passport, auth) {
         failureFlash: true
     }), users.session);
 
-    //Setting the facebook oauth routes
+    // Setting the facebook oauth routes
     app.get('/auth/facebook', passport.authenticate('facebook', {
         scope: ['email', 'user_about_me'],
         failureRedirect: '/signin'
@@ -60,12 +60,12 @@ module.exports = function(app, passport, auth) {
     app.param('userId', users.user);
 
     //Article Routes
-    var articles = require('../app/controllers/articles');
-    app.get('/articles', articles.all);
-    app.post('/articles', auth.requiresLogin, articles.create);
-    app.get('/articles/:articleId', articles.show);
-    app.put('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.update);
-    app.del('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy);
+    // var articles = require('../app/controllers/articles');
+    // app.get('/articles', articles.all);
+    // app.post('/articles', auth.requiresLogin, articles.create);
+    // app.get('/articles/:articleId', articles.show);
+    // app.put('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.update);
+    // app.del('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy);
 
     //NBA routes
     var players = require('../app/controllers/players');
@@ -73,7 +73,7 @@ module.exports = function(app, passport, auth) {
     app.get('/teams/:team', players.team);
     app.get('/teams', players.all);
     //Finish with setting up the articleId param
-    app.param('articleId', articles.article);
+    // app.param('articleId', articles.article);
 
     //Home route
     var index = require('../app/controllers/index');

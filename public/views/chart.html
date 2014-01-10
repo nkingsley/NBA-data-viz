@@ -8,14 +8,14 @@
         <div class="top-slider">
           <label><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
           <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculateAllTeamStarVals(teamStatsNorm,teams,stats);playerStars(teamStatsNorm, stats); updateRho();" min="0" max="10" step="0.5" ng-model="group.main"/>
-          <span class="weight badge">{{group.main}}</span>
+          <span class="weight badge badge-success">{{group.main}}</span>
         </div>
         <div class="nested-sliders-shell" collapse="isCollapsed">
           <ul class="nested-sliders">
             <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
               <label>{{statName}}</label>
               <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-change="calculateAllTeamStarVals(teamStatsNorm,teams,stats);playerStars(teamStatsNorm, stats); updateRho();"/>
-              <span class="weight badge">{{statNum.weight}}</span>
+              <span class="weight badge badge-info">{{statNum.weight}}</span>
             </li>
           </ul>
         </div>
