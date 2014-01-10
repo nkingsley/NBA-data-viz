@@ -4,7 +4,6 @@ angular.module('mean.chart')
     function ($scope, $http, Global, Stats, Spearman, promiseTracker) {
     var statsPromise = Global.stats;
     // var calPlayerWeightedStatsPromise = Stats.calWeightedPlayerStatsPromise;
-    
     $scope.options = {width: 840, height: 500};
     $scope.teams = Stats.teams;
     $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
@@ -14,6 +13,7 @@ angular.module('mean.chart')
     $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
+    $scope.stats = Stats.stats;
 
     statsPromise.then(function(data){
       appendHackReactorBadge();
@@ -22,16 +22,15 @@ angular.module('mean.chart')
       $scope.statsInfo = data.statsInfo;
       $scope.normStatsByStat = data.normStatsByStat;
       $scope.statsByTeam = data.statsByTeam;
-      $scope.stats = {};
       for (var statName in $scope.statsInfo){
         if(statName === 'GP' || statName === 'MIN'){
           continue;
         }
-        $scope.stats[statName] = {weight: 1, cat: $scope.statsInfo[statName].cat};
+        $scope.stats[statName] = $scope.stats[statName] || {weight: 5, cat: $scope.statsInfo[statName].cat};
       }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.stats, $scope.nestedSliders);
       $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats, $scope.statsByTeam);
-      $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats, $scope.statsByTeam);
+      // $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats, $scope.statsByTeam);
       $scope.updateRho();
     });
 
@@ -59,15 +58,22 @@ angular.module('mean.chart')
     // $scope.crunchingTracker.addPromise(calWeightedPlayerStatsPromise);
 
     // for collasping grouped sliders
-    // TODO: have $scope.isCollasped represent the state of all
+    // TODO: have $scope.isCollapsed represent the state of all
     // children collapse components
     $scope.allCollapsed = true;
-    $scope.openTeams = 0;
+    $scope.openTeam = null; // expanded team abbreviation
     $scope.isCollapsed = true;
 
-    $scope.setGlobalCollapseState = function (collapsed){
-      collapsed ? $scope.openTeams++ : $scope.openTeams--;
-      $scope.allCollapsed = ($scope.openTeams === 0) ? true : false;
+    $scope.collapseOther = function (team){
+      if ($scope.openTeam && $scope.openTeam !== team.abbreviation){
+        for (var i = 0; i < $scope.teams.length; i++) {
+          if ($scope.teams[i].abbreviation === $scope.openTeam) {
+            $scope.teams[i].isCollapsed = true;
+          }
+        }
+      }
+      team.isCollapsed = !team.isCollapsed;
+      $scope.openTeam = team.isCollapsed ? null : team.abbreviation;
     };
 
     $scope.updateRho = function (){
