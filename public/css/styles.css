@@ -1,7 +1,7 @@
 body {
   font: 14px sans-serif
   color: #ccc;
-  background-color: #fcfcfc;
+  background-color: #f3f3f3;
 }
 .container {
   width: 1170px;
@@ -20,6 +20,7 @@ body {
   float: left;
   background-color: #fff;
   width: 840px;
+  margin-bottom: 20px;
 }
 .btn-container {
   margin: 10px 0;
@@ -86,6 +87,10 @@ body {
 
 /* Power Rank Table Styles
  * ==========================================================================*/
+.teams {
+  margin-bottom: 0;
+  border-radius: 2px;
+}
 .rank {
   font-weight: bold;
 }
