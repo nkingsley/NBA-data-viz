@@ -1,4 +1,6 @@
 <div data-ng-controller="chartCtrl" >
+
+  All collapsed?  {{allCollapsed}}
 <div class="power-rank-container">
     <table class="teams table table-bordered" cg-busy="{tracker:'loadingTracker'}">
       <tr class="teams-header">
@@ -8,7 +10,7 @@
       <tr class="team" ng-repeat-start="team in teams | orderBy: '-starVal'">
         <td class="team-rank"><span class="rank">{{$index + 1}}</span> <span class="star-val">(Star Value: {{team.starVal | number:3}})</span>
         <p class="player-badge-shell">
-          <span class="badge badge-info" ng-click="isCollapsed = !isCollapsed">Players</span>
+          <span class="badge badge-info" ng-click="setGlobalCollapseState(isCollapsed); isCollapsed = !isCollapsed;">Players</span>
         </p>
         </td>
         <td class="team-badge"><img ng-src="img/nba_logos/{{team.logo_url}}"></td>
@@ -43,7 +45,7 @@
       <div class="top-slider">
         <label><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
         <input type = "range" ng-mouseup="changeSliders(nestedSliders,groupName);calculateAllTeamStarVals(teamStatsNorm,teams,stats);
-          calculatePlayerWeightedStats(teamStatsNorm, stats)" min="0" max="10" step="0.5" ng-model="group.main"/>
+          !allCollapsed && calculatePlayerWeightedStats(teamStatsNorm, stats);" min="0" max="10" step="0.5" ng-model="group.main"/>
         <span class="weight badge badge-success">{{group.main}}</span>
       </div>
       <div class="nested-sliders-shell" collapse="isCollapsed">
