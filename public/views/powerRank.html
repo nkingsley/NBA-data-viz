@@ -43,8 +43,8 @@
     <div class="slider-shell" ng-repeat="(groupName, group) in nestedSliders">
       <div class="top-slider">
         <label><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
-        <input type = "range" ng-mouseup="changeSliders(nestedSliders,groupName);calculateAllTeamStarVals(teamStatsNorm,teams,stats);
-          !allCollapsed && calculatePlayerWeightedStats(teamStatsNorm, stats);" min="0" max="10" step="0.5" ng-model="group.main"/>
+        <input type = "range" ng-mouseup="changeSliders(nestedSliders,groupName);calculateAllTeamStarVals(teamStatsNorm, teams, stats, statsByTeam);
+          !allCollapsed && calculatePlayerWeightedStats(teamStatsNorm, stats, statsByTeam);" min="0" max="10" step="0.5" ng-model="group.main"/>
         <span class="weight badge badge-success">{{group.main}}</span>
       </div>
       <div class="nested-sliders-shell" collapse="isCollapsed">
@@ -53,7 +53,7 @@
         <!-- <ul ng-show = "group.show"> -->
           <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
             <label>{{statName}}</label>
-            <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-mouseup="calculateAllTeamStarVals(teamStatsNorm,teams,stats)"/>
+            <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-mouseup="calculateAllTeamStarVals(teamStatsNorm, teams, stats, statsByTeam)"/>
             <span class="weight badge badge-info">{{statNum.weight}}</span>
           </li>
         </ul>

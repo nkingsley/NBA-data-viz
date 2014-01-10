@@ -307,95 +307,229 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       starVal: 0
     }];
 
-    exports.calculateAllTeamStarVals = function (teamStatsNorm, teams, statWeights){
-      var cumulativeTeamsStats = exports.cumulativeTeamsStats(teamStatsNorm);
-      var teamsMaxMin = exports.getStatMaxMin(cumulativeTeamsStats);
-      var teamsNormStats = exports.calculateTeamsNorm(cumulativeTeamsStats, teamsMaxMin);
+    exports.calculateAllTeamStarVals = function (teamStatsNorm, teams, statWeights, statsByTeam){
+      var cumulativeTeamsStats = exports.cumulativeTeamsStats(statsByTeam);
+      var teamsNormStats = exports.getNormalizedStats(cumulativeTeamsStats);
       for (var i = 0 ; i < teams.length ; i++){
         teams[i].starVal = exports.calculateTeamStar(teams[i].abbreviation, teamsNormStats, statWeights);
       }
     };
 
-    exports.cumulativeTeamsStats = function(teamsStatsNorm) {
-      var teamsCumeStats = {};
-      for (var team in teamsStatsNorm){
-        if(!teamsCumeStats[teamsStatsNorm[team]]){
-          teamsCumeStats[team] = {};
-        }
-        for (var player in teamsStatsNorm[team]){
-          for(var stat in teamsStatsNorm[team][player]){
-            if(!teamsCumeStats[team][stat]){
-              teamsCumeStats[team][stat] = teamsStatsNorm[team][player][stat];
-            } else {
-              teamsCumeStats[team][stat] += teamsStatsNorm[team][player][stat];
-            }
-          }
+    exports.cumulativeTeamsStats = function(statsByTeam){
+      var cumeTeamsStatsObj = {}
+      for (team in statsByTeam){
+        cumeTeamsStatsObj[team] = exports.teamCumeStats(statsByTeam[team])
+      }
+      return cumeTeamsStatsObj
+    }
+
+    exports.teamCumeStats = function(team) {
+      var teamCumeStatsObj = {};
+      for (stat in team){
+        teamCumeStatsObj[stat] = exports.statCume(team[stat]);
+      }
+      return teamCumeStatsObj
+    }
+
+    exports.statCume = function(stat){
+      statTotal = 0
+      for (player in stat) {
+        statTotal += stat[player];
+      }
+      return statTotal
+    }
+
+    exports.getNormalizedStats = function(stats){
+      var normalized = {}
+      for (entity in stats){
+        normalized[entity] = {}
+        for (stat in stats[entity]){
+          normalized[entity][stat] = exports.normalize(stat, stats[entity], stats)
+
         }
       }
-      return teamsCumeStats;
+      return normalized
     };
 
-    exports.getStatMaxMin = function(t){
-      var statsMaxMin = {};
-      for (var i in t){
-        for (var j in t[i]){
-          if (!statsMaxMin[j]) {
-            statsMaxMin[j] = {
-              'max': t[i][j],
-              'min': t[i][j],
-              'range': statsMaxMin.max-statsMaxMin.min
-            };
-          } else {
-            if(t[i][j] > statsMaxMin[j].max){
-              statsMaxMin[j].max = t[i][j];
-              statsMaxMin[j].range = statsMaxMin[j].max - statsMaxMin[j].min;
-            }
-            if(t[i][j] < statsMaxMin[j].min){
-              statsMaxMin[j].min = t[i][j];
-              statsMaxMin[j].range = statsMaxMin[j].max - statsMaxMin[j].min;
-            }
-          }
-        }
-      }
-      return statsMaxMin;
+    exports.normalize = function(stat, statsToNorm, statsToMaxMin){
+      var maxMinRange = exports.getMaxMinRange(statsToMaxMin, stat)
+      var normedStat
+      normedStat = 1-(maxMinRange.max - (statsToNorm[stat]))/maxMinRange.range;
+      return normedStat;
     };
 
-    exports.calculateTeamsNorm = function(cumulativeTeamsStats, teamsMaxMin){
-      var teamNorms = {};
-      for (var team in cumulativeTeamsStats){
-        //creates each team in teamNorms)
-        if(!teamNorms[team]){
-          teamNorms[team] = {};
-        }
-        for(var j in cumulativeTeamsStats[team]){ 
-          if (!teamNorms[team][j]){
-            teamNorms[team][j]= 0;
+    exports.getMaxMinRange = function(obj, stat){
+      for (var entity in obj){
+        if(!statMaxMinRange){
+          var statMaxMinRange = {
+            max: obj[entity][stat],
+            min: obj[entity][stat],
+            range: 0
           }
-          teamNorms[team][j] = 1-(teamsMaxMin[j].max - (cumulativeTeamsStats[team][j]))/teamsMaxMin[j].range;
+        }
+        if(obj[entity][stat] > statMaxMinRange.max){
+          statMaxMinRange.max = obj[entity][stat];
+        }
+        if(obj[entity][stat] < statMaxMinRange.min){
+          statMaxMinRange.min = obj[entity][stat];
         }
       }
-      return teamNorms;
+      statMaxMinRange.range = statMaxMinRange.max - statMaxMinRange.min;
+      return statMaxMinRange;
     };
-      
+
     exports.calculateTeamStar = function (team, normStats, statWeights) {
-      var star = 0;
-      var weightedStat = 0;
-      var totalValue = 0;
-      for (var statName in statWeights){
-        totalValue+=parseFloat(statWeights[statName].weight);
-      }
-      for (var stat in normStats[team]){
+
+      var star = 0
+      var weightedStats = exports.weight(normStats[team], statWeights)
+      var totalWeightValue = exports.calculateTotalStatWeights(statWeights)
+      var totalStat = 0
+      for (var stat in weightedStats){
         if(stat === 'MIN' || stat === 'GP'){
           continue;
         }
-        weightedStat += normStats[team][stat] * parseFloat(statWeights[stat].weight);
+        totalStat += weightedStats[stat]
       }
-      (totalValue === 0) ? star = 0 : star = weightedStat/totalValue;
+      star = totalStat/totalWeightValue
       return star;
     };
+
+    exports.weight = function(statsToWeight, statWeights){
+      var weightedStats = {}
+      var totalValue = exports.calculateTotalStatWeights(statWeights)
+      for (var stat in statsToWeight){
+        weightedStats[stat] = parseFloat(statWeights[stat].weight) * statsToWeight[stat];
+      }
+      return weightedStats
+    };
     
-    exports.getTeamCumeTotals = function(teamsStatsNorm, statWeights) {
-      var cumulativeTeamsStats = exports.cumulativeTeamsStats(teamsStatsNorm)
+    exports.calculateTotalStatWeights = function(statWeights){
+      var totalValue = 0
+      for (var statName in statWeights){
+        totalValue+=parseFloat(statWeights[statName].weight)
+      }
+      return totalValue
+    }
+
+
+    exports.ranks = function(statsToRank){
+      var ranked = [];
+      for (var stat in statsToRank){
+        if(ranked.length === 0){
+          ranked.push({statName: stat, stat: statsToRank[stat]});
+        } else {
+          for (var i = 0 ; i < ranked.length; i++){
+            if(statsToRank[stat] > ranked[i].stat){
+              ranked.splice(i, 0, {'statName': stat, 'stat': statsToRank[stat]});
+            }
+            if(i === ranked.length-1 && statsToRank[stat] < ranked[i].stat){
+              statsToRank.push({'statName': stat, 'stat': statsToRank[stat]});
+            }
+          }
+        }
+      }
+    };
+
+    
+
+
+
+
+
+    // exports.calculateAllTeamStarVals = function (teamStatsNorm, teams, statWeights){
+    //   console.log(statWeights)
+    //   var cumulativeTeamsStats = exports.cumulativeTeamsStats(teamStatsNorm);
+    //   var teamsMaxMin = exports.getStatMaxMin(cumulativeTeamsStats);
+    //   var teamsNormStats = exports.calculateTeamsNorm(cumulativeTeamsStats, teamsMaxMin);
+    //   for (var i = 0 ; i < teams.length ; i++){
+    //     teams[i].starVal = exports.calculateTeamStar(teams[i].abbreviation, teamsNormStats, statWeights);
+    //   }
+    // };
+
+    // exports.cumulativeTeamsStats = function(teamsStatsNorm) {
+    //   var teamsCumeStats = {};
+    //   for (var team in teamsStatsNorm){
+    //     if(!teamsCumeStats[teamsStatsNorm[team]]){
+    //       teamsCumeStats[team] = {};
+    //     }
+    //     for (var player in teamsStatsNorm[team]){
+    //       for(var stat in teamsStatsNorm[team][player]){
+    //         if(!teamsCumeStats[team][stat]){
+    //           teamsCumeStats[team][stat] = teamsStatsNorm[team][player][stat];
+    //         } else {
+    //           teamsCumeStats[team][stat] += teamsStatsNorm[team][player][stat];
+    //         }
+    //       }
+    //     }
+    //   }
+    //   debugger
+    //   console.log("teamsCumeStats: ", teamsCumeStats)
+    //   return teamsCumeStats;
+    // };
+
+    // exports.getStatMaxMin = function(t){
+    //   var statsMaxMin = {};
+    //   for (var i in t){
+    //     for (var j in t[i]){
+    //       if (!statsMaxMin[j]) {
+    //         statsMaxMin[j] = {
+    //           'max': t[i][j],
+    //           'min': t[i][j],
+    //           'range': statsMaxMin.max-statsMaxMin.min
+    //         };
+    //       } else {
+    //         if(t[i][j] > statsMaxMin[j].max){
+    //           statsMaxMin[j].max = t[i][j];
+    //           statsMaxMin[j].range = statsMaxMin[j].max - statsMaxMin[j].min;
+    //         }
+    //         if(t[i][j] < statsMaxMin[j].min){
+    //           statsMaxMin[j].min = t[i][j];
+    //           statsMaxMin[j].range = statsMaxMin[j].max - statsMaxMin[j].min;
+    //         }
+    //       }
+    //     }
+    //   }
+    //   return statsMaxMin;
+    // };
+
+    // exports.calculateTeamsNorm = function(cumulativeTeamsStats, teamsMaxMin){
+    //   var teamNorms = {};
+    //   for (var team in cumulativeTeamsStats){
+    //     //creates each team in teamNorms)
+    //     if(!teamNorms[team]){
+    //       teamNorms[team] = {};
+    //     }
+    //     for(var j in cumulativeTeamsStats[team]){ 
+    //       if (!teamNorms[team][j]){
+    //         teamNorms[team][j]= 0;
+    //       }
+    //       teamNorms[team][j] = 1-(teamsMaxMin[j].max - (cumulativeTeamsStats[team][j]))/teamsMaxMin[j].range;
+    //     }
+    //   }
+    //   return teamNorms;
+    // };
+      
+    // exports.calculateTeamStar = function (team, normStats, statWeights) {
+    //   var star = 0;
+    //   var weightedStat = 0;
+    //   var totalValue = 0;
+    //   for (var statName in statWeights){
+    //     totalValue+=parseFloat(statWeights[statName].weight);
+    //   }
+    //   for (var stat in normStats[team]){
+    //     if(stat === 'MIN' || stat === 'GP'){
+    //       continue;
+    //     }
+    //     weightedStat += normStats[team][stat] * parseFloat(statWeights[stat].weight);
+    //   }
+    //   (totalValue === 0) ? star = 0 : star = weightedStat/totalValue;
+    //   return star;
+    // };
+
+    
+    exports.getTeamCumeTotals = function(statsByTeam, statWeights) {
+      debugger
+      var cumulativeTeamsStats = exports.cumulativeTeamsStats(statsByTeam)
       var teamCumeTotals = {}
       for (var team in cumulativeTeamsStats){
         teamCumeTotals[team] = 0
@@ -408,11 +542,11 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
     }
 
     exports.playerWeightedStats = {};
-    exports.calculatePlayerWeightedStats = function (teamStatsNorm, statWeights) {
+    exports.calculatePlayerWeightedStats = function (teamStatsNorm, statWeights, statsByTeam) {
       var totalValue = 0;
       var weightedStat;
       var playerCume;
-      var teamTotals = exports.getTeamCumeTotals(teamStatsNorm, statWeights)
+      var teamTotals = exports.getTeamCumeTotals(statsByTeam, statWeights)
 
       for (var team in teamStatsNorm){
         exports.playerWeightedStats[team] = {};
@@ -441,7 +575,6 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
           }
         }
       }
-      // console.log("calculatePlayerWeightedStats: ", exports.playerWeightedStats);
     };
 
     exports.nestedSliders = {
@@ -468,7 +601,6 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
     };
 
     exports.assignNestedSliders = function (statWeights, nestedSliders){
-      // console.log("assignNestedSliders: ", statWeights);
       for (var statName in statWeights) {
         switch(statWeights[statName].cat) {
           case "POS"  : 
