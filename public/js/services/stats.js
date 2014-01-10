@@ -407,16 +407,12 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       return teamCumeTotals
     }
 
-
-    exports.calWeightedPlayerStatsPromise = null;
     exports.playerWeightedStats = {};
     exports.calculatePlayerWeightedStats = function (teamStatsNorm, statWeights) {
       var totalValue = 0;
       var weightedStat;
       var playerCume;
       var teamTotals = exports.getTeamCumeTotals(teamStatsNorm, statWeights)
-      d = $q.defer();
-      exports.calWeightedPlayerStatsPromise = d.promise;
 
       for (var team in teamStatsNorm){
         exports.playerWeightedStats[team] = {};
@@ -446,7 +442,6 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
         }
       }
       // console.log("calculatePlayerWeightedStats: ", exports.playerWeightedStats);
-      d.resolve();
     };
 
     exports.nestedSliders = {

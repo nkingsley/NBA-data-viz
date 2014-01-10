@@ -25,6 +25,9 @@ body {
 .btn-container {
   margin: 10px 0;
 }
+.btn-container .chart-select {
+  margin-left: 300px;
+}
 
 .axis path, .axis line {
   fill: none;
@@ -57,6 +60,7 @@ body {
 .slider-container {
   float: left;
   margin-left: 14px;
+  margin-top: 39px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33)
 }
 .slider-shell {
@@ -78,6 +82,9 @@ body {
   padding: 8px 8px 8px 16px;
   list-style:none;
 }
+.nested-sliders label {
+  font-size: 12px;
+}
 .badge {
   border-radius: 6px;
 }
@@ -90,6 +97,9 @@ body {
 .teams {
   margin-bottom: 0;
   border-radius: 2px;
+}
+.teams-header {
+   background-color: #eee;
 }
 .rank {
   font-weight: bold;
@@ -143,11 +153,15 @@ body {
   width: 128px;
   height: 103px;
 }
+.player-stats-container {
+  background-color: #fafafa;
+}
 .player-stats {
   border: 1px solid #ccc;
   padding: 8px;
   width: 674px;
   table-layout:fixed;
+  background-color: #fff;
 }
 .player-stats-header {
   border: 1px solid #ccc;
