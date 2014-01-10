@@ -1,5 +1,10 @@
 angular.module('mean.chart')
-  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', function ($scope, $http, Global, Stats, Spearman) {
+  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 
+    'promiseTracker', 
+    function ($scope, $http, Global, Stats, Spearman, promiseTracker) {
+    var statsPromise = Global.stats;
+    // var calPlayerWeightedStatsPromise = Stats.calWeightedPlayerStatsPromise;
+    
     $scope.options = {width: 840, height: 500};
     $scope.teams = Stats.teams;
     $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
@@ -10,7 +15,7 @@ angular.module('mean.chart')
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
 
-    Global.stats.then(function(data){
+    statsPromise.then(function(data){
       $scope.teamStats = data.teams;
       $scope.teamStatsNorm = data.teamsNorm;
       $scope.statsInfo = data.statsInfo;
@@ -27,29 +32,45 @@ angular.module('mean.chart')
       $scope.updateRho();
     });
 
+    // tracks the progress of the stats data fetch and processing
+    // so that we can display and hide a spinner to indicate to
+    // user that something is happening
+    $scope.loadingTracker = promiseTracker('loadingTracker');
+    $scope.loadingTracker.addPromise(statsPromise);
+
+    // tracks the progress of the playerWeightStats processing
+    // so that we can display and hide a spinner to indicate to
+    // user that something is happening
+    // $scope.crunchingTracker = promiseTracker('crunchingTracker');
+    // $scope.crunchingTracker.addPromise(calWeightedPlayerStatsPromise);
+
     // for collasping grouped sliders
+    // TODO: have $scope.isCollasped represent the state of all
+    // children collapse components
     $scope.isCollapsed = true;
 
     $scope.updateRho = function (){
       $scope.rhoVal = $scope.spearman.rho($scope.teams);
-    }
-
-    // $scope.getTeam = function(team) {
-    //   return playerWeightedStats[team];
-    // }
-      
+    };  
 
     $scope.makeHeadShotUrl = function(name, isCollapsed) {
       if(isCollapsed) { return ""; }
-      var removePeriods = function(str) {
-        return str.replace(/\./g,' ')
-      }
+
+      var removePunctuation = function(str) {
+        return str.replace(/[.']/g,'')
+      };
+
       var url = "http://i.cdn.turner.com/nba/nba/.element/img/2.0/sect/statscube/players/large/";
-      name = removePeriods(name);
-      var name_parts = name.split(" ");
-      var new_name = name_parts.join("_");
-      
-      return url + new_name.toLowerCase() + '.png';
+      var firstLast = null;
+      var formatted_name = null;
+
+      firstLast = name.split(" ");
+      for (var i = 0; i < firstLast.length; i++) {
+        firstLast[i] = removePunctuation(firstLast[i]);
+      }
+      formatted_name = firstLast.join("_");
+      return url + formatted_name.toLowerCase() + '.png';
+      console.log(_);
     };
    
 
