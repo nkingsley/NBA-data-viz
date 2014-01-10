@@ -28,7 +28,7 @@ angular.module('mean.chart')
       }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.stats, $scope.nestedSliders);
       $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats);
-      // $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats);
+      $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats);
       $scope.updateRho();
     });
 
