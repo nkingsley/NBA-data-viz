@@ -8,7 +8,7 @@ There are two ways to visualize:
 * The power ranking view allows you to see team rankings dynamically reorder as you adjust the sliders
 * The scatter plot view allows you to see how well your combination of stat weights can be used to predict team win percentage.  The [Spearman's rho](http://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient) metric is shown at the top as feedback.
 
-[Click here to start playing!](http://nbastar.herokuapp.com/ "NBAStatsViz")
+### [Click here to start playing!](http://nbastar.herokuapp.com/ "NBAStatsViz")
 
 ## Screenshots
 
