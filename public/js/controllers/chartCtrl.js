@@ -14,6 +14,8 @@ angular.module('mean.chart')
     $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
+    debugger
+    $scope.stats = Stats.stats;
 
     statsPromise.then(function(data){
       appendHackReactorBadge();
@@ -22,12 +24,13 @@ angular.module('mean.chart')
       $scope.statsInfo = data.statsInfo;
       $scope.normStatsByStat = data.normStatsByStat;
       $scope.statsByTeam = data.statsByTeam;
-      $scope.stats = {};
+      //$scope.stats = {};
       for (var statName in $scope.statsInfo){
+        debugger
         if(statName === 'GP' || statName === 'MIN'){
           continue;
         }
-        $scope.stats[statName] = {weight: 1, cat: $scope.statsInfo[statName].cat};
+        $scope.stats[statName] = $scope.stats[statName] || {weight: 1, cat: $scope.statsInfo[statName].cat};
       }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.stats, $scope.nestedSliders);
       $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats, $scope.statsByTeam);
@@ -62,10 +65,11 @@ angular.module('mean.chart')
     // TODO: have $scope.isCollasped represent the state of all
     // children collapse components
     $scope.allCollapsed = true;
-    $scope.openTeams = 0;
+    $scope.openTeam = null;
     $scope.isCollapsed = true;
 
-    $scope.setGlobalCollapseState = function (collapsed){
+    $scope.setGlobalCollapseState = function (team){
+      var collapsed = team.isCollapsed;
       collapsed ? $scope.openTeams++ : $scope.openTeams--;
       $scope.allCollapsed = ($scope.openTeams === 0) ? true : false;
     };
