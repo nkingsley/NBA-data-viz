@@ -16,6 +16,7 @@ angular.module('mean.chart')
     $scope.rhoVal = 0;
 
     statsPromise.then(function(data){
+      appendHackReactorBadge();
       $scope.teamStats = data.teams;
       $scope.teamStatsNorm = data.teamsNorm;
       $scope.statsInfo = data.statsInfo;
@@ -31,6 +32,17 @@ angular.module('mean.chart')
       $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats);
       $scope.updateRho();
     });
+
+    var appendHackReactorBadge = function (){
+      var img = document.createElement('img');
+      img.setAttribute('style', "position: fixed; top: 0; right: 0; border: 0;");
+      img.setAttribute('src',"http://i.imgur.com/x86kKmF.png");
+      img.setAttribute('alt',"Built at Hack Reactor");
+      var a = document.createElement('a');
+      a.setAttribute('href',"http://hackreactor.com");
+      a.appendChild(img);
+      document.body.appendChild(a);
+    }
 
     // tracks the progress of the stats data fetch and processing
     // so that we can display and hide a spinner to indicate to
