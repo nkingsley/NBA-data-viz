@@ -12,7 +12,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#000080",
       teamColor2: "#FF0000",
       teamColor3: "#C0C0C0",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"BOS",
@@ -22,7 +23,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#009E60",
       teamColor2: "#FFFFFF",
       teamColor3: "#000000",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"BKN",
@@ -32,7 +34,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#000000",
       teamColor2: "#FFFFFF",
       teamColor3: "#000000",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"CHA",
@@ -42,7 +45,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#002B5C",
       teamColor2: "#5191CD",
       teamColor3: "#F26531",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"CHI",
@@ -52,7 +56,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#D4001F",
       teamColor2: "#000000",
       teamColor3: "#FFFFFF",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"CLE",
@@ -62,7 +67,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#b3121d",
       teamColor2: "#FFD700",
       teamColor3: "#000080",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"DAL",
@@ -72,7 +78,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#0b60ad",
       teamColor2: "#072156",
       teamColor3: "#A9A9A9",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"DEN",
@@ -82,7 +89,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#4b90cd",
       teamColor2: "#fdb827",
       teamColor3: "#FFFFFF",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"DET",
@@ -92,7 +100,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#00519a",
       teamColor2: "#EB003C",
       teamColor3: "#FFFFFF",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"GSW",
@@ -102,7 +111,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#04529c",
       teamColor2: "#FFCC33",
       teamColor3: "#FFFFFF",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"HOU",
@@ -112,7 +122,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#CE1138",
       teamColor2: "#CCCCCC",
       teamColor3: "#000000",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"IND",
@@ -122,7 +133,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#092c57",
       teamColor2: "#ffc322",
       teamColor3: "#FFFFFF",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"LAC",
@@ -132,7 +144,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#EE2944",
       teamColor2: "#146AA2",
       teamColor3: "#FFFFFF",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"LAL",
@@ -142,7 +155,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#4A2583",
       teamColor2: "#F5AF1B",
       teamColor3: "#FFFFFF",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"MEM",
@@ -152,7 +166,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#001F70",
       teamColor2: "#7399C6",
       teamColor3: "#BED4E9",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"MIA",
@@ -162,7 +177,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#1E3344",
       teamColor2: "#B62630",
       teamColor3: "#FFFFFF",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"MIL",
@@ -173,7 +189,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor2: "#E32636",
       teamColor3: "#C0C0C0",
     
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"MIN",
@@ -183,7 +200,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#0F4D92",
       teamColor2: "#8c92ac",
       teamColor3: "#50c878",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"NOP",
@@ -194,7 +212,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#072248",
       teamColor2: "#A1854D",
       teamColor3: "#C72E35",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"NYK",
@@ -204,7 +223,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#0953a0",
       teamColor2: "#FF7518",
       teamColor3: "#C0C0C0",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"OKC",
@@ -214,7 +234,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#007DC3",
       teamColor2: "#F05133",
       teamColor3: "#FDBB30",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"ORL",
@@ -224,7 +245,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#0047AB",
       teamColor2: "#000000",
       teamColor3: "#708090",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"PHI",
@@ -234,7 +256,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#D0103A",
       teamColor2: "#0046AD",
       teamColor3: "#FFFFFF",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"PHX",
@@ -244,7 +267,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#FF8800",
       teamColor2: "#423189",
       teamColor3: "#000000",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"POR",
@@ -254,7 +278,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#F0163A",
       teamColor2: "#B6BFBF",
       teamColor3: "#000000",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"SAC",
@@ -264,7 +289,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#753BBD",
       teamColor2: "#000000",
       teamColor3: "#8A8D8F",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"SAS",
@@ -274,7 +300,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#000000",
       teamColor2: "#BEC8C9",
       teamColor3: "#FFFFFF",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"TOR",
@@ -284,7 +311,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#B31B1B",
       teamColor2: "#000000",
       teamColor3: "#708090",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"UTA",
@@ -294,7 +322,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#00275D",
       teamColor2: "#FF9100",
       teamColor3: "#0D4006",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     },
     {
       abbreviation:"WAS",
@@ -304,7 +333,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       teamColor1: "#C60C30",
       teamColor2: "#FFFFFF",
       teamColor3: "#002244",
-      starVal: 0
+      starVal: 0,
+      isCollapsed: true
     }];
 
     exports.calculateAllTeamStarVals = function (teamStatsNorm, teams, statWeights){
@@ -409,6 +439,7 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
 
     exports.playerWeightedStats = {};
     exports.calculatePlayerWeightedStats = function (teamStatsNorm, statWeights) {
+      console.log("TEAMSTATSNORM ====>",teamStatsNorm);
       var totalValue = 0;
       var weightedStat;
       var playerCume;
