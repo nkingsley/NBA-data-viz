@@ -95,6 +95,26 @@ body {
 .team {
   background-color: #fff;
 }
+
+/* table row animation styles */
+.team.ng-enter,
+.team.ng-move,
+.team.ng-leave {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
+}
+
+.team.ng-enter,
+.team.ng-move,
+.team.ng-leave.ng-leave-active {
+  opacity:0;
+}
+.team.ng-leave,
+.team.ng-move,
+.team.ng-enter.ng-enter-active {
+  opacity:1;
+}
+
 .table td.super-slim {
   padding: 0;
 }
@@ -129,5 +149,8 @@ body {
   background-color: #f3f3f3;
   font-size: 12px;
 }
+
+
+
 
 

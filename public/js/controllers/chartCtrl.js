@@ -45,6 +45,8 @@ angular.module('mean.chart')
     // $scope.crunchingTracker.addPromise(calWeightedPlayerStatsPromise);
 
     // for collasping grouped sliders
+    // TODO: have $scope.isCollasped represent the state of all
+    // children collapse components
     $scope.isCollapsed = true;
 
     $scope.updateRho = function (){
