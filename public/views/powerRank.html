@@ -1,5 +1,6 @@
 <div data-ng-controller="chartCtrl" >
 
+  All collapsed?  {{allCollapsed}}
 <div class="power-rank-container">
     <table class="teams table table-bordered" cg-busy="{tracker:'loadingTracker'}">
       <tr class="teams-header">
@@ -53,7 +54,7 @@
         <!-- <ul ng-show = "group.show"> -->
           <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
             <label>{{statName}}</label>
-            <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-mouseup="expression"="calculateAllTeamStarVals(teamStatsNorm,teams,stats)"/>
+            <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-mouseup="calculateAllTeamStarVals(teamStatsNorm,teams,stats)"/>
             <span class="weight badge badge-info">{{statNum.weight}}</span>
           </li>
         </ul>
