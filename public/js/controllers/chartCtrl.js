@@ -14,6 +14,8 @@ angular.module('mean.chart')
       $scope.teamStats = data.teams;
       $scope.teamStatsNorm = data.teamsNorm;
       $scope.statsInfo = data.statsInfo;
+      $scope.normStatsByStat = data.normStatsByStat;
+      $scope.statsByTeam = data.statsByTeam;
       $scope.stats = {};
       for (var statName in $scope.statsInfo){
         if(statName === 'GP' || statName === 'MIN'){
@@ -22,8 +24,8 @@ angular.module('mean.chart')
         $scope.stats[statName] = {weight: 1, cat: $scope.statsInfo[statName].cat};
       }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.stats, $scope.nestedSliders);
-      $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats);
-      $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats);
+      $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats, $scope.statsByTeam);
+      $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats, $scope.statsByTeam);
       $scope.updateRho();
     });
 
