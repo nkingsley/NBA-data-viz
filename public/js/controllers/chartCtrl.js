@@ -1,5 +1,10 @@
 angular.module('mean.chart')
-  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', function ($scope, $http, Global, Stats, Spearman) {
+  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 
+    'promiseTracker', 
+    function ($scope, $http, Global, Stats, Spearman, promiseTracker) {
+    var statsPromise = Global.stats;
+    // var calPlayerWeightedStatsPromise = Stats.calWeightedPlayerStatsPromise;
+    
     $scope.options = {width: 840, height: 500};
     $scope.teams = Stats.teams;
     $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
@@ -10,7 +15,7 @@ angular.module('mean.chart')
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
 
-    Global.stats.then(function(data){
+    statsPromise.then(function(data){
       $scope.teamStats = data.teams;
       $scope.teamStatsNorm = data.teamsNorm;
       $scope.statsInfo = data.statsInfo;
@@ -26,6 +31,18 @@ angular.module('mean.chart')
       $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats);
       $scope.updateRho();
     });
+
+    // tracks the progress of the stats data fetch and processing
+    // so that we can display and hide a spinner to indicate to
+    // user that something is happening
+    $scope.loadingTracker = promiseTracker('loadingTracker');
+    $scope.loadingTracker.addPromise(statsPromise);
+
+    // tracks the progress of the playerWeightStats processing
+    // so that we can display and hide a spinner to indicate to
+    // user that something is happening
+    // $scope.crunchingTracker = promiseTracker('crunchingTracker');
+    // $scope.crunchingTracker.addPromise(calWeightedPlayerStatsPromise);
 
     // for collasping grouped sliders
     $scope.isCollapsed = true;
