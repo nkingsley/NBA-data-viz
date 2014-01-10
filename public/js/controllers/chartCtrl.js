@@ -13,22 +13,24 @@ angular.module('mean.chart')
     $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
+    $scope.stats = Stats.stats;
 
     statsPromise.then(function(data){
       appendHackReactorBadge();
       $scope.teamStats = data.teams;
       $scope.teamStatsNorm = data.teamsNorm;
       $scope.statsInfo = data.statsInfo;
-      $scope.stats = {};
+      $scope.normStatsByStat = data.normStatsByStat;
+      $scope.statsByTeam = data.statsByTeam;
       for (var statName in $scope.statsInfo){
         if(statName === 'GP' || statName === 'MIN'){
           continue;
         }
-        $scope.stats[statName] = {weight: 1, cat: $scope.statsInfo[statName].cat};
+        $scope.stats[statName] = $scope.stats[statName] || {weight: 5, cat: $scope.statsInfo[statName].cat};
       }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.stats, $scope.nestedSliders);
-      $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats);
-      $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats);
+      $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats, $scope.statsByTeam);
+      $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats, $scope.statsByTeam);
       $scope.updateRho();
     });
 
@@ -70,11 +72,7 @@ angular.module('mean.chart')
           }
         }
       }
-          // var prevOpenTeam = $scope.openTeam;
-          // $scope.openTeam = team.abbreviation;
-          // if (!prevOpenTeam) break;
       team.isCollapsed = !team.isCollapsed;
-
       $scope.openTeam = team.isCollapsed ? null : team.abbreviation;
     };
 
