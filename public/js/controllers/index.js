@@ -74,7 +74,6 @@ angular.module('mean.system').controller('statsController', ['$scope', '$http', 
     //     $scope.teamsObj[team][player] = playerStats;
     //   }
 
-    //   console.log($scope.teamsObj)
     //   return $scope.teamsObj;
     // });
 
