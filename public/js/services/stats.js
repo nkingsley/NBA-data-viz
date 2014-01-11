@@ -497,7 +497,6 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
             topFiveStats.push({'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]});
           } else {
             for (var i = 0 ; i < topFiveStats.length; i++){
-              debugger
               if(Math.abs(100*weightedStat/teamTotals[openTeam]) > Math.abs(topFiveStats[i].stat)){
                 topFiveStats.splice(i, 0, {'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]});
                 if(topFiveStats.length > 5){
@@ -515,8 +514,6 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       exports.playerWeightedStats[openTeam][player] = topFiveStats;;
       }
 
-      debugger
-      console.log(exports.playerWeightedStats)
     };
 
     exports.nestedSliders = {

@@ -68,7 +68,6 @@ d3.custom.scatterPlot = function module() {
           .classed('chart-group', true);
 
       }
-      console.log("container: ", container);
       svg.transition().duration(duration).attr({width: width, height: height});
       svg.select('.container-group')
         .attr({transform: 'translate(' + margin.left + ',' + margin.top + ')'});
@@ -99,9 +98,6 @@ d3.custom.scatterPlot = function module() {
         .attr("cy", function(d) { return y(1); })
         .style("fill", function(d) { return d.teamColor1; })
         .attr("opacity", 0.8);
-
-      console.log(dots);
-      console.log(svg);
 
       // execute transition when datum changes
       dots.transition()
