@@ -27,12 +27,12 @@ d3.custom.scatterPlot = function module() {
       var xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
-        .tickFormat(d3.format("0.3r"));
+        .tickFormat(d3.format("0.1r"));
 
       var yAxis = d3.svg.axis()
         .scale(y)
         .orient("left")
-        .tickFormat(d3.format("0.3r"));
+        .tickFormat(d3.format("0.1r"));
 
       var color = d3.scale.category20();
 
