@@ -490,29 +490,30 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       var team = teamStatsNorm[openTeam];
       exports.playerWeightedStats[openTeam] = {};
       for (var player in team){
-        exports.playerWeightedStats[openTeam][player] = [];;
-        var topFiveStats = exports.playerWeightedStats[openTeam][player];
+        var topFiveStats = [];
         for (var stat in team[player]){
           weightedStat = team[player][stat]*statWeights[stat].weight;
           if(topFiveStats.length === 0){
             topFiveStats.push({'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]});
           } else {
             for (var i = 0 ; i < topFiveStats.length; i++){
-              if(Math.abs(weightedStat) > Math.abs(topFiveStats[i].stat)*statWeights[stat].weight){
+              if(Math.abs(100*weightedStat/teamTotals[openTeam]) > Math.abs(topFiveStats[i].stat)){
                 topFiveStats.splice(i, 0, {'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]});
                 if(topFiveStats.length > 5){
-                  topFiveStats.shift();
+                  topFiveStats.pop();
                 }
                 break;
               }  
               if(i === topFiveStats.length-1 && topFiveStats.length < 5){
-                topFiveStats.push({'statName': stat, 'stat': weightedStat})
+                topFiveStats.push({'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]})
                 break;
               }
             }
           }
         }
+      exports.playerWeightedStats[openTeam][player] = topFiveStats;;
       }
+
     };
 
     exports.nestedSliders = {

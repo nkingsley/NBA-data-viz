@@ -69,6 +69,7 @@ d3.custom.scatterPlot = function module() {
 
       }
 
+
       svg.transition().duration(duration).attr({width: width, height: height});
       svg.select('.container-group')
         .attr({transform: 'translate(' + margin.left + ',' + margin.top + ')'});
