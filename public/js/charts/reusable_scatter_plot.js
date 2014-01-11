@@ -68,6 +68,8 @@ d3.custom.scatterPlot = function module() {
           .classed('chart-group', true);
 
       }
+
+
       svg.transition().duration(duration).attr({width: width, height: height});
       svg.select('.container-group')
         .attr({transform: 'translate(' + margin.left + ',' + margin.top + ')'});
@@ -143,9 +145,11 @@ d3.custom.scatterPlot = function module() {
         });
       };
 
-      dots
-        .on("mouseover", dotMouseOver)
-        .on("mouseout", fadeDotsIn);
+      // Commented out my fancy fade in/fade on mouseover since it was
+      // intermittant issues with the initial
+      // dots
+      //   .on("mouseover", dotMouseOver)
+      //   .on("mouseout", fadeDotsIn);
 
       // Team Labels
       // ======================================================================
@@ -161,9 +165,9 @@ d3.custom.scatterPlot = function module() {
         .style("fill", function(d) { return d.teamColor2; })
         .attr("text-anchor", "middle");
 
-      teamLabels.on("mouseover", function(d, i) {
-        dotMouseOver.call(dots[0][i]);
-      }).on("mouseout", fadeDotsIn);
+      // teamLabels.on("mouseover", function(d, i) {
+      //   dotMouseOver.call(dots[0][i]);
+      // }).on("mouseout", fadeDotsIn);
 
       // update label position on data change
       teamLabels.transition()

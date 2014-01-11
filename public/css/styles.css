@@ -46,8 +46,12 @@ body {
 .dot, .team-label {
   cursor: pointer;
 }
+.dot:hover {
+  opacity: 1;
+}
 .team-label {
   font-size: 8px;
+  pointer-events: none;
 }
 .diagonal {
   fill: none;
@@ -103,9 +107,11 @@ body {
 }
 .rank {
   font-weight: bold;
+  font-size: 18px;
 }
 .star-val {
   color: #777;
+  margin-left: 30px;
 }
 .team {
   background-color: #fff;

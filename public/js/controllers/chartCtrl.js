@@ -8,7 +8,7 @@ angular.module('mean.chart')
     $scope.teams = Stats.teams;
     $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
     $scope.playerWeightedStats = Stats.playerWeightedStats;
-    $scope.calculatePlayerWeightedStats = Stats.calculatePlayerWeightedStats;  
+    $scope.calculatePlayerWeightedStats = Stats.calculatePlayerWeightedStats;
     $scope.changeSliders = Stats.changeSliders;
     $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
@@ -43,7 +43,7 @@ angular.module('mean.chart')
       a.setAttribute('href',"http://hackreactor.com");
       a.appendChild(img);
       document.body.appendChild(a);
-    }
+    };
 
     // tracks the progress of the stats data fetch and processing
     // so that we can display and hide a spinner to indicate to
@@ -78,13 +78,13 @@ angular.module('mean.chart')
 
     $scope.updateRho = function (){
       $scope.rhoVal = $scope.spearman.rho($scope.teams);
-    };  
+    };
 
     $scope.makeHeadShotUrl = function(name, isCollapsed) {
       if(isCollapsed) { return ""; }
 
       var removePunctuation = function(str) {
-        return str.replace(/[.']/g,'')
+        return str.replace(/[.']/g,'');
       };
 
       var url = "http://i.cdn.turner.com/nba/nba/.element/img/2.0/sect/statscube/players/large/";
