@@ -10,8 +10,8 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
     statsObj.timeObj = {}; //total team playing times
     statsObj.teamsObj = {}; // stats organized by team, player, stat
     statsObj.teamsObjNorm = {}; //stats organized by team, player normalized by time played
-    statsObj.normStatsByStat = {}//stats organized by stat, then team then player
-    statsObj.normStatsByTeam = {}//stats organized by team, then stat then player
+    statsObj.normStatsByStat = {}; //stats organized by stat, then team then player
+    statsObj.normStatsByTeam = {}; //stats organized by team, then stat then player
 
 
     //following section gets the max/min/range for each stat across the league to calculate the normalized stat
@@ -27,11 +27,11 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
           'min': data[0][j]/data[0].NA_MIN_Total_NEU,
           'range': 0
         };
-        statsObj.normStatsByStat[statName] = {}
+        statsObj.normStatsByStat[statName] = {};
         for (var i = 1 ; i < data.length; i++){
           minutes = data[i].NA_MIN_Total_NEU;
           if(!statsObj.normStatsByStat[statName][data[i].Team]){
-            statsObj.normStatsByStat[statName][data[i].Team]= {}
+            statsObj.normStatsByStat[statName][data[i].Team] = {};
           }
 
           if (data[i][j]/minutes > statsObj.maxMinRangeObj[statName].max){
@@ -69,7 +69,7 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
         statsObj.teamsObjNorm[team] = {};
       }
       if(!statsObj.normStatsByTeam[team]){
-        statsObj.normStatsByTeam[team] = {}
+        statsObj.normStatsByTeam[team] = {};
       }
       if(!statsObj.normStatsByStat[statName][team]){
         statsObj.normStatsByStat[statName][team] = {};
@@ -88,15 +88,16 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
           var statName = j.slice(4, -4).replace(/_/g, ' ');
           var newKey = statName.replace(/_/g , ' ');
           if(!statsObj.normStatsByTeam[team][newKey]){
-            statsObj.normStatsByTeam[team][newKey] = {}
+            statsObj.normStatsByTeam[team][newKey] = {};
           }
           //calculates the % of a teams total time a player played
           var playerPctTime = minutes/statsObj.timeObj[playerStatsObj.Team];
           //turns the stat into a per-minute stat
           var perMinStat = playerStatsObj[j]/minutes;
+          var normalized = null;
           //Normalizes the per min stat based on the max at value 1, min at value 0, or max at -1, min at 0 if a neg stat, 
           if(statsObj.maxMinRangeObj[statName].imp === "POS"){
-            var normalized = 1 - ((statsObj.maxMinRangeObj[statName].max-(perMinStat))/statsObj.maxMinRangeObj[statName].range);
+            normalized = 1 - ((statsObj.maxMinRangeObj[statName].max-(perMinStat))/statsObj.maxMinRangeObj[statName].range);
           } else {
             normalized = -1*(1 - ((statsObj.maxMinRangeObj[statName].max-(perMinStat))/statsObj.maxMinRangeObj[statName].range));
           }
@@ -104,8 +105,8 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
           if(j !== 'NA_MIN_Total_NEU'){
             playerStatsNorm[newKey] = playerPctTime * normalized;
             playerStats[newKey] = playerStatsObj[j];
-            statsObj.normStatsByStat[statName][team][player] = playerPctTime * normalized
-            statsObj.normStatsByTeam[team][newKey][player] = playerPctTime * normalized
+            statsObj.normStatsByStat[statName][team][player] = playerPctTime * normalized;
+            statsObj.normStatsByTeam[team][newKey][player] = playerPctTime * normalized;
           }
         }
       }
