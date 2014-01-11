@@ -15,6 +15,6 @@
     "angular-animate": "~1.2.7"
   },
   "resolutions": {
-    "angular": "1.2.7"
+    "angular": "1.2.8"
   }
 }
