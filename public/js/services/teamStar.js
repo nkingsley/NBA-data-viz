@@ -1,9 +1,8 @@
-// service delivering stat information for any controller that requires it
-angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Global) {
- 
-  var exports = {};
+var exports = {};
 
-  exports.teams = [
+exports.teams = [];
+
+[
     {
       abbreviation:"ATL",
       franchise:"Atlanta Hawks",
@@ -337,99 +336,9 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       isCollapsed: true
     }];
 
-    exports.stats = {};
-  
-
-    exports.calculateAllTeamStarVals = function (teamStatsNorm, teams, statWeights, statsByTeam){
-      var cumulativeTeamsStats = exports.cumulativeTeamsStats(statsByTeam);
-      var teamsNormStats = exports.getNormalizedStats(cumulativeTeamsStats);
-      for (var i = 0 ; i < teams.length ; i++){
-        teams[i].starVal = exports.calculateTeamStar(teams[i].abbreviation, teamsNormStats, statWeights);
-      }
-    };
-
-    exports.cumulativeTeamsStats = function(statsByTeam){
-      var cumeTeamsStatsObj = {}
-      for (team in statsByTeam){
-        cumeTeamsStatsObj[team] = exports.teamCumeStats(statsByTeam[team])
-      }
-      return cumeTeamsStatsObj
-    }
-
-    exports.teamCumeStats = function(team) {
-      var teamCumeStatsObj = {};
-      for (stat in team){
-        teamCumeStatsObj[stat] = exports.statCume(team[stat]);
-      }
-      return teamCumeStatsObj
-    }
-
-    exports.statCume = function(stat){
-      statTotal = 0
-      for (player in stat) {
-        statTotal += stat[player];
-      }
-      return statTotal
-    }
-
-    exports.getNormalizedStats = function(stats){
-      var normalized = {}
-      for (entity in stats){
-        normalized[entity] = {};
-        for (stat in stats[entity]){
-          normalized[entity][stat] = exports.normalize(stat, stats[entity], stats)
-
-        }
-      }
-      return normalized
-    };
-
-    exports.normalize = function(stat, statsToNorm, statsToMaxMin){
-      var maxMinRange = exports.getMaxMinRange(statsToMaxMin, stat)
-      var normedStat
-      normedStat = 1-(maxMinRange.max - (statsToNorm[stat]))/maxMinRange.range;
-      return normedStat;
-    };
-
-    exports.getMaxMinRange = function(obj, stat){
-      for (var entity in obj){
-        if(!statMaxMinRange){
-          var statMaxMinRange = {
-            max: obj[entity][stat],
-            min: obj[entity][stat],
-            range: 0
-          }
-        }
-        if(obj[entity][stat] > statMaxMinRange.max){
-          statMaxMinRange.max = obj[entity][stat];
-        }
-        if(obj[entity][stat] < statMaxMinRange.min){
-          statMaxMinRange.min = obj[entity][stat];
-        }
-      }
-      statMaxMinRange.range = statMaxMinRange.max - statMaxMinRange.min;
-      return statMaxMinRange;
-    };
-
-    exports.calculateTeamStar = function (team, normStats, statWeights) {
-      var star = 0
-      var weightedStats = exports.weight(normStats[team], statWeights)
-      var totalWeightValue = exports.calculateTotalStatWeights(statWeights)
-      var totalStat = 0
-      for (var stat in weightedStats){
-        if(stat === 'MIN' || stat === 'GP'){
-          continue;
-        }
-        totalStat += weightedStats[stat]
-      }
-      star = totalStat/totalWeightValue
-      return star;
-    };
-
-    exports.weight = function(statsToWeight, statWeights){
-      var weightedStats = {};
-      debugger;
-      var totalValue = exports.calculateTotalStatWeights(statWeights);
+    exports.weight = function(teams, statWeights){
+      var weightedStats = {}
+      var totalValue = exports.calculateTotalStatWeights(statWeights)
       for (var stat in statsToWeight){
         weightedStats[stat] = parseFloat(statWeights[stat].weight) * statsToWeight[stat];
       }
@@ -439,104 +348,9 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
     exports.calculateTotalStatWeights = function(statWeights){
       var totalValue = 0
       for (var statName in statWeights){
-        totalValue+=parseFloat(statWeights[statName].weight);
+        totalValue+=parseFloat(statWeights[statName].weight)
       }
-      return totalValue;
-    }
-
-
-    exports.ranks = function(statsToRank){
-      var ranked = [];
-      for (var stat in statsToRank){
-        if(ranked.length === 0){
-          ranked.push({statName: stat, stat: statsToRank[stat]});
-        } else {
-          for (var i = 0 ; i < ranked.length; i++){
-            if(statsToRank[stat] > ranked[i].stat){
-              ranked.splice(i, 0, {'statName': stat, 'stat': statsToRank[stat]});
-            }
-            if(i === ranked.length-1 && statsToRank[stat] < ranked[i].stat){
-              statsToRank.push({'statName': stat, 'stat': statsToRank[stat]});
-            }
-          }
-        }
-      }
-    };
-
-    
-    exports.getTeamCumeTotals = function(statsByTeam, statWeights) {
-      var cumulativeTeamsStats = exports.cumulativeTeamsStats(statsByTeam)
-      var teamCumeTotals = {}
-      for (var team in cumulativeTeamsStats){
-        teamCumeTotals[team] = 0
-        for(var stats in cumulativeTeamsStats[team]){
-          
-          teamCumeTotals[team]+=(Math.abs(cumulativeTeamsStats[team][stats]))*(statWeights[stats].weight)
-        }
-      }
-      return teamCumeTotals
-    }
-
-    exports.playerWeightedStats = {};
-
-    exports.calculatePlayerWeightedStats = function (teamStatsNorm, statWeights, statsByTeam, openTeam) {
-      var totalValue = 0;
-      var weightedStat;
-      var playerCume;
-      var teamTotals = exports.getTeamCumeTotals(statsByTeam, statWeights)
-
-      if (!openTeam) return;
-      
-      var team = teamStatsNorm[openTeam];
-      exports.playerWeightedStats[openTeam] = {};
-      for (var player in team){
-        var topFiveStats = [];
-        for (var stat in team[player]){
-          weightedStat = team[player][stat]*statWeights[stat].weight;
-          if(topFiveStats.length === 0){
-            topFiveStats.push({'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]});
-          } else {
-            for (var i = 0 ; i < topFiveStats.length; i++){
-              if(Math.abs(100*weightedStat/teamTotals[openTeam]) > Math.abs(topFiveStats[i].stat)){
-                topFiveStats.splice(i, 0, {'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]});
-                if(topFiveStats.length > 5){
-                  topFiveStats.pop();
-                }
-                break;
-              }  
-              if(i === topFiveStats.length-1 && topFiveStats.length < 5){
-                topFiveStats.push({'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]})
-                break;
-              }
-            }
-          }
-        }
-      exports.playerWeightedStats[openTeam][player] = topFiveStats;;
-      }
-
-    };
-
-    exports.nestedSliders = {
-      Possession:{
-        main:5,
-        oldMain:5
-      },
-      Shooting:{
-        main:5,
-        oldMain:5
-      },
-      Defense:{
-        main:5,
-        oldMain:5
-      },
-      Rebounding:{
-        main:5,
-        oldMain:5
-      },
-      Athleticism:{
-        main:5,
-        oldMain:5
-      },
+      return totalValue
     };
 
     exports.assignNestedSliders = function (statWeights, nestedSliders){
@@ -581,6 +395,20 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       nest.oldMain = parseFloat(nest.main);
     };
 
-    return exports;
-  }]);
+  // mock teams object:
+  // teams: {"MIN": {"drives total": .350},
+  //                {"Points total": .500}},
+  //        {"SAS": {"drives total": .200},
+  //                {"points total": .600}}
+
+  exports.calculateTeamStar = function(teams, statWeights){
+    for (var team in teams){
+      team['starVal'] = 0;
+      for (var stat in team){
+        statStarVal = statWeights[stat] * team[stat];
+        team[starVal] += statStarVal;
+      }
+    }
+  };
+
 
