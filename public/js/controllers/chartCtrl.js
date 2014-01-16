@@ -1,17 +1,19 @@
 angular.module('mean.chart')
-  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 
-    'promiseTracker', 
-    function ($scope, $http, Global, Stats, Spearman, promiseTracker) {
+  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 'Teamstar',
+    'promiseTracker',
+    function ($scope, $http, Global, Stats, Spearman, Teamstar, promiseTracker) {
     var statsPromise = Global.stats;
     // var calPlayerWeightedStatsPromise = Stats.calWeightedPlayerStatsPromise;
     $scope.options = {width: 840, height: 500};
     $scope.teams = Stats.teams;
+    $scope.calculateTeamStarVals = Teamstar.calculateTeamStar;
     $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
     $scope.playerWeightedStats = Stats.playerWeightedStats;
     $scope.calculatePlayerWeightedStats = Stats.calculatePlayerWeightedStats;
     $scope.changeSliders = Stats.changeSliders;
     $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
+    debugger;
     $scope.rhoVal = 0;
     $scope.stats = Stats.stats;
 
@@ -77,6 +79,7 @@ angular.module('mean.chart')
     };
 
     $scope.updateRho = function (){
+      debugger;
       $scope.rhoVal = $scope.spearman.rho($scope.teams);
     };
 

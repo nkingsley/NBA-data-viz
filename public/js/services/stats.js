@@ -361,19 +361,19 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       for (stat in team){
         teamCumeStatsObj[stat] = exports.statCume(team[stat]);
       }
-      return teamCumeStatsObj
+      return teamCumeStatsObj;
     }
 
     exports.statCume = function(stat){
-      statTotal = 0
+      statTotal = 0;
       for (player in stat) {
         statTotal += stat[player];
       }
-      return statTotal
+      return statTotal;
     }
 
     exports.getNormalizedStats = function(stats){
-      var normalized = {}
+      var normalized = {};
       for (entity in stats){
         normalized[entity] = {};
         for (stat in stats[entity]){
@@ -381,7 +381,7 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
 
         }
       }
-      return normalized
+      return normalized;
     };
 
     exports.normalize = function(stat, statsToNorm, statsToMaxMin){
@@ -412,32 +412,31 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
     };
 
     exports.calculateTeamStar = function (team, normStats, statWeights) {
-      var star = 0
-      var weightedStats = exports.weight(normStats[team], statWeights)
-      var totalWeightValue = exports.calculateTotalStatWeights(statWeights)
-      var totalStat = 0
+      var star = 0;
+      var weightedStats = exports.weight(normStats[team], statWeights);
+      var totalWeightValue = exports.calculateTotalStatWeights(statWeights);
+      var totalStat = 0;
       for (var stat in weightedStats){
         if(stat === 'MIN' || stat === 'GP'){
           continue;
         }
-        totalStat += weightedStats[stat]
+        totalStat += weightedStats[stat];
       }
-      star = totalStat/totalWeightValue
+      star = totalStat/totalWeightValue;
       return star;
     };
 
     exports.weight = function(statsToWeight, statWeights){
       var weightedStats = {};
-      debugger;
       var totalValue = exports.calculateTotalStatWeights(statWeights);
       for (var stat in statsToWeight){
         weightedStats[stat] = parseFloat(statWeights[stat].weight) * statsToWeight[stat];
       }
-      return weightedStats
+      return weightedStats;
     };
     
     exports.calculateTotalStatWeights = function(statWeights){
-      var totalValue = 0
+      var totalValue = 0;
       for (var statName in statWeights){
         totalValue+=parseFloat(statWeights[statName].weight);
       }
@@ -474,7 +473,7 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
           teamCumeTotals[team]+=(Math.abs(cumulativeTeamsStats[team][stats]))*(statWeights[stats].weight)
         }
       }
-      return teamCumeTotals
+      return teamCumeTotals;
     }
 
     exports.playerWeightedStats = {};
@@ -580,7 +579,6 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       }
       nest.oldMain = parseFloat(nest.main);
     };
-
     return exports;
   }]);
 
