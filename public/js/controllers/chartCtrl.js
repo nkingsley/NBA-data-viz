@@ -6,11 +6,11 @@ angular.module('mean.chart')
     $scope.options = {width: 840, height: 500};
     //$scope.teams should be replaced by the object at Global.teams
     // $scope.teams = Global.teams;
-    $scope.calculateTeamStarVals = Teamstar.calculateTeamStar;
+    $scope.calculateTeamStarVals = Stats.calculateTeamStar;
     // $scope.calculatePlayerStars = Playerstar.calculatePlayerStars;
-    $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
-    $scope.playerWeightedStats = Stats.playerWeightedStats;
-    $scope.calculatePlayerWeightedStats = Stats.calculatePlayerWeightedStats;
+    // $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
+    // $scope.playerWeightedStats = Stats.playerWeightedStats;
+    // $scope.calculatePlayerWeightedStats = Stats.calculatePlayerWeightedStats;
     $scope.changeSliders = Stats.changeSliders;
     $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
@@ -20,16 +20,16 @@ angular.module('mean.chart')
     statsPromise.then(function(data){
       appendHackReactorBadge();
       $scope.teamStats = data.teams;
-      debugger;
+      $scope.catMap = data.cats;
       // $scope.teamStatsNorm = data.teamsNorm;
       // $scope.statsInfo = data.statsInfo;
       // $scope.normStatsByStat = data.normStatsByStat;
       // $scope.statsByTeam = data.statsByTeam;
-      for (var statName in $scope.statsInfo){
+      for (var statName in $scope.catMap){
         if(statName === 'GP' || statName === 'MIN'){
           continue;
         }
-        $scope.stats[statName] = $scope.stats[statName] || {weight: 5, cat: $scope.statsInfo[statName].cat};
+        $scope.stats[statName] = $scope.stats[statName] || {weight: 5, cat: $scope.catMap[statName]};
       }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.stats, $scope.nestedSliders);
       $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats, $scope.statsByTeam);

@@ -2,14 +2,14 @@
 angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $http) {
   var _this = this;
   var statsObj = {};
+  var cats = {};
   var d = $q.defer();
 
 
   $http.get('/stats').success(function(data){
-    console.log(data);
     var teams = data.teams;
+    cats = data.cats;
     var team, stat, minutes;
-
   // $http.get('/teams').success(function(data){
   //   statsObj.maxMinRangeObj = {}; // to normalize
   //   statsObj.timeObj = {}; //total team playing times
@@ -26,8 +26,8 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
         } else {
           statName = stat.slice(4, -4).replace(/_/g , ' ');
           statsObj[team][statName] = {
-            'imp': stat.slice(-4).replace(/_/g , ''), // does this need the regex?
-            'cat': stat.slice(0, 4).replace(/_/g , ''),
+            // 'imp': stat.slice(-4).replace(/_/g , ''),
+            // 'cat': stat.slice(0, 4).replace(/_/g , ''),
             'rawVal': teams[team][stat]
             // 'max': data[0][j]/data[0].NA_MIN_Total_NEU,
             // 'min': data[0][j]/data[0].NA_MIN_Total_NEU,
@@ -120,7 +120,7 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
     //   statsObj.teamsObjNorm[team][player] = playerStatsNorm;
     //   statsObj.teamsObj[team][player] = playerStats;
     // }
-    d.resolve({teams: statsObj});
+    d.resolve({teams: statsObj, cats: cats});
   });
 
 

@@ -343,9 +343,9 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
     exports.calculateAllTeamStarVals = function (teamStatsNorm, teams, statWeights, statsByTeam){
       var cumulativeTeamsStats = exports.cumulativeTeamsStats(statsByTeam);
       var teamsNormStats = exports.getNormalizedStats(cumulativeTeamsStats);
-      debugger;
       for (var i = 0 ; i < teams.length ; i++){
-        teams[i].starVal = exports.calculateTeamStar(teams[i].abbreviation, teamsNormStats, statWeights);
+        teams[i].starVal = 0;
+        exports.calculateTeamStar(teams[i].abbreviation, teamsNormStats, statWeights);
       }
     };
 
@@ -382,7 +382,7 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
 
         }
       }
-      return normalized;
+      return normalized
     };
 
     exports.normalize = function(stat, statsToNorm, statsToMaxMin){
@@ -489,7 +489,6 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       
       var team = teamStatsNorm[openTeam];
       exports.playerWeightedStats[openTeam] = {};
-      debugger;
       for (var player in team){
         var topFiveStats = [];
         for (var stat in team[player]){
@@ -566,6 +565,7 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
 
     exports.changeSliders = function(nestedSliders, groupName) {
       var nest = nestedSliders[groupName];
+      debugger;
       for (var statName in nest){
         var stat = nest[statName];
         if (statName === "main" || statName === "oldMain"){
