@@ -488,6 +488,7 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       
       var team = teamStatsNorm[openTeam];
       exports.playerWeightedStats[openTeam] = {};
+      debugger;
       for (var player in team){
         var topFiveStats = [];
         for (var stat in team[player]){

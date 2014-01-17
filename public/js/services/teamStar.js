@@ -403,13 +403,17 @@ exports.teams = [
   //                {"points total": .600}}
 
   exports.calculateTeamStar = function(teams, statWeights){
-
+    var totalStatWeights = exports.calculateTotalStatWeights(statWeights);
     for (var team in teams){
-      team.starVal = 0;
+      var rawStar = 0;
       for (var stat in team){
-        statStarVal = statWeights[stat] * team[stat];
-        team[starVal] += statStarVal;
+        if (stat !== 'MIN' || 'GP'){
+          statStarVal = statWeights[stat] * team[stat];
+          rawStar += statStarVal;
+        }
       }
+      team.starVal = rawStar/totalStatWeights;
+      exports.teams[team] = team;
     }
   };
   return exports;

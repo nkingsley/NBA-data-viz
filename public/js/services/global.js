@@ -4,6 +4,11 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
   var statsObj = {};
   var d = $q.defer();
 
+
+  $http.get('/stats').success(function(data){
+    console.log(data);
+  });
+  
   $http.get('/teams').success(function(data){
     var team, player, minutes;
     statsObj.maxMinRangeObj = {}; // to normalize

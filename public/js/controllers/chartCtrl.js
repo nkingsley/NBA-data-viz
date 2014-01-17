@@ -7,13 +7,13 @@ angular.module('mean.chart')
     $scope.options = {width: 840, height: 500};
     $scope.teams = Stats.teams;
     $scope.calculateTeamStarVals = Teamstar.calculateTeamStar;
+    // $scope.calculatePlayerStars = Playerstar.calculatePlayerStars;
     $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
     $scope.playerWeightedStats = Stats.playerWeightedStats;
     $scope.calculatePlayerWeightedStats = Stats.calculatePlayerWeightedStats;
     $scope.changeSliders = Stats.changeSliders;
     $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
-    debugger;
     $scope.rhoVal = 0;
     $scope.stats = Stats.stats;
 
@@ -79,7 +79,6 @@ angular.module('mean.chart')
     };
 
     $scope.updateRho = function (){
-      debugger;
       $scope.rhoVal = $scope.spearman.rho($scope.teams);
     };
 
