@@ -47,19 +47,18 @@ var compileStats = function(stats,headers,fix){
     }
     allStats[statsObj.PLAYER_ID] = allStats[statsObj.PLAYER_ID] || {};
     var curPlayerObj = allStats[statsObj.PLAYER_ID];
-    if (curPlayerObj.TEAM === 'TOTAL'){
-      curPlayerObj.TEAM = statsObj.TEAM;
+    if (curPlayerObj.TEAM_ABBREVIATION === 'TOTAL'){
+      curPlayerObj.TEAM_ABBREVIATION = statsObj.TEAM_ABBREVIATION;
     }
-    if (statsObj.TEAM === 'TOTAL'){
-      statsObj.TEAM = curPlayerObj.TEAM;
+    if (statsObj.TEAM_ABBREVIATION === 'TOTAL'){
+      statsObj.TEAM_ABBREVIATION = curPlayerObj.TEAM_ABBREVIATION;
     }
-    allStats[statsObj['PLAYER_ID']] = _.merge(curPlayerObj,statsObj, function(a,b){
+    allStats[statsObj.PLAYER_ID] = _.merge(curPlayerObj,statsObj, function(a,b){
       return (a > b) ? a : b;
     });
   }
   if (urlsGotten === urlsToGet){
     var norms = normer.finish(allStats);
-    console.log(norms);
     exports.stats = norms;
     // persistStats(allStats);
   }
