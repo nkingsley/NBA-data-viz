@@ -54,7 +54,7 @@ var compileStats = function(stats,headers,fix){
   if (urlsGotten === urlsToGet){
     var norms = normer.finish(allStats);
     exports.stats = norms;
-    persistStats(allStats);
+    // persistStats(allStats);
   }
 };
 

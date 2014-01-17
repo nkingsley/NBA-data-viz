@@ -1,6 +1,8 @@
+var _ = require('lodash');
 var cbs = require('./callbacks');
 var normalize = require('./normalize');
 var map = require('./map').map;
+var ranks = require('./ranks');
 
 var runCallbacks = function(player,pgDone){
   for (var stat in player){
@@ -23,6 +25,17 @@ var cleanUp = function(player){
   }
 };
 
+var mapCats = function(map){
+  var newMap = {}
+  for (var stat in map){
+    var item = map[stat];
+    if(item.name){
+      newMap[item.name] = {cat:item.cat, weight:5};
+    }
+  }
+  return newMap;
+}
+
 var addTags = function(player){
   for (var stat in player){
     if (stat === "PLAYER"){
@@ -39,9 +52,9 @@ var addTags = function(player){
     if (statMap.name){
       statMap.name = statMap.name.replace(/ /g,'_');
     }
-    var key = ( statMap.cat || 'NA' ) + '_' + ( statMap.name || stat ) + '_' + (statMap.posneg || 'NEU');
+    var key = statMap.name || stat;
     player[key] = player[stat];
-    delete player[stat];
+    !statMap.keep && delete player[stat];
   }
 };
 
@@ -53,12 +66,16 @@ exports.finish = function(allStats){
     runCallbacks(allStats[id]);
   }
   var teamsNorm = normalize.normTeams(allStats,map);
+  ranks.rank(teamsNorm);
   for (var id in teamsNorm){
     addTags(teamsNorm[id]);
   }
-  // var playersNorm = normalize.normPlayers(allStats,map,teamsNorm);
+  var catObj = mapCats(map);
+  var playersNorm = normalize.normPlayers(allStats,map,teamsNorm);
+  var rankedPlayers = ranks.rank(playersNorm);
   // for (var id in allStats){
   //   addTags(allStats[id]);
   // }
-  return {teams:teamsNorm};
+  console.log(catObj);
+  return {teams:teamsNorm,cats:catObj};
 };

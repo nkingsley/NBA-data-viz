@@ -12,7 +12,7 @@ exports.normTeams = function(allStats,map){
   }
   toPerMinute(teams,map,1);
   var mmr = maxMinRange(teams);
-  normalize(teams,mmr);
+  normalize(teams,mmr,map);
   return teams;
 };
 
@@ -25,17 +25,21 @@ exports.normPlayers = function(allStats,map,teams){
   var cutoff = totalLeagueMinutes/1200;
   toPerMinute(players,map,1);
   var mmr = maxMinRange(players,cutoff);
-  normalize(players,mmr);
+  normalize(players,mmr,map);
   console.log(players);
   return players;
 };
 
-var normalize = function(collection,mmr){
+var normalize = function(collection,mmr,map){
   var norm = {};
   for (var item in collection){
     for (var stat in collection[item]){
       if (typeof collection[item][stat] === "string"){continue;}
       collection[item][stat] = 1-(mmr[stat].max - (collection[item][stat]))/mmr[stat].range;
+      if (map[stat].posneg === 'NEG'){
+        var flipFlop500 = collection[item][stat] - .5;
+        collection[item][stat] = .5 - flipFlop500;
+      }
     }
   }
 };
