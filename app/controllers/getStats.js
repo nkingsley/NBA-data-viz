@@ -45,14 +45,21 @@ var compileStats = function(stats,headers,fix){
       }
       statsObj[headers[k]] = stats[j][k];
     }
-    allStats[statsObj['PLAYER_ID']] = allStats[statsObj['PLAYER_ID']] || {};
-    var curPlayerObj = allStats[statsObj['PLAYER_ID']];
-    allStats[statsObj['PLAYER_ID']] = _.merge(allStats[statsObj['PLAYER_ID']],statsObj, function(a,b){
+    allStats[statsObj.PLAYER_ID] = allStats[statsObj.PLAYER_ID] || {};
+    var curPlayerObj = allStats[statsObj.PLAYER_ID];
+    if (curPlayerObj.TEAM === 'TOTAL'){
+      curPlayerObj.TEAM = statsObj.TEAM;
+    }
+    if (statsObj.TEAM === 'TOTAL'){
+      statsObj.TEAM = curPlayerObj.TEAM;
+    }
+    allStats[statsObj['PLAYER_ID']] = _.merge(curPlayerObj,statsObj, function(a,b){
       return (a > b) ? a : b;
     });
   }
   if (urlsGotten === urlsToGet){
     var norms = normer.finish(allStats);
+    console.log(norms);
     exports.stats = norms;
     // persistStats(allStats);
   }

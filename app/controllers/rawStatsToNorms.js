@@ -65,8 +65,9 @@ exports.finish = function(allStats){
   for (var id in allStats){
     runCallbacks(allStats[id]);
   }
+  // console.log(allStats);
   var teamsNorm = normalize.normTeams(allStats,map);
-  ranks.rank(teamsNorm);
+  // ranks.rank(teamsNorm);
   for (var id in teamsNorm){
     addTags(teamsNorm[id]);
   }
