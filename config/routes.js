@@ -72,6 +72,7 @@ module.exports = function(app, passport, auth) {
     app.get('/players/:name', players.show);
     app.get('/teams/:team', players.team);
     app.get('/teams', players.all);
+    app.get('/stats', players.teams);
     //Finish with setting up the articleId param
     // app.param('articleId', articles.article);
 
