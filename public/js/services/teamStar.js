@@ -346,12 +346,12 @@ exports.teams = [
     return weightedStats;
   };
   
-  exports.calculateTotalStatWeights = function(statWeights){
+  exports.totalStatWeights = function(statWeights){
     var totalValue = 0;
     for (var statName in statWeights){
       totalValue += parseFloat(statWeights[statName].weight);
     }
-    return totalValue
+    return totalValue;
   };
 
   exports.assignNestedSliders = function (statWeights, nestedSliders){
@@ -402,18 +402,20 @@ exports.teams = [
   //        {"SAS": {"drives total": .200},
   //                {"points total": .600}}
 
-  exports.calculateTeamStar = function(teams, statWeights){
-    var totalStatWeights = exports.calculateTotalStatWeights(statWeights);
-    for (var team in teams){
-      var rawStar = 0;
-      for (var stat in team){
-        if (stat !== 'MIN' || 'GP'){
-          statStarVal = statWeights[stat] * team[stat];
+  exports.calculateTeamStarVals = function(teamStats, statWeights){
+    var team, teamName, rawStar, stat;
+    var totalStatWeights = exports.totalStatWeights(statWeights);
+    for (team in exports.teams){
+      teamName = exports.teams[team].abbreviation;
+      rawStar = 0;
+      for (stat in teamStats[teamName]){
+        if (stat === ("MIN" || "GP")){
+          continue;
+        }
+          statStarVal = statWeights[stat]['weight'] * teamStats[teamName][stat];
           rawStar += statStarVal;
         }
-      }
-      team.starVal = rawStar/totalStatWeights;
-      exports.teams[team] = team;
+      exports.teams[team]['starVal'] = rawStar/totalStatWeights;
     }
   };
   return exports;
