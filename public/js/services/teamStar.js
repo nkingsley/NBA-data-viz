@@ -355,7 +355,6 @@ exports.teams = [
 
   exports.assignNestedSliders = function (statWeights, nestedSliders){
     for (var statName in statWeights) {
-      debugger;
       switch(statWeights[statName].cat) {
         case "PSS": 
           nestedSliders.Possession[statName] = statWeights[statName];
@@ -370,7 +369,7 @@ exports.teams = [
           nestedSliders.Rebounding[statName] = statWeights[statName];
           break;
         case "MSC":
-          nestedSliders.Athleticism[statName] = statWeights[statName];
+          nestedSliders.Miscellaneous[statName] = statWeights[statName];
           break;
       }
     }

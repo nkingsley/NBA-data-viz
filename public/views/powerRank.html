@@ -6,7 +6,7 @@
         <th>Rank</th>
         <th colspan="2">Team</th>
       </tr>
-      <tr class="team" ng-repeat-start="team in teamStats | orderBy: '-starVal'">
+      <tr class="team" ng-repeat-start="team in teams | orderBy: '-starVal'">
         <td class="team-rank"><span class="rank">{{$index + 1}}</span><span class="star-val">(Star Value: {{team.starVal | number:3}})</span>
         <p class="player-badge-shell">
           <span class="badge badge-info" ng-click="collapseOther(team);">Players</span>

@@ -5,7 +5,7 @@ angular.module('mean.chart')
     var statsPromise = Global.stats;
     $scope.options = {width: 840, height: 500};
     //$scope.teams should be replaced by the object at Global.teams
-    $scope.teams = Global.teams;
+    $scope.teams = Teamstar.teams;
     $scope.calculateTeamStarVals = Teamstar.calculateTeamStarVals;
     // $scope.calculatePlayerStars = Playerstar.calculatePlayerStars;
     // $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
