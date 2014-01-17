@@ -408,7 +408,7 @@ exports.teams = [
       teamName = exports.teams[team].abbreviation;
       rawStar = 0;
       for (stat in teamStats[teamName]){
-        if (stat === ("MIN" || "GP")){
+        if (stat === "MIN" || stat === "GP"){
           continue;
         }
           statStarVal = statWeights[stat]['weight'] * teamStats[teamName][stat];

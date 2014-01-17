@@ -3,22 +3,30 @@ angular.module('mean.chart').factory("Playerstar", ['$q', function ($q) {
   var exports = {};
 
   exports.players = [];
+  exports.teamPlayers = [];
 
- exports.calculatePlayerStarVals = function(playerStats, statWeights){
+ exports.calculatePlayerStarVals = function(playerStats, statWeights, openTeam){
     var player, playerName, rawStar, stat;
+    //for now, just calculate and return the players for the open team
+    if (!openTeam){
+      return;
+    }
     var totalStatWeights = exports.totalStatWeights(statWeights);
-    for (player in exports.players){
-      teamName = exports.teams[team].abbreviation;
+    var teamArray = playerStats[openTeam]
+    for (playerIdx in teamArray){
+      playerName = teamArray[playerIdx]['Player'];
       rawStar = 0;
-      for (stat in teamStats[teamName]){
-        if (stat === ("MIN" || "GP")){
+      for (stat in teamArray[playerIdx]){
+        if (stat === "MIN" || stat === "GP" || stat === "Player" || stat === "PLAYER_ID" || stat === 'Team' || stat === 'starVal'){
           continue;
         }
-          statStarVal = statWeights[stat]['weight'] * teamStats[teamName][stat];
+          statStarVal = statWeights[stat]['weight'] * teamArray[playerIdx][stat];
           rawStar += statStarVal;
       }
-      exports.teams[team]['starVal'] = rawStar/totalStatWeights;
+      teamArray[playerIdx]['starVal'] = rawStar/totalStatWeights;
     }
+    exports.teamPlayers = teamArray;
+    console.log(exports.teamPlayers);
   };
 
   exports.weight = function(teams, statWeights){
@@ -30,12 +38,12 @@ angular.module('mean.chart').factory("Playerstar", ['$q', function ($q) {
     return weightedStats;
   };
   
-  exports.calculateTotalStatWeights = function(statWeights){
+  exports.totalStatWeights = function(statWeights){
     var totalValue = 0;
     for (var statName in statWeights){
       totalValue += parseFloat(statWeights[statName].weight);
     }
-    return totalValue
+    return totalValue;
   };
     
 
