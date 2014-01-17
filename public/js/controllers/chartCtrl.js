@@ -3,9 +3,9 @@ angular.module('mean.chart')
     'promiseTracker',
     function ($scope, $http, Global, Stats, Spearman, Teamstar, promiseTracker) {
     var statsPromise = Global.stats;
-    // var calPlayerWeightedStatsPromise = Stats.calWeightedPlayerStatsPromise;
     $scope.options = {width: 840, height: 500};
-    $scope.teams = Stats.teams;
+    //$scope.teams should be replaced by the object at Global.teams
+    // $scope.teams = Global.teams;
     $scope.calculateTeamStarVals = Teamstar.calculateTeamStar;
     // $scope.calculatePlayerStars = Playerstar.calculatePlayerStars;
     $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
@@ -20,10 +20,11 @@ angular.module('mean.chart')
     statsPromise.then(function(data){
       appendHackReactorBadge();
       $scope.teamStats = data.teams;
-      $scope.teamStatsNorm = data.teamsNorm;
-      $scope.statsInfo = data.statsInfo;
-      $scope.normStatsByStat = data.normStatsByStat;
-      $scope.statsByTeam = data.statsByTeam;
+      debugger;
+      // $scope.teamStatsNorm = data.teamsNorm;
+      // $scope.statsInfo = data.statsInfo;
+      // $scope.normStatsByStat = data.normStatsByStat;
+      // $scope.statsByTeam = data.statsByTeam;
       for (var statName in $scope.statsInfo){
         if(statName === 'GP' || statName === 'MIN'){
           continue;
