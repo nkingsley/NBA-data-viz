@@ -416,8 +416,6 @@ exports.teams = [
       }
       exports.teams[team]['starVal'] = rawStar/totalStatWeights;
     }
-    debugger;
-    return exports; // exports.teams has appropriate star values here (though the results might be a little shaky)
   };
   return exports; // but not here, where all star value properties are set to 0 again.
 }]);

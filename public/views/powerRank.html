@@ -52,7 +52,7 @@
         <!-- <ul ng-show = "group.show"> -->
           <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
             <label>{{statName}}</label>
-            <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-change="calculateTeamStarVals(teamStat,weights);"/>
+            <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-change="changeSliders(nestedSliders,statName,groupName);calculateTeamStarVals(teamStats,weights);"/>
             <span class="weight badge badge-info">{{statNum.weight}}</span>
           </li>
         </ul>

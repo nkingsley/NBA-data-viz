@@ -21,17 +21,17 @@ angular.module('mean.chart')
     statsPromise.then(function(data){
       appendHackReactorBadge();
       $scope.teamStats = data.teams;
-      $scope.cats = data.cats;
+      $scope.weights = data.cats;
       // $scope.teamStatsNorm = data.teamsNorm;
       // $scope.statsInfo = data.statsInfo;
       // $scope.normStatsByStat = data.normStatsByStat;
       // $scope.statsByTeam = data.statsByTeam;
-      for (var statName in $scope.cats){
-        if(statName === 'GP' || statName === 'MIN'){
-          continue;
-        }
-        $scope.weights[statName] = $scope.weights[statName] || {weight: 5, cat: $scope.cats[statName].cat};
-      }
+      // for (var statName in $scope.cats){
+      //   if(statName === 'GP' || statName === 'MIN'){
+      //     continue;
+      //   }
+      //   $scope.weights[statName] = $scope.weights[statName] || {weight: 5, cat: $scope.cats[statName].cat};
+      // }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.weights, $scope.nestedSliders);
       $scope.calculateTeamStarVals($scope.teamStats, $scope.weights);
       $scope.updateRho();

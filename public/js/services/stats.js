@@ -563,8 +563,10 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
     };
     
 
-    exports.changeSliders = function(nestedSliders, groupName) {
-      debugger;
+    exports.changeSliders = function(nestedSliders, currentStat, groupName) {
+      if (!groupName){
+        groupName = currentStat;
+      }
       var nest = nestedSliders[groupName];
       for (var statName in nest){
         var stat = nest[statName];
