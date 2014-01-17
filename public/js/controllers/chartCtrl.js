@@ -1,12 +1,14 @@
 angular.module('mean.chart')
-  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 'Teamstar',
+  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar',
     'promiseTracker',
-    function ($scope, $http, Global, Stats, Spearman, Teamstar, promiseTracker) {
+    function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
     var statsPromise = Global.stats;
     $scope.options = {width: 840, height: 500};
     //$scope.teams should be replaced by the object at Global.teams
     $scope.teams = Teamstar.teams;
+    $scope.players = Playerstar.players;
     $scope.calculateTeamStarVals = Teamstar.calculateTeamStarVals;
+    $scope.calculatePlayerStars = Playerstar.calculatePlayerStarVals;
     // $scope.calculatePlayerStars = Playerstar.calculatePlayerStars;
     // $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
     // $scope.playerWeightedStats = Stats.playerWeightedStats;
@@ -22,6 +24,7 @@ angular.module('mean.chart')
       appendHackReactorBadge();
       $scope.teamStats = data.teams;
       $scope.weights = data.cats;
+      $scope.playerStats = data.players;
       // $scope.teamStatsNorm = data.teamsNorm;
       // $scope.statsInfo = data.statsInfo;
       // $scope.normStatsByStat = data.normStatsByStat;
@@ -34,6 +37,7 @@ angular.module('mean.chart')
       // }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.weights, $scope.nestedSliders);
       $scope.calculateTeamStarVals($scope.teamStats, $scope.weights);
+      // $scope.calculatePlayerStars
       $scope.updateRho();
     });
 

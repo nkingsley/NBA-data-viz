@@ -3,13 +3,15 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
   var _this = this;
   var statsObj = {};
   var cats = {};
+  var players = {};
   var d = $q.defer();
 
 
   $http.get('/stats').success(function(data){
+    console.log(data);
     var teams = data.teams;
     cats = data.cats;
-    var team, stat, minutes;
+    players = data.players;
   // $http.get('/teams').success(function(data){
   //   statsObj.maxMinRangeObj = {}; // to normalize
   //   statsObj.timeObj = {}; //total team playing times
@@ -113,7 +115,7 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
     //   statsObj.teamsObjNorm[team][player] = playerStatsNorm;
     //   statsObj.teamsObj[team][player] = playerStats;
     // }
-    d.resolve({teams: statsObj, cats: cats});
+    d.resolve({teams: statsObj, cats: cats, players: players});
   });
 
 

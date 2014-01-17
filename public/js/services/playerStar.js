@@ -1,19 +1,24 @@
-angular.module('mean.chart').factory("Playerstar", ['$q', 'Global', function ($q, Global) {
+angular.module('mean.chart').factory("Playerstar", ['$q', function ($q) {
 
   var exports = {};
 
   exports.players = [];
 
-  exports.calculatePlayerStars = function(players, statWeights){
-    for (var player in players){
-      player.starVal = 0;
-      for (var stat in player){
-        if (stat !== 'MIN' || 'GP'){
-          player.starVal += stat * statWeights[stat];
+ exports.calculatePlayerStarVals = function(playerStats, statWeights){
+    var player, playerName, rawStar, stat;
+    var totalStatWeights = exports.totalStatWeights(statWeights);
+    for (player in exports.players){
+      teamName = exports.teams[team].abbreviation;
+      rawStar = 0;
+      for (stat in teamStats[teamName]){
+        if (stat === ("MIN" || "GP")){
+          continue;
         }
+          statStarVal = statWeights[stat]['weight'] * teamStats[teamName][stat];
+          rawStar += statStarVal;
       }
+      exports.teams[team]['starVal'] = rawStar/totalStatWeights;
     }
-    exports.players[player] = players;
   };
 
   exports.weight = function(teams, statWeights){
@@ -31,29 +36,6 @@ angular.module('mean.chart').factory("Playerstar", ['$q', 'Global', function ($q
       totalValue += parseFloat(statWeights[statName].weight);
     }
     return totalValue
-  };
-
-  exports.assignNestedSliders = function (statWeights, nestedSliders){
-    for (var statName in statWeights) {
-      switch(statWeights[statName].cat) {
-        case "POS"  : 
-          nestedSliders.Possession[statName] = statWeights[statName];
-          break;
-        case "SHT":
-          nestedSliders.Shooting[statName] = statWeights[statName];
-          break; 
-        case "DEF":
-          nestedSliders.Defense[statName] = statWeights[statName];
-          break;
-        case "REB"  : 
-          nestedSliders.Rebounding[statName] = statWeights[statName];
-          break;
-        case "ATH":
-          nestedSliders.Athleticism[statName] = statWeights[statName];
-          break;
-      }
-    }
-    return nestedSliders;
   };
     
 
