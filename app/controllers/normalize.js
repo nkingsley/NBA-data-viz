@@ -10,9 +10,9 @@ exports.normTeams = function(allStats,map){
       teams[pTeam][stat] += allStats[player][stat];
     }
   }
-  toPerMinute(teams,map,1);
+  toPerMinute(teams,map);
   var mmr = maxMinRange(teams);
-  normalize(teams,mmr,map);
+  normalize(teams,mmr,map,true);
   return teams;
 };
 
@@ -23,19 +23,22 @@ exports.normPlayers = function(allStats,map,teams){
     totalLeagueMinutes += team.MIN;
   }
   var cutoff = totalLeagueMinutes/1200;
-  toPerMinute(players,map,1);
+  toPerMinute(players,map);
   var mmr = maxMinRange(players,cutoff);
-  normalize(players,mmr,map);
+  normalize(players,mmr,map,true);
+  toTotal(players,map);
+  var mmrNT = maxMinRange(players,cutoff);
+  normalize(players,mmrNT,map,false);
   return players;
 };
 
-var normalize = function(collection,mmr,map){
+var normalize = function(collection,mmr,map,flipNegs){
   var norm = {};
   for (var item in collection){
     for (var stat in collection[item]){
-      if (typeof collection[item][stat] === "string"){continue;}
+      if (!map[stat].name){continue;}
       collection[item][stat] = 1-(mmr[stat].max - (collection[item][stat]))/mmr[stat].range;
-      if (map[stat].posneg === 'NEG'){
+      if (flipNegs && map[stat].posneg === 'NEG'){
         var flipFlop500 = collection[item][stat] - .5;
         collection[item][stat] = .5 - flipFlop500;
       }
@@ -66,11 +69,20 @@ var maxMinRange = function(collection,cutoff){
   return mmr;
 };
 
-var toPerMinute = function(collection,map,teamify){
+var toPerMinute = function(collection,map){
   for (var item in collection){
     for (var stat in collection[item]){
       if (!map[stat].name){continue;}
-      collection[item][stat] = teamify * collection[item][stat]/collection[item].MIN;
+      collection[item][stat] = collection[item][stat]/collection[item].MIN;
     }
   }
 };
+
+var toTotal = function(collection,map){
+  for (var item in collection){
+    for (var stat in collection[item]){
+      if (!map[stat].name){continue;}
+      collection[item][stat] = collection[item][stat] * collection[item].MIN;
+    }
+  }
+}

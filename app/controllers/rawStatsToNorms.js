@@ -58,6 +58,16 @@ var addTags = function(player){
   }
 };
 
+var categorizeByTeams = function(players){
+  var teams = {};
+  for (var player in players){
+    var team = players[player].Team;
+    teams[team] = teams[team] || [];
+    teams[team].push(players[player]);
+  }
+  return teams;
+};
+
 exports.finish = function(allStats){
   for (var id in allStats){
     cleanUp(allStats[id]);
@@ -68,14 +78,21 @@ exports.finish = function(allStats){
   // console.log(allStats);
   var teamsNorm = normalize.normTeams(allStats,map);
   // ranks.rank(teamsNorm);
-  for (var id in teamsNorm){
-    addTags(teamsNorm[id]);
+  for (var team in teamsNorm){
+    addTags(teamsNorm[team]);
   }
   var catObj = mapCats(map);
   var playersNorm = normalize.normPlayers(allStats,map,teamsNorm);
-  var rankedPlayers = ranks.rank(playersNorm);
+  // var rankedPlayers = ranks.rank(playersNorm);
+  for (var id in playersNorm){
+    addTags(playersNorm[id]);
+  }
+  var playersByTeam = categorizeByTeams(playersNorm);
+  console.log(playersByTeam.MIA);
+  // console.log(playersNorm[2544]);
+  // console.log(allStats[2544]);
   // for (var id in allStats){
   //   addTags(allStats[id]);
   // }
-  return {teams:teamsNorm,cats:catObj};
+  return {teams:teamsNorm,cats:catObj,players:playersByTeam};
 };
