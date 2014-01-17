@@ -533,7 +533,7 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
         main:5,
         oldMain:5
       },
-      Athleticism:{
+      Miscellaneous:{
         main:5,
         oldMain:5
       },
@@ -554,8 +554,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
           case "REB"  : 
             nestedSliders.Rebounding[statName] = statWeights[statName];
             break;
-          case "ATH":
-            nestedSliders.Athleticism[statName] = statWeights[statName];
+          case "MSC":
+            nestedSliders.Miscellaneous[statName] = statWeights[statName];
             break;
         }
       }
