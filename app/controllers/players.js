@@ -14,6 +14,15 @@ exports.team = function(req,res){
     res.end(JSON.stringify(data));
   });
 };
+
+exports.teams = function(req,res){
+  var getStats = require('./getStats');
+  setTimeout(function(){
+    console.log(getStats);
+    res.end(JSON.stringify(getStats.stats));
+  },5000);
+};
+
 exports.all = function(req,res){
   mongoose.model('Player').find(function(err,data){
     res.setHeader('Content-Type', 'application/JSON');
