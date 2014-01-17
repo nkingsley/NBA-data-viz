@@ -26,7 +26,6 @@ exports.normPlayers = function(allStats,map,teams){
   toPerMinute(players,map,1);
   var mmr = maxMinRange(players,cutoff);
   normalize(players,mmr,map);
-  console.log(players);
   return players;
 };
 

@@ -76,6 +76,5 @@ exports.finish = function(allStats){
   // for (var id in allStats){
   //   addTags(allStats[id]);
   // }
-  console.log(catObj);
   return {teams:teamsNorm,cats:catObj};
 };
