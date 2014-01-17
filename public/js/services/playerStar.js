@@ -3,7 +3,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', function ($q) {
   var exports = {};
 
   exports.players = [];
-  exports.teamPlayers = [];
+  exports.teamPlayers;
 
  exports.calculatePlayerStarVals = function(playerStats, statWeights, openTeam){
     var player, playerName, rawStar, stat;

@@ -89,6 +89,8 @@ angular.module('mean.chart')
     };
 
     $scope.makeHeadShotUrl = function(name, isCollapsed) {
+      debugger;
+      
       if(isCollapsed) { return ""; }
 
       var removePunctuation = function(str) {
