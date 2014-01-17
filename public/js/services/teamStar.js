@@ -1,5 +1,5 @@
 
-angular.module('mean.chart').factory("Teamstar", ['$q', 'Global', function ($q, Global) {
+angular.module('mean.chart').factory("Teamstar", ['$q', function ($q) {
 
 var exports = {};
 
@@ -188,7 +188,6 @@ exports.teams = [
     teamColor1: "#003614",
     teamColor2: "#E32636",
     teamColor3: "#C0C0C0",
-  
     starVal: 0,
     isCollapsed: true
   },
@@ -356,8 +355,9 @@ exports.teams = [
 
   exports.assignNestedSliders = function (statWeights, nestedSliders){
     for (var statName in statWeights) {
+      debugger;
       switch(statWeights[statName].cat) {
-        case "POS"  : 
+        case "PSS": 
           nestedSliders.Possession[statName] = statWeights[statName];
           break;
         case "SHT":
@@ -366,10 +366,10 @@ exports.teams = [
         case "DEF":
           nestedSliders.Defense[statName] = statWeights[statName];
           break;
-        case "REB"  : 
+        case "REB": 
           nestedSliders.Rebounding[statName] = statWeights[statName];
           break;
-        case "ATH":
+        case "MSC":
           nestedSliders.Athleticism[statName] = statWeights[statName];
           break;
       }
@@ -414,11 +414,13 @@ exports.teams = [
         }
           statStarVal = statWeights[stat]['weight'] * teamStats[teamName][stat];
           rawStar += statStarVal;
-        }
+      }
       exports.teams[team]['starVal'] = rawStar/totalStatWeights;
     }
+    debugger;
+    return exports; // exports.teams has appropriate star values here (though the results might be a little shaky)
   };
-  return exports;
+  return exports; // but not here, where all star value properties are set to 0 again.
 }]);
 
 

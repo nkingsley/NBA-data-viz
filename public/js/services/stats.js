@@ -542,7 +542,7 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
     exports.assignNestedSliders = function (statWeights, nestedSliders){
       for (var statName in statWeights) {
         switch(statWeights[statName].cat) {
-          case "POS"  : 
+          case "PSS"  : 
             nestedSliders.Possession[statName] = statWeights[statName];
             break;
           case "SHT":
@@ -564,8 +564,8 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
     
 
     exports.changeSliders = function(nestedSliders, groupName) {
-      var nest = nestedSliders[groupName];
       debugger;
+      var nest = nestedSliders[groupName];
       for (var statName in nest){
         var stat = nest[statName];
         if (statName === "main" || statName === "oldMain"){

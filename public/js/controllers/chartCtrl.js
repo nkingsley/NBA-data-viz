@@ -5,8 +5,8 @@ angular.module('mean.chart')
     var statsPromise = Global.stats;
     $scope.options = {width: 840, height: 500};
     //$scope.teams should be replaced by the object at Global.teams
-    // $scope.teams = Global.teams;
-    $scope.calculateTeamStarVals = Stats.calculateTeamStar;
+    $scope.teams = Global.teams;
+    $scope.calculateTeamStarVals = Teamstar.calculateTeamStarVals;
     // $scope.calculatePlayerStars = Playerstar.calculatePlayerStars;
     // $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
     // $scope.playerWeightedStats = Stats.playerWeightedStats;
@@ -16,24 +16,24 @@ angular.module('mean.chart')
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
     $scope.stats = Stats.stats;
+    $scope.weights = {};
 
     statsPromise.then(function(data){
       appendHackReactorBadge();
       $scope.teamStats = data.teams;
-      $scope.catMap = data.cats;
+      $scope.cats = data.cats;
       // $scope.teamStatsNorm = data.teamsNorm;
       // $scope.statsInfo = data.statsInfo;
       // $scope.normStatsByStat = data.normStatsByStat;
       // $scope.statsByTeam = data.statsByTeam;
-      for (var statName in $scope.catMap){
+      for (var statName in $scope.cats){
         if(statName === 'GP' || statName === 'MIN'){
           continue;
         }
-        $scope.stats[statName] = $scope.stats[statName] || {weight: 5, cat: $scope.catMap[statName]};
+        $scope.weights[statName] = $scope.weights[statName] || {weight: 5, cat: $scope.cats[statName].cat};
       }
-      $scope.nestedSliders = Stats.assignNestedSliders($scope.stats, $scope.nestedSliders);
-      $scope.calculateAllTeamStarVals($scope.teamStatsNorm, $scope.teams, $scope.stats, $scope.statsByTeam);
-      // $scope.calculatePlayerWeightedStats($scope.teamStatsNorm, $scope.stats, $scope.statsByTeam);
+      $scope.nestedSliders = Stats.assignNestedSliders($scope.weights, $scope.nestedSliders);
+      $scope.calculateTeamStarVals($scope.teamStats, $scope.weights);
       $scope.updateRho();
     });
 

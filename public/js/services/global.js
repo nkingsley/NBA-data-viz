@@ -24,15 +24,8 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
         if(stat === "NA_MIN_NEU"){
           continue;
         } else {
-          statName = stat.slice(4, -4).replace(/_/g , ' ');
-          statsObj[team][statName] = {
-            // 'imp': stat.slice(-4).replace(/_/g , ''),
-            // 'cat': stat.slice(0, 4).replace(/_/g , ''),
-            'rawVal': teams[team][stat]
-            // 'max': data[0][j]/data[0].NA_MIN_Total_NEU,
-            // 'min': data[0][j]/data[0].NA_MIN_Total_NEU,
-            // 'range': 0
-          };
+          statName = stat;
+          statsObj[team][statName] = teams[team][stat];
           // statsObj.normStatsByStat[statName] = {};
           // for (var i = 1 ; i < data.length; i++){
           //   minutes = data[i].NA_MIN_Total_NEU;
