@@ -44,13 +44,13 @@ var addTags = function(player){
       continue;
     }
     if (stat === "TEAM_ABBREVIATION"){
-      player['Team'] = player[stat];
+      player.Team = player[stat];
       delete player[stat];
       continue;
     }
     var statMap = map[stat];
     if (statMap.name){
-      statMap.name = statMap.name.replace(/ /g,'_');
+      statMap.name = statMap.name;//.replace(/ /g,'_');
     }
     var key = statMap.name || stat;
     player[key] = player[stat];
@@ -75,24 +75,23 @@ exports.finish = function(allStats){
   for (var id in allStats){
     runCallbacks(allStats[id]);
   }
-  // console.log(allStats);
   var teamsNorm = normalize.normTeams(allStats,map);
-  // ranks.rank(teamsNorm);
   for (var team in teamsNorm){
     addTags(teamsNorm[team]);
   }
-  var catObj = mapCats(map);
   var playersNorm = normalize.normPlayers(allStats,map,teamsNorm);
-  // var rankedPlayers = ranks.rank(playersNorm);
   for (var id in playersNorm){
     addTags(playersNorm[id]);
   }
   var playersByTeam = categorizeByTeams(playersNorm);
-  console.log(playersByTeam.MIA);
+  var catObj = mapCats(map);
+  for (var id in allStats){
+    addTags(allStats[id]);
+  }
   // console.log(playersNorm[2544]);
-  // console.log(allStats[2544]);
-  // for (var id in allStats){
-  //   addTags(allStats[id]);
-  // }
-  return {teams:teamsNorm,cats:catObj,players:playersByTeam};
+  return {
+    Teamnorm:teamsNorm,
+    Playernorm:playersNorm, 
+    Rawstat: allStats
+  }
 };

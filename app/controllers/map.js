@@ -52,7 +52,7 @@ exports.map = {
   OREB_CONTESTED: {name:'Contested Offensive Rebounds',callback: cbs.perGame, cat: 'REB', posneg: 'POS'},
   OREB_UNCONTESTED: {name:'Uncontested Offensive Rebounds',callback: cbs.perGame, cat: 'REB', posneg: 'POS'},
   OREB_UNCONTESTED_PCT: {name:false},
-  DREB: {name:'Defensie Rebounds', cat: 'REB', posneg: 'POS'},
+  DREB: {name:'Defensive Rebounds', cat: 'REB', posneg: 'POS'},
   DREB_CHANCE: {name:'Defensive Rebound Opps Missed',callback: cbs.perGameMisses, compare: 'DREB', cat: 'REB', posneg: 'NEG'},
   DREB_COL_PCT: {name:false},
   DREB_CONTESTED: {name:'Contested Defensive Rebounds',callback: cbs.perGame, cat: 'REB', posneg: 'POS'},

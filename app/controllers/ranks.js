@@ -1,5 +1,3 @@
-var _ = require('lodash');
-
 exports.rank = function(statsObj){
   var statsArray = makeArray(statsObj);
   var allSorts = sortByEverything(statsArray);
@@ -7,9 +5,13 @@ exports.rank = function(statsObj){
   for (var stat in allSorts){
     for (var i = 0; i < allSorts[stat].length ; i++){
       var item = allSorts[stat][i];
-      // console.log(item.tempName,'->',stat,'->',i);
+      if (stat === 'tempName'){continue;}
       rankings[item.tempName] = rankings[item.tempName] || {};
-      rankings[item.tempName][stat] = i + 1;
+      if (typeof statsObj[item.tempName][stat] === "string"){
+        rankings[item.tempName][stat] = statsObj[item.tempName][stat];
+      } else{
+      rankings[item.tempName][stat] = i + 1;        
+      }
     }
   }
   cleanUp(statsObj);
@@ -32,7 +34,7 @@ var sortByEverything = function(statsArray){
       function(a,b){
        return sortCb(a,b,stat);
       });
-    allSorts[stat] = _.cloneDeep(sorted);
+    allSorts[stat] = sorted.slice();
   }
   return allSorts;
 };
@@ -41,7 +43,7 @@ var cleanUp = function(obj){
   for (var key in obj){
     for(var stat in obj[key]){
       if (stat === 'tempName'){
-        delete obj[key];
+        delete obj[key][stat];
       }
     }
   }
@@ -49,8 +51,8 @@ var cleanUp = function(obj){
 
 var sortCb = function(a,b,stat){
   if (a[stat] > b[stat]){
-    return 1;
-  } else {
     return -1;
+  } else {
+    return 1;
   }
 };

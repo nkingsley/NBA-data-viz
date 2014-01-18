@@ -1,6 +1,7 @@
 var curl = require('curling');
 var _ = require('lodash');
-var normer = require('./rawStatsToNorms');
+var statControl = require('./rawStatsToNorms');
+var db = require('./database');
 var urlsToGet = 12;
 var urlsGotten = 0;
 var allStats = {};
@@ -26,10 +27,6 @@ var fixHeaders = function(headers){
     );
   }
   return newHeads;
-};
-
-var persistStats = function(stats){
-  //save to db
 };
 
 var compileStats = function(stats,headers,fix){
@@ -58,9 +55,9 @@ var compileStats = function(stats,headers,fix){
     });
   }
   if (urlsGotten === urlsToGet){
-    var norms = normer.finish(allStats);
-    exports.stats = norms;
-    // persistStats(allStats);
+    var finishedStats = statControl.finish(allStats);
+    exports.stats = finishedStats;
+    db.saveAll(finishedStats);
   }
 };
 
