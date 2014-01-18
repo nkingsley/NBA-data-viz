@@ -7,7 +7,7 @@ angular.module('mean.chart')
     //$scope.teams should be replaced by the object at Global.teams
     $scope.teams = Teamstar.teams;
     // $scope.players = Playerstar.players;
-    $scope.teamPlayers = Playerstar.teamPlayers;
+    $scope.openTeamPlayers = Playerstar.openTeamPlayers;
     $scope.calculateTeamStarVals = Teamstar.calculateTeamStarVals;
     $scope.calculatePlayerStarVals = Playerstar.calculatePlayerStarVals;
     // $scope.calculatePlayerStars = Playerstar.calculatePlayerStars;
@@ -38,7 +38,7 @@ angular.module('mean.chart')
       // }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.weights, $scope.nestedSliders);
       $scope.calculateTeamStarVals($scope.teamStats, $scope.weights);
-      $scope.calculatePlayerStarVals($scope.playerStats, $scope.weights);
+      // $scope.calculatePlayerStarVals($scope.playerStats, $scope.weights);
       $scope.updateRho();
     });
 

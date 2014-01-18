@@ -18,7 +18,7 @@
       <tr ng-repeat-end>
         <td colspan="3" class="super-slim">
           <div collapse="team.isCollapsed">
-            <table class="player-details" ng-repeat="(playerName, playerStats) in teamPlayers">
+            <table class="player-details" ng-repeat="(playerName, playerStats) in openTeamPlayers">
               <tr>
                 <td class="player-head-shot"><img ng-src="{{makeHeadShotUrl(playerName, team.isCollapsed)}}"></td>
                 <td class="player-stats-container">
