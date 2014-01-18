@@ -115,6 +115,7 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
     //   statsObj.teamsObjNorm[team][player] = playerStatsNorm;
     //   statsObj.teamsObj[team][player] = playerStats;
     // }
+    console.log(teams);
     d.resolve({teams: statsObj, cats: cats, players: players});
   });
 

@@ -21,6 +21,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', function ($q) {
       return;
     }
     exports.teamPlayers[openTeam] = {};
+    console.log(exports.teamPlayers);
     var totalStatWeights = exports.totalStatWeights(statWeights);
     var teamArray = playerStats[openTeam]
     for (playerIdx in teamArray){
@@ -32,6 +33,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', function ($q) {
           continue;
         }
           statStarVal = statWeights[stat]['weight'] * teamArray[playerIdx][stat];
+          statStarVal = 100*statStarVal/totalStatWeights;
           rawStar += statStarVal;
           statObj = {'statName': stat, 'starVal': statStarVal};
           if (statArray.length === 0){
@@ -55,7 +57,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', function ($q) {
       exports.teamPlayers[openTeam][playerName] = statArray;
       teamArray[playerIdx]['starVal'] = rawStar/totalStatWeights;
     }
-    exports.openTeamPlayers = exports.teamPlayers[openTeam];
+    exports.openTeamPlayers = exports.teamPlayers[openTeam]; //add in sort to have them display
     console.log(exports.openTeamPlayers);
   };
 
