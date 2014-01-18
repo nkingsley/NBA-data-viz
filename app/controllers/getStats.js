@@ -44,10 +44,8 @@ var compileStats = function(stats,headers,fix){
     }
     allStats[statsObj.PLAYER_ID] = allStats[statsObj.PLAYER_ID] || {};
     var curPlayerObj = allStats[statsObj.PLAYER_ID];
-    if (curPlayerObj.TEAM_ABBREVIATION === 'TOTAL'){
-      curPlayerObj.TEAM_ABBREVIATION = statsObj.TEAM_ABBREVIATION;
-    }
-    if (statsObj.TEAM_ABBREVIATION === 'TOTAL'){
+    //handle trades
+    if (urlsGotten === urlsToGet){
       statsObj.TEAM_ABBREVIATION = curPlayerObj.TEAM_ABBREVIATION;
     }
     allStats[statsObj.PLAYER_ID] = _.merge(curPlayerObj,statsObj, function(a,b){
@@ -61,6 +59,7 @@ var compileStats = function(stats,headers,fix){
   }
 };
 
+setTimeout(function(){
 var urls = [
 'http://stats.nba.com/stats/leaguedashplayershotlocations?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&DistanceRange=By+Zone&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench=&pageNo=1&rowsPerPage=25',
 'http://stats.nba.com/stats/leaguedashplayershotlocations?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Opponent&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&DistanceRange=By+Zone&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench='
@@ -72,10 +71,16 @@ for (var i = 0 ; i < urls.length; i++){
     compileStats(data.rowSet,data.headers,true);
   });
 }
-curl.run("-X GET 'http://stats.nba.com/stats/leaguedashplayerstats?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench='", function(err,result){
-  var data = JSON.parse(result.payload).resultSets[0];
-  compileStats(data.rowSet,data.headers);
-});
+},4000);
+//this one does not have totals, just player stats on new teams.  
+//Having it go last will make it overwrite all "TOTAL" player teams with the correct one
+
+  curl.run("-X GET 'http://stats.nba.com/stats/leaguedashplayerstats?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench='", function(err,result){
+    var data = JSON.parse(result.payload).resultSets[0];
+    compileStats(data.rowSet,data.headers);
+  });  
+
+
 
 var advUrls = [
 'http://stats.nba.com/js/data/sportvu/defenseData.js',

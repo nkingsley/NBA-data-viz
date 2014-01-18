@@ -1,6 +1,17 @@
 var mongoose = require('mongoose'),
     _ = require('lodash');
 
+exports.newHighScore = function(req,res){
+  var Catobj = mongoose.model('Catobj');
+  var catobj = new Catobj(req.body);
+  catobj.save(function(err){
+    if(err){
+      console.log(err);
+    }
+    res.end('Success');
+  });
+}
+
 exports.player = function(req,res){
   mongoose.model(req.params.model).find({Player: new RegExp('^'+req.params.name+'$', "i")},function(err,data){
     res.setHeader('Content-Type', 'application/JSON');
@@ -16,8 +27,16 @@ exports.team = function(req,res){
 };
 
 exports.init = function(req,res){
-    mongoose.model('Teamnorm').find(function(err,teams){
-      mongoose.model('Catobj').find(function(err,catobj){
+    mongoose.model('Teamnorm')
+    .find()
+    .sort({created:-1})
+    .limit(30)
+    .exec(function(err,teams){
+      mongoose.model('Catobj')
+      .find()
+      .sort({score:-1})
+      .limit(1)
+      .exec(function(err,catobj){
         var data = {
           teams: toObj(teams,'Team'),
           cat: catobj[0]
