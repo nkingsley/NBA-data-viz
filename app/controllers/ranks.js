@@ -1,5 +1,7 @@
+var utils = require('./utils');
+
 exports.rank = function(statsObj){
-  var statsArray = makeArray(statsObj);
+  var statsArray = utils.toArray(statsObj);
   var allSorts = sortByEverything(statsArray);
   var rankings = {};
   for (var stat in allSorts){
@@ -14,17 +16,8 @@ exports.rank = function(statsObj){
       }
     }
   }
-  cleanUp(statsObj);
+  utils.cleanUp(statsObj);
   return rankings;
-};
-
-var makeArray = function(obj){
-  var array = [];
-  for (var key in obj){
-    obj[key].tempName = key;
-    array.push(obj[key]);
-  }
-  return array;
 };
 
 var sortByEverything = function(statsArray){
@@ -37,16 +30,6 @@ var sortByEverything = function(statsArray){
     allSorts[stat] = sorted.slice();
   }
   return allSorts;
-};
-
-var cleanUp = function(obj){
-  for (var key in obj){
-    for(var stat in obj[key]){
-      if (stat === 'tempName'){
-        delete obj[key][stat];
-      }
-    }
-  }
 };
 
 var sortCb = function(a,b,stat){

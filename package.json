@@ -39,7 +39,8 @@
     "grunt": "latest",
     "grunt-cli": "latest",
     "grunt-env": "latest",
-    "curling": "~0.3.0"
+    "curling": "~0.3.0",
+    "q": "~1.0.0"
   },
   "devDependencies": {
     "supertest": "latest",

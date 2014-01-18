@@ -1,5 +1,4 @@
-var mongoose = require('mongoose'),
-    _ = require('lodash');
+var mongoose = require('mongoose'), utils =require('./utils');
 
 exports.newHighScore = function(req,res){
   var Catobj = mongoose.model('Catobj');
@@ -10,7 +9,42 @@ exports.newHighScore = function(req,res){
     }
     res.end('Success');
   });
-}
+};
+
+exports.timeWindow = function(req,res){
+  var dateStart = new Date(req.params.dateStart);
+  var dateSm1 = utils.makeDate(dateStart,-1);
+  var dateEnd = new Date(req.params.dateEnd);
+  var dateEm1 = utils.makeDate(dateEnd,-1);
+  var findStart = {
+    created:{
+      $lte:dateStart,
+      $gte:dateSm1
+    }
+  };
+  var findEnd = {
+    created:{
+      $let:dateEnd,
+      $gte:dateEm1
+    }
+  };
+  if(req.params.filter){
+    findStart[filter] = 1;
+    findEnd[filter] = 1;
+  }
+  var filter = req.params.filter || 'Team';
+  mongoose.model(req.params.model).find(findStart)
+  .exec(function(err,start){
+    mongoose.model(req.params.model).find(findEnd)
+    .exec(function(err,end){
+      var startObj = utils.toObj(start, filter);
+      var endObj = utils.toObj(end, filter);
+      var diff = utils.diff(startObj,endObj);
+      res.setHeader('Content-Type', 'application/JSON');
+      res.end(JSON.stringify(diff));
+    });
+  });
+};
 
 exports.player = function(req,res){
   mongoose.model(req.params.model).find({Player: new RegExp('^'+req.params.name+'$', "i")},function(err,data){
@@ -38,7 +72,7 @@ exports.init = function(req,res){
       .limit(1)
       .exec(function(err,catobj){
         var data = {
-          teams: toObj(teams,'Team'),
+          teams: utils.toObj(teams,'Team'),
           cat: catobj[0]
         };
         res.setHeader('Content-Type', 'application/JSON');
@@ -56,26 +90,27 @@ exports.all = function(req,res){
 
 exports.create = function(model,collection){
   var Model = mongoose.model(model);
+  var done = 0, total= Object.keys(collection).length;
   for (var item in collection){
     var data = new Model(collection[item]);
     data.save(function(err) {
+      done++;
       if (err){
         console.log(err);
+      }
+      if (total === done){
+        exports.total--;
+      }
+      if (exports.total === 0){
+        mongoose.connection.close();
       }
     });
   }
 }
 
 exports.saveAll = function(finishedStats){
+  exports.total= Object.keys(finishedStats).length;
   for (var model in finishedStats){
     exports.create(model,finishedStats[model]);
   }
-};
-
-var toObj = function(array,key){
-  var obj = {};
-  for (var i = 0 ; i < array.length ; i++){
-    obj[array[i][key]] = array[i];
-  }
-  return obj;
 };

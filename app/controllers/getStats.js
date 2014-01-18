@@ -1,10 +1,14 @@
+var statModels = require('../models/statModels');
 var curl = require('curling');
 var _ = require('lodash');
-var statControl = require('./rawStatsToNorms');
+var statControl = require('./statControl');
 var db = require('./database');
 var urlsToGet = 12;
 var urlsGotten = 0;
 var allStats = {};
+var tp = require('./tradedPlayers');
+var mongoose = require('mongoose');
+var mustRerun = false;
 var fixHeaders = function(headers){
   //some stats have nested headers.  This concats the correct top-level header onto the lower-level header
   var newHeads = [];
@@ -29,77 +33,113 @@ var fixHeaders = function(headers){
   return newHeads;
 };
 
-var compileStats = function(stats,headers,fix){
+var compileStats = function(stats,headers,fix,missingTradeData){
   urlsGotten++;
   if (fix){
     headers = fixHeaders(headers);
   }
   for (var j = 0 ; j < stats.length; j++){
-    var statsObj = {};
+    var newPlayer = {};
     for (var k = 0 ; k < headers.length ; k++){
       if (stats[j][k] === null){
         stats[j][k] = 0;
       }
-      statsObj[headers[k]] = stats[j][k];
+      newPlayer[headers[k]] = stats[j][k];
     }
-    allStats[statsObj.PLAYER_ID] = allStats[statsObj.PLAYER_ID] || {};
-    var curPlayerObj = allStats[statsObj.PLAYER_ID];
-    //handle trades
-    if (urlsGotten === urlsToGet){
-      statsObj.TEAM_ABBREVIATION = curPlayerObj.TEAM_ABBREVIATION;
+    var newPId = newPlayer.PLAYER_ID;
+    if (!tp.tradedPlayers){
+      tp.tradedPlayers = {};
     }
-    allStats[statsObj.PLAYER_ID] = _.merge(curPlayerObj,statsObj, function(a,b){
+    if (!mustRerun){
+      var action = tp.handleTrades(newPlayer,tp.tradedPlayers,missingTradeData);    
+    }
+    if (action === 'SKIP'){
+      continue;
+    }
+    if (action === 'NEWTRADE'){
+      mustRerun = true;
+    }
+    //hacky fix for first year
+    if (missingTradeData && newPId === '2736'){
+      console.log(newPId);
+      // console.log(tp.tradedPlayers);
+    }
+    if (missingTradeData && tp.tradedPlayers[newPId]){
+      allStats[newPId].TEAM_ABBREVIATION = newPlayer.TEAM_ABBREVIATION;
+      console.log(newPlayer);
+    }
+    allStats[newPId] = allStats[newPId] || {};
+    var curPlayerObj = allStats[newPId];
+    allStats[newPId] = _.merge(curPlayerObj,newPlayer,
+    function(a,b){
       return (a > b) ? a : b;
     });
   }
   if (urlsGotten === urlsToGet){
+    if (mustRerun || tp.addNewPlayerTeam(tp.tradedPlayers,allStats)){
+      allStats = {};
+      urlsGotten = 0;
+      mustRerun = false;
+      getStats();
+      return;
+    }
     var finishedStats = statControl.finish(allStats);
     exports.stats = finishedStats;
     db.saveAll(finishedStats);
   }
 };
 
-setTimeout(function(){
 var urls = [
-'http://stats.nba.com/stats/leaguedashplayershotlocations?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&DistanceRange=By+Zone&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench=&pageNo=1&rowsPerPage=25',
-'http://stats.nba.com/stats/leaguedashplayershotlocations?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Opponent&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&DistanceRange=By+Zone&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench='
+  'http://stats.nba.com/stats/leaguedashplayershotlocations?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&DistanceRange=By+Zone&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench=&pageNo=1&rowsPerPage=25',
+  'http://stats.nba.com/stats/leaguedashplayershotlocations?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Opponent&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&DistanceRange=By+Zone&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench='
 ];
-for (var i = 0 ; i < urls.length; i++){
-  curl.run("-X GET '" + urls[i] + "'"
-  , function(err,result){
-    var data = JSON.parse(result.payload).resultSets;
-    compileStats(data.rowSet,data.headers,true);
-  });
-}
-},4000);
-//this one does not have totals, just player stats on new teams.  
-//Having it go last will make it overwrite all "TOTAL" player teams with the correct one
-
-  curl.run("-X GET 'http://stats.nba.com/stats/leaguedashplayerstats?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench='", function(err,result){
-    var data = JSON.parse(result.payload).resultSets[0];
-    compileStats(data.rowSet,data.headers);
-  });  
-
-
 
 var advUrls = [
-'http://stats.nba.com/js/data/sportvu/defenseData.js',
-'http://stats.nba.com/js/data/sportvu/speedData.js',
-'http://stats.nba.com/js/data/sportvu/passingData.js',
-'http://stats.nba.com/js/data/sportvu/touchesData.js',
-'http://stats.nba.com/js/data/sportvu/reboundingData.js',
-'http://stats.nba.com/js/data/sportvu/drivesData.js',
-'http://stats.nba.com/js/data/sportvu/catchShootData.js',
-'http://stats.nba.com/js/data/sportvu/pullUpShootData.js',
-'http://stats.nba.com/js/data/sportvu/shootingData.js'
+  'http://stats.nba.com/js/data/sportvu/defenseData.js',
+  'http://stats.nba.com/js/data/sportvu/speedData.js',
+  'http://stats.nba.com/js/data/sportvu/passingData.js',
+  'http://stats.nba.com/js/data/sportvu/touchesData.js',
+  'http://stats.nba.com/js/data/sportvu/reboundingData.js',
+  'http://stats.nba.com/js/data/sportvu/drivesData.js',
+  'http://stats.nba.com/js/data/sportvu/catchShootData.js',
+  'http://stats.nba.com/js/data/sportvu/pullUpShootData.js',
+  'http://stats.nba.com/js/data/sportvu/shootingData.js'
 ];
 
-for (var i = 0 ; i < advUrls.length; i++){
-  curl.run("-X GET '" + advUrls[i] + "'", function(err,result){
-    var data = result.payload.slice(result.payload.indexOf(' = ') + 3);
-    data = data.slice(0,data.length-1);
-    data = JSON.parse(data).resultSets[0];
-    stats = data.rowSet.sort(function(a,b){if (a[1] > b[1]){return 1;} else {return -1;}});
-    compileStats(stats,data.headers);
-  });  
-}
+var getStats = function(){
+  //wait for connection
+  setTimeout(function(){
+    tp.all();  
+  },1000);
+  // wait for traded players to arrive from db
+  setTimeout(function(){
+    //missing trade data
+    setTimeout(function(){
+      for (var i = 0 ; i < urls.length; i++){
+        curl.run("-X GET '" + urls[i] + "'", 
+        function(err,result){
+          var data = JSON.parse(result.payload).resultSets;
+          compileStats(data.rowSet,data.headers,true,true);
+        });
+      }
+    },2000);
+      curl.run("-X GET 'http://stats.nba.com/stats/leaguedashplayerstats?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench='", 
+      function(err,result){
+        var data = JSON.parse(result.payload).resultSets[0];
+        compileStats(data.rowSet,data.headers);
+      });  
+
+    for (var i = 0 ; i < advUrls.length; i++){
+      curl.run("-X GET '" + advUrls[i] + "'", 
+      function(err,result){
+        var data = result.payload.slice(result.payload.indexOf(' = ') + 3);
+        data = data.slice(0,data.length-1);
+        data = JSON.parse(data).resultSets[0];
+        stats = data.rowSet.sort(function(a,b){if (a[1] > b[1]){return 1;} else {return -1;}});
+        compileStats(stats,data.headers);
+      });  
+    }
+  },4000);
+};
+mongoose.connect('mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036');
+getStats();

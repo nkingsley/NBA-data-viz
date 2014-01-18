@@ -1,13 +1,13 @@
 var cbs = require('./callbacks');
-
+//confusing... name means keep and normalize.  keep means keep it but don't normalize
 exports.map = {
-  PLAYER_ID: {name:false, keep:true},
-  PLAYER: {name:false, keep: true},
+  PLAYER_ID: {name:false, keep:'PLAYER_ID'},
+  PLAYER: {name:false, keep: 'Player'},
   FIRST_NAME: {name:false},
   LAST_NAME: {name:false},
-  TEAM_ABBREVIATION: {name:false, keep: true},
-  GP: {name:false, keep:true},
-  MIN: {name:false, keep: true},
+  TEAM_ABBREVIATION: {name:false, keep: 'Team'},
+  GP: {name:false, keep:'GP'},
+  MIN: {name:false, keep: 'MIN'},
   DVS: {name:false},
   DPP: {name:false},
   DTP: {name:false},

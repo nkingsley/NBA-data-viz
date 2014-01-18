@@ -1,5 +1,4 @@
 var mongoose = require('mongoose'),
-    config = require('../../config/config'),
     map = require('../controllers/map').map,
     schema = {};
 for (var stat in map){
@@ -13,6 +12,8 @@ schema.created = {
 };
 schema.score = Number;
 mongoose.model('Catobj', new mongoose.Schema(schema,{collection: 'catobj'}));
+
+// //uncomment to populate a default catObj into the db
 // setTimeout(function(){
 //   var catobj = {};
 // for (var stat in map){
@@ -20,6 +21,7 @@ mongoose.model('Catobj', new mongoose.Schema(schema,{collection: 'catobj'}));
 //     catobj[map[stat].name] = {weight:5,cat:map[stat].cat};  
 //   }
 // }
+// catobj.score = .5;
 // var Catobj = mongoose.model('Catobj')
 // var catobj = new Catobj(catobj);
 // catobj.save(function(err){
