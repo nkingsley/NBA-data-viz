@@ -19,9 +19,12 @@ exports.cleanUp = function(obj){
 
 exports.toObj = function(array,key){
   var obj = {};
+  if (!Array.isArray(array) || !key){
+    return false;
+  }
   for (var i = 0 ; i < array.length ; i++){
     obj[array[i][key]] = array[i];
-  }
+  }    
   return obj;
 };
 
@@ -46,3 +49,13 @@ exports.makeDate = function(date,change){
   return changed;
 };
 
+exports.dateTimeless = function(date){
+  var timlessDate;
+  if (date){
+    timelessDate = new Date(date);
+  } else{
+    timelessDate = new Date();
+  }
+  timelessDate.setHours(0,0,0,0);
+  return timelessDate;
+};

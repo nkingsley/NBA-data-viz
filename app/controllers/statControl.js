@@ -48,7 +48,6 @@ exports.finish = function(allStats,tradedPlayers){
   }
   tp.splitData(tradedPlayers,allStats,'Rawstat',maps.reverseMap())
   .then(function(allStats){
-    console.log(allStats);
     var teamsNorm = normalize.normTeams(allStats,map);  
     for (var team in teamsNorm){
       addTags(teamsNorm[team]);
@@ -57,12 +56,12 @@ exports.finish = function(allStats,tradedPlayers){
     for (var id in playersNorm){
       addTags(playersNorm[id]);
     }
-    // console.log(playersNorm[2544]); //LeBron!
 
     var playersRank = ranks.rank(playersNorm);
     for (var id in allStats){
       addTags(allStats[id]);
     }
+    // console.log(playersNorm[2544]); //LeBron!
     var megaStats = {
       Teamnorm:teamsNorm,
       Playernorm:playersNorm, 

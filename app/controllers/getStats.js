@@ -59,14 +59,8 @@ var compileStats = function(stats,headers,fix,missingTradeData){
     if (action === 'NEWTRADE'){
       mustRerun = true;
     }
-    //hacky fix for first year
-    if (missingTradeData && newPId === '2736'){
-      console.log(newPId);
-      // console.log(tp.tradedPlayers);
-    }
     if (missingTradeData && tp.tradedPlayers[newPId]){
       allStats[newPId].TEAM_ABBREVIATION = newPlayer.TEAM_ABBREVIATION;
-      console.log(newPlayer);
     }
     allStats[newPId] = allStats[newPId] || {};
     var curPlayerObj = allStats[newPId];
@@ -83,8 +77,9 @@ var compileStats = function(stats,headers,fix,missingTradeData){
       getStats();
       return;
     }
-    statControl.finish(allStats,tp.tradedPlayers)
-    .then(function(finishedStats){
+    var finished = statControl.finish(allStats,tp.tradedPlayers)
+    finished.then(function(finishedStats){
+      // console.log('at finished promise->',finishedStats.Playernorm[2544]); //LeBron!
       db.saveAll(finishedStats);
     });
   }

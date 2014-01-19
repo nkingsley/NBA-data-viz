@@ -12,22 +12,10 @@ exports.newHighScore = function(req,res){
 };
 
 exports.timeWindow = function(req,res){
-  var dateStart = new Date(req.params.dateStart);
-  var dateSm1 = utils.makeDate(dateStart,-1);
-  var dateEnd = new Date(req.params.dateEnd);
-  var dateEm1 = utils.makeDate(dateEnd,-1);
-  var findStart = {
-    created:{
-      $lte:dateStart,
-      $gte:dateSm1
-    }
-  };
-  var findEnd = {
-    created:{
-      $let:dateEnd,
-      $gte:dateEm1
-    }
-  };
+  var dateStart = utils.DateTimeless(dateStart);
+  var dateEnd = utils.DateTimeless(dateEnd);
+  var findStart = {created: dateStart};
+  var findEnd = {created: dateEnd};
   if(req.params.filter){
     findStart[filter] = 1;
     findEnd[filter] = 1;
@@ -89,10 +77,12 @@ exports.all = function(req,res){
 };
 
 exports.create = function(model,collection){
+  var date = utils.dateTimeless();
   var Model = mongoose.model(model);
   var done = 0, total= Object.keys(collection).length;
   for (var item in collection){
-    var data = new Model(collection[item]);
+    var data = new Model(collection[item]);    
+    data.created = date;
     data.save(function(err) {
       done++;
       if (err){
@@ -109,7 +99,6 @@ exports.create = function(model,collection){
 }
 
 exports.saveAll = function(finishedStats){
-  console.log(finishedStats);
   exports.total= Object.keys(finishedStats).length;
   for (var model in finishedStats){
     exports.create(model,finishedStats[model]);

@@ -1,5 +1,6 @@
 var mongoose = require('mongoose'),
     map = require('../controllers/map').map,
+    utils = require('../controllers/utils');
     schema = {};
 for (var stat in map){
   if (map[stat] && map[stat].name){
@@ -22,6 +23,7 @@ mongoose.model('Catobj', new mongoose.Schema(schema,{collection: 'catobj'}));
 //   }
 // }
 // catobj.score = .5;
+// catobj.created = utils.dateTimeless();
 // var Catobj = mongoose.model('Catobj')
 // var catobj = new Catobj(catobj);
 // catobj.save(function(err){

@@ -23,6 +23,7 @@ exports.create = function(player){
     PLAYER_ID : player.PLAYER_ID,
     newId : Math.floor(Math.random()*500000000) + 200000000,
     newTeam: player.TEAM_ABBREVIATION,
+    created: utils.dateTimeless()
   };
   var tradedPlayer = new Tp(tp);
   tradedPlayer.save(function(err){
@@ -76,31 +77,41 @@ exports.splitData = function(tradedPlayers,stats,model,map){
   var playersToSplit = [];
   for (var player in tradedPlayers){
     var tp = tradedPlayers[player];
-    tp.created = new Date(tp.created);
-    if (tp.created < new Date(1,19,2014)){
+    if (tp.created > utils.dateTimeless('1-19-2014')){
       continue;
     }
-    var dayBefore = utils.makeDate(tp.created,-1);
-    playersToSplit.push({created:{$lt:tp.created,$gte:dayBefore},PLAYER_ID:tp.PLAYER_ID})
+    playersToSplit.push({created:tp.created,PLAYER_ID:tp.PLAYER_ID});
   }
-  mongoose.model(model).find(playersToSplit).exec(function(err,oldPlayerStats){
-    console.log(oldPlayerStats);
-    for (var i = 0 ; i < oldPlayerStats.length ; i++){
-      var oldPlayer = oldPlayerStats[i];
-      for (var stat in oldPlayer){
-        var oldId = oldPlayer.PLAYER_ID;
-        var newId = tradedPlayers[oldId].newId;
-        stats[newId] = {};
-        for (var stat in stats[oldId]){
-          stats[newId][map[stat]] = stats[oldId][stat] - oldPlayer[stat];      
-        }
-        stats[oldId] = {};
-        for (var stat in oldPlayer){
-          stats[oldId][map[stat]] = oldPlayer[stat];
-        }
-      }
+  // mongoose.model(model).find(playersToSplit).exec(function(err,oldPlayerStats){
+  //   if (err){
+  //     console.log(err);
+  //   }
+  //   console.log('old players length',oldPlayerStats.length);
+  //   for (var i = 0 ; i < oldPlayerStats.length ; i++){
+  //     var oldPlayer = oldPlayerStats[i];
+  //     // console.log(oldPlayer);
+  //     for (var stat in oldPlayer){
+  //       var oldId = oldPlayer.PLAYER_ID;
+  //       var newId = tradedPlayers[oldId].newId;
+  //       stats[newId] = {};
+  //       for (var stat in stats[oldId]){
+  //         stats[newId][map[stat]] = stats[oldId][stat] - oldPlayer[stat];      
+  //       }
+  //       stats[oldId] = {};
+  //       for (var stat in oldPlayer){
+  //         stats[oldId][map[stat]] = oldPlayer[stat];
+  //       }
+  //     }
+  //   }
+  //   // console.log(stats[2544]); //LeBron!
+  //   d.resolve(stats);
+  // });
+  // return d.promise;
+  for (var player in stats){
+    if (stats[player].TEAM_ABBREVIATION === 'TOTAL'){
+      stats[player].TEAM_ABBREVIATION = tradedPlayers[player].newId;
     }
-    d.resolve(stats);
-  });
+  }
+  d.resolve(stats);
   return d.promise;
 };
