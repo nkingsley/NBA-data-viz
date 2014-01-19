@@ -18,17 +18,17 @@
       <tr ng-repeat-end>
         <td colspan="3" class="super-slim">
           <div collapse="team.isCollapsed">
-            <table class="player-details" ng-repeat="(playerName, playerStats) in openTeamPlayers">
+            <table class="player-details" ng-repeat="(playerName, playerStatArray) in openTeamPlayers">
               <tr>
                 <td class="player-head-shot"><img ng-src="{{makeHeadShotUrl(playerName, team.isCollapsed)}}"></td>
                 <td class="player-stats-container">
                   <h4>{{playerName}}</h4>
                   <table class="player-stats">
                     <tr class="player-stats-header">
-                      <th ng-repeat="stat in playerStats">{{stat.statName}}</th>
+                      <th ng-repeat="stat in playerStatArray">{{stat.statName}}</th>
                     </tr>
                     <tr>
-                      <td ng-repeat="stat in playerStats">{{stat.starVal | number:3}}{{"%"}}</td>
+                      <td ng-repeat="stat in playerStatArray">{{stat.starVal | number:3}}{{"%"}}</td>
                     </tr>
                   </table>
                 </td>

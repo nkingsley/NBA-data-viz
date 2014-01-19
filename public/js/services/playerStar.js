@@ -21,7 +21,6 @@ angular.module('mean.chart').factory("Playerstar", ['$q', function ($q) {
       return;
     }
     exports.teamPlayers[openTeam] = {};
-    console.log(exports.teamPlayers);
     var totalStatWeights = exports.totalStatWeights(statWeights);
     var teamArray = playerStats[openTeam]
     for (playerIdx in teamArray){
