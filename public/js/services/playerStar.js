@@ -56,7 +56,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', function ($q) {
       exports.teamPlayers[openTeam][playerName] = statArray;
       teamArray[playerIdx]['starVal'] = rawStar/totalStatWeights;
     }
-    exports.openTeamPlayers = exports.teamPlayers[openTeam]; //add in sort to have them display
+    exports.openTeamPlayers = exports.teamPlayers; //add in sort to have them display
     console.log(exports.openTeamPlayers);
   };
 
