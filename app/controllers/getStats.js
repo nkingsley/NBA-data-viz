@@ -83,9 +83,10 @@ var compileStats = function(stats,headers,fix,missingTradeData){
       getStats();
       return;
     }
-    var finishedStats = statControl.finish(allStats);
-    exports.stats = finishedStats;
-    db.saveAll(finishedStats);
+    statControl.finish(allStats,tp.tradedPlayers)
+    .then(function(finishedStats){
+      db.saveAll(finishedStats);
+    });
   }
 };
 

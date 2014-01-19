@@ -80,10 +80,11 @@ exports.splitData = function(tradedPlayers,stats,model,map){
     if (tp.created < new Date(1,19,2014)){
       continue;
     }
-    var 1dayearlier = utils.makeDate(tp.created,-1);
-    playersToSplit.push({created:{$lte:tp.created,$gt:1dayearlier},PLAYER_ID:tp.PLAYER_ID})
+    var dayBefore = utils.makeDate(tp.created,-1);
+    playersToSplit.push({created:{$lt:tp.created,$gte:dayBefore},PLAYER_ID:tp.PLAYER_ID})
   }
-  mongoose.Model(model).find(playersToSplit).exec(function(err,oldPlayerStats){
+  mongoose.model(model).find(playersToSplit).exec(function(err,oldPlayerStats){
+    console.log(oldPlayerStats);
     for (var i = 0 ; i < oldPlayerStats.length ; i++){
       var oldPlayer = oldPlayerStats[i];
       for (var stat in oldPlayer){
@@ -91,9 +92,12 @@ exports.splitData = function(tradedPlayers,stats,model,map){
         var newId = tradedPlayers[oldId].newId;
         stats[newId] = {};
         for (var stat in stats[oldId]){
-          stats[newId].stat = stats[oldId][stat] - oldPlayer[stat];      
+          stats[newId][map[stat]] = stats[oldId][stat] - oldPlayer[stat];      
         }
-        stats[oldId] = oldPlayer;
+        stats[oldId] = {};
+        for (var stat in oldPlayer){
+          stats[oldId][map[stat]] = oldPlayer[stat];
+        }
       }
     }
     d.resolve(stats);

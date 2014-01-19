@@ -2,7 +2,9 @@ var
   _ = require('lodash'), 
   cbs = require('./callbacks'), 
   normalize = require('./normalize'), 
-  map = require('./map').map,
+  maps = require('./map'), map = maps.map,
+  Q = require('q');
+  tp = require('./tradedPlayers'),
   ranks = require('./ranks');
 
 var runCallbacks = function(player,perGameCalcsComplete){
@@ -36,32 +38,38 @@ var addTags = function(player){
   }
 };
 
-exports.finish = function(allStats){
+exports.finish = function(allStats,tradedPlayers){
+  var d = Q.defer();
   for (var id in allStats){
     cleanUp(allStats[id]);
   }
   for (var id in allStats){
     runCallbacks(allStats[id]);
   }
-  var teamsNorm = normalize.normTeams(allStats,map);  
-  for (var team in teamsNorm){
-    addTags(teamsNorm[team]);
-  }
-  var playersNorm = normalize.normPlayers(allStats,map,teamsNorm);
-  for (var id in playersNorm){
-    addTags(playersNorm[id]);
-  }
-  // console.log(playersNorm[2544]); //LeBron!
-  
-  var playersRank = ranks.rank(playersNorm);
-  for (var id in allStats){
-    addTags(allStats[id]);
-  }
-  var megaStats = {
-    Teamnorm:teamsNorm,
-    Playernorm:playersNorm, 
-    Rawstat: allStats,
-    Playerrank: playersRank
-  };
-  return megaStats;
+  tp.splitData(tradedPlayers,allStats,'Rawstat',maps.reverseMap())
+  .then(function(allStats){
+    console.log(allStats);
+    var teamsNorm = normalize.normTeams(allStats,map);  
+    for (var team in teamsNorm){
+      addTags(teamsNorm[team]);
+    }
+    var playersNorm = normalize.normPlayers(allStats,map,teamsNorm);
+    for (var id in playersNorm){
+      addTags(playersNorm[id]);
+    }
+    // console.log(playersNorm[2544]); //LeBron!
+
+    var playersRank = ranks.rank(playersNorm);
+    for (var id in allStats){
+      addTags(allStats[id]);
+    }
+    var megaStats = {
+      Teamnorm:teamsNorm,
+      Playernorm:playersNorm, 
+      Rawstat: allStats,
+      Playerrank: playersRank
+    };
+    d.resolve(megaStats);
+  });
+  return d.promise;
 };

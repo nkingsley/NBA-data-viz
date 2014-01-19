@@ -109,6 +109,7 @@ exports.create = function(model,collection){
 }
 
 exports.saveAll = function(finishedStats){
+  console.log(finishedStats);
   exports.total= Object.keys(finishedStats).length;
   for (var model in finishedStats){
     exports.create(model,finishedStats[model]);
