@@ -348,6 +348,11 @@ exports.teams = [
   exports.totalStatWeights = function(statWeights){
     var totalValue = 0;
     for (var statName in statWeights){
+      debugger;
+      if (statName === "MIN" || statName === "GP" || statName === '__v' || statName === "_id" ||
+          statName === "created" || statName === "score" || statName === 'Team'){
+          continue;
+        }
       totalValue += parseFloat(statWeights[statName].weight);
     }
     return totalValue;
@@ -395,12 +400,6 @@ exports.teams = [
     nest.oldMain = parseFloat(nest.main);
   };
 
-  // mock teams object:
-  // teams: {"MIN": {"drives total": .350},
-  //                {"Points total": .500}},
-  //        {"SAS": {"drives total": .200},
-  //                {"points total": .600}}
-
   exports.calculateTeamStarVals = function(teamStats, statWeights){
     var team, teamName, rawStar, stat;
     var totalStatWeights = exports.totalStatWeights(statWeights);
@@ -408,7 +407,8 @@ exports.teams = [
       teamName = exports.teams[team].abbreviation;
       rawStar = 0;
       for (stat in teamStats[teamName]){
-        if (stat === "MIN" || stat === "GP"){
+        if (stat === "MIN" || stat === "GP" || stat === '__v' || stat === "_id" ||
+          stat === "created" || stat === "score" || stat === 'Team'){
           continue;
         }
           statStarVal = statWeights[stat]['weight'] * teamStats[teamName][stat];

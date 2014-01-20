@@ -3,23 +3,14 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
   var _this = this;
   var statsObj = {};
   var cats = {};
-  var players = {};
   var d = $q.defer();
 
 
-  $http.get('/stats').success(function(data){
+  $http.get('/init').success(function(data){
     console.log(data);
     var teams = data.teams;
-    cats = data.cats;
-    players = data.players;
-  // $http.get('/teams').success(function(data){
-  //   statsObj.maxMinRangeObj = {}; // to normalize
-  //   statsObj.timeObj = {}; //total team playing times
-  //   statsObj.teamsObj = {}; // stats organized by team, player, stat
-  //   statsObj.teamsObjNorm = {}; //stats organized by team, player normalized by time played
-  //   statsObj.normStatsByStat = {}; //stats organized by stat, then team then player
-  //   statsObj.normStatsByTeam = {}; //stats organized by team, then stat then player
-
+    cats = data.cat;
+    console.log(data.cat);
     for (team in teams){
       statsObj[team] = {};
       for (stat in teams[team]){
@@ -28,21 +19,6 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
         } else {
           statName = stat;
           statsObj[team][statName] = teams[team][stat];
-          // statsObj.normStatsByStat[statName] = {};
-          // for (var i = 1 ; i < data.length; i++){
-          //   minutes = data[i].NA_MIN_Total_NEU;
-          //   if(!statsObj.normStatsByStat[statName][data[i].Team]){
-          //     statsObj.normStatsByStat[statName][data[i].Team] = {};
-          //   }
-
-          //   if (data[i][j]/minutes > statsObj.maxMinRangeObj[statName].max){
-          //     statsObj.maxMinRangeObj[statName].max = data[i][j]/minutes;
-          //   }
-          //   if (data[i][j]/minutes < statsObj.maxMinRangeObj[statName].min){
-          //     statsObj.maxMinRangeObj[statName].min = data[i][j]/minutes;
-          //   }
-          // }
-          // statsObj.maxMinRangeObj[statName].range = statsObj.maxMinRangeObj[statName].max-statsObj.maxMinRangeObj[statName].min;
 
         }
       }
@@ -115,8 +91,7 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
     //   statsObj.teamsObjNorm[team][player] = playerStatsNorm;
     //   statsObj.teamsObj[team][player] = playerStats;
     // }
-    console.log(teams);
-    d.resolve({teams: statsObj, cats: cats, players: players});
+    d.resolve({teams: statsObj, cats: cats});
   });
 
 

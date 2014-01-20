@@ -25,7 +25,7 @@ angular.module('mean.chart')
       appendHackReactorBadge();
       $scope.teamStats = data.teams;
       $scope.weights = data.cats;
-      $scope.playerStats = data.players;
+      console.log($scope.weights);
       // $scope.teamStatsNorm = data.teamsNorm;
       // $scope.statsInfo = data.statsInfo;
       // $scope.normStatsByStat = data.normStatsByStat;
