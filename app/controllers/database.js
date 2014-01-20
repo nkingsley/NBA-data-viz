@@ -1,4 +1,4 @@
-var mongoose = require('mongoose'), utils =require('./utils');
+var mongoose = require('mongoose'), utils =require('./utils'),q = require('Q');
 
 exports.newHighScore = function(req,res){
   var Catobj = mongoose.model('Catobj');
@@ -12,18 +12,24 @@ exports.newHighScore = function(req,res){
 };
 
 exports.timeWindow = function(req,res){
-  var dateStart = utils.DateTimeless(dateStart);
-  var dateEnd = utils.DateTimeless(dateEnd);
+  var dateStart = utils.dateTimeless(req.params.dateStart);
+  var dateEnd = utils.dateTimeless(req.params.dateEnd);
   var findStart = {created: dateStart};
   var findEnd = {created: dateEnd};
-  if(req.params.filter){
-    findStart[filter] = 1;
-    findEnd[filter] = 1;
+  if (req.params.teamOrTeams === "a"){
+    var filter = "Team";
+    var model = "Rawteam";
+  } else if (req.params.teamOrTeams.length === 3){
+    var filter = "Player";
+    var model = "Rawstat";
+    findStart.Team = req.params.teamOrTeams;
+    findEnd.Team = req.params.teamOrTeams;
+  } else {
+    res.end({});
   }
-  var filter = req.params.filter || 'Team';
-  mongoose.model(req.params.model).find(findStart)
+  mongoose.model(model).find(findStart)
   .exec(function(err,start){
-    mongoose.model(req.params.model).find(findEnd)
+    mongoose.model(model).find(findEnd)
     .exec(function(err,end){
       var startObj = utils.toObj(start, filter);
       var endObj = utils.toObj(end, filter);
@@ -35,19 +41,48 @@ exports.timeWindow = function(req,res){
 };
 
 exports.player = function(req,res){
-  mongoose.model(req.params.model).find({Player: new RegExp('^'+req.params.name+'$', "i")},function(err,data){
+  var date = utils.dateTimeless();
+  var subroutine = function(date){
+    var d = q.defer();
+    mongoose.model(req.params.model).find({Player: new RegExp('^'+req.params.name+'$', "i"),created:date},function(err,data){
+      console.log(date);
+      if (data.length === 0){
+        date.setDate(date.getDate()-1);
+        subroutine(date);
+        return;
+      }
+      d.resolve(data);
+    });
+    return d.promise;
+  };
+  var promise = subroutine(date);
+  promise.then(function(data){
     res.setHeader('Content-Type', 'application/JSON');
     res.end(JSON.stringify(data));
   });
 };
 
 exports.team = function(req,res){
-  mongoose.model(req.params.model).find({Team: new RegExp('^'+req.params.team+'$', "i")},function(err,data){
+  var date = utils.dateTimeless();
+  var subroutine = function(date){
+    var d = q.defer();
+    mongoose.model('Playernorm').find({Team: new RegExp('^'+req.params.team+'$', "i"),created:date},function(err,data){
+      console.log(date);
+      if (data.length === 0){
+        date.setDate(date.getDate()-1);
+        subroutine(date);
+        return;
+      }
+      d.resolve(data);
+    });
+    return d.promise;
+  };
+  var promise = subroutine(date);
+  promise.then(function(data){
     res.setHeader('Content-Type', 'application/JSON');
     res.end(JSON.stringify(data));
   });
 };
-
 exports.init = function(req,res){
     mongoose.model('Teamnorm')
     .find()

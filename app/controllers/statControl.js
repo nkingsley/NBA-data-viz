@@ -48,25 +48,33 @@ exports.finish = function(allStats,tradedPlayers){
   }
   tp.splitData(tradedPlayers,allStats,'Rawstat',maps.reverseMap())
   .then(function(allStats){
-    var teamsNorm = normalize.normTeams(allStats,map);  
+    var teamsBoth = normalize.normTeams(allStats,map);  
+    var teamsNorm = teamsBoth.teamsNorm;
     for (var team in teamsNorm){
       addTags(teamsNorm[team]);
+    }
+    for (var team in teamsBoth.Rawteam){
+      addTags(teamsBoth.Rawteam[team]);
     }
     var playersNorm = normalize.normPlayers(allStats,map,teamsNorm);
     for (var id in playersNorm){
       addTags(playersNorm[id]);
     }
-
     var playersRank = ranks.rank(playersNorm);
+    for (var player in playersNorm){
+      for (var stat in playersNorm[player]){
+        playersNorm[player][stat + "_rank"] = playersRank[player][stat];
+      }
+    }
     for (var id in allStats){
       addTags(allStats[id]);
     }
-    // console.log(playersNorm[2544]); //LeBron!
+    console.log(playersNorm[2544]); //LeBron!
     var megaStats = {
+      Rawteam: teamsBoth.Rawteam,
       Teamnorm:teamsNorm,
       Playernorm:playersNorm, 
       Rawstat: allStats,
-      Playerrank: playersRank
     };
     d.resolve(megaStats);
   });
