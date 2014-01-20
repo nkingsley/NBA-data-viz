@@ -13,6 +13,7 @@ exports.normTeams = function(allStats,map){
   toPerMinute(teams,map);
   var mmr = maxMinRange(teams);
   normalize(teams,mmr,map,true);
+  appendTeam(teams);
   return teams;
 };
 
@@ -84,5 +85,11 @@ var toTotal = function(collection,map){
       if (!map[stat].name){continue;}
       collection[item][stat] = collection[item][stat] * collection[item].MIN;
     }
+  }
+};
+
+var appendTeam = function(collection){
+  for (var item in collection){
+    collection[item].TEAM_ABBREVIATION = item;
   }
 }

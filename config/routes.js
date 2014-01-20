@@ -60,14 +60,13 @@ module.exports = function(app, passport, auth) {
     app.param('userId', users.user);
 
     //NBA routes
-    var players = require('../app/controllers/players');
-    app.get('/players/:name', players.show);
-    app.get('/teams/:team', players.team);
-    app.get('/teams', players.all);
-    app.get('/stats', players.teams);
-    //Finish with setting up the articleId param
-    // app.param('articleId', articles.article);
-
+    var db = require('../app/controllers/database');
+    app.get('/players/:model/:name', db.player);
+    app.get('/teams/:model/:team', db.team);
+    app.get('/window/:model/:dateStart/:dateEnd/:filter',db.timeWindow);
+    app.get('/window/:model/:dateStart/:dateEnd',db.timeWindow);
+    app.get('/init', db.init);
+    app.post('/highScore/:catObj',db.newHighScore);
     //Home route
     var index = require('../app/controllers/index');
     app.get('/', index.render);
