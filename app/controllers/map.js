@@ -5,7 +5,8 @@ exports.reverseMap = function(){
   for (var stat in exports.map){
     var name = exports.map[stat].name || exports.map[stat].keep;
     if (name){
-      reverseMap[name] = stat;
+      reverseMap[name] = exports.map[stat];
+      reverseMap[name].key = stat;
     }
   }
   return reverseMap;

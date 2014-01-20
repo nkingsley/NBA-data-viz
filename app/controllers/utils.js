@@ -1,3 +1,6 @@
+var maps = require('./map');
+var reverseMap = maps.reverseMap();
+
 exports.toArray = function(obj){
   var array = [];
   for (var key in obj){
@@ -33,11 +36,16 @@ exports.diff = function(startData,endData){
   for (var item in startData){
     diff[item] = diff[item] || {};
     for (var stat in startData[item]){
-      if (!endData[item][stat]){
-        console.log(startData[item][stat]);
+      if (!endData[item][stat] && startData[item][stat] && endData[item][stat] !== 0){
+        console.log('at->',stat,'this->',startData[item],'doesnt match this->',endData[item]);
         return false;
       }
-      diff[item][stat] = endData[item][stat] - startData[item][stat];
+      if (!reverseMap[stat] || typeof startData[item][stat] === 'function'){continue;}
+      if (reverseMap[stat].name || stat === 'MIN' || stat === 'GP'){
+        diff[item][stat] = endData[item][stat] - startData[item][stat];      
+      }else if (reverseMap[stat].keep){
+        diff[item][stat] = startData[item][stat];
+      }
     }
   }
   return diff;
@@ -56,6 +64,7 @@ exports.dateTimeless = function(date){
   } else{
     timelessDate = new Date();
   }
-  timelessDate.setHours(0,0,0,0);
-  return timelessDate;
+  var timelessDate_utc = new Date(timelessDate.getUTCFullYear(), timelessDate.getUTCMonth(), timelessDate.getUTCDate());
+  timelessDate_utc.setHours(0,0,0,0);
+  return timelessDate_utc;
 };

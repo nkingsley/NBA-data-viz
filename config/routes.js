@@ -62,9 +62,8 @@ module.exports = function(app, passport, auth) {
     //NBA routes
     var db = require('../app/controllers/database');
     app.get('/players/:model/:name', db.player);
-    app.get('/teams/:model/:team', db.team);
-    app.get('/window/:model/:dateStart/:dateEnd/:filter',db.timeWindow);
-    app.get('/window/:model/:dateStart/:dateEnd',db.timeWindow);
+    app.get('/teams/:team', db.team);
+    app.get('/window/:teamOrTeams/:dateStart/:dateEnd',db.timeWindow);
     app.get('/init', db.init);
     app.post('/highScore/:catObj',db.newHighScore);
     //Home route

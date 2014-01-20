@@ -24,14 +24,30 @@ var makeSchema = function(map){
 var schema = makeSchema(map);
 
 mongoose.model('Rawstat', new mongoose.Schema(schema,{collection: 'rawstats'}));
-mongoose.model('Rawteams', new mongoose.Schema(schema,{collection: 'rawteams'}));
-mongoose.model('Playernorm', new mongoose.Schema(schema,{collection: 'playernorms'}));
+mongoose.model('Rawteam', new mongoose.Schema(schema,{collection: 'rawteams'}));
 mongoose.model('Teamnorm', new mongoose.Schema(schema,{collection: 'teamnorms'}));
-mongoose.model('Playerrank', new mongoose.Schema(schema,{collection: 'playerranks'}));
+var playerSchema = {};
+
+for (var stat in schema){
+  playerSchema[stat] = schema[stat];
+  if (schema[stat] === Number){
+    playerSchema[stat + '_rank'] = Number;
+  }
+}
+
+mongoose.model('Playernorm', new mongoose.Schema(playerSchema,{collection: 'playernorms'}));
+
 var tpSchema = {
   PLAYER_ID: Number,
   newId: Number,
   newTeam: String,
-  created: {type:Date, default:Date.now}
+  created: Date
 };
 mongoose.model('Tradedplayer', new mongoose.Schema(tpSchema,{collection: 'tradedplayers'}));
+var winLossSchema = {
+  Team: String,
+  Wins: Number,
+  Losses: Number,
+  created: Date
+}
+mongoose.model('Winloss', new mongoose.Schema(winLossSchema,{collection: 'winslosses'}));
