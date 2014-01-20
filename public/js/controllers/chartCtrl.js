@@ -1,8 +1,9 @@
 angular.module('mean.chart')
-  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar',
+  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar', 'Playerstatreq',
     'promiseTracker',
-    function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
-    var statsPromise = Global.stats;
+    function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, Playerstatreq, promiseTracker) {
+    var teamsPromise = Global.stats;
+    var playerPromise = Playerstatreq.stats;
     $scope.options = {width: 840, height: 500};
     //$scope.teams should be replaced by the object at Global.teams
     $scope.teams = Teamstar.teams;
@@ -21,25 +22,20 @@ angular.module('mean.chart')
     $scope.stats = Stats.stats;
     $scope.weights = {};
 
-    statsPromise.then(function(data){
+    teamsPromise.then(function(data){
       appendHackReactorBadge();
       $scope.teamStats = data.teams;
       $scope.weights = data.cats;
-      console.log($scope.weights);
-      // $scope.teamStatsNorm = data.teamsNorm;
-      // $scope.statsInfo = data.statsInfo;
-      // $scope.normStatsByStat = data.normStatsByStat;
-      // $scope.statsByTeam = data.statsByTeam;
-      // for (var statName in $scope.cats){
-      //   if(statName === 'GP' || statName === 'MIN'){
-      //     continue;
-      //   }
-      //   $scope.weights[statName] = $scope.weights[statName] || {weight: 5, cat: $scope.cats[statName].cat};
-      // }
       $scope.nestedSliders = Stats.assignNestedSliders($scope.weights, $scope.nestedSliders);
       $scope.calculateTeamStarVals($scope.teamStats, $scope.weights);
-      $scope.calculatePlayerStarVals($scope.playerStats, $scope.weights, false);
       $scope.updateRho();
+    });
+
+    playerPromise.then(function(data){
+      $scope.playerStats = data.playerStats;
+      console.log($scope.playerStats);
+      $scope.nestedSliders = Stats.assignNestedSliders($scope.weights, $scope.nestedSliders);
+      $scope.calculatePlayerStarVals($scope.playerStats, $scope.weights, false);
     });
 
     var appendHackReactorBadge = function (){
@@ -57,7 +53,7 @@ angular.module('mean.chart')
     // so that we can display and hide a spinner to indicate to
     // user that something is happening
     $scope.loadingTracker = promiseTracker('loadingTracker');
-    $scope.loadingTracker.addPromise(statsPromise);
+    $scope.loadingTracker.addPromise(teamsPromise);
 
     // tracks the progress of the playerWeightStats processing
     // so that we can display and hide a spinner to indicate to

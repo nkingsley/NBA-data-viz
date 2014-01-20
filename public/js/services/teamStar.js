@@ -348,7 +348,6 @@ exports.teams = [
   exports.totalStatWeights = function(statWeights){
     var totalValue = 0;
     for (var statName in statWeights){
-      debugger;
       if (statName === "MIN" || statName === "GP" || statName === '__v' || statName === "_id" ||
           statName === "created" || statName === "score" || statName === 'Team'){
           continue;

@@ -7,7 +7,6 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
 
 
   $http.get('/init').success(function(data){
-    console.log(data);
     var teams = data.teams;
     cats = data.cat;
     console.log(data.cat);
