@@ -54,7 +54,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
           if (statName === "toString"){
             delete(players[player].stats[stat]);
             continue;
-          } else if (!players[player].stats[stat].norm || statName === 'totalPlayerStar'){
+          } else if (statName === 'totalPlayerStar'){
             continue;
           }
           var statStarVal = statWeights[statName].weight * players[player].stats[stat].norm;
@@ -70,72 +70,10 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
         return player2.totalPlayerStar - player1.totalPlayerStar;
       });
       // team level
-
       deferred.resolve({players: players});
     });
     return deferred.promise;
   };
-
-
-  // exports.playerWeightedStats = {};
-
-
-  // exports.calculatePlayerWeightedStats = function (playerStats, statWeights, openTeam) {
-  //   var totalValue = 0;
-  //   var weightedStat;
-  //   var playerCume;
-  //   var teamTotals = exports.getTeamCumeTotals(statsByTeam, statWeights)
-
-  //   if (!openTeam) return;
-  //   var team = teamStatsNorm[openTeam];
-  //   exports.playerWeightedStats[openTeam] = {};
-  //   for (var player in team){
-  //     var topFiveStats = [];
-  //     for (var stat in team[player]){
-  //       weightedStat = team[player][stat]*statWeights[stat].weight;
-  //       if(topFiveStats.length === 0){
-  //         topFiveStats.push({'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]});
-  //       } else {
-  //         for (var i = 0 ; i < topFiveStats.length; i++){
-  //           if(Math.abs(100*weightedStat/teamTotals[openTeam]) > Math.abs(topFiveStats[i].stat)){
-  //             topFiveStats.splice(i, 0, {'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]});
-  //             if(topFiveStats.length > 5){
-  //               topFiveStats.pop();
-  //             }
-  //             break;
-  //           }
-  //           if(i === topFiveStats.length-1 && topFiveStats.length < 5){
-  //             topFiveStats.push({'statName': stat, 'stat': 100*weightedStat/teamTotals[openTeam]})
-  //             break;
-  //           }
-  //         }
-  //       }
-  //     }
-  //   exports.playerWeightedStats[openTeam][player] = topFiveStats;;
-  //   debugger;
-  //   }
-
-  // };
-
-  // exports.weight = function(teams, statWeights){
-  //   var weightedStats = {};
-  // var totalValue = exports.calculateTotalStatWeights(statWeights);
-  //   for (var stat in statsToWeight){
-  //     weightedStats[stat] = parseFloat(statWeights[stat].weight) * statsToWeight[stat];
-  //   }
-  //   return weightedStats;
-  // };
-
-  // var totalStatWeights = function(statWeights){
-  //   var totalValue = 0;
-  //   for (var stat in statWeights){
-  //     if (stat === "__v" || stat === "_id" || stat === "created" || stat === "score"){
-  //       continue;
-  //     }
-  //     totalValue += parseFloat(statWeights[stat].weight);
-  //   }
-  //   return totalValue;
-  // };
 
   exports.changeSliders = function(nestedSliders, groupName) {
     var nest = nestedSliders[groupName];

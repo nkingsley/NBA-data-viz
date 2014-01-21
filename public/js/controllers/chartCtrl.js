@@ -23,6 +23,7 @@ angular.module('mean.chart')
       Playerstar.calculatePlayerStarVals(weights,openTeam)
       .then(function(teamPlayers){
         $scope.playerStats = teamPlayers;
+        console.log($scope.playerStats);
 
       });
     };
