@@ -20,7 +20,7 @@ angular.module('mean.chart')
     $scope.stats = Stats.stats;
     $scope.weights = {};
     $scope.calculatePlayerStarVals = function(weights,openTeam){
-      $scope.getPlayerStarVals(weights,openTeam)
+      Playerstar.calculatePlayerStarVals(weights,openTeam)
       .then(function(teamPlayers){
         $scope.playerStats = teamPlayers;
 
@@ -34,13 +34,12 @@ angular.module('mean.chart')
       $scope.calculateTeamStarVals($scope.teamStats, $scope.weights);
       $scope.updateRho();
     });
-    $scope.
-    playerPromise.then(function(data){
-      $scope.playerStats = data.playerStats;
-      $scope.nestedSliders = Stats.assignNestedSliders($scope.weights, $scope.nestedSliders);
-      $scope.calculatePlayerStarVals($scope.playerStats, $scope.weights, false);
-      $scope.openTeamPlayers = Playerstar.teamPlayers;
-    });
+    // playerPromise.then(function(data){
+    //   $scope.playerStats = data.playerStats;
+    //   $scope.nestedSliders = Stats.assignNestedSliders($scope.weights, $scope.nestedSliders);
+    //   $scope.calculatePlayerStarVals($scope.playerStats, $scope.weights, false);
+    //   $scope.openTeamPlayers = Playerstar.teamPlayers;
+    // });
 
     var appendHackReactorBadge = function (){
       var img = document.createElement('img');

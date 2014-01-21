@@ -50,16 +50,25 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
       for (var player in players){
         players[player].totalPlayerStar = 0;
         for (var stat in players[player].stats){
-          var statStarVal = statWeights[stat].weight * players[player].stats[stat].norm;
+          var statName = players[player].stats[stat].name;
+          if (statName === "toString"){
+            delete(players[player].stats[stat]);
+            continue;
+          } else if (!players[player].stats[stat].norm || statName === 'totalPlayerStar'){
+            continue;
+          }
+          var statStarVal = statWeights[statName].weight * players[player].stats[stat].norm;
           players[player].stats[stat].starVal = statStarVal;
           players[player].totalPlayerStar += statStarVal;
         }
-        debugger;
         //player level
-        player.stats.sort(function(stat1, stat2){
-          return stat1.starVal - stat2.starVal;
+        players[player].stats.sort(function(stat1, stat2){
+          return stat2.starVal - stat1.starVal;
         });
       }
+      players.sort(function(player1, player2){
+        return player2.totalPlayerStar - player1.totalPlayerStar;
+      });
       // team level
 
       deferred.resolve({players: players});
