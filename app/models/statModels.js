@@ -24,7 +24,6 @@ var makeSchema = function(map){
 var schema = makeSchema(map);
 
 mongoose.model('Rawstat', new mongoose.Schema(schema,{collection: 'rawstats'}));
-mongoose.model('Rawteam', new mongoose.Schema(schema,{collection: 'rawteams'}));
 mongoose.model('Teamnorm', new mongoose.Schema(schema,{collection: 'teamnorms'}));
 var playerSchema = {};
 

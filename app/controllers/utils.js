@@ -10,6 +10,18 @@ exports.toArray = function(obj){
   return array;
 };
 
+exports.reverseTags = function(collection){
+  var map = maps.reverseMap();
+  for (var item in collection){
+    for (var stat in collection[item]){
+      var name = map[stat].name || map[stat].keep;
+      var temp = collection[item][stat];
+      delete collection[item][stat];
+      collection[item][name] = temp;
+    }
+  }
+};
+
 exports.cleanUp = function(obj){
   for (var key in obj){
     for(var stat in obj[key]){
