@@ -8,20 +8,23 @@ angular.module('mean.chart').factory('Spearman', ['Global', 'Teamstar', function
       theTeams[i][rankBy + "Rank"] = i+1;
     }
   };
+  Global.stats
+  .then(function(data){
+    debugger;
+    rankBy(data.teams,"winPct");
+  });
 
-  rankBy(Teamstar.teams,"winPct");
-
-  exports.rho = function (){
-    rankBy(Teamstar.teams,"starVal");
-    Teamstar.teams.forEach(function (team){
+  exports.rho = function (teams){
+    rankBy(teams,"starVal");
+    teams.forEach(function (team){
       team.di = team.starValRank - team.winPctRank;
       team.di2 = Math.pow(team.di,2);
     });
 
-    var sum = Teamstar.teams.reduce(function(seed, eachTeam){
+    var sum = teams.reduce(function(seed, eachTeam){
       return seed + eachTeam.di2;
     }, 0);
-    var n = Teamstar.teams.length;
+    var n = teams.length;
     var rhoVal = 1 - (6*sum)/(Math.pow(n,3)-n);
 
     return rhoVal;

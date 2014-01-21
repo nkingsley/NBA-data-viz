@@ -10,6 +10,8 @@ body {
   width: 840px;
 }
 .chart-container {
+  position: fixed;
+  bottom: 2px;
   float: left;
   background-color: #fff;
   width: 840px;
@@ -63,7 +65,7 @@ body {
 /* Slider Styles
  * ==========================================================================*/
 .slider-container {
-  float: left;
+  float: right;
   margin-left: 14px;
   margin-top: 39px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33)

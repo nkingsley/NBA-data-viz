@@ -1,15 +1,11 @@
-angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, $http) {
+angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', function($q, $http, Global) {
 
   var exports = {};
   exports.teamPlayers = {};
-     //needs to generate an object like: 
-  // {'SAS': 
-  //   {'Aron Baynes': [
-  //     {stat: 0.2555, statName: "Drives Total"},
-  //     {stat: 0.244, statName: "PTS"}
-  //     ]
-  //   }
-  // }
+  Global.stats
+  .then(function(stats){
+    exports.cats = stats.cats;
+  });
   var teamStatReq = function(openTeam){
     var teamStatObj = {};
     if (!openTeam){
@@ -46,31 +42,33 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
       return;
     }
     var weightPlayers = function(players){
+      var totalStatWeights = calculateTotalStatWeights(statWeights);
       for (var player in players){
-        players[player].totalPlayerStar = 0;
-        for (var stat in players[player].stats){
-          var statName = players[player].stats[stat].name;
+        var p = players[player];
+        p.scores = {};
+        p.totalPlayerStar = 0;
+        for (var stat in p.stats){
+          var statName = p.stats[stat].name;
           if (statName === "toString"){
-            delete(players[player].stats[stat]);
+            delete(p.stats[stat]);
             continue;
           } else if (statName === 'totalPlayerStar'){
             continue;
           }
-          var statStarVal = statWeights[statName].weight * players[player].stats[stat].norm;
-          players[player].stats[stat].starVal = statStarVal;
-          players[player].totalPlayerStar += statStarVal;
+          var statStarVal = statWeights[statName].weight * p.stats[stat].norm;
+          p.stats[stat].starVal = statStarVal;
+          p.scores[statWeights[statName].cat] = p.scores[statWeights[statName].cat] || 0;
+          p.scores[statWeights[statName].cat] += 100*statStarVal/totalStatWeights;
+          p.totalPlayerStar += 100*statStarVal/totalStatWeights; // makes the star scores a little less arbitrary
         }
-        //player level
-        if (!players[player].stats){
-          debugger;
-        }
-        players[player].stats.sort(function(stat1, stat2){
-          return stat2.starVal - stat1.starVal;
-        });
+      //   players[player].stats.sort(function(stat1, stat2){
+      //     return stat2.starVal - stat1.starVal;
+      //   });
       }
-      players.sort(function(player1, player2){
-        return player2.totalPlayerStar - player1.totalPlayerStar;
-      });
+      debugger;
+      // players.sort(function(player1, player2){
+      //   return player2.totalPlayerStar - player1.totalPlayerStar;
+      // });
     };
     if (players){
       weightPlayers(players.players);
@@ -82,8 +80,19 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
         deferred.resolve({players: players});
     });
     }
-      // team level
     return deferred.promise;
+  };
+
+
+  var calculateTotalStatWeights = function(statWeights){
+    var totalValue = 0;
+    for (var statName in statWeights){
+      if (statName === "__v" || statName === "_id" || statName === "created" || statName === "score"){
+        continue;
+      }
+      totalValue+=parseFloat(statWeights[statName].weight);
+    }
+    return totalValue;
   };
 
   exports.changeSliders = function(nestedSliders, groupName) {
