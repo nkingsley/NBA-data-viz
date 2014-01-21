@@ -9,7 +9,6 @@ angular.module('mean.chart')
     $scope.teams = Teamstar.teams;
     // $scope.players = Playerstar.players;
     $scope.calculateTeamStarVals = Teamstar.calculateTeamStarVals;
-    $scope.getPlayerStarVals = Playerstar.calculatePlayerStarVals;
     // $scope.calculatePlayerStars = Playerstar.calculatePlayerStars;
     // $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
     // $scope.playerWeightedStats = Stats.playerWeightedStats;
