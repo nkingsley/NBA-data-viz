@@ -80,7 +80,10 @@ var compileStats = function(stats,headers,fix,missingTradeData){
     var finished = statControl.finish(allStats,tp.tradedPlayers)
     finished.then(function(finishedStats){
       // console.log('at finished promise->',finishedStats.Playernorm[2544]); //LeBron!
-      db.saveAll(finishedStats);
+      // db.saveAll(finishedStats)
+      // .then(function(){
+        // mongoose.connection.close();
+      // })
     });
   }
 };
@@ -103,13 +106,9 @@ var advUrls = [
 ];
 
 var getStats = function(){
-  //wait for connection
-  setTimeout(function(){
-    tp.all();  
-  },1000);
-  // wait for traded players to arrive from db
-  setTimeout(function(){
-    //missing trade data
+  tp.all()
+  .then(function(){
+   //missing trade data on these two endpoints, they should be delayed till last
     setTimeout(function(){
       for (var i = 0 ; i < urls.length; i++){
         curl.run("-X GET '" + urls[i] + "'", 
@@ -119,12 +118,20 @@ var getStats = function(){
         });
       }
     },2000);
-      curl.run("-X GET 'http://stats.nba.com/stats/leaguedashplayerstats?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench='", 
-      function(err,result){
-        var data = JSON.parse(result.payload).resultSets[0];
-        compileStats(data.rowSet,data.headers);
-      });  
-
+    curl.run("-X GET 'http://stats.nba.com/stats/leaguedashteamstats?Season=2013-14&AllStarSeason=2012-13&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=PerGame&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench=&ls=iref%3Anba%3Agnav&pageNo=1&rowsPerPage=30'",
+    function(err,result){
+      var data = JSON.parse(result.payload).resultSets[0];
+      var result = []
+      for (var i = 0 ; i < data.rowSet.length ; i++){
+        result.push({franchise:data.rowSet[i][1],winPct:data.rowSet[i][5]});
+      }
+      db.saveWins({teams:result});
+    });
+    curl.run("-X GET 'http://stats.nba.com/stats/leaguedashplayerstats?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench='", 
+    function(err,result){
+      var data = JSON.parse(result.payload).resultSets[0];
+      compileStats(data.rowSet,data.headers);
+    });  
     for (var i = 0 ; i < advUrls.length; i++){
       curl.run("-X GET '" + advUrls[i] + "'", 
       function(err,result){
@@ -135,7 +142,6 @@ var getStats = function(){
         compileStats(stats,data.headers);
       });  
     }
-  },4000);
+  });
 };
-mongoose.connect('mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036');
-getStats();
+mongoose.connect('mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036', getStats);

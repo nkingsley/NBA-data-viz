@@ -44,9 +44,10 @@ var tpSchema = {
 };
 mongoose.model('Tradedplayer', new mongoose.Schema(tpSchema,{collection: 'tradedplayers'}));
 var winLossSchema = {
-  Team: String,
-  Wins: Number,
-  Losses: Number,
+  teams: [{
+    franchise: String,
+    winPct: Number,
+  }],
   created: Date
-}
+};
 mongoose.model('Winloss', new mongoose.Schema(winLossSchema,{collection: 'winslosses'}));

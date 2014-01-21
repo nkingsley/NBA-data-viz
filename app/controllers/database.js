@@ -1,4 +1,4 @@
-var mongoose = require('mongoose'), utils =require('./utils'),q = require('Q'), 
+var mongoose = require('mongoose'), utils =require('./utils'), q = require('Q'), 
 statControl = require('./statControl'), maps = require('./map');
 
 exports.newHighScore = function(req,res){
@@ -9,6 +9,17 @@ exports.newHighScore = function(req,res){
       console.log(err);
     }
     res.end('Success');
+  });
+};
+
+exports.saveWins = function(wl){
+  var Winloss = mongoose.model('Winloss');
+  var winloss = new Winloss(wl);
+  winloss.created = utils.dateTimeless();
+  winloss.save(function(err){
+    if(err){
+      console.log(err);
+    }
   });
 };
 
@@ -26,15 +37,15 @@ exports.timeWindow = function(req,res){
       statControl.finish(diff)
       .then(function(megaStats){
         if (req.params.team.length === 3){
-        var completeData = {};
-        for (var player in megaStats.Playernorm){
-          var pl = megaStats.Playernorm[player];
-          if (pl.Team === req.params.team){
-            completeData[player] = pl;
+          var completeData = {};
+          for (var player in megaStats.Playernorm){
+            var pl = megaStats.Playernorm[player];
+            if (pl.Team === req.params.team){
+              completeData[player] = pl;
+            }
           }
-        }
-      } else {
-        completeData = megaStats.Teamnorm;
+        } else {
+          completeData = megaStats.Teamnorm;
       }
       res.setHeader('Content-Type', 'application/JSON');
       res.end(JSON.stringify(completeData));
@@ -112,12 +123,19 @@ exports.init = function(req,res){
     .sort({score:-1})
     .limit(1)
     .exec(function(err,catobj){
-      var data = {
-        teams: utils.toObj(teams,'Team'),
-        cat: catobj[0]
-      };
-      res.setHeader('Content-Type', 'application/JSON');
-      res.end(JSON.stringify(data));
+      mongoose.model('Winloss')
+      .find()
+      .sort({created:-1})
+      .limit(1)
+      .exec(function(err,winPct){
+        var data = {
+          teams: utils.toObj(teams,'Team'),
+          cat: catobj[0],
+          winPct: utils.toObj(winPct[0].teams,'franchise')
+        };
+        res.setHeader('Content-Type', 'application/JSON');
+        res.end(JSON.stringify(data));
+      })
     });
   });
 };
@@ -132,6 +150,7 @@ exports.all = function(req,res){
 exports.create = function(model,collection){
   var date = utils.dateTimeless();
   var Model = mongoose.model(model);
+  var d = q.defer();
   var done = 0, total= Object.keys(collection).length;
   for (var item in collection){
     var data = new Model(collection[item]);    
@@ -142,18 +161,25 @@ exports.create = function(model,collection){
         console.log(err);
       }
       if (total === done){
-        exports.total--;
-      }
-      if (exports.total === 0){
-        mongoose.connection.close();
+        d.resolve();
       }
     });
   }
+  return d.promise;
 }
 
 exports.saveAll = function(finishedStats){
-  exports.total= Object.keys(finishedStats).length;
+  var d = q.defer();
+  var total= Object.keys(finishedStats).length;
+  var done = 0;
   for (var model in finishedStats){
-    exports.create(model,finishedStats[model]);
+    exports.create(model,finishedStats[model])
+    .then(function(){
+      done++;
+      if (done === total){
+        d.resolve();
+      }
+    })
   }
+  return d.promise;
 };
