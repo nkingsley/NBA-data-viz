@@ -39,14 +39,13 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
 
 
 
-  exports.calculatePlayerStarVals = function(statWeights, openTeam){
+  exports.calculatePlayerStarVals = function(statWeights, openTeam, players){
     var deferred = $q.defer();
     //for now, just calculate and return the players for the open team
     if (!openTeam){
       return;
     }
-    teamStatReq(openTeam)
-    .then(function(players){
+    var weightPlayers = function(players){
       for (var player in players){
         players[player].totalPlayerStar = 0;
         for (var stat in players[player].stats){
@@ -62,6 +61,9 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
           players[player].totalPlayerStar += statStarVal;
         }
         //player level
+        if (!players[player].stats){
+          debugger;
+        }
         players[player].stats.sort(function(stat1, stat2){
           return stat2.starVal - stat1.starVal;
         });
@@ -69,9 +71,18 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
       players.sort(function(player1, player2){
         return player2.totalPlayerStar - player1.totalPlayerStar;
       });
-      // team level
-      deferred.resolve({players: players});
+    };
+    if (players){
+      weightPlayers(players.players);
+      deferred.resolve({players: players.players});
+    } else{
+      teamStatReq(openTeam)
+      .then(function(players){
+        weightPlayers(players);
+        deferred.resolve({players: players});
     });
+    }
+      // team level
     return deferred.promise;
   };
 

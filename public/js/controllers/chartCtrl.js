@@ -1,7 +1,7 @@
 angular.module('mean.chart')
-  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar', 'Playerstatreq',
+  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar',
     'promiseTracker',
-    function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, Playerstatreq, promiseTracker) {
+    function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
     var teamsPromise = Global.stats;
     var playerPromise = Playerstar.stats;
     $scope.options = {width: 840, height: 500};
@@ -19,12 +19,18 @@ angular.module('mean.chart')
     $scope.rhoVal = 0;
     $scope.stats = Stats.stats;
     $scope.weights = {};
+    $scope.currentTeam = null;
     $scope.calculatePlayerStarVals = function(weights,openTeam){
-      Playerstar.calculatePlayerStarVals(weights,openTeam)
+      if (openTeam === $scope.currentTeam){
+        var players = $scope.playerStats;
+      } else {
+        var players = null;
+      }
+      Playerstar.calculatePlayerStarVals(weights, openTeam, players)
       .then(function(teamPlayers){
         $scope.playerStats = teamPlayers;
         console.log($scope.playerStats);
-
+        $scope.currentTeam = openTeam;
       });
     };
     teamsPromise.then(function(data){
@@ -89,7 +95,6 @@ angular.module('mean.chart')
     };
 
     $scope.makeHeadShotUrl = function(name, isCollapsed) {
-      debugger;
       
       if(isCollapsed) { return ""; }
 
