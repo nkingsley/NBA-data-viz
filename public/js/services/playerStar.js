@@ -34,6 +34,13 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
   };
 
 
+  var nestMap = {
+    DEF: "Defense",
+    SHT: "Shooting",
+    REB: "Rebounding",
+    MSC: "Miscellaneous",
+    PSS: "Possession"
+  };
 
   exports.calculatePlayerStarVals = function(statWeights, openTeam, players){
     var deferred = $q.defer();
@@ -57,8 +64,8 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
           }
           var statStarVal = statWeights[statName].weight * p.stats[stat].norm;
           p.stats[stat].starVal = statStarVal;
-          p.scores[statWeights[statName].cat] = p.scores[statWeights[statName].cat] || 0;
-          p.scores[statWeights[statName].cat] += 100*statStarVal/totalStatWeights;
+          p.scores[nestMap[statWeights[statName].cat]] = p.scores[nestMap[statWeights[statName].cat]] || 0;
+          p.scores[nestMap[statWeights[statName].cat]] += 100*statStarVal/totalStatWeights;
           p.totalPlayerStar += 100*statStarVal/totalStatWeights; // makes the star scores a little less arbitrary
         }
       //   players[player].stats.sort(function(stat1, stat2){
