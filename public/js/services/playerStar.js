@@ -47,7 +47,6 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
     }
     var weightPlayers = function(players){
       var totalStatWeights = calculateTotalStatWeights(statWeights);
-      debugger;
       for (var player in players){
         players[player].totalPlayerStar = 0;
         for (var stat in players[player].stats){

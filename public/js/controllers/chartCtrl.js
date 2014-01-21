@@ -30,6 +30,7 @@ angular.module('mean.chart')
       .then(function(teamPlayers){
         $scope.playerStats = teamPlayers;
         $scope.currentTeam = openTeam;
+        console.log($scope.playerStats);
       });
     };
     teamsPromise.then(function(data){
