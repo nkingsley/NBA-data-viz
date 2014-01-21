@@ -25,10 +25,10 @@
                   <h4>{{p.Player}} <br>Star Value: {{p.totalPlayerStar | number:1}}</h4>
                   <table class="player-stats">
                     <tr class="player-stats-header">
-                      <th ng-repeat="stat in p.stats | orderBy: '-starVal' | limitTo:5 " ng-bind="stat.name"></th>
+                      <th ng-repeat="(name, score) in p.scores">{{name}}</th>
                     </tr>
                     <tr>
-                      <td ng-repeat="stat in p.stats | orderBy: '-starVal' | limitTo:5" ng-bind="stat.rank"></td>
+                      <td ng-repeat="(name, score) in p.scores">{{score | number:2}}</td>
                     </tr>
                   </table>
                 </td>
