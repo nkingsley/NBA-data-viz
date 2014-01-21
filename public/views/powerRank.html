@@ -18,7 +18,7 @@
       <tr ng-repeat-end>
         <td colspan="3" class="super-slim">
           <div collapse="team.isCollapsed">
-            <table class="player-details" ng-repeat="p in playerStats.players">
+            <table class="player-details" ng-repeat="p in playerStats.players | orderBy: '-totalPlayerStar'">
               <tr>
                 <td class="player-head-shot"><img ng-src="{{makeHeadShotUrl(p.Player, team.isCollapsed)}}"></td>
                 <td class="player-stats-container">
@@ -28,7 +28,7 @@
                       <th ng-repeat="stat in p.stats | limitTo:5 | orderBy: '-starVal'" ng-bind="stat.name"></th>
                     </tr>
                     <tr>
-                      <td ng-repeat="stat in p.stats | limitTo:5" ng-bind="stat.rank">{{stat.rank}}{{"th"}}</td>
+                      <td ng-repeat="stat in p.stats | limitTo:5 | orderBy: '-starVal" ng-bind="stat.rank">{{stat.rank}}{{"th"}}</td>
                     </tr>
                   </table>
                 </td>

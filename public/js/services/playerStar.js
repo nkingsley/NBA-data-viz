@@ -62,17 +62,13 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
           players[player].stats[stat].starVal = statStarVal;
           players[player].totalPlayerStar += 100*statStarVal/totalStatWeights; // makes the star scores a little less arbitrary
         }
-        //player level
-        if (!players[player].stats){
-          debugger;
-        }
-        players[player].stats.sort(function(stat1, stat2){
-          return stat2.starVal - stat1.starVal;
-        });
+      //   players[player].stats.sort(function(stat1, stat2){
+      //     return stat2.starVal - stat1.starVal;
+      //   });
       }
-      players.sort(function(player1, player2){
-        return player2.totalPlayerStar - player1.totalPlayerStar;
-      });
+      // players.sort(function(player1, player2){
+      //   return player2.totalPlayerStar - player1.totalPlayerStar;
+      // });
     };
     if (players){
       weightPlayers(players.players);

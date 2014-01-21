@@ -416,8 +416,7 @@ exports.teams = [
       exports.teams[team]['starVal'] = rawStar/totalStatWeights;
     }
   };
-  console.log(exports.teams);
-  return exports; // but not here, where all star value properties are set to 0 again.
+  return exports;
 }]);
 
 
