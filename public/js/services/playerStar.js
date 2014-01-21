@@ -46,6 +46,8 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
       return;
     }
     var weightPlayers = function(players){
+      var totalStatWeights = calculateTotalStatWeights(statWeights);
+      debugger;
       for (var player in players){
         players[player].totalPlayerStar = 0;
         for (var stat in players[player].stats){
@@ -58,7 +60,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
           }
           var statStarVal = statWeights[statName].weight * players[player].stats[stat].norm;
           players[player].stats[stat].starVal = statStarVal;
-          players[player].totalPlayerStar += statStarVal;
+          players[player].totalPlayerStar += 100*statStarVal/totalStatWeights; // makes the star scores a little less arbitrary
         }
         //player level
         if (!players[player].stats){
@@ -82,8 +84,19 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
         deferred.resolve({players: players});
     });
     }
-      // team level
     return deferred.promise;
+  };
+
+
+  var calculateTotalStatWeights = function(statWeights){
+    var totalValue = 0;
+    for (var statName in statWeights){
+      if (statName === "__v" || statName === "_id" || statName === "created" || statName === "score"){
+        continue;
+      }
+      totalValue+=parseFloat(statWeights[statName].weight);
+    }
+    return totalValue;
   };
 
   exports.changeSliders = function(nestedSliders, groupName) {

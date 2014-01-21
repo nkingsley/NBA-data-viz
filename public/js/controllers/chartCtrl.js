@@ -29,12 +29,10 @@ angular.module('mean.chart')
       Playerstar.calculatePlayerStarVals(weights, openTeam, players)
       .then(function(teamPlayers){
         $scope.playerStats = teamPlayers;
-        console.log($scope.playerStats);
         $scope.currentTeam = openTeam;
       });
     };
     teamsPromise.then(function(data){
-      appendHackReactorBadge();
       $scope.teamStats = data.teams;
       $scope.weights = data.cats;
       $scope.nestedSliders = Stats.assignNestedSliders($scope.weights, $scope.nestedSliders);
@@ -59,6 +57,7 @@ angular.module('mean.chart')
       document.body.appendChild(a);
     };
 
+    appendHackReactorBadge();
     // tracks the progress of the stats data fetch and processing
     // so that we can display and hide a spinner to indicate to
     // user that something is happening

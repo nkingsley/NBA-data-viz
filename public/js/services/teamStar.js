@@ -327,7 +327,7 @@ exports.teams = [
   {
     abbreviation:"WAS",
     franchise:"Washington Wizards",
-    logo_url: "utah_jazz.gif",
+    logo_url: "wash_wizards.gif",
     winPct:0.483,
     teamColor1: "#C60C30",
     teamColor2: "#FFFFFF",

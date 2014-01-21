@@ -22,13 +22,13 @@
               <tr>
                 <td class="player-head-shot"><img ng-src="{{makeHeadShotUrl(p.Player, team.isCollapsed)}}"></td>
                 <td class="player-stats-container">
-                  <h4>{{playerName}}</h4>
+                  <h4>{{p.Player}} <br>Star Value: {{p.totalPlayerStar | number:1}}</h4>
                   <table class="player-stats">
                     <tr class="player-stats-header">
-                      <th ng-repeat="stat in p.stats | limitTo:5">{{stat.name}}</th>
+                      <th ng-repeat="stat in p.stats | limitTo:5 | orderBy: '-starVal'" ng-bind="stat.name"></th>
                     </tr>
                     <tr>
-                      <td ng-repeat="stat in p.stats | limitTo:5">{{stat.rank}}</td>
+                      <td ng-repeat="stat in p.stats | limitTo:5" ng-bind="stat.rank">{{stat.rank}}{{"th"}}</td>
                     </tr>
                   </table>
                 </td>
