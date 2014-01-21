@@ -3,13 +3,12 @@ var Tp = mongoose.model('Tradedplayer');
 exports.tradedPlayers = {};
 exports.all = function(){
   var d = Q.defer();
-  //todo: find this season's traded players
-  // var currentSeason = new Date();
-  // if (currentSeason.getMonth() < 5){
-  //   currentSeason.setYear(currentSeason.getYear() - 1);
-  // }
-  // currentSeason.setMonth(4);
-  Tp.find()
+  var currentSeason = new Date();
+  if (currentSeason.getMonth() < 8){
+    currentSeason.setYear(currentSeason.getFullYear() - 1);
+  }
+  currentSeason.setMonth(8);
+  Tp.find({created:{$gte:currentSeason}})
   .exec(function(err,data){
     var tps = utils.toObj(data,'PLAYER_ID');
     exports.tradedPlayers = tps;
@@ -40,8 +39,8 @@ exports.destroy = function(player){
     if(err){
       console.log(err);
     }
-  })
-}
+  });
+};
 
 
 exports.handleTrades = function(player,tradedPlayers,missingTradeData){
@@ -74,44 +73,48 @@ exports.addNewPlayerTeam = function(tradedPlayers,allStats){
 
 exports.splitData = function(tradedPlayers,stats,model,map){
   var d = Q.defer();
-  var playersToSplit = [];
+  if (!tradedPlayers){
+    d.resolve();
+    return d.promise;
+  }
+  var toSplit = 0, splitComplete = 0;
+  var cutoffDate = utils.dateTimeless('1-21-2014');
   for (var player in tradedPlayers){
     var tp = tradedPlayers[player];
-    if (tp.created > utils.dateTimeless('1-19-2014')){
+    if (tp.created < cutoffDate){
       continue;
     }
-    playersToSplit.push({created:tp.created,PLAYER_ID:tp.PLAYER_ID});
+    toSplit++;
+    mongoose.model(model)
+    .find({created:tp.created,PLAYER_ID:tp.PLAYER_ID})
+    .limit(1)
+    .exec(function(err,oldPlayerStats){
+      if (op.length > 0){
+        var op = oldPlayerStats[0];
+        var oid = op.PLAYER_ID;
+        var nid = tradedPlayers[oid].newId;
+        stats[nid] = {};
+        for (var stat in stats[oid]){
+          stats[nid][stat] = stats[oid][stat] - op[map[stat].key];
+        }
+        stats[oid] = {};
+        for (var stat in op){
+          stats[oid][map[stat].key] = op[stat];
+        }
+      }
+      splitComplete++;
+      if (toSplit === splitComplete){
+        d.resolve();
+      }
+    });
   }
-  // mongoose.model(model).find(playersToSplit).exec(function(err,oldPlayerStats){
-  //   if (err){
-  //     console.log(err);
-  //   }
-  //   console.log('old players length',oldPlayerStats.length);
-  //   for (var i = 0 ; i < oldPlayerStats.length ; i++){
-  //     var oldPlayer = oldPlayerStats[i];
-  //     // console.log(oldPlayer);
-  //     for (var stat in oldPlayer){
-  //       var oldId = oldPlayer.PLAYER_ID;
-  //       var newId = tradedPlayers[oldId].newId;
-  //       stats[newId] = {};
-  //       for (var stat in stats[oldId]){
-  //         stats[newId][map[stat]] = stats[oldId][stat] - oldPlayer[stat];      
-  //       }
-  //       stats[oldId] = {};
-  //       for (var stat in oldPlayer){
-  //         stats[oldId][map[stat]] = oldPlayer[stat];
-  //       }
-  //     }
-  //   }
-  //   // console.log(stats[2544]); //LeBron!
-  //   d.resolve(stats);
-  // });
-  // return d.promise;
+  if ( toSplit === 0 ){
+    d.resolve();
+  }
   for (var player in stats){
     if (stats[player].TEAM_ABBREVIATION === 'TOTAL'){
-      stats[player].TEAM_ABBREVIATION = tradedPlayers[player].newId;
+      stats[player].TEAM_ABBREVIATION = tradedPlayers[player].newTeam;
     }
   }
-  d.resolve(stats);
   return d.promise;
 };

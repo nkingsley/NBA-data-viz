@@ -10,12 +10,11 @@ exports.normTeams = function(allStats,map){
       teams[pTeam][stat] += allStats[player][stat];
     }
   }
-  var rawTeams = _.cloneDeep(teams);
   toPerMinute(teams,map);
   var mmr = maxMinRange(teams);
   normalize(teams,mmr,map,true);
   appendTeam(teams);
-  return {teamsNorm:teams,Rawteam:rawTeams};
+  return teams;
 };
 
 exports.normPlayers = function(allStats,map,teams){
