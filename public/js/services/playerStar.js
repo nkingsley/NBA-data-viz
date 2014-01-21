@@ -1,8 +1,7 @@
 angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, $http) {
 
   var exports = {};
-  exports.players = [];
-  exports.teamPlayers = {};
+  var exports.teamPlayers = {};
      //needs to generate an object like: 
   // {'SAS': 
   //   {'Aron Baynes': [
@@ -20,7 +19,6 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
     var subroutine = function(openTeam){
       $http.get('/teams/' + openTeam).success(function(data){
         var teamStats = data;
-        console.log(teamStats);
         for (player in teamStats){
           teamStatObj[player] = {};
           for (stat in teamStats[player]){
@@ -42,18 +40,17 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
 
 
   exports.calculatePlayerStarVals = function(statWeights, openTeam){
+    var deferred = $q.defer();
     var statObj;
     //for now, just calculate and return the players for the open team
-
     if (!openTeam){
       return;
     }
     teamStatReq(openTeam)
     .then(function(playerStats){
+      teamPlayers = {}; // clear out the current team object when a new team is opened
       var player, playerName, playerIdx, rawStar, stat;
-      exports.teamPlayers = {};
       var totalStatWeights = exports.totalStatWeights(statWeights);
-      debugger;
       for (playerIdx in playerStats){
         var statArray = [];
         playerName = playerStats[playerIdx]['Player'];
@@ -65,7 +62,6 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
           }
             statStarVal = statWeights[stat]['weight'] * playerStats[playerIdx][stat];
             statStarVal = 100*statStarVal/totalStatWeights;
-            debugger;
             rawStar += statStarVal;
             statObj = {'statName': stat, 'starVal': statStarVal, 'statRank': playerStats[playerIdx][stat + '_rank']};
             if (statArray.length === 0){
@@ -88,12 +84,11 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
           exports.teamPlayers[playerName] = {};
           exports.teamPlayers[playerName]['starVal'] = rawStar/totalStatWeights;
         }
-        debugger;
         exports.teamPlayers[playerName]['statArray'] = statArray;
-        // teamArray[playerIdx]['starVal'] = rawStar/totalStatWeights;
       }
+      deferred.resolve({playerStats: teamPlayers});
     });
-    exports.openTeamPlayers = exports.teamPlayers; //add in sort to have them display
+    return deferred.promise;
   };
 
   // exports.playerWeightedStats = {};
@@ -176,7 +171,12 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', function($q, 
     nest.oldMain = parseFloat(nest.main);
   };
 
+
+
+  debugger;
   return exports;
 }]);
+
+
 
 
