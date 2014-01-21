@@ -10,6 +10,8 @@ body {
   width: 840px;
 }
 .chart-container {
+  position: fixed;
+  bottom: 2px;
   float: left;
   background-color: #fff;
   width: 840px;
