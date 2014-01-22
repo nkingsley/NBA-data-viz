@@ -11,10 +11,9 @@ exports.toArray = function(obj){
 };
 
 exports.reverseTags = function(collection){
-  var map = maps.reverseMap();
   for (var item in collection){
     for (var stat in collection[item]){
-      var name = map[stat].name || map[stat].keep;
+      var name = reverseMap[stat].name || reverseMap[stat].keep;
       var temp = collection[item][stat];
       delete collection[item][stat];
       collection[item][name] = temp;

@@ -38,6 +38,14 @@ var addTags = function(player){
   }
 };
 
+var removeTeamStats = function(player){
+  for (var stat in player){
+    if (map[stat].team){
+      delete player[stat]
+    }
+  }
+};
+
 exports.finish = function(allStats,tradedPlayers){
   var d = Q.defer();
   for (var id in allStats){
@@ -54,13 +62,8 @@ exports.finish = function(allStats,tradedPlayers){
     }
     var playersNorm = normalize.normPlayers(allStats,map,teamsNorm);
     for (var id in playersNorm){
+      removeTeamStats(playersNorm[id]);
       addTags(playersNorm[id]);
-    }
-    var playersRank = ranks.rank(playersNorm);
-    for (var player in playersNorm){
-      for (var stat in playersNorm[player]){
-        playersNorm[player][stat + "_rank"] = playersRank[player][stat];
-      }
     }
     for (var id in allStats){
       addTags(allStats[id]);

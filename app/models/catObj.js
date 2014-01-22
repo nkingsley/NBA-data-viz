@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     schema = {};
 for (var stat in map){
   if (map[stat] && map[stat].name){
-    schema[map[stat].name] = {weight:Number,cat:String};  
+    schema[map[stat].name] = {weight:Number,cat:String,team:Boolean};  
   }
 }
 schema.created = {
@@ -19,10 +19,13 @@ mongoose.model('Catobj', new mongoose.Schema(schema,{collection: 'catobj'}));
 //   var catobj = {};
 // for (var stat in map){
 //   if (map[stat] && map[stat].name){
-//     catobj[map[stat].name] = {weight:5,cat:map[stat].cat};  
+//     catobj[map[stat].name] = {weight:5,cat:map[stat].cat}; 
+//     if (map[stat].team){
+//       catobj[map[stat].name].team = true; 
+//     }
 //   }
 // }
-// catobj.score = .5;
+// catobj.score = 0.5;
 // catobj.created = utils.dateTimeless();
 // var Catobj = mongoose.model('Catobj')
 // var catobj = new Catobj(catobj);

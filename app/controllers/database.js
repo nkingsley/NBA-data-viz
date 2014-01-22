@@ -84,6 +84,9 @@ exports.team = function(req,res){
       console.log(date);
       if (data.length === 0){
         date.setDate(date.getDate()-1);
+        if (date < new Date('1-20-2014')){
+          d.resolve();
+        }
         subroutine(date);
         return;
       }
@@ -93,22 +96,22 @@ exports.team = function(req,res){
   };
   subroutine(date)
   .then(function(data){
-    var playersArr = [];
-    var map = maps.reverseMap();
-    for (var player in data){
-      var playerObj = {
-        Player: data[player].Player,
-        stats: []
-      };
-      for (var stat in data[player]){
-        if (map[stat] && map[stat].name){
-          playerObj.stats.push({name:stat,rank:data[player][stat + '_rank'],norm:data[player][stat]});
-        }
-      }
-      playersArr.push(playerObj);
-    }
+    // var playersArr = [];
+    // var map = maps.reverseMap();
+    // for (var player in data){
+    //   var playerObj = {
+    //     Player: data[player].Player,
+    //     stats: []
+    //   };
+    //   for (var stat in data[player]){
+    //     if (map[stat] && map[stat].name){
+    //       playerObj.stats.push({name:stat,rank:data[player][stat + '_rank'],norm:data[player][stat]});
+    //     }
+    //   }
+    //   playersArr.push(playerObj);
+    // }
     res.setHeader('Content-Type', 'application/JSON');
-    res.end(JSON.stringify(playersArr));
+    res.end(JSON.stringify(data));
   });
 };
 
