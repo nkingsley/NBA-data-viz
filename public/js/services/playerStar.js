@@ -6,7 +6,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
   .then(function(stats){
     exports.cats = stats.cats;
   });
-  var teamStatReq = function(openTeam){
+  exports.teamStatReq = function(openTeam){
     var teamStatObj = {};
     if (!openTeam){
       return;
@@ -43,7 +43,6 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
   };
 
   exports.calculatePlayerStarVals = function(statWeights, openTeam, players){
-    var deferred = $q.defer();
     //for now, just calculate and return the players for the open team
     if (!openTeam){
       return;
@@ -54,40 +53,22 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
         var p = players[player];
         p.scores = {};
         p.totalPlayerStar = 0;
-        for (var stat in p.stats){
-          var statName = p.stats[stat].name;
-          if (statName === "toString"){
+        for (var stat in p){
+          if (stat === "toString"){
             delete(p.stats[stat]);
             continue;
-          } else if (statName === 'totalPlayerStar'){
+          } else if (!statWeights[stat] || !statWeights[stat].cat){
             continue;
           }
-          var statStarVal = statWeights[statName].weight * p.stats[stat].norm;
-          p.stats[stat].starVal = statStarVal;
-          p.scores[nestMap[statWeights[statName].cat]] = p.scores[nestMap[statWeights[statName].cat]] || 0;
-          p.scores[nestMap[statWeights[statName].cat]] += 100*statStarVal/totalStatWeights;
+          var statStarVal = statWeights[stat].weight * p[stat];
+          p.scores[nestMap[statWeights[stat].cat]] = p.scores[nestMap[statWeights[stat].cat]] || 0;
+          p.scores[nestMap[statWeights[stat].cat]] += 100*statStarVal/totalStatWeights;
           p.totalPlayerStar += 100*statStarVal/totalStatWeights; // makes the star scores a little less arbitrary
         }
-      //   players[player].stats.sort(function(stat1, stat2){
-      //     return stat2.starVal - stat1.starVal;
-      //   });
       }
-      debugger;
-      // players.sort(function(player1, player2){
-      //   return player2.totalPlayerStar - player1.totalPlayerStar;
-      // });
     };
-    if (players){
-      weightPlayers(players.players);
-      deferred.resolve({players: players.players});
-    } else{
-      teamStatReq(openTeam)
-      .then(function(players){
-        weightPlayers(players);
-        deferred.resolve({players: players});
-    });
-    }
-    return deferred.promise;
+    weightPlayers(players);
+    exports.teamPlayers = players;
   };
 
 

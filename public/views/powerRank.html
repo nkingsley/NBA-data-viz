@@ -6,29 +6,29 @@
         <th>Rank</th>
         <th colspan="2">Team</th>
       </tr>
-      <tr class="team" ng-repeat-start="team in teams | orderBy: '-starVal'">
-        <td class="team-rank"><span class="rank">{{$index + 1}}</span><span class="star-val">(Star Value: {{team.starVal | number:3}})</span>
+      <tr class="team" ng-repeat-start="team in teams | orderBy: '-starVal' track by team.abbreviation">
+        <td class="team-rank"><span class="rank">{{$index + 1}}</span><span class="star-val">(Star Value: <span ng-bind="team.starVal | number:3"></span>)</span>
         <p class="player-badge-shell">
-          <span class="badge badge-info" ng-click="collapseOther(team); openTeam && calculatePlayerStarVals(weights,openTeam);">Players</span>
+          <span class="badge badge-info" ng-click="collapseOther(team); openTeam && calculatePlayerStarVals(weights,openTeam,players);">Players</span>
         </p>
         </td>
         <td class="team-badge"><img ng-src="img/nba_logos/{{team.logo_url}}"></td>
-        <td class="team-details">{{team.franchise}}</td>
+        <td class="team-details" ng-bind="team.franchise"></td>
       </tr>
       <tr ng-repeat-end>
         <td colspan="3" class="super-slim">
           <div collapse="team.isCollapsed">
-            <table class="player-details" ng-repeat="p in playerStats.players | orderBy: '-totalPlayerStar'">
+            <table class="player-details" ng-repeat="p in playerStats | orderBy: '-totalPlayerStar' track by p.PLAYER_ID">
               <tr>
                 <td class="player-head-shot"><img ng-src="{{makeHeadShotUrl(p.Player, team.isCollapsed)}}"></td>
                 <td class="player-stats-container">
-                  <h4>{{p.Player}} <br>Star Value: {{p.totalPlayerStar | number:1}}</h4>
+                  <h4>{{p.Player}} <br>Star Value: <span ng-bind="p.totalPlayerStar | number:1"></span></h4>
                   <table class="player-stats">
                     <tr class="player-stats-header">
-                      <th ng-repeat="(name, score) in p.scores">{{name}}</th>
+                      <th ng-repeat="(name, score) in p.scores track by name"><span ng-bind="name"></span></th>
                     </tr>
                     <tr>
-                      <td ng-repeat="(name, score) in p.scores">{{score | number:2}}</td>
+                      <td ng-repeat="(name, score) in p.scores track by name">{{score | number:2}}</td>
                     </tr>
                   </table>
                 </td>
@@ -43,7 +43,7 @@
     <div class="slider-shell" ng-repeat="(groupName, group) in nestedSliders">
       <div class="top-slider">
         <label><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
-        <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculateTeamStarVals(teamStats,weights,teams);calculatePlayerStarVals(weights,openTeam)" min="0" max="10" step="0.5" ng-model="group.main"/>
+        <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculateTeamStarVals(teamStats,weights,teams);openTeam && calculatePlayerStarVals(weights,openTeam,players)" min="0" max="10" step="0.5" ng-model="group.main"/>
         <span class="weight badge badge-success">{{group.main}}</span>
       </div>
       <div class="nested-sliders-shell" collapse="isCollapsed">
@@ -52,7 +52,7 @@
         <!-- <ul ng-show = "group.show"> -->
           <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
             <label>{{statName}}</label>
-            <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-change="changeSliders(nestedSliders,statName,groupName);calculateTeamStarVals(teamStats,weights,teams);calculatePlayerStarVals(weights,openTeam)"/>
+            <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-change="changeSliders(nestedSliders,statName,groupName);calculateTeamStarVals(teamStats,weights,teams);  openTeam && calculatePlayerStarVals(weights,openTeam,players)"/>
             <span class="weight badge badge-info">{{statNum.weight}}</span>
           </li>
         </ul>

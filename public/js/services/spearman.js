@@ -10,7 +10,6 @@ angular.module('mean.chart').factory('Spearman', ['Global', 'Teamstar', function
   };
   Global.stats
   .then(function(data){
-    debugger;
     rankBy(data.teams,"winPct");
   });
 
@@ -26,10 +25,8 @@ angular.module('mean.chart').factory('Spearman', ['Global', 'Teamstar', function
     }, 0);
     var n = teams.length;
     var rhoVal = 1 - (6*sum)/(Math.pow(n,3)-n);
-
     return rhoVal;
   };
 
   return exports;
-
 }]);

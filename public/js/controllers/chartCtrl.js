@@ -1,14 +1,12 @@
 angular.module('mean.chart')
   .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar',
-    'promiseTracker',
+    'promiseTracker', 
     function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
     var teamsPromise = Global.stats;
-    var playerPromise = Playerstar.stats;
     $scope.options = {width: 840, height: 500};
     //$scope.teams should be replaced by the object at Global.teams
     // $scope.players = Playerstar.players;
     $scope.calculateTeamStarVals = Teamstar.calculateTeamStarVals;
-    $scope.calculatePlayerStars = Playerstar.calculatePlayerStars;
     // $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
     // $scope.playerWeightedStats = Stats.playerWeightedStats;
     // $scope.calculatePlayerWeightedStats = Stats.calculatePlayerWeightedStats;
@@ -16,22 +14,26 @@ angular.module('mean.chart')
     $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
-    $scope.stats = Stats.stats;
     $scope.weights = {};
     $scope.currentTeam = null;
+
     $scope.calculatePlayerStarVals = function(weights,openTeam){
       if (openTeam === $scope.currentTeam){
         var players = $scope.playerStats;
-      } else {
-        var players = null;
-      }
-      Playerstar.calculatePlayerStarVals(weights, openTeam, players)
-      .then(function(teamPlayers){
+
+        Playerstar.calculatePlayerStarVals(weights,openTeam,players);
+        var teamPlayers = Playerstar.teamPlayers
         $scope.playerStats = teamPlayers;
-        $scope.currentTeam = openTeam;
-        console.log($scope.playerStats);
-      });
+      } else {
+        Playerstar.teamStatReq(openTeam)
+        .then(function(players){
+          Playerstar.calculatePlayerStarVals(weights,openTeam,players);
+          $scope.playerStats = Playerstar.teamPlayers;
+          $scope.currentTeam = openTeam;
+        });
+      }
     };
+
     teamsPromise.then(function(data){
       $scope.teamStats = data.teamStats;
       $scope.weights = data.cats;
