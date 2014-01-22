@@ -1,6 +1,6 @@
 // service delivering stat information for any controller that requires it
 angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Global) {
- 
+   // Should be renamed to sliders.
   var exports = {};
 
 
@@ -11,11 +11,19 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       },
       Shooting:{
         main:5,
-        oldMain:5
+        oldMain:5,
+        TeamShooting: {
+          main: 5,
+          oldMain: 5
+        }
       },
       Defense:{
         main:5,
-        oldMain:5
+        oldMain:5,
+        TeamDefense: {
+          main:5,
+          oldMain:5
+        }
       },
       Rebounding:{
         main:5,
@@ -30,16 +38,24 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
     exports.assignNestedSliders = function (statWeights, nestedSliders){
       for (var statName in statWeights) {
         switch(statWeights[statName].cat) {
-          case "PSS"  : 
+          case "PSS": 
             nestedSliders.Possession[statName] = statWeights[statName];
             break;
           case "SHT":
+            if (statWeights[statName].team){
+              nestedSliders.Shooting.TeamShooting[statName] = statWeights[statName];
+              break;
+            }
             nestedSliders.Shooting[statName] = statWeights[statName];
-            break; 
+            break;
           case "DEF":
+            if (statWeights[statName].team){
+              nestedSliders.Defense.TeamDefense[statName] = statWeights[statName];
+              break;
+            }
             nestedSliders.Defense[statName] = statWeights[statName];
             break;
-          case "REB"  : 
+          case "REB": 
             nestedSliders.Rebounding[statName] = statWeights[statName];
             break;
           case "MSC":
