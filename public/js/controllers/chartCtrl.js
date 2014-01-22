@@ -20,7 +20,6 @@ angular.module('mean.chart')
     $scope.calculatePlayerStarVals = function(weights,openTeam){
       if (openTeam === $scope.currentTeam){
         var players = $scope.playerStats;
-
         Playerstar.calculatePlayerStarVals(weights,openTeam,players);
         var teamPlayers = Playerstar.teamPlayers
         $scope.playerStats = teamPlayers;
@@ -91,6 +90,8 @@ angular.module('mean.chart')
       team.isCollapsed = !team.isCollapsed;
       $scope.openTeam = team.isCollapsed ? null : team.abbreviation;
     };
+    
+
 
     $scope.updateRho = function (){
       $scope.rhoVal = $scope.spearman.rho($scope.teams);

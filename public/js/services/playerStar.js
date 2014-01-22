@@ -33,7 +33,6 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
     return d.promise;
   };
 
-
   var nestMap = {
     DEF: "Defense",
     SHT: "Shooting",
@@ -62,8 +61,8 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
           }
           var statStarVal = statWeights[stat].weight * p[stat];
           p.scores[nestMap[statWeights[stat].cat]] = p.scores[nestMap[statWeights[stat].cat]] || 0;
-          p.scores[nestMap[statWeights[stat].cat]] += 100*statStarVal/totalStatWeights;
-          p.totalPlayerStar += 100*statStarVal/totalStatWeights; // makes the star scores a little less arbitrary
+          p.scores[nestMap[statWeights[stat].cat]] += statStarVal/(10*totalStatWeights);
+          p.totalPlayerStar += statStarVal/(10*totalStatWeights); // makes the star scores a little less arbitrary
         }
       }
     };

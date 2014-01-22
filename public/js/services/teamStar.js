@@ -77,6 +77,7 @@ var exports = {};
           stat === "created" || stat === "score" || stat === 'Team'){
           continue;
         }
+        debugger;
           statStarVal = statWeights[stat]['weight'] * teamStats[teamName][stat];
           rawStar += statStarVal;
       }
