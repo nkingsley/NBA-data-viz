@@ -28,8 +28,6 @@ exports.normPlayers = function(allStats,map,teams){
   var mmr = maxMinRange(players,cutoff);
   normalize(players,mmr,map,true);
   toTotal(players,map);
-  var mmrNT = maxMinRange(players,cutoff);
-  normalize(players,mmrNT,map,false);
   return players;
 };
 

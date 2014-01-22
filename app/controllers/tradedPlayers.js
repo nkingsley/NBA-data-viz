@@ -78,7 +78,7 @@ exports.splitData = function(tradedPlayers,stats,model,map){
     return d.promise;
   }
   var toSplit = 0, splitComplete = 0;
-  var cutoffDate = utils.dateTimeless('1-21-2014');
+  var cutoffDate = utils.dateTimeless('1-22-2014');
   for (var player in tradedPlayers){
     var tp = tradedPlayers[player];
     if (tp.created < cutoffDate){
@@ -89,8 +89,8 @@ exports.splitData = function(tradedPlayers,stats,model,map){
     .find({created:tp.created,PLAYER_ID:tp.PLAYER_ID})
     .limit(1)
     .exec(function(err,oldPlayerStats){
-      if (op.length > 0){
-        var op = oldPlayerStats[0];
+      var op = oldPlayerStats[0];
+      if (op){
         var oid = op.PLAYER_ID;
         var nid = tradedPlayers[oid].newId;
         stats[nid] = {};

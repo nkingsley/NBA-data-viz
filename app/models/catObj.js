@@ -21,7 +21,7 @@ mongoose.model('Catobj', new mongoose.Schema(schema,{collection: 'catobj'}));
 //   if (map[stat] && map[stat].name){
 //     catobj[map[stat].name] = {weight:5,cat:map[stat].cat}; 
 //     if (map[stat].team){
-//       catobj[map[stat].name].team = true; 
+//       catobj[map[stat].name] = {weight:5,cat:'TM_DEF'}; 
 //     }
 //   }
 // }
