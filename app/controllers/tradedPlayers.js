@@ -78,7 +78,7 @@ exports.splitData = function(tradedPlayers,stats,model,map){
     return d.promise;
   }
   var toSplit = 0, splitComplete = 0;
-  var cutoffDate = utils.dateTimeless('1-21-2014');
+  var cutoffDate = utils.dateTimeless('1-22-2014');
   for (var player in tradedPlayers){
     var tp = tradedPlayers[player];
     if (tp.created < cutoffDate){

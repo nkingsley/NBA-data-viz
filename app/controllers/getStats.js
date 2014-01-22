@@ -1,7 +1,7 @@
 var statModels = require('../models/statModels'),curl = require('curling'),_ = require('lodash'),
 statControl = require('./statControl'),db = require('./database'),
 ma = require('./movingAverage'), tp = require('./tradedPlayers'), mongoose = require('mongoose'), 
-allStats = {}, urlsToGet = 12, urlsGotten = 0, mustRerun = false;
+allStats = {}, urlsToGet = 11, urlsGotten = 0, mustRerun = false;
 
 var fixHeaders = function(headers){
   //some stats have nested headers.  This concats the correct top-level header onto the lower-level header
@@ -86,7 +86,7 @@ var compileStats = function(stats,headers,fix,missingTradeData){
 };
 
 var urls = [
-  'http://stats.nba.com/stats/leaguedashplayershotlocations?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&DistanceRange=By+Zone&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench=&pageNo=1&rowsPerPage=25',
+  // 'http://stats.nba.com/stats/leaguedashplayershotlocations?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&DistanceRange=By+Zone&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench=&pageNo=1&rowsPerPage=25',
   'http://stats.nba.com/stats/leaguedashplayershotlocations?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Opponent&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&DistanceRange=By+Zone&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench='
 ];
 
