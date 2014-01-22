@@ -18,18 +18,20 @@ angular.module('mean.chart')
     $scope.currentTeam = null;
 
     $scope.calculatePlayerStarVals = function(weights,openTeam){
+      debugger;
       if (openTeam === $scope.currentTeam){
         var players = $scope.playerStats;
-
         Playerstar.calculatePlayerStarVals(weights,openTeam,players);
-        var teamPlayers = Playerstar.teamPlayers
+        var teamPlayers = Playerstar.teamPlayers;
         $scope.playerStats = teamPlayers;
+        $scope.inflate(openTeam);
       } else {
         Playerstar.teamStatReq(openTeam)
         .then(function(players){
           Playerstar.calculatePlayerStarVals(weights,openTeam,players);
           $scope.playerStats = Playerstar.teamPlayers;
           $scope.currentTeam = openTeam;
+          $scope.inflate(openTeam);
         });
       }
     };
@@ -91,7 +93,20 @@ angular.module('mean.chart')
       team.isCollapsed = !team.isCollapsed;
       $scope.openTeam = team.isCollapsed ? null : team.abbreviation;
     };
-
+    $scope.collapseAll = function(){
+      for (var i = 0 ; i < $scope.teams.length ; i++){
+        if (!$scope.teams[i].isCollapsed){
+          $scope.teams[i].isCollapsed = true;
+        }
+      }
+    };
+    $scope.inflate = function(team){
+      for (var i = 0 ; i < $scope.teams.length ; i++){
+        if ($scope.teams[i].abbreviation === team){
+          $scope.teams[i].isCollapsed = false;
+        }
+      }
+    };
     $scope.updateRho = function (){
       $scope.rhoVal = $scope.spearman.rho($scope.teams);
     };

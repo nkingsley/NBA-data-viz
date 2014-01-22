@@ -4,17 +4,17 @@ body {
   background-color: #f3f3f3;
 }
 .container {
-  width: 1170px;
+  /*width: 1170px;*/
 }
 .intro-container {
-  width: 840px;
+  /*width: 840px;*/
 }
 .chart-container {
   position: fixed;
   bottom: 2px;
   float: left;
   background-color: #fff;
-  width: 840px;
+  /*width: 840px;*/
   height: 600px;
   border: 1px solid #ccc;
   margin-bottom: 20px;
@@ -22,7 +22,6 @@ body {
 .power-rank-container {
   float: left;
   background-color: #fff;
-  width: 840px;
   margin-bottom: 20px;
 }
 .btn-container {
@@ -102,6 +101,13 @@ body {
 /* Power Rank Table Styles
  * ==========================================================================*/
 .teams {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  /*justify-content: space-around;*/
   margin-bottom: 0;
   border-radius: 2px;
 }
@@ -156,11 +162,13 @@ body {
   width: 50px;
 }
 .player-details {
-  width: 838px;
+  /*width: 838px;*/
+  flex:6;
   border-bottom: 1px solid #ccc;
 }
 .player-head-shot {
-  width: 128px;
+  flex:1;
+  /*width: 128px;*/
 }
 .player-head-shot img {
   width: 128px;
@@ -172,7 +180,8 @@ body {
 .player-stats {
   border: 1px solid #ccc;
   padding: 8px;
-  width: 674px;
+  flex:4;
+  /*width: 674px;*/
   table-layout:fixed;
   background-color: #fff;
 }

@@ -47,7 +47,7 @@ exports.map = {
   FGM: {name:'FG Made',cat: 'SHT', posneg: 'POS'},
   FGA: {name: 'FG Missed', callback: cbs.stdMisses, compare:'FGM', cat: 'SHT', posneg: 'NEG'},
   FG3M: {name:'FG3 Made', cat: 'SHT', posneg: 'POS'},
-  FG3A: {name:'FG3 Missed', compare:'FG3M', cat: 'SHT', posneg: 'NEG'},
+  FG3A: {name:'FG3 Missed', callback: cbs.stdMisses, compare:'FG3M', cat: 'SHT', posneg: 'NEG'},
   FG3_PCT: {},
   EFG_PCT: {},
   PTS_TOT: {},

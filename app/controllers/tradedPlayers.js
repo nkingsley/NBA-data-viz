@@ -89,8 +89,8 @@ exports.splitData = function(tradedPlayers,stats,model,map){
     .find({created:tp.created,PLAYER_ID:tp.PLAYER_ID})
     .limit(1)
     .exec(function(err,oldPlayerStats){
-      if (op.length > 0){
-        var op = oldPlayerStats[0];
+      var op = oldPlayerStats[0];
+      if (op){
         var oid = op.PLAYER_ID;
         var nid = tradedPlayers[oid].newId;
         stats[nid] = {};
