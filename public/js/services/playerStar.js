@@ -75,7 +75,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
   var calculateTotalStatWeights = function(statWeights){
     var totalValue = 0;
     for (var statName in statWeights){
-      if (statName === "__v" || statName === "_id" || statName === "created" || statName === "score"){
+      if (statName === "__v" || statName === "_id" || statName === "created" || statName === "score" || statWeights[statName].cat === "TM_DEF"){
         continue;
       }
       totalValue+=parseFloat(statWeights[statName].weight);

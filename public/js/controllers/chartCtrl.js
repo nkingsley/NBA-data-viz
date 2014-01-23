@@ -15,23 +15,22 @@ angular.module('mean.chart')
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
     $scope.weights = {};
-    $scope.currentTeam = null;
+    // $scope.currentTeam = null;
 
     $scope.calculatePlayerStarVals = function(weights,openTeam){
       if ($scope.allPlayers){
         Playerstar.calculatePlayerStarVals(weights,openTeam,$scope.allPlayers);
         $scope.playerStats = Playerstar.teamPlayers;
-        setTimeout(function(){
-          console.log(Playerstar.teamPlayers);
-        });
         $scope.inflate(openTeam);
+        $scope.openTeam = openTeam
+
       } else {
         Playerstar.teamStatReq()
         .then(function(players){
           $scope.allPlayers = players;
           Playerstar.calculatePlayerStarVals(weights,openTeam,players);
           $scope.playerStats = Playerstar.teamPlayers;
-          $scope.currentTeam = openTeam;
+          $scope.openTeam = openTeam;
           $scope.inflate(openTeam);
         });
       }
