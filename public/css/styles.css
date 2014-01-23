@@ -1,3 +1,4 @@
+
 body {
   font: 14px sans-serif
   color: #ccc;
@@ -191,7 +192,25 @@ body {
   font-size: 12px;
 }
 
+.contains{
+  padding: 20px;
+}
+.powerRank, .playerRank{
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row;
+  /*justify-content: space-around;*/
+}
+.teamsContainer {
+  flex:4;
+}
+.playersContainer{
+  flex:4;
+}
 
-
-
-
+.slidersContainer {
+  flex:2;
+}

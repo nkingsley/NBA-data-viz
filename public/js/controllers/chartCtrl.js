@@ -16,7 +16,16 @@ angular.module('mean.chart')
     $scope.rhoVal = 0;
     $scope.weights = {};
     // $scope.currentTeam = null;
-
+    $scope.playersGotten = function(weights){
+      if ($scope.allPlayers){
+        return true;
+      } else if (Playerstar.allPlayers){
+        $scope.allPlayers = Playerstar.allPlayers;
+        return true;
+      } else {
+        return false;
+      }
+    };
     $scope.calculatePlayerStarVals = function(weights,openTeam){
       if ($scope.allPlayers){
         Playerstar.calculatePlayerStarVals(weights,openTeam,$scope.allPlayers);
