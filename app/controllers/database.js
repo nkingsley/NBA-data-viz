@@ -1,4 +1,4 @@
-var mongoose = require('mongoose'), utils =require('./utils'), q = require('Q'), 
+var mongoose = require('mongoose'), utils =require('./utils'), q = require('q'), 
 statControl = require('./statControl'), maps = require('./map');
 
 exports.newHighScore = function(req,res){

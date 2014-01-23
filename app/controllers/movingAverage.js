@@ -1,5 +1,5 @@
 var utils = require('./utils'), mongoose = require('mongoose'),
-db = require('./database'), statControl = require('./statControl'), q = require('Q');
+db = require('./database'), statControl = require('./statControl'), q = require('q');
 
 exports.movingAverage = function(rawStats){
   var d = q.defer();
