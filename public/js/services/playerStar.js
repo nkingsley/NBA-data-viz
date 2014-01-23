@@ -2,37 +2,35 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
 
   var exports = {};
   exports.teamPlayers = {};
+  var teamStatObj = {};
   Global.stats
   .then(function(stats){
     exports.cats = stats.cats;
   });
-  exports.teamStatReq = function(openTeam){
-    var teamStatObj = {};
-    if (!openTeam){
-      return;
-    }
+  exports.teamStatReq = function(){
     var d = $q.defer();
-    var subroutine = function(openTeam){
-      $http.get('/teams/' + openTeam).success(function(data){
-        var teamStats = data;
-        for (var player in teamStats){
-          teamStatObj[player] = {};
-          for (var stat in teamStats[player]){
-            if (stat === "MIN" || stat === "GP" || stat === "__v" || stat === "_id" ||
-            stat === "created" || stat === "score"){
-              continue;
-            } else {
-              teamStatObj[player][stat] = teamStats[player][stat];
-            }
-          }
-        }
+    var subroutine = function(){
+      $http.get('/players').success(function(data){
+        // var playerStats = data;
+        // for (var player in playerStats){
+        //   p = playerStats[player];
+        //   teamStatObj[p.Team] = teamStatObj[p.Team] || {};
+        //   teamStatObj[p.Team][p.Player] = teamStatObj[p.Team][p.Player] || {};
+        //   for (var stat in p){
+        //     if (stat === "MIN" || stat === "GP" || stat === "__v" || stat === "_id" ||
+        //     stat === "created" || stat === "score" || stat === "Team" || stat === "PLAYER_ID" || stat === "Player"){
+        //       continue;
+        //     } else {
+        //       teamStatObj[p.Team][p.Player][stat] = playerStats[player][stat];
+        //     }
+        //   }
+        // }
         d.resolve(data);
       });
     };
-    subroutine(openTeam);
+    subroutine();
     return d.promise;
   };
-
 
   var nestMap = {
     DEF: "Defense",
@@ -49,26 +47,28 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
     }
     var weightPlayers = function(players){
       var totalStatWeights = calculateTotalStatWeights(statWeights);
+      var team = [];
       for (var player in players){
+        if (players[player].Team !== openTeam){
+          continue;
+        }
         var p = players[player];
-        p.scores = {};
-        p.totalPlayerStar = 0;
+        var pWeighted = {name:p.Player,scores:{},totalPlayerStar:0};
         for (var stat in p){
-          if (stat === "toString"){
-            delete(p.stats[stat]);
-            continue;
-          } else if (!statWeights[stat] || !statWeights[stat].cat){
+          if (!statWeights[stat] || !statWeights[stat].cat){
             continue;
           }
           var statStarVal = statWeights[stat].weight * p[stat];
-          p.scores[nestMap[statWeights[stat].cat]] = p.scores[nestMap[statWeights[stat].cat]] || 0;
-          p.scores[nestMap[statWeights[stat].cat]] += 100*statStarVal/totalStatWeights;
-          p.totalPlayerStar += 100*statStarVal/totalStatWeights; // makes the star scores a little less arbitrary
+          pWeighted.scores[nestMap[statWeights[stat].cat]] = pWeighted.scores[nestMap[statWeights[stat].cat]] || 0;
+          pWeighted.scores[nestMap[statWeights[stat].cat]] += statStarVal/(10*totalStatWeights);
+          pWeighted.totalPlayerStar += statStarVal/(10*totalStatWeights); // makes the star scores a little less arbitrary
         }
+        team.push(pWeighted);
       }
+      return team;
     };
-    weightPlayers(players);
-    exports.teamPlayers = players;
+    var team = weightPlayers(players);
+    exports.teamPlayers = team;
   };
 
 

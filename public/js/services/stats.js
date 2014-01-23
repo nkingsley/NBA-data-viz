@@ -3,7 +3,6 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
    // Should be renamed to sliders.
   var exports = {};
 
-
     exports.nestedSliders = {
       Possession:{
         main:5,
@@ -11,19 +10,11 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       },
       Shooting:{
         main:5,
-        oldMain:5,
-        TeamShooting: {
-          main: 5,
-          oldMain: 5
-        }
+        oldMain:5
       },
       Defense:{
         main:5,
-        oldMain:5,
-        TeamDefense: {
-          main:5,
-          oldMain:5
-        }
+        oldMain:5
       },
       Rebounding:{
         main:5,
@@ -33,6 +24,10 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
         main:5,
         oldMain:5
       },
+      "Team Defense": {
+        main: 5,
+        oldMain:5
+      }
     };
 
     exports.assignNestedSliders = function (statWeights, nestedSliders){
@@ -42,17 +37,9 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
             nestedSliders.Possession[statName] = statWeights[statName];
             break;
           case "SHT":
-            if (statWeights[statName].team){
-              nestedSliders.Shooting.TeamShooting[statName] = statWeights[statName];
-              break;
-            }
             nestedSliders.Shooting[statName] = statWeights[statName];
             break;
           case "DEF":
-            if (statWeights[statName].team){
-              nestedSliders.Defense.TeamDefense[statName] = statWeights[statName];
-              break;
-            }
             nestedSliders.Defense[statName] = statWeights[statName];
             break;
           case "REB": 
@@ -60,6 +47,9 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
             break;
           case "MSC":
             nestedSliders.Miscellaneous[statName] = statWeights[statName];
+            break;
+          case "TM_DEF":
+            nestedSliders["Team Defense"][statName] = statWeights[statName];
             break;
         }
       }
