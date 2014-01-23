@@ -32,12 +32,12 @@ angular.module('mean.chart')
         $scope.playerStats = Playerstar.teamPlayers;
         $scope.inflate(openTeam);
         $scope.openTeam = openTeam
-
       } else {
         Playerstar.teamStatReq()
         .then(function(players){
           $scope.allPlayers = players;
           Playerstar.calculatePlayerStarVals(weights,openTeam,players);
+          debugger;
           $scope.playerStats = Playerstar.teamPlayers;
           $scope.openTeam = openTeam;
           $scope.inflate(openTeam);

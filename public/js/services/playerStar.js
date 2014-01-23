@@ -47,9 +47,9 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
     }
     var weightPlayers = function(players){
       var totalStatWeights = calculateTotalStatWeights(statWeights);
-      var team = [];
+      var result = [];
       for (var player in players){
-        if (players[player].Team !== openTeam){
+        if (players[player].Team !== openTeam  && openTeam !== 'ALL'){
           continue;
         }
         var p = players[player];
@@ -62,15 +62,14 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
           pWeighted.scores[nestMap[statWeights[stat].cat]] = pWeighted.scores[nestMap[statWeights[stat].cat]] || 0;
           pWeighted.scores[nestMap[statWeights[stat].cat]] += statStarVal/(10*totalStatWeights);
           pWeighted.totalPlayerStar += statStarVal/(10*totalStatWeights); // makes the star scores a little less arbitrary
+          debugger;
         }
-        team.push(pWeighted);
+        result.push(pWeighted);
       }
-      return team;
+      return result;
     };
-    var team = weightPlayers(players);
-    exports.teamPlayers = team;
+    exports.teamPlayers = weightPlayers(players);
   };
-
 
   var calculateTotalStatWeights = function(statWeights){
     var totalValue = 0;
