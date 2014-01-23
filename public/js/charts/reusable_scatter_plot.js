@@ -15,7 +15,7 @@ d3.custom.scatterPlot = function module() {
         chartH = height - margin.top - margin.bottom;
       
       var x = d3.scale.linear()
-        .domain([0, 1])
+        .domain([15, 40])
         // .domain([d3.min(_data, function(d) { return d.starVal; }),
         //   d3.max(_data, function(d) { return d.starVal; })])
         .range([0, chartW]);
@@ -27,7 +27,7 @@ d3.custom.scatterPlot = function module() {
       var xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
-        .tickFormat(d3.format("0.1r"));
+        // .tickFormat(d3.format("0.1r"));
 
       var yAxis = d3.svg.axis()
         .scale(y)

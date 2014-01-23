@@ -9,7 +9,7 @@
       <tr class="team" ng-repeat-start="team in teams | orderBy: '-starVal' track by team.abbreviation">
         <td class="team-rank"><span class="rank">{{$index + 1}}</span><span class="star-val">(Star Value: <span ng-bind="team.starVal | number:3"></span>)</span>
         <p class="player-badge-shell">
-          <span class="badge badge-info" ng-click="openTeam = !openTeam; collapseAll();calculatePlayerStarVals(weights,team.abbreviation);">Players</span>
+          <span class="badge badge-info" ng-click="collapseAll(); clickTrack(); calculatePlayerStarVals(weights,team.abbreviation);">Players</span>
         </p>
         </td>
         <td class="team-badge"><img ng-src="img/nba_logos/{{team.logo_url}}"></td>
@@ -18,7 +18,6 @@
       <tr ng-repeat-end>
         <td colspan="3" class="super-slim">
           <div ng-if="!team.isCollapsed">
-            <div collapsed="team.isCollapsed">
             <table class="player-details" ng-repeat="p in playerStats | orderBy: '-totalPlayerStar' track by p.name">
               <tr>
                 <td class="player-head-shot"><img ng-src="{{makeHeadShotUrl(p.name, team.isCollapsed)}}"></td>

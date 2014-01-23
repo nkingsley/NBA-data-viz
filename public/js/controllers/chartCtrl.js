@@ -14,8 +14,9 @@ angular.module('mean.chart')
     $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
-    $scope.weights = {};
-    // $scope.currentTeam = null;
+    $scope.secondClick = false;
+    $scope.weights = Stats.nestedSliders;
+
     $scope.playersGotten = function(weights){
       if ($scope.allPlayers){
         return true;
@@ -27,17 +28,22 @@ angular.module('mean.chart')
       }
     };
     $scope.calculatePlayerStarVals = function(weights,openTeam){
+      debugger;
+      if (openTeam === $scope.openTeam && $scope.secondClick){
+        $scope.collapseAll();
+        $scope.openTeam = null;
+        return;
+      }
       if ($scope.allPlayers){
         Playerstar.calculatePlayerStarVals(weights,openTeam,$scope.allPlayers);
         $scope.playerStats = Playerstar.teamPlayers;
         $scope.inflate(openTeam);
-        $scope.openTeam = openTeam
+        $scope.openTeam = openTeam;
       } else {
         Playerstar.teamStatReq()
         .then(function(players){
           $scope.allPlayers = players;
           Playerstar.calculatePlayerStarVals(weights,openTeam,players);
-          debugger;
           $scope.playerStats = Playerstar.teamPlayers;
           $scope.openTeam = openTeam;
           $scope.inflate(openTeam);
@@ -90,6 +96,10 @@ angular.module('mean.chart')
     $scope.allCollapsed = true;
     $scope.openTeam = null; // expanded team abbreviation
     $scope.isCollapsed = true;
+
+    $scope.clickTrack = function(){
+      $scope.secondClick = !$scope.secondClick;
+    };
 
     $scope.collapseOther = function (team){
       if ($scope.openTeam && $scope.openTeam !== team.abbreviation){
