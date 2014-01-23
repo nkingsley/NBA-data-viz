@@ -62,7 +62,6 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
           pWeighted.scores[nestMap[statWeights[stat].cat]] = pWeighted.scores[nestMap[statWeights[stat].cat]] || 0;
           pWeighted.scores[nestMap[statWeights[stat].cat]] += statStarVal/(10*totalStatWeights);
           pWeighted.totalPlayerStar += statStarVal/(10*totalStatWeights); // makes the star scores a little less arbitrary
-          debugger;
         }
         result.push(pWeighted);
       }
