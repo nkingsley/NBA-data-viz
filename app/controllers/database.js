@@ -33,6 +33,7 @@ exports.players = function(req,res){
         date.setDate(date.getDate()-1);
         if (date < new Date('1-20-2014')){
           d.resolve();
+          return;
         }
         subroutine(date);
         return;
