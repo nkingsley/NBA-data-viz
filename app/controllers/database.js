@@ -23,6 +23,22 @@ exports.saveWins = function(wl){
   });
 };
 
+exports.checkDate = function(date){
+  var noStatsToday = q.defer();
+  mongoose.model('Playernorm').find({created:{$gte:date}},function(err,data){
+    if (!data){
+      noStatsToday.resolve(true);
+      return;
+    }
+    if (data.length === 0){
+      noStatsToday.resolve(true);
+      return;
+    }
+    noStatsToday.resolve(false);
+  });
+  return noStatsToday.promise;
+};
+
 exports.players = function(req,res){
   var date = utils.dateTimeless();
   var subroutine = function(date){
