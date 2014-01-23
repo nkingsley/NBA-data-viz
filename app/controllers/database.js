@@ -27,7 +27,7 @@ exports.players = function(req,res){
   var date = utils.dateTimeless();
   var subroutine = function(date){
     var d = q.defer();
-    mongoose.model('Playernorm').find({created:date},function(err,data){
+    mongoose.model('Playernorm').find({created:{$gte:date}},function(err,data){
       console.log(date);
       if (data.length === 0){
         date.setDate(date.getDate()-1);
