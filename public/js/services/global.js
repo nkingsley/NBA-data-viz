@@ -108,7 +108,7 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
   {
     abbreviation:"GSW",
     franchise:"Golden State Warriors",
-    logo_url: "gs_warriors.png",
+    logo_url: "gs_warriors.gif",
     winPct: 0,
     teamColor1: "#04529c",
     teamColor2: "#FFCC33",
@@ -207,7 +207,7 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
   {
     abbreviation:"NOP",
     franchise:"New Orleans Pelicans",
-    logo_url: "no_pelicans.png",
+    logo_url: "no_pelicans.gif",
     winPct: 0,
     teamColor1: "#072248",
     teamColor2: "#A1854D",
@@ -262,7 +262,7 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
   {
     abbreviation:"PHX",
     franchise:"Phoenix Suns",
-    logo_url: "phnx_suns.png",
+    logo_url: "phnx_suns.gif",
     winPct: 0,
     teamColor1: "#FF8800",
     teamColor2: "#423189",

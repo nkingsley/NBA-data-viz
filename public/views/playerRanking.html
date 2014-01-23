@@ -1,6 +1,6 @@
-<div data-ng-controller="chartCtrl" data-ng-init = "calculatePlayerStarVals(weights,'ALL')">
+<div data-ng-controller="chartCtrl" data-ng-init = "calculatePlayerStarVals('ALL',false)">
 <div class="playerRank">
-  <div class = "playersContainer">
+  <div class = "playersContainer" cg-busy="{tracker:'loadingTracker'}">
     <table class="player-details" ng-repeat="p in playerStats | orderBy: '-totalPlayerStar' | limitTo: 50 track by p.name" >
       <tr>
         <td class="player-head-shot"><img ng-src="{{makeHeadShotUrl(p.name, false)}}"></td>
@@ -20,21 +20,23 @@
   </div>
   <div class = "slidersContainer">
     <div class="slider-shell" ng-repeat="(groupName, group) in nestedSliders">
-      <div class="top-slider">
-        <label><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
-        <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculatePlayerStarVals(weights,'ALL');" min="0" max="10" step="0.5" ng-model="group.main"/>
-        <span class="weight badge badge-success">{{group.main}}</span>
-      </div>
-      <div class="nested-sliders-shell" collapse="isCollapsed">
-        <!-- <a ng-click = "group.show = !group.show">expand</a> -->
-        <ul class="nested-sliders">
-        <!-- <ul ng-show = "group.show"> -->
-          <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
-            <label>{{statName}}</label>
-            <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-change="changeSliders(nestedSliders,statName,groupName);calculatePlayerStarVals(weights,'ALL')"/>
-            <span class="weight badge badge-info">{{statNum.weight}}</span>
-          </li>
-        </ul>
+      <div ng-if = "groupName !== 'Team Defense'">
+        <div class="top-slider">
+          <label><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
+          <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculatePlayerStarVals('ALL',false);" min="0" max="10" step="0.5" ng-model="group.main"/>
+          <span class="weight badge badge-success">{{group.main}}</span>
+        </div>
+        <div class="nested-sliders-shell" collapse="isCollapsed">
+          <!-- <a ng-click = "group.show = !group.show">expand</a> -->
+          <ul class="nested-sliders">
+          <!-- <ul ng-show = "group.show"> -->
+            <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
+              <label>{{statName}}</label>
+              <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-change="changeSliders(nestedSliders,statName,groupName);calculatePlayerStarVals('ALL',false)"/>
+              <span class="weight badge badge-info">{{statNum.weight}}</span>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

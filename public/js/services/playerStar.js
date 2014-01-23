@@ -2,33 +2,20 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
 
   var exports = {};
   exports.teamPlayers = {};
-  var teamStatObj = {};
   Global.stats
   .then(function(stats){
     exports.cats = stats.cats;
   });
   exports.teamStatReq = function(){
     var d = $q.defer();
-    var subroutine = function(){
-      $http.get('/players').success(function(data){
-        // var playerStats = data;
-        // for (var player in playerStats){
-        //   p = playerStats[player];
-        //   teamStatObj[p.Team] = teamStatObj[p.Team] || {};
-        //   teamStatObj[p.Team][p.Player] = teamStatObj[p.Team][p.Player] || {};
-        //   for (var stat in p){
-        //     if (stat === "MIN" || stat === "GP" || stat === "__v" || stat === "_id" ||
-        //     stat === "created" || stat === "score" || stat === "Team" || stat === "PLAYER_ID" || stat === "Player"){
-        //       continue;
-        //     } else {
-        //       teamStatObj[p.Team][p.Player][stat] = playerStats[player][stat];
-        //     }
-        //   }
-        // }
-        d.resolve(data);
-      });
-    };
-    subroutine();
+    if (exports.allPlayers){
+      d.resolve(exports.allPlayers);
+      return d.promise;
+    }
+    $http.get('/players').success(function(data){
+      exports.allPlayers = data;
+      d.resolve(data);
+    });
     return d.promise;
   };
 
@@ -40,34 +27,40 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
     PSS: "Possession"
   };
 
-  exports.calculatePlayerStarVals = function(statWeights, openTeam, players){
-    //for now, just calculate and return the players for the open team
-    if (!openTeam){
-      return;
-    }
-    var weightPlayers = function(players){
-      var totalStatWeights = calculateTotalStatWeights(statWeights);
-      var result = [];
-      for (var player in players){
-        if (players[player].Team !== openTeam  && openTeam !== 'ALL'){
-          continue;
-        }
-        var p = players[player];
-        var pWeighted = {name:p.Player,scores:{},totalPlayerStar:0};
-        for (var stat in p){
-          if (!statWeights[stat] || !statWeights[stat].cat){
+  exports.calculatePlayerStarVals = function(statWeights, openTeam){
+    var d = $q.defer();
+    exports.teamStatReq()
+    .then(function(players){
+      //for now, just calculate and return the players for the open team
+      if (!openTeam){
+        return;
+      }
+      var weightPlayers = function(players){
+        var totalStatWeights = calculateTotalStatWeights(statWeights);
+        var result = [];
+        for (var player in players){
+          if (players[player].Team !== openTeam  && openTeam !== 'ALL'){
             continue;
           }
-          var statStarVal = statWeights[stat].weight * p[stat];
-          pWeighted.scores[nestMap[statWeights[stat].cat]] = pWeighted.scores[nestMap[statWeights[stat].cat]] || 0;
-          pWeighted.scores[nestMap[statWeights[stat].cat]] += statStarVal/(10*totalStatWeights);
-          pWeighted.totalPlayerStar += statStarVal/(10*totalStatWeights); // makes the star scores a little less arbitrary
+          var p = players[player];
+          var pWeighted = {name:p.Player,scores:{},totalPlayerStar:0};
+          for (var stat in p){
+            if (!statWeights[stat] || !statWeights[stat].cat){
+              continue;
+            }
+            var statStarVal = statWeights[stat].weight * p[stat];
+            pWeighted.scores[nestMap[statWeights[stat].cat]] = pWeighted.scores[nestMap[statWeights[stat].cat]] || 0;
+            pWeighted.scores[nestMap[statWeights[stat].cat]] += statStarVal/(10*totalStatWeights);
+            pWeighted.totalPlayerStar += statStarVal/(10*totalStatWeights); // makes the star scores a little less arbitrary
+          }
+          result.push(pWeighted);
         }
-        result.push(pWeighted);
-      }
-      return result;
-    };
-    exports.teamPlayers = weightPlayers(players);
+        return result;
+      };
+      exports.teamPlayers = weightPlayers(players);
+      d.resolve(exports.teamPlayers);
+    });
+    return d.promise;
   };
 
   var calculateTotalStatWeights = function(statWeights){

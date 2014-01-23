@@ -63,7 +63,7 @@ module.exports = function(app, passport, auth) {
     var db = require('../app/controllers/database');
     app.get('/players', db.players);
     app.get('/init', db.init);
-    app.post('/highScore/:catObj',db.newHighScore);
+    app.post('/highScore',db.newHighScore);
     //Home route
     var index = require('../app/controllers/index');
     app.get('/', index.render);

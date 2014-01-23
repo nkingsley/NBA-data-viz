@@ -4,51 +4,42 @@ angular.module('mean.chart')
     function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
     var teamsPromise = Global.stats;
     $scope.options = {width: 840, height: 500};
-    //$scope.teams should be replaced by the object at Global.teams
-    // $scope.players = Playerstar.players;
     $scope.calculateTeamStarVals = Teamstar.calculateTeamStarVals;
-    // $scope.calculateAllTeamStarVals = Stats.calculateAllTeamStarVals;
-    // $scope.playerWeightedStats = Stats.playerWeightedStats;
-    // $scope.calculatePlayerWeightedStats = Stats.calculatePlayerWeightedStats;
     $scope.changeSliders = Stats.changeSliders;
     $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
     $scope.secondClick = false;
     $scope.weights = Stats.nestedSliders;
+    $scope.currentTeam = false;
 
-    $scope.playersGotten = function(weights){
-      if ($scope.allPlayers){
-        return true;
-      } else if (Playerstar.allPlayers){
-        $scope.allPlayers = Playerstar.allPlayers;
-        return true;
+    $scope.toggleOpenTeam = function(team){
+      if ($scope.currentTeam === team){
+        $scope.currentTeam = false;
       } else {
-        return false;
+        $scope.currentTeam = team;
       }
     };
-    $scope.calculatePlayerStarVals = function(weights,openTeam){
-      debugger;
-      if (openTeam === $scope.openTeam && $scope.secondClick){
-        $scope.collapseAll();
-        $scope.openTeam = null;
+
+    $scope.calculatePlayerStarVals = function(team, click){
+      if (!team){
         return;
       }
-      if ($scope.allPlayers){
-        Playerstar.calculatePlayerStarVals(weights,openTeam,$scope.allPlayers);
-        $scope.playerStats = Playerstar.teamPlayers;
-        $scope.inflate(openTeam);
-        $scope.openTeam = openTeam;
-      } else {
-        Playerstar.teamStatReq()
-        .then(function(players){
-          $scope.allPlayers = players;
-          Playerstar.calculatePlayerStarVals(weights,openTeam,players);
-          $scope.playerStats = Playerstar.teamPlayers;
-          $scope.openTeam = openTeam;
-          $scope.inflate(openTeam);
-        });
+      if (team !== "ALL"){
+        var abbr = team.abbreviation;
+      } else{
+        var abbr = "ALL"
       }
+      teamsPromise.then(function(data){        
+        var playerPromise = Playerstar.calculatePlayerStarVals($scope.weights,abbr)
+        playerPromise.then(function(){
+          $scope.playerStats = Playerstar.teamPlayers;
+          if (click){
+            $scope.toggleOpenTeam(team);
+          }
+        });
+        $scope.loadingTracker.addPromise(playerPromise);
+      });
     };
 
     teamsPromise.then(function(data){
@@ -59,12 +50,6 @@ angular.module('mean.chart')
       $scope.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
       $scope.updateRho();
     });
-    // playerPromise.then(function(data){
-    //   $scope.playerStats = data.playerStats;
-    //   $scope.nestedSliders = Stats.assignNestedSliders($scope.weights, $scope.nestedSliders);
-    //   $scope.calculatePlayerStarVals($scope.playerStats, $scope.weights, false);
-    //   $scope.openTeamPlayers = Playerstar.teamPlayers;
-    // });
 
     var appendHackReactorBadge = function (){
       var img = document.createElement('img');
@@ -94,40 +79,20 @@ angular.module('mean.chart')
     // TODO: have $scope.isCollapsed represent the state of all
     // children collapse components
     $scope.allCollapsed = true;
-    $scope.openTeam = null; // expanded team abbreviation
     $scope.isCollapsed = true;
 
-    $scope.clickTrack = function(){
-      $scope.secondClick = !$scope.secondClick;
-    };
-
-    $scope.collapseOther = function (team){
-      if ($scope.openTeam && $scope.openTeam !== team.abbreviation){
-        for (var i = 0; i < $scope.teams.length; i++) {
-          if ($scope.teams[i].abbreviation === $scope.openTeam) {
-            $scope.teams[i].isCollapsed = true;
-          }
-        }
-      }
-      team.isCollapsed = !team.isCollapsed;
-      $scope.openTeam = team.isCollapsed ? null : team.abbreviation;
-    };
-    $scope.collapseAll = function(){
-      for (var i = 0 ; i < $scope.teams.length ; i++){
-        if (!$scope.teams[i].isCollapsed){
-          $scope.teams[i].isCollapsed = true;
-        }
-      }
-    };
-    $scope.inflate = function(team){
-      for (var i = 0 ; i < $scope.teams.length ; i++){
-        if ($scope.teams[i].abbreviation === team){
-          $scope.teams[i].isCollapsed = false;
-        }
-      }
-    };
     $scope.updateRho = function (){
       $scope.rhoVal = $scope.spearman.rho($scope.teams);
+    };
+
+    $scope.sendScore = function(weights){
+      $scope.updateRho();
+      delete weights._id;
+      delete weights.created;
+      weights.score = $scope.rhoVal;
+      $http.post('/highscore',weights).success(function(data){
+        console.log(data);
+      });
     };
 
     $scope.makeHeadShotUrl = function(name, isCollapsed) {
