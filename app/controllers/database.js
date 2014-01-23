@@ -24,13 +24,13 @@ exports.saveWins = function(wl){
 };
 
 exports.players = function(req,res){
-  var date = utils.dateTimeless();
+  var date = new date();
   var subroutine = function(date){
     var d = q.defer();
-    mongoose.model('Playernorm').find({created:date},function(err,data){
+    mongoose.model('Playernorm').find({gt:date},function(err,data){
       console.log(date);
       if (data.length === 0){
-        date.setDate(date.getDate()-1);
+        date.setHours(date.getHours()-12);
         if (date < new Date('1-20-2014')){
           d.resolve();
           return;
