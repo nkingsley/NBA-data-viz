@@ -63,7 +63,7 @@ exports.diff = function(startData,endData){
 };
 
 exports.makeDate = function(date,change){
-  var changed = new Date(JSON.stringify(date));
+  var changed = new Date(date);
   changed.setDate(date.getDate()-change);
   return changed;
 };

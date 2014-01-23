@@ -56,7 +56,8 @@
     "grunt-contrib-watch": "~0.5.3",
     "karma-coverage": "~0.1.4",
     "karma": "~0.10.9",
-    "q": "~1.0.0"
+    "q": "~1.0.0",
+    "curling": "~0.3.0"
   },
   "devDependencies": {
     "supertest": "0.8.2",
