@@ -20,9 +20,10 @@ angular.module('mean.chart')
     $scope.calculatePlayerStarVals = function(weights,openTeam){
       if ($scope.allPlayers){
         Playerstar.calculatePlayerStarVals(weights,openTeam,$scope.allPlayers);
-        // debugger;
         $scope.playerStats = Playerstar.teamPlayers;
-        debugger;
+        setTimeout(function(){
+          console.log(Playerstar.teamPlayers);
+        });
         $scope.inflate(openTeam);
       } else {
         Playerstar.teamStatReq()
