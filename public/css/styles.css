@@ -1,6 +1,13 @@
+@media all and (min-width: 0px)    {  body  { font-size: 8px;  } .bigger {font-size: 15px;} .biggest {font-size: 20px;} .normal {font-size: 10px;} .smaller{font-size: 6px;}}
+@media all and (min-width: 600px)  {  body  { font-size: 9px;  } .bigger {font-size: 16px;} .biggest {font-size: 22px;} .normal {font-size: 11px;} .smaller{font-size: 7px;}}
+@media all and (min-width: 800px)  {  body  { font-size: 10px; } .bigger {font-size: 17px;} .biggest {font-size: 24px;} .normal {font-size: 12px;} .smaller{font-size: 8px;}}
+@media all and (min-width: 1000px) {  body  { font-size: 11px; } .bigger {font-size: 18px;} .biggest {font-size: 26px;} .normal {font-size: 13px;} .smaller{font-size: 9px;}}
+@media all and (min-width: 1200px) {  body  { font-size: 12px; } .bigger {font-size: 19px;} .biggest {font-size: 28px;} .normal {font-size: 14px;} .smaller{font-size: 10px;}}
+@media all and (min-width: 1400px) {  body  { font-size: 13px; } .bigger {font-size: 20px;} .biggest {font-size: 30px;} .normal {font-size: 15px;} .smaller{font-size: 11px;}}
+@media all and (min-width: 1600px) {  body  { font-size: 14px; } .bigger {font-size: 21px;} .biggest {font-size: 32px;} .normal {font-size: 16px;} .smaller{font-size: 12px;}}
 
 body {
-  font: 14px sans-serif
+  font: sans-serif
   color: #ccc;
   background-color: #f3f3f3;
 }
@@ -32,16 +39,13 @@ body {
   margin: 10px 0;
 }
 .btn-container .chart-select {
-  margin-left: 300px;
+  margin-left: 1vw;
 }
 
 .axis path, .axis line {
   fill: none;
   stroke: #ccc;
   shape-rendering: crispEdges;
-}
-.tick {
-  font-size: 13px;
 }
 .axis .label {
   font-weight: normal;
@@ -56,7 +60,6 @@ body {
   opacity: 1;
 }
 .team-label {
-  font-size: 8px;
   pointer-events: none;
 }
 .diagonal {
@@ -79,9 +82,6 @@ body {
   padding: 1vw;
   border-top: 1px solid #ccc;
 }
-.top-slider label {
-  font-weight: bold;
-}
 .nested-sliders-shell {
   width: 100%;
   background-color: #fff;
@@ -91,11 +91,8 @@ body {
   padding: 1px;
   list-style:none;
 }
-.nested-sliders label {
-  font-size: 12px;
-}
 .badge {
-  border-radius: 6px;
+  border-radius: 2vw;
 }
 .weight {
   margin-left: 5vw;
@@ -112,12 +109,11 @@ body {
    background-color: #eee;
 }
 .rank {
-  font-weight: bold;
-  font-size: 18px;
+  font-weight: 900;
 }
 .star-val {
   color: #777;
-  margin-left: 30px;
+  margin-left: 2vw;
 }
 .team {
   background-color: #fff;
@@ -169,19 +165,29 @@ body {
   width: 7rem;
 }
 .player-stats-container {
+  padding:.5rem;
   background-color: #fafafa;
 }
 .player-stats {
   width:100%;
   border: 1px solid #ccc;
-  padding: 8px;
+  padding: .5rem;
   table-layout:fixed;
   background-color: #fff;
 }
 .player-stats-header {
   border: 1px solid #ccc;
   background-color: #f3f3f3;
-  font-size: 12px;
+}
+
+.rhoRed {
+  color: red;
+  font-weight: 1000;
+}
+
+.rhoGreen {
+  color: green;
+  font-weight: 1000;
 }
 
 .contains{

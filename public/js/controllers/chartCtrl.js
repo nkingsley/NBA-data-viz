@@ -4,6 +4,7 @@ angular.module('mean.chart')
     function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
     var teamsPromise = Global.stats;
     //watch statement on window width
+    $scope.infoShow = 'Hide Info';
     $scope.options = {width: 840, height: 500};
     $scope.calculateTeamStarVals = Teamstar.calculateTeamStarVals;
     $scope.changeSliders = Stats.changeSliders;
@@ -13,12 +14,31 @@ angular.module('mean.chart')
     $scope.secondClick = false;
     $scope.weights = Stats.nestedSliders;
     $scope.currentTeam = false;
-
+    $scope.introCollapsed = true;
+    $scope.introShow = 'Show Info';
+    $scope.recalculate = function(groupName,statName){
+      $scope.changeSliders($scope.nestedSliders,statName,groupName);
+      $scope.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams); 
+      $scope.calculatePlayerStarVals($scope.currentTeam,false);
+      $scope.updateRho();
+    };
+    $scope.introToggle = function(){
+      $scope.introCollapsed = !$scope.introCollapsed;
+      $scope.introShow = $scope.introCollapsed ? 'Show Info' : 'Hide Info';
+    };
     $scope.toggleOpenTeam = function(team){
       if ($scope.currentTeam === team){
         $scope.currentTeam = false;
       } else {
         $scope.currentTeam = team;
+      }
+    };
+
+    $scope.redGreen = function(rhoVal){
+      if (rhoVal > 0.9){
+        return 'rhoGreen';
+      } else{
+        return 'rhoRed';
       }
     };
 

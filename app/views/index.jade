@@ -1,21 +1,6 @@
 extends layouts/default
 
 block content
-  .intro-container
-    h2 The "Star" Visualization Tool
-    p The "Star" Visualization tool is an app that gives you the power to see what NBA stats matter most in determining team rankings.  By moving sliders, you can assign weights to a whole host of stats.  
-    p There are two ways to visualize:
-      ul
-        li The power ranking view allows you to see team rankings dynamically reorder as you adjust the sliders
-        li The scatter plot view allows you to see how well your combination of stat weights can be used to predict team win percentage.  The <a href="http://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient">Spearman's rho</a> metric is shown at the top as feedback.
-  .btn-container
-    .btn-group.chart-select
-      a(href='/#!/')
-        button(type="button", class="btn") Power Ranking
-      a(href='/#!/scatter')  
-        button(type="button", class="btn") Scatter Plot
-      a(href='/#!/players')
-        button(type="button", class="btn") Top 50 Players
   section(data-ng-view)
   script(type="text/javascript").
     window.user = !{user};

@@ -80,7 +80,7 @@ var exports = {};
           statStarVal = statWeights[stat]['weight'] * teamStats[teamName][stat];
           rawStar += statStarVal;
       }
-      teams[team]['starVal'] = (rawStar/totalStatWeights)*50;
+      teams[team]['starVal'] = ((rawStar/totalStatWeights - 0.5) * 3) + 0.5;
     }
     exports.teams = teams;
   };

@@ -1,0 +1,21 @@
+<div class = "biggest">MoneyBaller</div>
+<div class = "intro-container bigger" collapse = "introCollapsed">
+    <p> The MoneyBaller tool is an app that gives you the power to see what NBA stats matter most in determining team rankings.  By moving sliders, you can assign weights to a whole host of stats.  </p>
+    <p>There are two ways to visualize:</p>
+      <ul>
+        <li> The power ranking view allows you to see team rankings dynamically reorder as you adjust the sliders</li>
+        <li> The scatter plot view allows you to see how well your combination of stat weights can be used to predict team win percentage.  The <a href="http://en.wikipedia.org/wiki/Spearman's_rank_correlation_coefficient">Spearman's rho</a> metric is shown at the top as feedback.</li>
+      </ul>
+</div>
+<div class = "btn-container">
+  <div class = "btn-group chart-select">
+    <a href='/#!/'>
+      <button type="button" class="btn normal">Power Ranking</button></a>
+    <a href='/#!/scatter'>  
+      <button type="button" class="btn normal">Scatter Plot</button></a>
+    <a href='/#!/players'>
+      <button type="button" class="btn normal">Top 50 Players</button></a>
+    <a ng-click = "introToggle()">
+      <button type="button" class="btn normal">{{introShow}}</button></a>
+  </div>
+</div>

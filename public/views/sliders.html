@@ -1,0 +1,19 @@
+<div class="slider-container">
+  <div class = "sendWeights"><button class = "btn normal" ng-click = "sendScore(weights)">Submit These Settings</button></div>
+  <div class="slider-shell" ng-repeat="(groupName, group) in nestedSliders">
+    <div class="top-slider">
+      <label class = "normal"><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
+      <input type = "range" class = "rangeSlider" ng-change="recalculate(groupName)" min="0" max="10" step="0.5" ng-model="group.main"/>
+      <span class="weight badge badge-success normal">{{group.main}}</span>
+    </div>
+    <div class="nested-sliders-shell" collapse="isCollapsed">
+      <ul class="nested-sliders">
+        <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
+          <label class = "normal">{{statName}}</label>
+          <input ng-model="statNum.weight" class = "rangeSlider" type="range" min="0" max="10" step="0.5" ng-change="recalculate(groupName,statName)"/>
+          <span class="weight badge badge-info normal">{{statNum.weight}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

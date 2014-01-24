@@ -15,7 +15,7 @@ d3.custom.scatterPlot = function module() {
         chartH = height - margin.top - margin.bottom;
       
       var x = d3.scale.linear()
-        .domain([15, 40])
+        .domain([0, 1])
         // .domain([d3.min(_data, function(d) { return d.starVal; }),
         //   d3.max(_data, function(d) { return d.starVal; })])
         .range([0, chartW]);
