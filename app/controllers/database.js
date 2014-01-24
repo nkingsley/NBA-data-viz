@@ -41,8 +41,8 @@ exports.checkDate = function(date){
 
 exports.players = function(req,res){
   var date = utils.dateTimeless();
+  var d = q.defer();
   var subroutine = function(date){
-    var d = q.defer();
     mongoose.model('Playernorm').find({created:{$gte:date}},function(err,data){
       console.log(date,data.length);
       if (data.length === 0){

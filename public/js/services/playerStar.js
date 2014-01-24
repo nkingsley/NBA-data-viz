@@ -13,6 +13,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
       return d.promise;
     }
     $http.get('/players').success(function(data){
+      debugger;
       exports.allPlayers = data;
       d.resolve(data);
     });
