@@ -43,7 +43,7 @@ exports.players = function(req,res){
   var date = utils.dateTimeless();
   var d = q.defer();
   var subroutine = function(date){
-    mongoose.model('Playernorm').find({created:{$gte:date}},function(err,data){
+    mongoose.model('Playernorm').find({created:date},function(err,data){
       console.log(date,data.length);
       if (data.length === 0){
         console.log('lame');

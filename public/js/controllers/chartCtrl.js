@@ -3,6 +3,7 @@ angular.module('mean.chart')
     'promiseTracker', 
     function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
     var teamsPromise = Global.stats;
+    //watch statement on window width
     $scope.options = {width: 840, height: 500};
     $scope.calculateTeamStarVals = Teamstar.calculateTeamStarVals;
     $scope.changeSliders = Stats.changeSliders;

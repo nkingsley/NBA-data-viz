@@ -40,11 +40,11 @@
     </table>
   </div>
   <div class="slider-container">
-    <div class = "sendWeights"><button ng-click = "sendScore(weights)">Submit These Settings</button></div>
+    <div class = "sendWeights"><button class = "btn" ng-click = "sendScore(weights)">Submit These Settings</button></div>
     <div class="slider-shell" ng-repeat="(groupName, group) in nestedSliders">
       <div class="top-slider">
         <label><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
-        <input type = "range" ng-change="changeSliders(nestedSliders,groupName);calculateTeamStarVals(teamStats,weights,teams); calculatePlayerStarVals(currentTeam,false);" min="0" max="10" step="0.5" ng-model="group.main"/>
+        <input type = "range" class = "rangeSlider" ng-change="changeSliders(nestedSliders,groupName);calculateTeamStarVals(teamStats,weights,teams); calculatePlayerStarVals(currentTeam,false);" min="0" max="10" step="0.5" ng-model="group.main"/>
         <span class="weight badge badge-success">{{group.main}}</span>
       </div>
       <div class="nested-sliders-shell" collapse="isCollapsed">
@@ -53,7 +53,7 @@
         <!-- <ul ng-show = "group.show"> -->
           <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
             <label>{{statName}}</label>
-            <input ng-model="statNum.weight" type="range" min="0" max="10" step="0.5" ng-change="changeSliders(nestedSliders,statName,groupName);calculateTeamStarVals(teamStats,weights,teams); calculatePlayerStarVals(currentTeam,false)"/>
+            <input ng-model="statNum.weight" class = "rangeSlider" type="range" min="0" max="10" step="0.5" ng-change="changeSliders(nestedSliders,statName,groupName);calculateTeamStarVals(teamStats,weights,teams); calculatePlayerStarVals(currentTeam,false)"/>
             <span class="weight badge badge-info">{{statNum.weight}}</span>
           </li>
         </ul>

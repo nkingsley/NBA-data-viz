@@ -11,7 +11,6 @@ body {
   /*width: 840px;*/
 }
 .chart-container {
-  position: fixed;
   bottom: 2px;
   float: left;
   background-color: #fff;
@@ -20,7 +19,11 @@ body {
   border: 1px solid #ccc;
   margin-bottom: 20px;
 }
+.rangeSlider{
+  width: 70%;
+}
 .power-rank-container {
+  width:60vw;
   float: left;
   background-color: #fff;
   margin-bottom: 20px;
@@ -65,28 +68,27 @@ body {
 /* Slider Styles
  * ==========================================================================*/
 .slider-container {
+  width:30vw;
   float: right;
-  margin-left: 14px;
-  margin-top: 39px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33)
 }
 .slider-shell {
-  width: 300px;
 }
 .top-slider {
   background-color: #fafafa;
-  padding: 8px;
+  padding: 1vw;
   border-top: 1px solid #ccc;
 }
 .top-slider label {
   font-weight: bold;
 }
 .nested-sliders-shell {
+  width: 100%;
   background-color: #fff;
 }
 .nested-sliders {
   margin: 0;
-  padding: 8px 8px 8px 16px;
+  padding: 1px;
   list-style:none;
 }
 .nested-sliders label {
@@ -96,19 +98,13 @@ body {
   border-radius: 6px;
 }
 .weight {
-  margin-left: 30px;
+  margin-left: 5vw;
 }
 
 /* Power Rank Table Styles
  * ==========================================================================*/
 .teams {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  /*justify-content: space-around;*/
+  width: 100%;
   margin-bottom: 0;
   border-radius: 2px;
 }
@@ -163,26 +159,22 @@ body {
   width: 50px;
 }
 .player-details {
-  /*width: 838px;*/
-  flex:6;
+  width: 66vw;
   border-bottom: 1px solid #ccc;
 }
 .player-head-shot {
-  flex:1;
-  /*width: 128px;*/
+  width: 30%;
 }
 .player-head-shot img {
-  width: 128px;
-  height: 103px;
+  width: 7rem;
 }
 .player-stats-container {
   background-color: #fafafa;
 }
 .player-stats {
+  width:100%;
   border: 1px solid #ccc;
   padding: 8px;
-  flex:4;
-  /*width: 674px;*/
   table-layout:fixed;
   background-color: #fff;
 }
