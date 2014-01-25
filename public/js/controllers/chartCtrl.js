@@ -41,7 +41,37 @@ angular.module('mean.chart')
         return 'rhoRed';
       }
     };
-
+    $scope.changeCoupled = function(statName,group){
+      if (!group[statName].coupledName){
+        return;
+      }
+      for (var stat in group){
+        if (stat === statName){
+          continue;
+        }
+        if (group[stat].coupledName === group[statName].coupledName){
+          debugger;
+          group[stat].weight = group[statName].weight;
+        }
+      }
+    };
+    $scope.coupleStats = function(group){
+      var result = {};
+      var coupledStats = {};
+      for (var stat in group){
+        if (stat === "Scoreless Catch and Shoot"){
+          debugger
+        }
+        if (coupledStats[group[stat].coupledName] || stat === "main" || stat === "oldMain"){
+          continue;
+        }
+        if (group[stat].coupledName){
+          coupledStats[group[stat].coupledName] = true;
+        }
+        result[stat]= group[stat];
+      }
+      return result;
+    };
     $scope.calculatePlayerStarVals = function(team, click){
       if (!team){
         return;
@@ -83,7 +113,7 @@ angular.module('mean.chart')
       document.body.appendChild(a);
     };
 
-    appendHackReactorBadge();
+    // appendHackReactorBadge();
     // tracks the progress of the stats data fetch and processing
     // so that we can display and hide a spinner to indicate to
     // user that something is happening

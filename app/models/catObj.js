@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
     schema = {};
 for (var stat in map){
   if (map[stat] && map[stat].name){
-    schema[map[stat].name] = {weight:Number,cat:String,team:Boolean};  
+    schema[map[stat].name] = {weight:Number,cat:String,team:Boolean, coupledName: String};  
   }
 }
 schema.created = {
@@ -23,11 +23,14 @@ mongoose.model('Catobj', new mongoose.Schema(schema,{collection: 'catobj'}));
 //     if (map[stat].team){
 //       catobj[map[stat].name] = {weight:5,cat:'TM_DEF'}; 
 //     }
+//     if (map[stat].coupledName){
+//       catobj[map[stat].name].coupledName = map[stat].coupledName; 
+//     }
 //   }
 // }
 // catobj.score = 0.5;
 // catobj.created = utils.dateTimeless();
-// var Catobj = mongoose.model('Catobj')
+// var Catobj = mongoose.model('Catobj');
 // var catobj = new Catobj(catobj);
 // catobj.save(function(err){
 //   console.log(err);

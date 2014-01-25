@@ -8,9 +8,9 @@
     </div>
     <div class="nested-sliders-shell" collapse="isCollapsed">
       <ul class="nested-sliders">
-        <li ng-repeat="(statName, statNum) in group" ng-show = "statNum.weight > -1">
-          <label class = "normal">{{statName}}</label>
-          <input ng-model="statNum.weight" class = "rangeSlider" type="range" min="0" max="10" step="0.5" ng-change="recalculate(groupName,statName)"/>
+        <li ng-repeat="(statName, statNum) in coupleStats(group)" ng-show = "statNum.weight > -1">
+          <label>{{statNum.coupledName || statName}}</label>
+          <input ng-model="statNum.weight" class = "rangeSlider" type="range" min="0" max="10" step="0.5" ng-change="changeCoupled(statName,group);recalculate(groupName,statName)"/>
           <span class="weight badge badge-info normal">{{statNum.weight}}</span>
         </li>
       </ul>
