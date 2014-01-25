@@ -1,7 +1,10 @@
 <div data-ng-controller="chartCtrl" >
+  <div header></div>
   <div accuracy></div>
-  <div class="chart-container">
-    <scatter-plot height="options.height" width="options.width" data="teams" hovered="hovered(args)"></scatter-plot>  
+  <div class = "span6">
+  <scatter-plot height="options.height" width="options.width" data="teams" hovered="hovered(args)">
+  </scatter-plot>  
   </div>
+  <div class = "span3">
   <div slider-block></div>
-</div>
+  </div>

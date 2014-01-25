@@ -1,27 +1,18 @@
-@media all and (min-width: 0px)    {  body  { font-size: 8px;  } .bigger {font-size: 15px;} .biggest {font-size: 20px;} .normal {font-size: 10px;} .smaller{font-size: 6px;}}
-@media all and (min-width: 600px)  {  body  { font-size: 9px;  } .bigger {font-size: 16px;} .biggest {font-size: 22px;} .normal {font-size: 11px;} .smaller{font-size: 7px;}}
-@media all and (min-width: 800px)  {  body  { font-size: 10px; } .bigger {font-size: 17px;} .biggest {font-size: 24px;} .normal {font-size: 12px;} .smaller{font-size: 8px;}}
-@media all and (min-width: 1000px) {  body  { font-size: 11px; } .bigger {font-size: 18px;} .biggest {font-size: 26px;} .normal {font-size: 13px;} .smaller{font-size: 9px;}}
-@media all and (min-width: 1200px) {  body  { font-size: 12px; } .bigger {font-size: 19px;} .biggest {font-size: 28px;} .normal {font-size: 14px;} .smaller{font-size: 10px;}}
-@media all and (min-width: 1400px) {  body  { font-size: 13px; } .bigger {font-size: 20px;} .biggest {font-size: 30px;} .normal {font-size: 15px;} .smaller{font-size: 11px;}}
-@media all and (min-width: 1600px) {  body  { font-size: 14px; } .bigger {font-size: 21px;} .biggest {font-size: 32px;} .normal {font-size: 16px;} .smaller{font-size: 12px;}}
 
 body {
   font: sans-serif
   color: #ccc;
   background-color: #f3f3f3;
 }
-.container {
-  /*width: 1170px;*/
-}
-.intro-container {
-  /*width: 840px;*/
+.content{
+  display:flex;
+  flex-direction: row;
+  width: 100%;
 }
 .chart-container {
   bottom: 2px;
   float: left;
   background-color: #fff;
-  /*width: 840px;*/
   height: 600px;
   border: 1px solid #ccc;
   margin-bottom: 20px;
@@ -30,7 +21,7 @@ body {
   width: 70%;
 }
 .power-rank-container {
-  width:60vw;
+  width:66%;
   float: left;
   background-color: #fff;
   margin-bottom: 20px;
@@ -71,11 +62,14 @@ body {
 /* Slider Styles
  * ==========================================================================*/
 .slider-container {
-  width:30vw;
-  float: right;
+  width:100%;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33)
 }
+.slider-block{
+  width:33%;
+}
 .slider-shell {
+  width:100%;
 }
 .top-slider {
   background-color: #fafafa;
@@ -87,15 +81,15 @@ body {
   background-color: #fff;
 }
 .nested-sliders {
-  margin: 0;
+  margin-left: 2vw;
   padding: 1px;
   list-style:none;
 }
 .badge {
-  border-radius: 2vw;
+  border-radius: 5px;
 }
 .weight {
-  margin-left: 5vw;
+  margin-left: 2vw;
 }
 
 /* Power Rank Table Styles
@@ -113,7 +107,6 @@ body {
 }
 .star-val {
   color: #777;
-  margin-left: 2vw;
 }
 .team {
   background-color: #fff;
@@ -149,13 +142,11 @@ body {
 }
 .team-badge {
   width: 50px;
-  height: 50px;
 }
 .team-badge img {
   width: 50px;
 }
 .player-details {
-  width: 66vw;
   border-bottom: 1px solid #ccc;
 }
 .player-head-shot {
@@ -192,23 +183,4 @@ body {
 
 .contains{
   padding: 20px;
-}
-.powerRank, .playerRank{
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-flow: row;
-  /*justify-content: space-around;*/
-}
-.teamsContainer {
-  flex:4;
-}
-.playersContainer{
-  flex:4;
-}
-
-.slidersContainer {
-  flex:2;
 }

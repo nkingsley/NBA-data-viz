@@ -1,16 +1,18 @@
-<table class="player-details" ng-repeat="p in playerStats | orderBy: '-totalPlayerStar' | limitTo: 50 track by p.name">
-  <tr>
-    <td class="player-head-shot"><img ng-src="{{makeHeadShotUrl(p.name, !currentTeam)}}"></td>
-    <td class="player-stats-container">
-      <div class = "normal"><strong>{{p.name}} <br>Star Value: <span ng-bind="p.totalPlayerStar | number:1"></span></strong></div>
-      <table class="player-stats normal">
-        <tr class="player-stats-header smaller">
-          <th ng-repeat="(name, score) in p.scores track by name"><span ng-bind="name"></span></th>
-        </tr>
-        <tr>
-          <td ng-repeat="(name, score) in p.scores track by name">{{score | number:2}}</td>
-        </tr>
-      </table>
-    </td>
-  </tr>
-</table>
+<div cg-busy="{tracker:'loadingTracker'}">
+  <table class="player-details" ng-repeat="p in playerStats | orderBy: '-totalPlayerStar' | limitTo: 25 track by p.name" >
+    <tr>
+      <td class="player-head-shot"><img ng-src="{{makeHeadShotUrl(p.name, !currentTeam)}}"></td>
+      <td class="player-stats-container">
+        <div class = "normal"><strong>{{p.name}} <br>Star Value: <span ng-bind="p.totalPlayerStar | number:1"></span></strong></div>
+        <table class="player-stats normal">
+          <tr class="player-stats-header smaller">
+            <th ng-repeat="(name, score) in p.scores track by name"><span ng-bind="name"></span></th>
+          </tr>
+          <tr>
+            <td ng-repeat="(name, score) in p.scores track by name">{{score | number:2}}</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
