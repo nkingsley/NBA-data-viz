@@ -135,6 +135,10 @@ body {
 .table td.super-slim {
   padding: 0;
 }
+.tableSlidersCollapsed {
+  height: 150px;
+  font-size: 1.4rem;
+}
 .player-badge-shell {
   margin-top: 10px;
   margin-bottom: 0;
@@ -147,22 +151,32 @@ body {
   width: 50px;
 }
 .player-details {
+  font-size: 25px;
   border-bottom: 1px solid #ccc;
 }
 .player-head-shot {
-  width: 30%;
+  vertical-align: middle;
+  width: 20%;
+  padding: 0px;
 }
-.player-head-shot img {
-  width: 7rem;
+.headshotSlidersCollapsed {
+  width: 100%;
+}
+.playerInfo {
+  font-size: 20px;
+  padding-bottom: 2px;
+}
+.playerInfoSlidersCollapsed {
+  font-size: 1.5rem;
 }
 .player-stats-container {
-  padding:.5rem;
+  font-size: 1rem;
+  padding: 8px;
   background-color: #fafafa;
 }
 .player-stats {
   width:100%;
   border: 1px solid #ccc;
-  padding: .5rem;
   table-layout:fixed;
   background-color: #fff;
 }
@@ -180,3 +194,21 @@ body {
   color: green;
   font-weight: 1000;
 }
+
+.contains{
+  padding: 20px;
+}
+.scrolling {
+  height: 500px;
+  overflow-y: scroll;
+}
+.rightAligned {
+  float: right;
+}
+.table td {
+  vertical-align: middle;
+}
+th {
+  text-align: left;
+}
+
