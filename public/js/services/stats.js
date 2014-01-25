@@ -14,7 +14,11 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       },
       Defense:{
         main:5,
-        oldMain:5
+        oldMain:5,
+        "Team Defense": {
+          main: 5,
+          oldMain:5
+        }
       },
       Rebounding:{
         main:5,
@@ -23,14 +27,11 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
       Miscellaneous:{
         main:5,
         oldMain:5
-      },
-      "Team Defense": {
-        main: 5,
-        oldMain:5
       }
     };
 
-    exports.assignNestedSliders = function (statWeights, nestedSliders){
+    exports.assignNestedSliders = function (statWeights){
+      var nestedSliders = exports.nestedSliders;
       for (var statName in statWeights) {
         switch(statWeights[statName].cat) {
           case "PSS": 
@@ -49,7 +50,7 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
             nestedSliders.Miscellaneous[statName] = statWeights[statName];
             break;
           case "TM_DEF":
-            nestedSliders["Team Defense"][statName] = statWeights[statName];
+            nestedSliders.Defense["Team Defense"][statName] = statWeights[statName];
             break;
         }
       }
@@ -57,11 +58,15 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
     };
     
 
-    exports.changeSliders = function(nestedSliders, currentStat, groupName) {
+    exports.changeSliders = function(currentStat, groupName) {
       if (!groupName){
         groupName = currentStat;
       }
-      var nest = nestedSliders[groupName];
+      if (groupName === "Team Defense"){
+        var nest = exports.nestedSliders.Defense[groupName];
+      } else{
+        var nest = exports.nestedSliders[groupName];        
+      }
       for (var statName in nest){
         var stat = nest[statName];
         if (statName === "main" || statName === "oldMain"){
@@ -76,6 +81,10 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
         }
       }
       nest.oldMain = parseFloat(nest.main);
+      if (groupName === "Defense"){
+        exports.nestedSliders.Defense["Team Defense"].main = exports.nestedSliders.Defense.main;
+        exports.changeSliders("Team Defense");
+      }
     };
     return exports;
   }]);

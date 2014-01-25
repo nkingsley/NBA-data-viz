@@ -66,6 +66,23 @@ exports.players = function(req,res){
   });
 };
 
+exports.presets = function(){
+  var d = q.defer();
+  mongoose.model('Catobj')
+  .find()
+  .exec(function(err,presets){
+    var realPresets = [];
+    for (var i in presets){
+      if (!presets[i].presetName){
+        continue;
+      }
+      realPresets.push(presets[i]);
+    }
+    d.resolve(realPresets);
+  });
+  return d.promise;
+};
+
 exports.init = function(req,res){
   mongoose.model('Teamnorm')
   .find()
@@ -82,13 +99,17 @@ exports.init = function(req,res){
       .sort({created:-1})
       .limit(1)
       .exec(function(err,winPct){
-        var data = {
-          teams: utils.toObj(teams,'Team'),
-          cat: catobj[0],
-          winPct: utils.toObj(winPct[0].teams,'franchise')
-        };
-        res.setHeader('Content-Type', 'application/JSON');
-        res.end(JSON.stringify(data));
+        exports.presets()
+        .then(function(presets){
+          var data = {
+            teams: utils.toObj(teams,'Team'),
+            cat: catobj[0],
+            winPct: utils.toObj(winPct[0].teams,'franchise'),
+            presets: presets
+          };
+          res.setHeader('Content-Type', 'application/JSON');
+          res.end(JSON.stringify(data));
+        });
       })
     });
   });

@@ -13,7 +13,6 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
       return d.promise;
     }
     $http.get('/players').success(function(data){
-      debugger;
       exports.allPlayers = data;
       d.resolve(data);
     });
@@ -67,10 +66,15 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
   var calculateTotalStatWeights = function(statWeights){
     var totalValue = 0;
     for (var statName in statWeights){
-      if (statName === "__v" || statName === "_id" || statName === "created" || statName === "score" || statWeights[statName].cat === "TM_DEF"){
+      if (statName === "__v" || statName === "_id" || statName === "created" 
+        || statName === "score" || statWeights[statName].cat === "TM_DEF" 
+        || statName === "presetName" || statName === "$$hashKey"){
         continue;
       }
       totalValue+=parseFloat(statWeights[statName].weight);
+      if (!totalValue && totalValue !== 0){
+        debugger;
+      }
     }
     return totalValue;
   };

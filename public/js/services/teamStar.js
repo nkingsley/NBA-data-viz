@@ -16,10 +16,14 @@ var exports = {};
     var totalValue = 0;
     for (var statName in statWeights){
       if (statName === "MIN" || statName === "GP" || statName === '__v' || statName === "_id" ||
-          statName === "created" || statName === "score" || statName === 'Team'){
+          statName === "created" || statName === "score" || statName === 'Team' || statName === "presetName"
+          || statName === "user" || statName === "$$hashKey"){
           continue;
         }
       totalValue += parseFloat(statWeights[statName].weight);
+      if (!totalValue){
+        debugger;
+      }
     }
     return totalValue;
   };
@@ -74,7 +78,8 @@ var exports = {};
       rawStar = 0;
       for (stat in teamStats[teamName]){
         if (stat === "MIN" || stat === "GP" || stat === '__v' || stat === "_id" ||
-          stat === "created" || stat === "score" || stat === 'Team'){
+          stat === "created" || stat === "score" || stat === 'Team' || stat === "presetName"
+          || stat === "user" || stat === "$$hashKey"){
           continue;
         }
           statStarVal = statWeights[stat]['weight'] * teamStats[teamName][stat];

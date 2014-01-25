@@ -1,7 +1,7 @@
 <div data-ng-controller="chartCtrl" >
 <div class = "container">
 <div header></div>
-<div accuracy></div>
+<div accuracy ng-show = "!slidersCollapsed"></div>
   <div class = "row">
     <div ng-class="itemsClass">
       <table class="table table-bordered" cg-busy="{tracker:'loadingTracker'}">

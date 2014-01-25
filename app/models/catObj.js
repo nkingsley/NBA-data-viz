@@ -12,6 +12,11 @@ schema.created = {
   default: Date.now
 };
 schema.score = Number;
+schema.user = {
+  type: mongoose.Schema.ObjectId,
+  ref: 'User'
+};
+schema.presetName = String;
 mongoose.model('Catobj', new mongoose.Schema(schema,{collection: 'catobj'}));
 
 // //uncomment to populate a default catObj into the db

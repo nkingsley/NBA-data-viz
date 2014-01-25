@@ -3,7 +3,6 @@ angular.module('mean.chart')
     'promiseTracker', 
     function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
     var teamsPromise = Global.stats;
-    //watch statement on window width
     $scope.infoShow = 'Hide Info';
     $scope.itemsClass = "span12";
     $scope.sliderShow = "Show Sliders";
@@ -12,16 +11,12 @@ angular.module('mean.chart')
     $scope.introCollapsed = true;
     $scope.introShow = 'Show Info';
     $scope.options = {width: 680, height: 550};
-    $scope.calculateTeamStarVals = Teamstar.calculateTeamStarVals;
-    $scope.changeSliders = Stats.changeSliders;
-    $scope.nestedSliders = Stats.nestedSliders;
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
-    $scope.secondClick = false;
     $scope.weights = Stats.nestedSliders;
     $scope.recalculate = function(groupName,statName){
-      $scope.changeSliders($scope.nestedSliders,statName,groupName);
-      $scope.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams); 
+      Stats.changeSliders(statName,groupName);
+      Teamstar.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams); 
       $scope.calculatePlayerStarVals($scope.currentTeam,false);
       $scope.updateRho();
     };
@@ -71,9 +66,6 @@ angular.module('mean.chart')
       var result = {};
       var coupledStats = {};
       for (var stat in group){
-        if (stat === "Scoreless Catch and Shoot"){
-          debugger
-        }
         if (coupledStats[group[stat].coupledName] || stat === "main" || stat === "oldMain"){
           continue;
         }
@@ -106,14 +98,21 @@ angular.module('mean.chart')
     };
 
     teamsPromise.then(function(data){
+      $scope.presets = data.presets;
       $scope.teamStats = data.teamStats;
       $scope.weights = data.cats;
       $scope.teams = data.teams;
-      $scope.nestedSliders = Stats.assignNestedSliders($scope.weights, $scope.nestedSliders);
-      $scope.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
+      $scope.nestedSliders = Stats.assignNestedSliders($scope.weights);
+      Teamstar.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
       $scope.updateRho();
     });
-
+    $scope.setWeights = function(preset){
+      $scope.weights = preset;
+      $scope.nestedSliders = Stats.assignNestedSliders($scope.weights);
+      Teamstar.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
+      $scope.currentTeam && $scope.calculatePlayerStarVals($scope.currentTeam);
+      $scope.updateRho();
+    };
     var appendHackReactorBadge = function (){
       var img = document.createElement('img');
       img.setAttribute('style', "position: fixed; top: 0; right: 0; border: 0;");
@@ -126,22 +125,9 @@ angular.module('mean.chart')
     };
 
     // appendHackReactorBadge();
-    // tracks the progress of the stats data fetch and processing
-    // so that we can display and hide a spinner to indicate to
-    // user that something is happening
     $scope.loadingTracker = promiseTracker('loadingTracker');
     $scope.loadingTracker.addPromise(teamsPromise);
-
-    // tracks the progress of the playerWeightStats processing
-    // so that we can display and hide a spinner to indicate to
-    // user that something is happening
-    // $scope.crunchingTracker = promiseTracker('crunchingTracker');
-    // $scope.crunchingTracker.addPromise(calWeightedPlayerStatsPromise);
-
-    // for collasping grouped sliders
-    // TODO: have $scope.isCollapsed represent the state of all
-    // children collapse components
-    $scope.allCollapsed = true;
+    // $scope.allCollapsed = true;
     $scope.isCollapsed = true;
 
     $scope.updateRho = function (){
@@ -149,10 +135,12 @@ angular.module('mean.chart')
     };
 
     $scope.sendScore = function(weights){
+      var name = prompt("Name these Slider Presets");
       $scope.updateRho();
       delete weights._id;
       delete weights.created;
       weights.score = $scope.rhoVal;
+      weights.presetName = name;
       $http.post('/highscore',weights).success(function(data){
         console.log(data);
       });
@@ -177,8 +165,4 @@ angular.module('mean.chart')
       formatted_name = firstLast.join("_");
       return url + formatted_name.toLowerCase() + '.png';
     };
-
   }]);
-
-
-

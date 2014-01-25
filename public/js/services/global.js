@@ -356,7 +356,7 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
       var teamName = teams[i].franchise;
       teams[i].winPct = winPct[teamName].winPct;
     }
-    d.resolve({teamStats: statsObj, cats: cats, teams: teams});
+    d.resolve({teamStats: statsObj, cats: cats, teams: teams, presets:data.presets});
   });
 
   _this._data = {
