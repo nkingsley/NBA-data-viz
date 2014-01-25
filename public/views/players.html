@@ -6,7 +6,7 @@
         <div class = "normal">{{p.name}} <span class='leftAligned'> Star Value: <span ng-bind="p.totalPlayerStar | number:1"></span></span></div>
         <table class="player-stats normal">
           <tr class="player-stats-header smaller">
-            <th ng-repeat="(name, score) in p.scores track by name" style="font-size: .66rem; font-weight: lighter;"><span>{{name}}</span></th>
+            <th ng-repeat="(name, score) in p.scores track by name" style="font-size: 1rem; font-weight: lighter;"><span>{{name}}</span></th>
           </tr>
           <tr>
             <td ng-repeat="(name, score) in p.scores track by name">{{score | number:2}}</td>
