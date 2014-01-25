@@ -150,19 +150,21 @@ body {
   border-bottom: 1px solid #ccc;
 }
 .player-head-shot {
-  width: 30%;
+  vertical-align: middle;
+  width: 20%;
+  padding: 0px;
 }
 .player-head-shot img {
   width: 7rem;
+  padding: 0px;
 }
 .player-stats-container {
-  padding:.5rem;
+  padding: 8px;
   background-color: #fafafa;
 }
 .player-stats {
   width:100%;
   border: 1px solid #ccc;
-  padding: .5rem;
   table-layout:fixed;
   background-color: #fff;
 }
@@ -183,4 +185,24 @@ body {
 
 .contains{
   padding: 20px;
+}
+.scrolling {
+  height: 500px;
+  overflow-y: scroll;
+}
+.leftAligned {
+  float: right;
+}
+td .player-head-shot {
+  vertical-align: auto;
+  padding: 0px;
+}
+.table td {
+  vertical-align: middle;
+}
+table .player-stats-normal {
+  text-align: left;
+}
+th {
+  text-align: left;
 }
