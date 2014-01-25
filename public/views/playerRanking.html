@@ -1,9 +1,12 @@
 <div data-ng-controller="chartCtrl" data-ng-init = "calculatePlayerStarVals('ALL',false);currentTeam = 'ALL';">
-<div header></div>
-<div accuracy></div>
-<div class = "span6">
-  <div players></div>
-</div>
-<div class = "span3">
-  <div slider-block></div>
+  <div header></div>
+  <div accuracy></div>
+  <div class = "row">
+    <div ng-class = "itemsClass">
+      <div players></div>
+    </div>
+    <div class = "span4" collapse = "slidersCollapsed">
+      <div slider-block></div>
+    </div>
+  </div>
 </div>

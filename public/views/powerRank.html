@@ -3,7 +3,7 @@
 <div header></div>
 <div accuracy></div>
   <div class = "row">
-    <div class="span6">
+    <div ng-class="itemsClass">
       <table class="table table-bordered" cg-busy="{tracker:'loadingTracker'}">
         <tr class="teams-header">
           <th>Rank</th>
@@ -35,7 +35,7 @@
         </tr>
       </table>
     </div>
-    <div slider-block class = "span3"></div>
+    <div slider-block class = "span4" collapse = "slidersCollapsed"></div>
   </div>
 </div>
 

@@ -5,7 +5,13 @@ angular.module('mean.chart')
     var teamsPromise = Global.stats;
     //watch statement on window width
     $scope.infoShow = 'Hide Info';
-    $scope.options = {width: 500, height: 400};
+    $scope.itemsClass = "span12";
+    $scope.sliderShow = "Show Sliders";
+    $scope.slidersCollapsed = true;
+    $scope.currentTeam = false;
+    $scope.introCollapsed = true;
+    $scope.introShow = 'Show Info';
+    $scope.options = {width: 680, height: 550};
     $scope.calculateTeamStarVals = Teamstar.calculateTeamStarVals;
     $scope.changeSliders = Stats.changeSliders;
     $scope.nestedSliders = Stats.nestedSliders;
@@ -13,9 +19,6 @@ angular.module('mean.chart')
     $scope.rhoVal = 0;
     $scope.secondClick = false;
     $scope.weights = Stats.nestedSliders;
-    $scope.currentTeam = false;
-    $scope.introCollapsed = true;
-    $scope.introShow = 'Show Info';
     $scope.recalculate = function(groupName,statName){
       $scope.changeSliders($scope.nestedSliders,statName,groupName);
       $scope.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams); 
@@ -25,6 +28,15 @@ angular.module('mean.chart')
     $scope.introToggle = function(){
       $scope.introCollapsed = !$scope.introCollapsed;
       $scope.introShow = $scope.introCollapsed ? 'Show Info' : 'Hide Info';
+    };
+    $scope.sliderToggle = function(){
+      $scope.slidersCollapsed = !$scope.slidersCollapsed;
+      if ($scope.slidersCollapsed){
+        $scope.itemsClass = "span12";
+      } else {
+        $scope.itemsClass = "span8";
+      }
+      $scope.sliderShow = $scope.slidersCollapsed ? 'Show Sliders' : 'Hide Sliders';
     };
     $scope.toggleOpenTeam = function(team){
       if ($scope.currentTeam === team){

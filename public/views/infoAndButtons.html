@@ -9,6 +9,17 @@
 </div>
 <div class = "btn-container">
   <div class = "btn-group chart-select">
+    <ul class="nav pull-left">
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><button class = "btn">Presets<b class="caret"></b></button>
+      </a>
+            <ul class="dropdown-menu">
+                <li ng-repeat = "preset in presets">
+                  <a ng-click = "changePreset(preset)">{{preset.name}}</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
     <a href='/#!/'>
       <button type="button" class="btn normal">Power Ranking</button></a>
     <a href='/#!/scatter'>  
@@ -17,5 +28,9 @@
       <button type="button" class="btn normal">Top 25 Players</button></a>
     <a ng-click = "introToggle()">
       <button type="button" class="btn normal">{{introShow}}</button></a>
+    <a ng-click = "sliderToggle()" ng-hide = "hideSliderButton">
+      <button type="button" class="btn normal">{{sliderShow}}</button></a>
+    <a ng-click = "sendScore(weights)" ng-hide = "slidersCollapsed">
+      <button type="button" class = "btn normal">Submit These Settings</button></a>
   </div>
 </div>
