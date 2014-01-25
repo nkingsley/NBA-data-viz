@@ -5,7 +5,7 @@ angular.module('mean.chart')
     var teamsPromise = Global.stats;
     //watch statement on window width
     $scope.infoShow = 'Hide Info';
-    $scope.options = {width: 840, height: 500};
+    $scope.options = {width: 500, height: 400};
     $scope.calculateTeamStarVals = Teamstar.calculateTeamStarVals;
     $scope.changeSliders = Stats.changeSliders;
     $scope.nestedSliders = Stats.nestedSliders;
