@@ -22,6 +22,9 @@ body {
   flex-direction: row;
   width: 100%;
 }
+.dot, .team-label{
+  font-size:11px;
+}
 .chart-container {
   bottom: 2px;
   float: left;

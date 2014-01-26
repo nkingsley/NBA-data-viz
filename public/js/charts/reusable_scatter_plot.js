@@ -49,7 +49,7 @@ d3.custom.scatterPlot = function module() {
           .attr("x", width / 2 - 30)
           .attr("y", 40)
           .style("text-anchor", "end")
-          .text("Star Value");
+          .text("Baller W/L");
 
         container
           .append('g')
@@ -61,7 +61,7 @@ d3.custom.scatterPlot = function module() {
           .attr("y", -60)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
-          .text("Wins/Games Played");
+          .text("Actual W/L");
 
         container
           .append('g')
