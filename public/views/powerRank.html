@@ -25,7 +25,7 @@
             <span class = "star-val">{{team.winPct}}</span>
           </td>
           <td class="team-badge"><img ng-src="img/nba_logos/{{team.logo_url}}"></td>
-          <td class="team-details" ng-bind="team.franchise"></td>
+          <td  > <span class="team-details">{{team.franchise}}</span></td>
         </tr>
         <tr ng-repeat-end>
           <td colspan="5" class="super-slim">
@@ -35,7 +35,7 @@
         </tr>
       </table>
     </div>
-    <div slider-block class = "span4" collapse = "slidersCollapsed"></div>
+    <div slider-block class = "span5" collapse = "slidersCollapsed"></div>
   </div>
 </div>
 

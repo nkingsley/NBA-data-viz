@@ -6,7 +6,7 @@ angular.module('mean.chart')
   })
   .directive('accuracy', function(){
     return{
-      template: '<div ng-class = "redGreen(rhoVal)"><span class = "rank bigger">Accuracy:</span> {{rhoVal | number:3}}</div>'
+      template: '<div ng-class = "redGreen(rhoVal)"><span class = "rank">Accuracy:{{rhoVal | number:3}}</span> </div>'
     }
   })
   .directive('header', function(){

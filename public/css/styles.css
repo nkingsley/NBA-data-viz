@@ -1,4 +1,12 @@
-
+.logo{
+  margin-left: 40px;
+  font-size: 30px;
+  font-weight: 900;
+  font-family:helvetica;
+}
+.presetsMenu{
+  font-size: 24px;
+}
 body {
   font: sans-serif
   color: #ccc;
@@ -65,15 +73,18 @@ body {
   width:100%;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33)
 }
-.slider-block{
-  width:33%;
+.slider-text{
+  font-size:25px;
 }
 .slider-shell {
   width:100%;
 }
+.oneSlider{
+  padding:20px;
+}
 .top-slider {
   background-color: #fafafa;
-  padding: 1vw;
+  padding: 30px;
   border-top: 1px solid #ccc;
 }
 .nested-sliders-shell {
@@ -81,8 +92,8 @@ body {
   background-color: #fff;
 }
 .nested-sliders {
-  margin-left: 2vw;
-  padding: 1px;
+  margin-left: 10px;
+  padding: 20px;
   list-style:none;
 }
 .badge {
@@ -104,9 +115,11 @@ body {
 }
 .rank {
   font-weight: 900;
+  font-size: 24px;
 }
 .star-val {
   color: #777;
+  font-size:22px;
 }
 .team {
   background-color: #fff;
@@ -131,13 +144,16 @@ body {
 .team.ng-enter.ng-enter-active {
   opacity:1;
 }
-
+table .table .table-bordered{
+  min-width: 900px;
+}
 .table td.super-slim {
   padding: 0;
 }
+
 .tableSlidersCollapsed {
   height: 150px;
-  font-size: 1.4rem;
+  font-size: 20px;
 }
 .player-badge-shell {
   margin-top: 10px;
@@ -151,7 +167,7 @@ body {
   width: 50px;
 }
 .player-details {
-  font-size: 25px;
+  font-size: 50px;
   border-bottom: 1px solid #ccc;
 }
 .player-head-shot {
@@ -170,7 +186,7 @@ body {
   font-size: 1.5rem;
 }
 .player-stats-container {
-  font-size: 1rem;
+  font-size: 10px;
   padding: 8px;
   background-color: #fafafa;
 }
@@ -199,7 +215,7 @@ body {
   padding: 20px;
 }
 .scrolling {
-  height: 500px;
+  height: 1300px;
   overflow-y: scroll;
 }
 .rightAligned {
@@ -212,3 +228,71 @@ th {
   text-align: left;
 }
 
+.team-details{
+  font-size:30px;
+}
+input[type="range"]{
+    background: rgb(94, 30, 30);
+    width: 130px;
+    height: 6px;
+    -webkit-appearance: none;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -wekkit-border-radius: 8px;
+    -webkit-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+    -moz-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+    box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+}
+
+input[type="range"]:hover{
+    background: rgb(194, 139, 131);
+    width: 130px;
+    height: 6px;
+    -webkit-appearance: none;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -wekkit-border-radius: 8px;
+    -webkit-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+    -moz-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+    box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+}
+
+input[type="range"]::-webkit-slider-thumb{
+   -webkit-appearance:none !important;  
+   width:30px;
+   height:30px;
+   -webkit-appearance: none;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -wekkit-border-radius: 8px;
+    border:1px solid black;
+
+    background: #a90329;
+    background: -moz-linear-gradient(left, #a90329 0%, #8f0222 50%, #6d0019 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#a90329), color-stop(50%,#8f0222), color-stop(100%,#6d0019));
+    background: -webkit-linear-gradient(left, #a90329 0%,#8f0222 50%,#6d0019 100%);
+    background: -o-linear-gradient(left, #a90329 0%,#8f0222 50%,#6d0019 100%);
+    background: -ms-linear-gradient(left, #a90329 0%,#8f0222 50%,#6d0019 100%);
+    background: linear-gradient(to right, #a90329 0%,#8f0222 50%,#6d0019 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=1 );
+ }
+
+input[type="range"]::-webkit-slider-thumb:hover{
+   -webkit-appearance:none !important;  
+   width:30px;
+   height:30px;
+   -webkit-appearance: none;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -wekkit-border-radius: 8px;
+    background-color:rgb(56, 13, 13);
+    border:1px solid black;
+
+    background: -moz-linear-gradient(left, #1d2e38 0%, #2b4254 50%, #2b4254 100%);
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#1d2e38), color-stop(50%,#2b4254), color-stop(100%,#2b4254));
+    background: -webkit-linear-gradient(left, #1d2e38 0%,#2b4254 50%,#2b4254 100%);
+    background: -o-linear-gradient(left, #1d2e38 0%,#2b4254 50%,#2b4254 100%);
+    background: -ms-linear-gradient(left, #1d2e38 0%,#2b4254 50%,#2b4254 100%);
+    background: linear-gradient(left, #1d2e38 0%,#2b4254 50%,#2b4254 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1d2e38', endColorstr='#2b4254',GradientType=1 );
+ }

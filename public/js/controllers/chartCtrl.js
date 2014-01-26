@@ -10,7 +10,7 @@ angular.module('mean.chart')
     $scope.currentTeam = false;
     $scope.introCollapsed = true;
     $scope.introShow = 'Show Info';
-    $scope.options = {width: 680, height: 550};
+    $scope.options = {width: 550, height: 430};
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
     $scope.weights = Stats.nestedSliders;
@@ -29,7 +29,7 @@ angular.module('mean.chart')
       if ($scope.slidersCollapsed){
         $scope.itemsClass = "span12";
       } else {
-        $scope.itemsClass = "span8";
+        $scope.itemsClass = "span7";
       }
       $scope.sliderShow = $scope.slidersCollapsed ? 'Show Sliders' : 'Hide Sliders';
     };

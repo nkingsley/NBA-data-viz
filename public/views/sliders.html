@@ -1,26 +1,26 @@
 <div class="slider-container scrolling">
   <div class="slider-shell" ng-repeat="(groupName, group) in nestedSliders">
     <div class="top-slider">
-      <label class = "normal"><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
+      <label class = "slider-text"><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
       <input type = "range" class = "rangeSlider" ng-change="recalculate(groupName)" min="0" max="10" step="0.5" ng-model="group.main"/>
       <span class="weight badge badge-success normal">{{group.main}}</span>
     </div>
     <div class="nested-sliders-shell" collapse="isCollapsed">
       <ul class="nested-sliders">
-        <li ng-repeat="(statName, statNum) in coupleStats(group)" ng-show = "statNum.weight > -1 || statNum.main > -1">
+        <li class = "oneSlider" ng-repeat="(statName, statNum) in coupleStats(group)" ng-show = "statNum.weight > -1 || statNum.main > -1">
           <div ng-if = "statNum.weight > -1">
-            <label>{{statNum.coupledName || statName}}</label>
+            <label class = "slider-text">{{statNum.coupledName || statName}}</label>
             <input ng-model="statNum.weight" class = "rangeSlider" type="range" min="0" max="10" step="0.5" ng-change="changeCoupled(statName,group);recalculate(groupName,statName)"/>
             <span class="weight badge badge-info normal">{{statNum.weight}}</span>
           </div>
           <div ng-if = "statNum.main > -1 && currentTeam !== 'ALL'">
-            <a ng-click = "subCollapsed = !subCollapsed"><label>{{statNum.coupledName || statName}}</label></a>
+            <a ng-click = "subCollapsed = !subCollapsed"><label class = "slider-text">{{statNum.coupledName || statName}}</label></a>
             <input ng-model ="statNum.main" ng-change = "recalculate(statName)"class = "rangeSlider" type="range" min="0" max="10" step="0.5" />
             <span class="weight badge badge-info normal">{{statNum.main}}</span>
             <div class = "nested-sliders-shell" collapse="!subCollapsed">
               <ul class = "nested-sliders">
-                <li ng-repeat = "(tmDefName,tmDefStat) in statNum" ng-show = "tmDefStat.weight > -1">
-                  <label>{{tmDefStat.coupledName || tmDefName}}</label>
+                <li class = "oneSlider" ng-repeat = "(tmDefName,tmDefStat) in statNum" ng-show = "tmDefStat.weight > -1">
+                  <label class = "slider-text">{{tmDefStat.coupledName || tmDefName}}</label>
                   <input ng-model="tmDefStat.weight" class = "rangeSlider" type="range" min="0" max="10" step="0.5" ng-change="recalculate(statName,tmDefStat)"/>
                   <span class="weight badge badge-info normal">{{tmDefStat.weight}}</span>
                 </li>

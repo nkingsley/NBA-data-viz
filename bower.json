@@ -12,7 +12,7 @@
     "angular-ui-utils": "0.0.4",
     "d3": "latest",
     "angular-busy": "*",
-    "angular-animate": "~1.2.7"
+    "angular-animate": "latest"
   },
   "resolutions": {
     "angular": "1.2.8"
