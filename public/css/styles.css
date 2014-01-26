@@ -8,8 +8,8 @@
   font-size: 24px;
 }
 body {
-  font: sans-serif
-  color: #ccc;
+  font-size:22px;
+  font: helvetica;
   background-color: #f3f3f3;
 }
 .svg-chart{
@@ -106,6 +106,7 @@ body {
 }
 .badge {
   border-radius: 5px;
+  padding:10px;
 }
 .weight {
   margin-left: 2vw;
@@ -241,7 +242,7 @@ th {
 }
 input[type="range"]{
     background: rgb(94, 30, 30);
-    width: 130px;
+    width: 75%;
     height: 6px;
     -webkit-appearance: none;
     border-radius: 8px;
@@ -254,7 +255,7 @@ input[type="range"]{
 
 input[type="range"]:hover{
     background: rgb(194, 139, 131);
-    width: 130px;
+    width: 75%;
     height: 6px;
     -webkit-appearance: none;
     border-radius: 8px;

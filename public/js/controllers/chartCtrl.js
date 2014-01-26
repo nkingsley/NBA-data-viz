@@ -42,7 +42,7 @@ angular.module('mean.chart')
     };
 
     $scope.redGreen = function(rhoVal){
-      if (rhoVal > 0.9){
+      if (rhoVal > 0.8){
         return 'rhoGreen';
       } else{
         return 'rhoRed';
