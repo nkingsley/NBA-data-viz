@@ -12,6 +12,11 @@ body {
   color: #ccc;
   background-color: #f3f3f3;
 }
+.svg-chart{
+  position: fixed;
+  top: 100px;
+  background-color:white;
+}
 .content{
   display:flex;
   flex-direction: row;
@@ -26,7 +31,9 @@ body {
   margin-bottom: 20px;
 }
 .rangeSlider{
-  width: 70%;
+  padding-top:15px;
+  padding-bottom:15px;
+  width: 100%;
 }
 .power-rank-container {
   width:66%;
@@ -75,6 +82,7 @@ body {
 }
 .slider-text{
   font-size:25px;
+  margin-bottom:10px;
 }
 .slider-shell {
   width:100%;
@@ -259,8 +267,8 @@ input[type="range"]:hover{
 
 input[type="range"]::-webkit-slider-thumb{
    -webkit-appearance:none !important;  
-   width:30px;
-   height:30px;
+   width:50px;
+   height:50px;
    -webkit-appearance: none;
     border-radius: 8px;
     -moz-border-radius: 8px;
@@ -279,8 +287,8 @@ input[type="range"]::-webkit-slider-thumb{
 
 input[type="range"]::-webkit-slider-thumb:hover{
    -webkit-appearance:none !important;  
-   width:30px;
-   height:30px;
+   width:50px;
+   height:50px;
    -webkit-appearance: none;
     border-radius: 8px;
     -moz-border-radius: 8px;
