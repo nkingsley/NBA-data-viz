@@ -1,5 +1,5 @@
 angular.module('mean', ['ngCookies', 'ngResource', 'ngRoute', 'ngAnimate',
-  'ui.bootstrap', 'ui.route',
+  'ui.bootstrap', 'ui.route', 'ngTouch',
   'mean.system',
   'mean.chart', 
   ]);
