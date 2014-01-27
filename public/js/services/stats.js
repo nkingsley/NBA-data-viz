@@ -68,6 +68,9 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
         var nest = exports.nestedSliders[groupName];        
       }
       for (var statName in nest){
+        if (statName === "Team Defense"){
+          continue;
+        }
         var stat = nest[statName];
         if (statName === "main" || statName === "oldMain"){
           continue;
