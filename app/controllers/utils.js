@@ -13,7 +13,7 @@ exports.toArray = function(obj){
 exports.reverseTags = function(collection){
   for (var item in collection){
     for (var stat in collection[item]){
-      var name = reverseMap[stat].name || reverseMap[stat].keep;
+      var name = reverseMap[stat].key;
       var temp = collection[item][stat];
       delete collection[item][stat];
       collection[item][name] = temp;
@@ -47,10 +47,6 @@ exports.diff = function(startData,endData){
   for (var item in startData){
     diff[item] = diff[item] || {};
     for (var stat in startData[item]){
-      if (!endData[item][stat] && startData[item][stat] && endData[item][stat] !== 0){
-        console.log('at->',stat,'this->',startData[item],'doesnt match this->',endData[item]);
-        return false;
-      }
       if (!reverseMap[stat] || typeof startData[item][stat] === 'function'){continue;}
       if (reverseMap[stat].name || stat === 'MIN' || stat === 'GP'){
         diff[item][stat] = endData[item][stat] - startData[item][stat];      

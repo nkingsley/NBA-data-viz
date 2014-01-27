@@ -1,5 +1,5 @@
-var mongoose = require('mongoose'), utils =require('./utils'), Q = require('q');
-var Tp = mongoose.model('Tradedplayer');
+var mongoose = require('mongoose'), utils =require('./utils'), Q = require('q'),
+Tp = mongoose.model('Tradedplayer'), maps = require('./map');
 exports.tradedPlayers = {};
 exports.all = function(){
   var d = Q.defer();
@@ -71,7 +71,9 @@ exports.addNewPlayerTeam = function(tradedPlayers,allStats){
   if (updated){return true;}
 };
 
-exports.splitData = function(tradedPlayers,stats,model,map){
+exports.splitData = function(tradedPlayers,stats,model){
+  var map = maps.map;
+  var rmap = maps.reverseMap();
   var d = Q.defer();
   if (!tradedPlayers){
     d.resolve();
@@ -95,11 +97,17 @@ exports.splitData = function(tradedPlayers,stats,model,map){
         var nid = tradedPlayers[oid].newId;
         stats[nid] = {};
         for (var stat in stats[oid]){
-          stats[nid][stat] = stats[oid][stat] - op[map[stat].key];
+          if (!map[stat]){
+            continue;
+          }
+          stats[nid][stat] = stats[oid][stat] - op[map[stat].name || map[stat].keep];
         }
         stats[oid] = {};
         for (var stat in op){
-          stats[oid][map[stat].key] = op[stat];
+          if (!rmap[stat] || !rmap[stat].key){
+            continue;
+          }
+          stats[oid][rmap[stat].key] = op[stat];
         }
       }
       splitComplete++;

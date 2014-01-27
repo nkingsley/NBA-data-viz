@@ -36,7 +36,7 @@ var normalize = function(collection,mmr,map,flipNegs){
   for (var item in collection){
     for (var stat in collection[item]){
       if (!map[stat].name){continue;}
-      collection[item][stat] = 1-(mmr[stat].max - (collection[item][stat]))/mmr[stat].range;
+      collection[item][stat] = (1-(mmr[stat].max - (collection[item][stat]))/mmr[stat].range) || 0;
       if (flipNegs && map[stat].posneg === 'NEG'){
         var flipFlop500 = collection[item][stat] - .5;
         collection[item][stat] = .5 - flipFlop500;
@@ -72,7 +72,7 @@ var toPerMinute = function(collection,map){
   for (var item in collection){
     for (var stat in collection[item]){
       if (!map[stat].name){continue;}
-      collection[item][stat] = collection[item][stat]/collection[item].MIN;
+      collection[item][stat] = collection[item][stat]/collection[item].MIN || 0;
     }
   }
 };
