@@ -2,6 +2,7 @@ angular.module('mean.chart')
   .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar',
     'promiseTracker', 
     function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
+    $scope.global = Global;
     var teamsPromise = Global.stats;
     $scope.infoShow = 'Hide Info';
     $scope.itemsClass = "span12";
