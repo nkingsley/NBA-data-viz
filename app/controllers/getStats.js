@@ -1,7 +1,7 @@
 var statModels = require('../models/statModels'),curl = require('curling'),_ = require('lodash'),
 statControl = require('./statControl'),db = require('./database'), utils = require('./utils'),
 ma = require('./movingAverage'), tp = require('./tradedPlayers'), mongoose = require('mongoose'), 
-allStats = {}, urlsToGet = 11, urlsGotten = 0, mustRerun = false;
+q = require('q'),allStats = {}, urlsToGet = 11, urlsGotten = 0, mustRerun = false;
 
 var fixHeaders = function(headers){
   //some stats have nested headers.  This concats the correct top-level header onto the lower-level header
@@ -71,16 +71,19 @@ var compileStats = function(stats,headers,fix,missingTradeData){
       getStats();
       return;
     }
-    statControl.finish(allStats,tp.tradedPlayers)
-    .then(function(finishedStats){
-      var forMovingAverages = _.cloneDeep(finishedStats.Rawstat);
-      ma.movingAverage(forMovingAverages)
-      .then(function(){
-        db.saveAll(finishedStats)
+    getPlayerDetails(allStats)
+    .then(function(){
+      statControl.finish(allStats,tp.tradedPlayers)
+      .then(function(finishedStats){
+        var forMovingAverages = _.cloneDeep(finishedStats.Rawstat);
+        ma.movingAverage(forMovingAverages)
         .then(function(){
-          mongoose.connection.close();
-        })
-      })
+          db.saveAll(finishedStats)
+          .then(function(){
+            mongoose.connection.close();
+          });
+        });
+      });
     });
   }
 };
@@ -149,5 +152,25 @@ var getStats = function(){
     });
   });
 };
-// mongoose.connect('mongodb://localhost/mean-test', getStats);
-mongoose.connect('mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036', getStats);
+
+var getPlayerDetails = function(allStats){
+  var d = q.defer();
+  var playerDetailsToGet = Object.keys(allStats).length;
+  var playerDetailsGotten = 0;
+  // for (var id in allStats){
+    var id = 2223;
+    var url = 'http://stats.nba.com/stats/commonplayerinfo/?PlayerID=' + id + '&SeasonType=Regular+Season&LeagueID=00';
+    curl.run("-X GET '" + url + "'"
+      , function(err,result){
+        console.log(result.payload);
+        playerDetailsGotten++;
+        dldkjf
+        if (playerDetailsGotten === playerDetailsToGet){
+          d.resolve();
+        }
+      });
+  // }
+  return d.promise;
+};
+mongoose.connect('mongodb://localhost/mean-test', getStats);
+// mongoose.connect('mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036', getStats);

@@ -69,7 +69,7 @@ exports.finish = function(allStats,tradedPlayers){
     for (var id in allStats){
       addTags(allStats[id]);
     }
-    console.log(playersNorm[2544]); //LeBron!
+    // console.log(playersNorm[2544]); //LeBron!
     var megaStats = {
       Teamnorm:teamsNorm,
       Playernorm:playersNorm, 

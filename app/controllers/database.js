@@ -66,6 +66,29 @@ exports.players = function(req,res){
   });
 };
 
+exports.teamMovAvg = function(req,res){
+  var start = utils.dateTimeless(req.params.start);
+  var end = utils.dateTimeless(req.params.end);
+  mongoose.model('Tnmovavg')
+  .find({Team:req.params.team,created:{$gte:start,$lte:end}})
+  .exec(function(err,averages){
+    res.setHeader('Content-Type', 'application/JSON');
+    res.end(JSON.stringify(averages));
+  });
+};
+
+exports.playerMovAvg = function(req,res){
+  var start = utils.dateTimeless(req.params.start);
+  var end = utils.dateTimeless(req.params.end);
+  mongoose.model('Pnmovavg')
+  .find({Player:req.params.player,created:{$gte:start,$lte:end}})
+  .exec(function(err,averages){
+    res.setHeader('Content-Type', 'application/JSON');
+    res.end(JSON.stringify(averages));
+  });
+};
+
+
 exports.presets = function(){
   var d = q.defer();
   mongoose.model('Catobj')

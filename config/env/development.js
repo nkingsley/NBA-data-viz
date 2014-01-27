@@ -1,12 +1,12 @@
 module.exports = {
     db: "mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036",
     app: {
-        name: "NBA Stats"
+        name: "MoneyBaller"
     },
     facebook: {
-        clientID: "APP_ID",
-        clientSecret: "APP_SECRET",
-        callbackURL: "http://localhost:3000/auth/facebook/callback"
+        clientID: "701913439842154",
+        clientSecret: "5a6c033d867737fa1189b1d437916502",
+        callbackURL: "http://nbastar.herokuapp.com/auth/facebook/callback"
     },
     twitter: {
         clientID: "CONSUMER_KEY",

@@ -63,6 +63,8 @@ module.exports = function(app, passport, auth) {
     var db = require('../app/controllers/database');
     app.get('/players', db.players);
     app.get('/init', db.init);
+    app.get('/team-window/:team/:start/:end', db.teamMovAvg);
+    app.get('/player-window/:player/:start/:end', db.playerMovAvg);
     app.post('/highScore',db.newHighScore);
     //Home route
     var index = require('../app/controllers/index');
