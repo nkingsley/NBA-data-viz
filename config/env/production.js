@@ -1,5 +1,5 @@
 module.exports = {
-    db: "mmongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036",
+    db: "mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036",
     app: {
         name: "MoneyBaller"
     },
