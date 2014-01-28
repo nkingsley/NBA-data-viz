@@ -3,7 +3,6 @@ angular.module('mean.chart')
     'promiseTracker', 
     function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
     $scope.global = Global;
-    var teamsPromise = Global.stats;
     $scope.infoShow = 'Hide Info';
     $scope.itemsClass = "span12";
     $scope.sliderShow = "Show Sliders";
@@ -14,7 +13,7 @@ angular.module('mean.chart')
     $scope.options = {width: 550, height: 430};
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
-    $scope.weights = Stats.nestedSliders;
+    $scope.isCollapsed = true;
     $scope.recalculate = function(groupName,statName){
       Stats.changeSliders(statName,groupName);
       Teamstar.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams); 
@@ -58,7 +57,6 @@ angular.module('mean.chart')
           continue;
         }
         if (group[stat].coupledName === group[statName].coupledName){
-          debugger;
           group[stat].weight = group[statName].weight;
         }
       }
@@ -86,7 +84,7 @@ angular.module('mean.chart')
       } else{
         var abbr = "ALL"
       }
-      teamsPromise.then(function(data){        
+      Global.stats.then(function(data){
         var playerPromise = Playerstar.calculatePlayerStarVals($scope.weights,abbr)
         playerPromise.then(function(){
           $scope.playerStats = Playerstar.teamPlayers;
@@ -98,7 +96,7 @@ angular.module('mean.chart')
       });
     };
 
-    teamsPromise.then(function(data){
+    Global.stats.then(function(data){
       $scope.presets = data.presets;
       $scope.teamStats = data.teamStats;
       $scope.weights = data.cats;
@@ -112,6 +110,7 @@ angular.module('mean.chart')
       $scope.nestedSliders = Stats.assignNestedSliders($scope.weights);
       Teamstar.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
       $scope.currentTeam && $scope.calculatePlayerStarVals($scope.currentTeam);
+      debugger;
       $scope.updateRho();
     };
     var appendHackReactorBadge = function (){
@@ -125,11 +124,8 @@ angular.module('mean.chart')
       document.body.appendChild(a);
     };
 
-    // appendHackReactorBadge();
     $scope.loadingTracker = promiseTracker('loadingTracker');
-    $scope.loadingTracker.addPromise(teamsPromise);
-    // $scope.allCollapsed = true;
-    $scope.isCollapsed = true;
+    $scope.loadingTracker.addPromise(Global.stats);
 
     $scope.updateRho = function (){
       $scope.rhoVal = $scope.spearman.rho($scope.teams);
@@ -142,10 +138,21 @@ angular.module('mean.chart')
       delete weights.created;
       weights.score = $scope.rhoVal;
       weights.presetName = name;
+      weights.user = Global.user._id;
       $http.post('/highscore',weights).success(function(data){
         console.log(data);
       });
     };
+
+    $scope.getPresets = function(presets){
+
+    };
+
+    if(Global.user){
+      $http.get('/presets').success(function(data){
+        $scope.userPresets = data;
+      });
+    }
 
     $scope.makeHeadShotUrl = function(name, isCollapsed) {
       

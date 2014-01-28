@@ -88,20 +88,22 @@ exports.playerMovAvg = function(req,res){
   });
 };
 
+exports.presetList = function(req,res){
+  mongoose.model('Catobj')
+  .find({user:req.user._id})
+  .exec(function(err,presets){
+    res.setHeader('Content-Type', 'application/JSON');
+    res.end(JSON.stringify(presets));
+  });
+};
+
 
 exports.presets = function(){
   var d = q.defer();
   mongoose.model('Catobj')
-  .find()
+  .find({user:"52e6e0bf002038080022c945"})
   .exec(function(err,presets){
-    var realPresets = [];
-    for (var i in presets){
-      if (!presets[i].presetName){
-        continue;
-      }
-      realPresets.push(presets[i]);
-    }
-    d.resolve(realPresets);
+    d.resolve(presets);
   });
   return d.promise;
 };

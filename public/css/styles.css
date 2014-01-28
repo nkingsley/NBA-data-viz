@@ -13,8 +13,6 @@ body {
   background-color: #f3f3f3;
 }
 .svg-chart{
-  position: fixed;
-  top: 100px;
   background-color:white;
 }
 .content{

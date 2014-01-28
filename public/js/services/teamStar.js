@@ -50,7 +50,15 @@ var exports = {};
     }
     return nestedSliders;
   };
-    
+  
+  var edgeCase = function(total,statWeights){
+    for(var stat in statWeights){
+      if(total/2.5 < statWeights[stat].weight){
+        return true;
+      }
+    }
+    return false;
+  };
 
   exports.changeSliders = function(nestedSliders, groupName) {
     var nest = nestedSliders[groupName];
@@ -73,6 +81,7 @@ var exports = {};
   exports.calculateTeamStarVals = function(teamStats, statWeights, teams){
     var team, teamName, rawStar, stat;
     var totalStatWeights = exports.totalStatWeights(statWeights);
+
     for (team in teams){
       teamName = teams[team].abbreviation;
       rawStar = 0;
@@ -85,7 +94,11 @@ var exports = {};
           statStarVal = statWeights[stat]['weight'] * teamStats[teamName][stat];
           rawStar += statStarVal;
       }
-      teams[team]['starVal'] = ((rawStar/totalStatWeights - 0.5) * 3) + 0.5;
+      if (edgeCase(totalStatWeights,statWeights)){
+        teams[team]['starVal'] = rawStar/totalStatWeights;
+      } else{
+        teams[team]['starVal'] = ((rawStar/totalStatWeights - 0.5) * 3) + 0.5;        
+      }
     }
     exports.teams = teams;
   };

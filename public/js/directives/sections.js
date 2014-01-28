@@ -9,7 +9,7 @@ angular.module('mean.chart')
       template: '<div ng-class = "redGreen(rhoVal)"><span class = "rank">Accuracy:{{rhoVal | number:3}}</span> </div>'
     }
   })
-  .directive('header', function(){
+  .directive('buttons', function(){
     return {
       templateUrl: 'views/infoAndButtons.html'
     }
@@ -17,5 +17,10 @@ angular.module('mean.chart')
   .directive('players', function(){
     return{
       templateUrl: 'views/players.html'
+    }
+  })
+  .directive('header',function(){
+    return{
+      templateUrl: 'views/header.html'
     }
   });
