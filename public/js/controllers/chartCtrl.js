@@ -9,7 +9,7 @@ angular.module('mean.chart')
     $scope.slidersCollapsed = true;
     $scope.currentTeam = false;
     $scope.introCollapsed = true;
-    $scope.introShow = 'Show Info';
+    $scope.introShow = 'i';
     $scope.options = {width: 550, height: 430};
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
@@ -22,7 +22,7 @@ angular.module('mean.chart')
     };
     $scope.introToggle = function(){
       $scope.introCollapsed = !$scope.introCollapsed;
-      $scope.introShow = $scope.introCollapsed ? 'Show Info' : 'Hide Info';
+      $scope.introShow = $scope.introCollapsed ? 'i' : '^';
     };
     $scope.sliderToggle = function(){
       $scope.slidersCollapsed = !$scope.slidersCollapsed;

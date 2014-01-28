@@ -1,8 +1,14 @@
-<div class = "navbar">
+<div style = "height:120px">
+<div class = "navbar nav">
   <div class="navbar-inner">
+
       <ul class="nav">
+
           <li>
+              <div accuracy class= "accuracy" ng-show = "!slidersCollapsed"></div>
               <a class="brand" href="/">MoneyBaller</a>
+              <a ng-click = "introToggle()">
+                <button type="button" class="infoButton">{{introShow}}</button></a>
           </li>
           <li data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
               <a href="#!/{{item.link}}">{{item.title}}</a>
@@ -47,4 +53,6 @@
       </li>
   </ul>
   </div>
+  <div buttons></div> 
+</div>
 </div>

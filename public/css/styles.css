@@ -4,12 +4,83 @@
   font-weight: 900;
   font-family:helvetica;
 }
+.accuracy{
+ position: absolute;
+ top:10px;
+ left:460px;
+}
+.infoButton{
+  position: absolute;
+  top:10px;
+  left:-10px;
+  padding:0px;
+  font-size:20px;
+  border:0px;
+  border-radius:20px;
+  width:20px;
+  height:20px;
+  background-image: url('../img/basketball.png');
+  background-size:20px 20px;
+  background-repeat:no-repeat;
+}
+.headContainer{
+background-color: #fafafa;
+background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
+background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
+background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
+background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
+background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
+background-repeat: repeat-x;
+border: 1px solid #d4d4d4;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
+-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+}
+.introContainer{
+padding: 20px;
+}
+.buttonContainer{
+padding:2px;
+}
+.navbar-inner{
+  padding-right:0px;
+}
+.navbar{
+  position:fixed;
+  margin-bottom:10px;
+  z-index:1;
+  width:940px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.mainButton{
+  padding:12px;
+  font-family: 'Exo 2', sans-serif;
+  font-size:27px;
+-webkit-appearance: none;
+border-radius: 8px;
+-moz-border-radius: 8px;
+-wekkit-border-radius: 8px;
+-webkit-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+-moz-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+background-image: -moz-linear-gradient(top, #EB5909, #f2f2f2);
+background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#EB5909), to(#f2f2f2));
+background-image: -webkit-linear-gradient(top, #EB5909, #f2f2f2);
+background-image: -o-linear-gradient(top, #EB5909, #f2f2f2);
+background-image: linear-gradient(to bottom, #E9D1AE, #EB5909);
+  border:1px black;
+}
 .presetsMenu{
   font-size: 24px;
 }
 body {
-  font-size:22px;
-  font: helvetica;
+  font-size:24px;
+  font-family: 'Exo 2', sans-serif;
   background-color: #f3f3f3;
 }
 .svg-chart{
@@ -32,11 +103,12 @@ body {
   margin-bottom: 20px;
 }
 .rangeSlider{
-  padding-top:15px;
-  padding-bottom:15px;
+  padding-top:8px;
+  padding-bottom:8px;
   width: 100%;
 }
 .power-rank-container {
+  font-family: 'Duru Sans', sans-serif;
   width:66%;
   float: left;
   background-color: #fff;
@@ -78,7 +150,10 @@ body {
 /* Slider Styles
  * ==========================================================================*/
 .slider-container {
-  width:100%;
+  height:90%;
+  overflow-y:scroll;
+  position:fixed;
+  width:380px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33)
 }
 .slider-text{
@@ -107,10 +182,11 @@ body {
 }
 .badge {
   border-radius: 5px;
-  padding:10px;
+  padding:5px 10px 5px 10px;
+  margin-left:-5px;
 }
 .weight {
-  margin-left: 2vw;
+  margin-left: 5px;
 }
 
 /* Power Rank Table Styles
@@ -154,17 +230,10 @@ body {
 .team.ng-enter.ng-enter-active {
   opacity:1;
 }
-table .table .table-bordered{
-  min-width: 900px;
-}
 .table td.super-slim {
   padding: 0;
 }
 
-.tableSlidersCollapsed {
-  height: 150px;
-  font-size: 20px;
-}
 .player-badge-shell {
   margin-top: 10px;
   margin-bottom: 0;
@@ -189,11 +258,14 @@ table .table .table-bordered{
   width: 100%;
 }
 .playerInfo {
-  font-size: 20px;
+  font-size: 25px;
   padding-bottom: 2px;
 }
 .playerInfoSlidersCollapsed {
-  font-size: 1.5rem;
+  font-size: 29px;
+}
+.playerInfoSlidersOpen {
+  font-size:25px;
 }
 .player-stats-container {
   font-size: 10px;
@@ -224,10 +296,6 @@ table .table .table-bordered{
 .contains{
   padding: 20px;
 }
-.scrolling {
-  height: 1300px;
-  overflow-y: scroll;
-}
 .rightAligned {
   float: right;
 }
@@ -242,61 +310,31 @@ th {
   font-size:30px;
 }
 input[type="range"]{
-    background: #B64100;
-    width: 75%;
-    height: 2px;
-    -webkit-appearance: none;
-    border-radius: 8px;
-    -moz-border-radius: 8px;
-    -wekkit-border-radius: 8px;
-    -webkit-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
-    -moz-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
-    box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+  background-image: -moz-linear-gradient(top, #EB5909, #f2f2f2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#EB5909), to(#f2f2f2));
+  background-image: -webkit-linear-gradient(top, #EB5909, #f2f2f2);
+  background-image: -o-linear-gradient(top, #EB5909, #f2f2f2);
+  background-image: linear-gradient(to bottom, #E9D1AE, #EB5909);
+  width: 75%;
+  height: 2px;
+  -webkit-appearance: none;
+  border-radius: 8px;
+  -moz-border-radius: 8px;
+  -wekkit-border-radius: 8px;
+  -webkit-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+  -moz-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+  box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
 }
 
-input[type="range"]:hover{
-    background: #B64100;
-    width: 75%;
-    height: 2px;
-    -webkit-appearance: none;
-    border-radius: 8px;
-    -moz-border-radius: 8px;
-    -wekkit-border-radius: 8px;
-    -webkit-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
-    -moz-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
-    box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
-}
 
 input[type="range"]::-webkit-slider-thumb{
-   -webkit-appearance:none !important;  
-   width:50px;
-   height:50px;
-   -webkit-appearance: none;
-    border-radius: 60px;
-    -moz-border-radius: 60px;
-    -wekkit-border-radius: 60px;
-    border:1px solid black;
-    background-image: url('../img/basketball.png');
-
-input[type="range"]::-webkit-slider-thumb:hover{
-   -webkit-appearance:none !important;  
-   width:50px;
-   height:50px;
-   -webkit-appearance: none;
-    border-radius: 60px;
-    -moz-border-radius: 60px;
-    -wekkit-border-radius: 60px;
-    background-image: -webkit-gradient(
-  linear,
-  left top,
-  left bottom,
-  color-stop(0.24, #FF4F4F),
-  color-stop(1, #FFB133)
-);
-background-image: -o-linear-gradient(bottom, #FF4F4F 24%, #FFB133 100%);
-background-image: -moz-linear-gradient(bottom, #FF4F4F 24%, #FFB133 100%);
-background-image: -webkit-linear-gradient(bottom, #FF4F4F 24%, #FFB133 100%);
-background-image: -ms-linear-gradient(bottom, #FF4F4F 24%, #FFB133 100%);
-background-image: linear-gradient(to bottom, #FF4F4F 24%, #FFB133 100%);
-    border:1px solid black;
- }
+  -webkit-appearance:none !important;  
+  width:50px;
+  height:50px;
+  -webkit-appearance: none;
+  border-radius: 60px;
+  -moz-border-radius: 60px;
+  -wekkit-border-radius: 60px;
+  border:1px solid black;
+  background-image: url('../img/basketball.png');
+}

@@ -1,10 +1,8 @@
 <div data-ng-controller="chartCtrl" >
 <div class = "container">
-<div header></div>
-<div buttons></div>
-<div accuracy ng-show = "!slidersCollapsed"></div>
+  <div header></div>
   <div class = "row">
-    <div ng-class="itemsClass" class="scrolling">
+    <div ng-class="itemsClass">
       <table class="table table-bordered" cg-busy="{tracker:'loadingTracker'}">
         <tr class="teams-header">
           <th>Rank</th>
@@ -36,7 +34,7 @@
         </tr>
       </table>
     </div>
-    <div slider-block class = "span5" collapse = "slidersCollapsed"></div>
+    <div slider-block class = "span5" ng-hide = "slidersCollapsed"></div>
   </div>
 </div>
 

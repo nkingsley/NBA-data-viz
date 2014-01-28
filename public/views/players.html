@@ -9,7 +9,7 @@
             <th ng-repeat="(name, score) in p.scores track by name"><span>{{name}}</span></th>
           </tr>
           <tr>
-            <td ng-repeat="(name, score) in p.scores track by name">{{score | number:2}}</td>
+            <td ng-class="{playerInfoSlidersCollapsed: slidersCollapsed,playerInfoSlidersOpen: !slidersCollapsed}" ng-repeat="(name, score) in p.scores track by name">{{score | number:2}}</td>
           </tr>
         </table>
       </td>
