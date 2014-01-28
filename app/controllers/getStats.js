@@ -155,6 +155,8 @@ var getStats = function(){
 
 var getPlayerDetails = function(allStats){
   var d = q.defer();
+  d.resolve();
+  return d.promise;
   var playerDetailsToGet = Object.keys(allStats).length;
   var playerDetailsGotten = 0;
   // for (var id in allStats){
@@ -172,5 +174,5 @@ var getPlayerDetails = function(allStats){
   // }
   return d.promise;
 };
-mongoose.connect('mongodb://localhost/mean-test', getStats);
-// mongoose.connect('mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036', getStats);
+// mongoose.connect('mongodb://localhost/mean-test', getStats);
+mongoose.connect('mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036', getStats);
