@@ -11,13 +11,22 @@ var exports = {};
     }
     return weightedStats;
   };
-  
+  var skipStats = {
+    "MIN": true,
+    "GP": true,
+    "__v": true,
+    "_id": true,
+    "presetName": true,
+    "Team": true,
+    "score": true,
+    "created": true,
+    "user": true,
+    "$$hashKey": true,
+  }
   exports.totalStatWeights = function(statWeights){
     var totalValue = 0;
     for (var statName in statWeights){
-      if (statName === "MIN" || statName === "GP" || statName === '__v' || statName === "_id" ||
-          statName === "created" || statName === "score" || statName === 'Team' || statName === "presetName"
-          || statName === "user" || statName === "$$hashKey"){
+      if (skipStats[statName]){
           continue;
         }
       totalValue += parseFloat(statWeights[statName].weight);
@@ -50,15 +59,6 @@ var exports = {};
     }
     return nestedSliders;
   };
-  
-  var edgeCase = function(total,statWeights){
-    for(var stat in statWeights){
-      if(total/2.5 < statWeights[stat].weight){
-        return true;
-      }
-    }
-    return false;
-  };
 
   exports.changeSliders = function(nestedSliders, groupName) {
     var nest = nestedSliders[groupName];
@@ -78,7 +78,7 @@ var exports = {};
     nest.oldMain = parseFloat(nest.main);
   };
 
-  exports.calculateTeamStarVals = function(teamStats, statWeights, teams){
+  exports.calculateTeamStarVals = function(teamStats, statWeights, teams, multiplier){
     var team, teamName, rawStar, stat;
     var totalStatWeights = exports.totalStatWeights(statWeights);
 
@@ -94,11 +94,16 @@ var exports = {};
           statStarVal = statWeights[stat]['weight'] * teamStats[teamName][stat];
           rawStar += statStarVal;
       }
-      if (edgeCase(totalStatWeights,statWeights)){
-        teams[team]['starVal'] = rawStar/totalStatWeights;
-      } else{
-        teams[team]['starVal'] = ((rawStar/totalStatWeights - 0.5) * 3) + 0.5;        
+      multiplier = multiplier || 3;
+      var newStar = ((rawStar/totalStatWeights - 0.5) * multiplier) + 0.5; 
+      if (newStar > 1 || newStar < 0){
+        return exports.calculateTeamStarVals(teamStats,statWeights,teams,1);
+      } 
+      if (newStar > .9 || newStar < .1){
+        return exports.calculateTeamStarVals(teamStats,statWeights,teams,1.5);
       }
+      teams[team]['starVal'] = newStar;
+
     }
     exports.teams = teams;
   };
