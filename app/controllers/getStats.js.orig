@@ -154,5 +154,31 @@ var getStats = function(){
   });
 };
 
+<<<<<<< HEAD
+var getPlayerDetails = function(allStats){
+  var d = q.defer();
+  d.resolve();
+  return d.promise;
+  var playerDetailsToGet = Object.keys(allStats).length;
+  var playerDetailsGotten = 0;
+  // for (var id in allStats){
+    var id = 2223;
+    var url = 'http://stats.nba.com/stats/commonplayerinfo/?PlayerID=' + id + '&SeasonType=Regular+Season&LeagueID=00';
+    curl.run("-X GET '" + url + "'"
+      , function(err,result){
+        console.log(result.payload);
+        playerDetailsGotten++;
+        dldkjf
+        if (playerDetailsGotten === playerDetailsToGet){
+          d.resolve();
+        }
+      });
+  // }
+  return d.promise;
+};
+mongoose.connect('mongodb://localhost/mean-test', getStats);
+// mongoose.connect('mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036', getStats);
+=======
 // mongoose.connect('mongodb://localhost/mean-test', getStats);
 mongoose.connect('mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036', getStats);
+>>>>>>> 7d8475e7fcbde21e32698d6e183156f3a6111c1e

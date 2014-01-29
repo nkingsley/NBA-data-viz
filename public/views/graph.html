@@ -2,10 +2,8 @@
   <div header></div>
   <div accuracy></div>
   <div class = "row">
-    Players:
-    <input type="text" ng-model="graphSelected" typeahead="(datum.name + datum.abbreviation) as (datum.name + datum.franchise) for datum in playerStats | filter:$viewValue | limitTo:8" class="form-control">
-    Teams:
-    <input type="text" ng-model="graphSelected" typeahead="team.abbreviation as team.franchise for team in teams | filter:$viewValue | limitTo:4" class="form-control"> {{graphSelected}}
+    Players or Teams:
+    <input type="text" ng-model="graphSelected" typeahead="(datum.name + datum.abbreviation) as (datum.name + datum.franchise) for datum in teamsAndPlayers | filter:$viewValue | limitTo:8" class="form-control"> {{graphSelected}}
     <div ng-if="graphSelected" ng-model="dt.startDate">
       <datepicker
         ng-required="true"

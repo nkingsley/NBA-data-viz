@@ -14,15 +14,14 @@ angular.module('mean.chart')
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
     $scope.weights = Stats.nestedSliders;
- 
+
     // Line-Chart variables and request function //  
     $scope.dt = {};
-    $scope.graphSelectedPlayer = null;
-    $scope.graphSelectedTeam = null;
-    $scope.playerRequest = Graphrequests.playerRequest;
+    $scope.graphSelected = null;
+    $scope.timeRequest = Graphrequests.timeRequest;
     $scope.graphData = [];
     $scope.graphPlayer = function(statName){
-      $scope.graphRequest = Graphrequests.playerRequest($scope.graphSelectedPlayer, $scope.dt.startDate, $scope.dt.endDate);
+      $scope.graphRequest = Graphrequests.timeRequest($scope.graphSelected, $scope.dt.startDate, $scope.dt.endDate);
       $scope.graphRequest.then(function(data){
         var playerWindowStat = {}; // e.g. 'Lebron James'
         playerWindowStat['key'] = data[0].Player
@@ -94,6 +93,7 @@ angular.module('mean.chart')
       var result = {};
       var coupledStats = {};
       for (var stat in group){
+        if (!$scope.filterTeamOnlySliders(group[stat]) && stat !== "Team Defense"){continue;}
         if (coupledStats[group[stat].coupledName] || stat === "main" || stat === "oldMain"){
           continue;
         }
@@ -104,6 +104,17 @@ angular.module('mean.chart')
       }
       return result;
     };
+
+    $scope.filterTeamOnlySliders = function(stat){
+      if (!(stat.weight > -1)){return false;}
+      if ($scope.currentTeam === 'ALL'){
+        if (stat.cat === "PSS_TM" || stat.cat === "SHT_TM"){
+          return false;
+        }
+      }
+      return true;
+    };
+
     $scope.calculatePlayerStarVals = function(team, click){
       if (!team){
         return;
@@ -120,12 +131,18 @@ angular.module('mean.chart')
           if (click){
             $scope.toggleOpenTeam(team);
           }
+          $scope.teamsAndPlayers = $scope.playerStats.concat($scope.teams); // Might be sad code, but it has to run somewhere after playerStats gets defined
+          debugger;
         });
         $scope.loadingTracker.addPromise(playerPromise);
       });
     };
 
-    $scope.playerList = $scope.calculatePlayerStarVals("ALL"); 
+
+    // HEY THIS PROBABLY SHOULD BE SOMEWHERE NICER
+    $scope.calculatePlayerStarVals("ALL");
+
+
 
     Global.stats.then(function(data){
       $scope.presets = data.presets;
@@ -142,6 +159,7 @@ angular.module('mean.chart')
       Teamstar.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
       $scope.currentTeam && $scope.calculatePlayerStarVals($scope.currentTeam);
       $scope.updateRho();
+      console.log($scope.weights);
     };
     var appendHackReactorBadge = function (){
       var img = document.createElement('img');
@@ -163,6 +181,7 @@ angular.module('mean.chart')
 
     $scope.sendScore = function(weights){
       var name = prompt("Name these Slider Presets");
+      if (!name){return;}
       $scope.updateRho();
       delete weights._id;
       delete weights.created;
@@ -172,10 +191,6 @@ angular.module('mean.chart')
       $http.post('/highscore',weights).success(function(data){
         console.log(data);
       });
-    };
-
-    $scope.getPresets = function(presets){
-
     };
 
     if(Global.user){

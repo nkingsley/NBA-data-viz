@@ -27,7 +27,9 @@ exports.normPlayers = function(allStats,map,teams){
   toPerMinute(players,map);
   var mmr = maxMinRange(players,cutoff);
   normalize(players,mmr,map,true);
+  widenGap(players,map);
   toTotal(players,map);
+
   return players;
 };
 
@@ -82,6 +84,16 @@ var toTotal = function(collection,map){
     for (var stat in collection[item]){
       if (!map[stat].name){continue;}
       collection[item][stat] = collection[item][stat] * collection[item].MIN;
+    }
+  }
+};
+
+var widenGap = function(collection,map){
+  for (var item in collection){
+    for (var stat in collection[item]){
+      if (!map[stat].name){continue;}
+      var widerNorm = ((collection[item][stat] - 0.5) * 3) + 0.5;
+      collection[item][stat] = widerNorm;
     }
   }
 };

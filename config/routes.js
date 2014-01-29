@@ -66,6 +66,7 @@ module.exports = function(app, passport, auth) {
     app.get('/team-window/:team/:start/:end', db.teamMovAvg);
     app.get('/player-window/:player/:start/:end', db.playerMovAvg);
     app.get('/presets', db.presetList);
+    app.get('/playerdetails',db.getPlayerDetails);
     app.post('/highScore',db.newHighScore);
 
     //Home route
