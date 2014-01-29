@@ -20,19 +20,28 @@ angular.module('mean.chart')
     $scope.graphSelected = null;
     $scope.timeRequest = Graphrequests.timeRequest;
     $scope.graphData = [];
-    $scope.graphPlayer = function(statName){
-      $scope.graphRequest = Graphrequests.timeRequest($scope.graphSelected, $scope.dt.startDate, $scope.dt.endDate);
-      $scope.graphRequest.then(function(data){
-        var playerWindowStat = {}; // e.g. 'Lebron James'
-        playerWindowStat['key'] = data[0].Player
-        playerWindowStat['values'] = [];
-        for (var i = 0; i < data.length; i++){ // for each day in Lebron's window
-          var dayData = [data[i].created, data[i][statName]];
-          playerWindowStat['values'].push(dayData);
-          $scope.graphData.push(playerWindowStat);
-        }
-      })
+    var graphInputData = {};
+    $scope.getGraphData = function(){
+      if (!graphInputData[$scope.graphSelected]){
+        $scope.graphRequest = Graphrequests.timeRequest($scope.graphSelected, $scope.dt.startDate, $scope.dt.endDate);
+        $scope.graphRequest.then(function(data){
+          graphInputData[$scope.graphSelected] = data;
+        })
+      }
+
     };
+
+    $scope.makeGraphData = function(statName){
+      var playerWindowStat = {}; // e.g. 'Lebron James'
+      playerWindowStat['key'] = data[0].Player
+      playerWindowStat['values'] = [];
+      for (var i = 0; i < data.length; i++){ // for each day in Lebron's window
+        var dayData = [data[i].created, data[i][statName]];
+        playerWindowStat['values'].push(dayData);
+      }
+      $scope.graphData.push(playerWindowStat);
+    };
+
     $scope.startDate = function() {
       $scope.dt.startDate = new Date();
     };

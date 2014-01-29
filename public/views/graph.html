@@ -1,22 +1,22 @@
-<div data-ng-controller="chartCtrl" data-ng-init = "hideSliderButton = true; slidersCollapsed = false" >
+<div data-ng-controller="chartCtrl" data-ng-init = "hideSliderButton = true; slidersCollapsed = false">
   <div header></div>
   <div accuracy></div>
   <div class = "row">
-    Players or Teams:
-    <input type="text" ng-model="graphSelected" typeahead="(datum.name + datum.abbreviation) as (datum.name + datum.franchise) for datum in teamsAndPlayers | filter:$viewValue | limitTo:8" class="form-control"> {{graphSelected}}
-    <div ng-if="graphSelected" ng-model="dt.startDate">
-      <datepicker
-        ng-required="true"
-        max="dt.endDate">
-     </datepicker>
-   </div>
-   <div ng-if="dt.startDate" ng-model="dt.endDate">
-     <datepicker
-     min="dt.startDate"
-     ng-required="true">
-   </datepicker>
-     <button type="button" class="btn" ng-click="graphPlayer('Turnovers');"> Submit</button>
-   </div>
+   <div ng-model="dt.startDate"><div class="select">Start Date: </div>
+      <p class="input-group">
+        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt.startDate" is-open="opened" max="dt.endDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+      </p>
+    </div>
+   <div ng-if="dt.startDate" ng-model="dt.endDate"><div class="select">End Date: </div>
+      <p class="input-group">
+        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt.endDate" is-open="opened" min="dt.startDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+      </p>
+    </div>
+    <div class="select">Players or Teams: </div>
+    <p class="input-group">
+      <input type="text" ng-model="graphSelected" typeahead="(datum.name + datum.abbreviation) as (datum.name + datum.franchise) for datum in teamsAndPlayers | filter:$viewValue | limitTo:8" class="form-control"> {{graphSelected}}
+    </p>
+    <button type="button" class="btn" ng-click="makeGraphData();"> Submit</button>
    {{graphData}}
     <nvd3-line-chart
     height="550"
@@ -27,7 +27,6 @@
     xAxisTickFormat="xAxisTickFormatFunction()"
     yAxisTickFormat="yAxisTickFormatFunction()"
     hovered="hovered(args)"><nvd3-line-chart>
-    </div>
     <div class = "span5">
     <div slider-block></div>
   </div>

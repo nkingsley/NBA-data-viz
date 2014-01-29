@@ -311,7 +311,9 @@ body {
 th {
   text-align: left;
 }
-
+.select {
+  margin-bottom: 5px;
+}
 .team-details{
   font-size:30px;
 }
