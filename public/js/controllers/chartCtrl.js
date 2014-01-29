@@ -13,7 +13,6 @@ angular.module('mean.chart')
     $scope.options = {width: 550, height: 430};
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
-    $scope.chosen = null;
     $scope.weights = Stats.nestedSliders;
  
     // Line-Chart variables and request function //  
