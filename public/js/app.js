@@ -1,7 +1,7 @@
 angular.module('mean', ['ngCookies', 'ngResource', 'ngRoute', 'ngAnimate',
-  'ui.bootstrap', 'ui.route', 'ngTouch',
+  'ui.bootstrap', 'ui.route', 'ngTouch', 'nvd3ChartDirectives',
   'mean.system',
-  'mean.chart', 
+  'mean.chart'
   ]);
 
 angular.module('mean.system', []);

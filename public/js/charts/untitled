@@ -1,6 +1,6 @@
-d3.custom = d3.custom || {};
+d3.custom = {};
 
-d3.custom.scatterPlot = function module() {
+d3.custom.lineGraph = function module() {
   var margin = {top: 40, right: 45, bottom: 40, left: 75},
       width = 500,
       height = 500,
@@ -27,7 +27,7 @@ d3.custom.scatterPlot = function module() {
       var xAxis = d3.svg.axis()
         .scale(x)
         .orient("bottom")
-        // .tickFormat(d3.format("0.1r"));
+        // .tickFormat(d3.format("0.1r")); // needs date formatting d3.date.format("something")
 
       var yAxis = d3.svg.axis()
         .scale(y)
@@ -49,7 +49,7 @@ d3.custom.scatterPlot = function module() {
           .attr("x", width / 2 - 30)
           .attr("y", 40)
           .style("text-anchor", "end")
-          .text("Baller W/L");
+          .text("Date");
 
         container
           .append('g')
@@ -61,7 +61,7 @@ d3.custom.scatterPlot = function module() {
           .attr("y", -60)
           .attr("dy", ".71em")
           .style("text-anchor", "end")
-          .text("Actual W/L");
+          .text("Star Value");
 
         container
           .append('g')
@@ -87,30 +87,9 @@ d3.custom.scatterPlot = function module() {
         .ease(ease)
         .call(yAxis);
 
-      // Dots
+      // Lines
       // ======================================================================
-      var dots = svg.select('.chart-group')
-        .selectAll('.dot')
-        .data(_data, function (d) { return d.abbreviation; });
 
-      dots.enter().append("circle")
-        .classed('dot', true)
-        .attr("r", 15)
-        .attr("cx", function(d) { return x(d.starVal); })
-        .attr("cy", function(d) { return y(1); })
-        .style("fill", function(d) { return d.teamColor1; })
-        .attr("opacity", 0.8);
-
-      // execute transition when datum changes
-      dots.transition()
-        .duration(750)
-        .ease(ease)
-        .attr("r", 15)
-        .attr("cx", function(d) { return x(d.starVal); })
-        .attr("cy", function(d) { return y(d.winPct); })
-        .style("fill", function(d) { return d.teamColor1; });
-
-      dots.exit().transition().style({opacity: 0}).remove(); 
 
       // Behaviors
       var darken = function(el) {

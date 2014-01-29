@@ -1,0 +1,37 @@
+<div data-ng-controller="chartCtrl" data-ng-init = "hideSliderButton = true; slidersCollapsed = false" >
+  <div header></div>
+  <div accuracy></div>
+  <div class = "row">
+    Players:
+    <input type="text" ng-model="graphSelectedPlayer" typeahead="player.name as player.name for player in playerStats | filter:$viewValue | limitTo:8" class="form-control">
+    Teams:
+    <input type="text" ng-model="graphSelectedTeam" typeahead="team.abbreviation as team.franchise for team in teams | filter:$viewValue | limitTo:4" class="form-control"> {{graphSelectedTeam}}
+    <div ng-if="graphSelectedPlayer || graphSelectedTeam" ng-model="dt.startDate">
+      <datepicker
+        ng-required="true"
+        max="dt.endDate">
+     </datepicker>
+   </div>
+   <div ng-if="dt.startDate" ng-model="dt.endDate">
+     <datepicker
+     min="dt.startDate"
+     ng-required="true">
+   </datepicker>
+     <button type="button" class="btn" ng-click="graphPlayer(graphSelectedPlayer, startDate, endDate);"> Submit</button>
+   </div>
+    <nvd3-line-chart
+    height="options.height"
+    width="options.width"
+    data="graphData"
+    showXAxis="true"
+    showYAxis="true"
+    xAxisTickFormat="xAxisTickFormatFunction()"
+    yAxisTickFormat="yAxisTickFormatFunction()"
+    hovered="hovered(args)"><nvd3-line-chart>
+    </div>
+    <div class = "span5">
+    <div slider-block></div>
+  </div>
+</div>
+
+<!-- ng-click="playerRequest(selected, dateRange); -->

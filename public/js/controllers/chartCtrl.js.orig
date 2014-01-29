@@ -1,32 +1,27 @@
 angular.module('mean.chart')
   .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar', 'Graphrequests',
     'promiseTracker', 
+<<<<<<< HEAD
     function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, Graphrequests, promiseTracker) {
+    var teamsPromise = Global.stats;
+=======
+    function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
     $scope.global = Global;
+>>>>>>> df36f392561e1b11e6df20d4ddea02196684bf68
     $scope.infoShow = 'Hide Info';
     $scope.itemsClass = "span12";
     $scope.sliderShow = "Show Sliders";
     $scope.slidersCollapsed = true;
     $scope.currentTeam = false;
     $scope.introCollapsed = true;
-    $scope.introShow = 'i';
+    $scope.introShow = 'Show Info';
     $scope.options = {width: 550, height: 430};
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
+<<<<<<< HEAD
     $scope.chosen = null;
     $scope.dt = {};
- 
-    // Line-Chart variables and request function //  
-    $scope.dt = {};
-    $scope.graphSelectedPlayer = null;
-    $scope.graphSelectedTeam = null;
     $scope.playerRequest = Graphrequests.playerRequest;
-    $scope.graphPlayer = function(stat){
-      $scope.graphRequest = Graphrequests.playerRequest($scope.graphSelectedPlayer, $scope.dt.startDate, $scope.dt.endDate);
-      $scope.graphRequest.then(function(data){
-        $scope.graphData = data;
-      })
-    };
     $scope.startDate = function() {
       $scope.dt.startDate = new Date();
     };
@@ -35,17 +30,19 @@ angular.module('mean.chart')
     };
     $scope.startDate();
     $scope.endDate();
-
     $scope.weights = Stats.nestedSliders;
+=======
+    $scope.isCollapsed = true;
+>>>>>>> df36f392561e1b11e6df20d4ddea02196684bf68
     $scope.recalculate = function(groupName,statName){
       Stats.changeSliders(statName,groupName);
-      Teamstar.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams);
+      Teamstar.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams); 
       $scope.calculatePlayerStarVals($scope.currentTeam,false);
       $scope.updateRho();
     };
     $scope.introToggle = function(){
       $scope.introCollapsed = !$scope.introCollapsed;
-      $scope.introShow = $scope.introCollapsed ? 'i' : '^';
+      $scope.introShow = $scope.introCollapsed ? 'Show Info' : 'Hide Info';
     };
     $scope.sliderToggle = function(){
       $scope.slidersCollapsed = !$scope.slidersCollapsed;
@@ -115,11 +112,10 @@ angular.module('mean.chart')
             $scope.toggleOpenTeam(team);
           }
         });
-        debugger;
         $scope.loadingTracker.addPromise(playerPromise);
       });
     };
-    $scope.playerList = $scope.calculatePlayerStarVals("ALL");
+
     Global.stats.then(function(data){
       $scope.presets = data.presets;
       $scope.teamStats = data.teamStats;
@@ -134,6 +130,7 @@ angular.module('mean.chart')
       $scope.nestedSliders = Stats.assignNestedSliders($scope.weights);
       Teamstar.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
       $scope.currentTeam && $scope.calculatePlayerStarVals($scope.currentTeam);
+      debugger;
       $scope.updateRho();
     };
     var appendHackReactorBadge = function (){
@@ -167,6 +164,12 @@ angular.module('mean.chart')
       });
     };
 
+<<<<<<< HEAD
+    var removePunctuation = function(str) { // also used in
+      return str.replace(/[.']/g,'');
+    };
+
+=======
     $scope.getPresets = function(presets){
 
     };
@@ -177,13 +180,10 @@ angular.module('mean.chart')
       });
     }
 
+>>>>>>> df36f392561e1b11e6df20d4ddea02196684bf68
     $scope.makeHeadShotUrl = function(name, isCollapsed) {
       
       if(isCollapsed) { return ""; }
-
-      var removePunctuation = function(str) {
-        return str.replace(/[.']/g,'');
-      };
 
       var url = "http://i.cdn.turner.com/nba/nba/.element/img/2.0/sect/statscube/players/large/";
       var firstLast = null;
@@ -191,7 +191,7 @@ angular.module('mean.chart')
 
       firstLast = name.split(" ");
       for (var i = 0; i < firstLast.length; i++) {
-        firstLast[i] = removePunctuation(firstLast[i]);
+        firstLast[i] = $scope.removePunctuation(firstLast[i]);
       }
       formatted_name = firstLast.join("_");
       return url + formatted_name.toLowerCase() + '.png';

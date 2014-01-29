@@ -11,6 +11,9 @@ angular.module('mean').config(['$routeProvider',
         when('/players', {
             templateUrl: 'views/playerRanking.html'
         }).
+        when('/graph', {
+            templateUrl: 'views/graph.html'
+        }).
         otherwise({
             redirectTo: '/'
         });
