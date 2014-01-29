@@ -100,6 +100,18 @@ exports.splitData = function(tradedPlayers,stats,model){
           if (!map[stat]){
             continue;
           }
+          if (stat === "TEAM_ABBREVIATION"){
+            stats[nid][stat] = tp.newTeam;
+            continue;
+          }
+          if (stat === "PLAYER"){
+            stats[nid][stat] = op.Player;
+            continue;
+          }
+          if (stat === "PLAYER_ID"){
+            stats[nid][stat] = tp.newId;
+            continue;
+          }
           stats[nid][stat] = stats[oid][stat] - op[map[stat].name || map[stat].keep];
         }
         stats[oid] = {};

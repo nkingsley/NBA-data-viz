@@ -12,6 +12,17 @@ exports.newHighScore = function(req,res){
   });
 };
 
+exports.getPlayerDetails = function(req,res){
+  mongoose.model('Playerdetail')
+  .find()
+  .sort({created:-1})
+  .limit(1)
+  .exec(function(err,deets){
+    res.setHeader('Content-Type', 'application/JSON');
+    res.end(JSON.stringify(deets));
+  });
+};
+
 exports.saveWins = function(wl){
   var Winloss = mongoose.model('Winloss');
   var winloss = new Winloss(wl);
@@ -97,6 +108,17 @@ exports.presetList = function(req,res){
   });
 };
 
+exports.saveOne = function(item,model){
+  mongoose.model(model)
+  var Model = mongoose.model(model);
+  var thing = new Model(item);
+  thing.created = utils.dateTimeless();
+  thing.save(function(err){
+    if(err){
+      console.log(err);
+    }
+  });
+};
 
 exports.presets = function(){
   var d = q.defer();

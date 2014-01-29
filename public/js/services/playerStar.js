@@ -45,7 +45,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
           var p = players[player];
           var pWeighted = {name:p.Player,scores:{},totalPlayerStar:0};
           for (var stat in p){
-            if (!statWeights[stat] || !statWeights[stat].cat){
+            if (!statWeights[stat] || !statWeights[stat].cat || !nestMap[statWeights[stat].cat]){
               continue;
             }
             var statStarVal = statWeights[stat].weight * p[stat];
@@ -71,6 +71,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
         || statName === "presetName" || statName === "$$hashKey" || statName === "user"){
         continue;
       }
+      if (!nestMap[statWeights[statName].cat]){continue;}
       totalValue+=parseFloat(statWeights[statName].weight);
       if (!totalValue && totalValue !== 0){
         debugger;

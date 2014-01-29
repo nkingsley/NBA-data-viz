@@ -65,6 +65,7 @@ angular.module('mean.chart')
       var result = {};
       var coupledStats = {};
       for (var stat in group){
+        if (!$scope.filterTeamOnlySliders(group[stat]) && stat !== "Team Defense"){continue;}
         if (coupledStats[group[stat].coupledName] || stat === "main" || stat === "oldMain"){
           continue;
         }
@@ -75,6 +76,17 @@ angular.module('mean.chart')
       }
       return result;
     };
+
+    $scope.filterTeamOnlySliders = function(stat){
+      if (!(stat.weight > -1)){return false;}
+      if ($scope.currentTeam === 'ALL'){
+        if (stat.cat === "PSS_TM" || stat.cat === "SHT_TM"){
+          return false;
+        }
+      }
+      return true;
+    };
+
     $scope.calculatePlayerStarVals = function(team, click){
       if (!team){
         return;
@@ -110,7 +122,6 @@ angular.module('mean.chart')
       $scope.nestedSliders = Stats.assignNestedSliders($scope.weights);
       Teamstar.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
       $scope.currentTeam && $scope.calculatePlayerStarVals($scope.currentTeam);
-      debugger;
       $scope.updateRho();
     };
     var appendHackReactorBadge = function (){
@@ -133,6 +144,7 @@ angular.module('mean.chart')
 
     $scope.sendScore = function(weights){
       var name = prompt("Name these Slider Presets");
+      if (!name){return;}
       $scope.updateRho();
       delete weights._id;
       delete weights.created;
@@ -142,10 +154,6 @@ angular.module('mean.chart')
       $http.post('/highscore',weights).success(function(data){
         console.log(data);
       });
-    };
-
-    $scope.getPresets = function(presets){
-
     };
 
     if(Global.user){

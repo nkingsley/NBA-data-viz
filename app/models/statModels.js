@@ -55,3 +55,14 @@ var winLossSchema = {
   created: Date
 };
 mongoose.model('Winloss', new mongoose.Schema(winLossSchema,{collection: 'winslosses'}));
+
+var playerDetailSchema = {
+  players:[{
+    PERSON_ID: Number,
+    POSITION: String,
+    BIRTHDATE: String 
+  }],
+  created: Date
+};
+
+mongoose.model('Playerdetail', new mongoose.Schema(playerDetailSchema,{collection:'playerdetails'}));
