@@ -14,17 +14,25 @@ angular.module('mean.chart')
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
     $scope.chosen = null;
-    $scope.dt = {};
+    $scope.weights = Stats.nestedSliders;
  
     // Line-Chart variables and request function //  
     $scope.dt = {};
     $scope.graphSelectedPlayer = null;
     $scope.graphSelectedTeam = null;
     $scope.playerRequest = Graphrequests.playerRequest;
-    $scope.graphPlayer = function(stat){
+    $scope.graphData = [];
+    $scope.graphPlayer = function(statName){
       $scope.graphRequest = Graphrequests.playerRequest($scope.graphSelectedPlayer, $scope.dt.startDate, $scope.dt.endDate);
       $scope.graphRequest.then(function(data){
-        $scope.graphData = data;
+        var playerWindowStat = {}; // e.g. 'Lebron James'
+        playerWindowStat['key'] = data[0].Player
+        playerWindowStat['values'] = [];
+        for (var i = 0; i < data.length; i++){ // for each day in Lebron's window
+          var dayData = [data[i].created, data[i][statName]];
+          playerWindowStat['values'].push(dayData);
+          $scope.graphData.push(playerWindowStat);
+        }
       })
     };
     $scope.startDate = function() {
@@ -36,7 +44,6 @@ angular.module('mean.chart')
     $scope.startDate();
     $scope.endDate();
 
-    $scope.weights = Stats.nestedSliders;
     $scope.recalculate = function(groupName,statName){
       Stats.changeSliders(statName,groupName);
       Teamstar.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams);
@@ -115,11 +122,12 @@ angular.module('mean.chart')
             $scope.toggleOpenTeam(team);
           }
         });
-        debugger;
         $scope.loadingTracker.addPromise(playerPromise);
       });
     };
-    $scope.playerList = $scope.calculatePlayerStarVals("ALL");
+
+    $scope.playerList = $scope.calculatePlayerStarVals("ALL"); 
+
     Global.stats.then(function(data){
       $scope.presets = data.presets;
       $scope.teamStats = data.teamStats;

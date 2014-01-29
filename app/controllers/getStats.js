@@ -174,5 +174,5 @@ var getPlayerDetails = function(allStats){
   // }
   return d.promise;
 };
-// mongoose.connect('mongodb://localhost/mean-test', getStats);
-mongoose.connect('mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036', getStats);
+mongoose.connect('mongodb://localhost/mean-test', getStats);
+// mongoose.connect('mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036', getStats);

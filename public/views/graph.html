@@ -17,11 +17,12 @@
      min="dt.startDate"
      ng-required="true">
    </datepicker>
-     <button type="button" class="btn" ng-click="graphPlayer(graphSelectedPlayer, startDate, endDate);"> Submit</button>
+     <button type="button" class="btn" ng-click="graphPlayer('Turnovers');"> Submit</button>
    </div>
+   {{graphData}}
     <nvd3-line-chart
-    height="options.height"
-    width="options.width"
+    height="550"
+    width="550"
     data="graphData"
     showXAxis="true"
     showYAxis="true"

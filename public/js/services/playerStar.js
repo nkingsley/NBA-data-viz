@@ -73,7 +73,6 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
       }
       totalValue+=parseFloat(statWeights[statName].weight);
       if (!totalValue && totalValue !== 0){
-        debugger;
       }
     }
     return totalValue;

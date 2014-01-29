@@ -15,6 +15,7 @@
     "angular-animate": "latest"
   },
   "resolutions": {
-    "angular": "1.2.8"
+    "angular": "1.2.8",
+    "d3": "3.4.1"
   }
 }

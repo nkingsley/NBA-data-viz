@@ -1,4 +1,4 @@
-angular.module('mean.chart').factory("Graphrequests", ['$q', '$http', 'Global', function($q, $http, Global) {
+angular.module('mean.chart').factory("Graphrequests", ['$q', '$http', function($q, $http) {
   var exports = {};
   exports.chosen = {};
 

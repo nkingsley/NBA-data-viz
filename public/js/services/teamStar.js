@@ -22,7 +22,6 @@ var exports = {};
         }
       totalValue += parseFloat(statWeights[statName].weight);
       if (!totalValue){
-        debugger;
       }
     }
     return totalValue;
