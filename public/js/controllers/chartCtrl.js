@@ -123,6 +123,7 @@ angular.module('mean.chart')
       Teamstar.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
       $scope.currentTeam && $scope.calculatePlayerStarVals($scope.currentTeam);
       $scope.updateRho();
+      console.log($scope.weights);
     };
     var appendHackReactorBadge = function (){
       var img = document.createElement('img');
