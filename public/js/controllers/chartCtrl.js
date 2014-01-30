@@ -106,6 +106,7 @@ angular.module('mean.chart')
         });
         $scope.loadingTracker.addPromise(playerPromise);
       });
+      return false;
     };
 
     Global.stats.then(function(data){
@@ -154,6 +155,9 @@ angular.module('mean.chart')
       weights.user = Global.user._id;
       $http.post('/highscore',weights).success(function(data){
         console.log(data);
+        if ($scope.userPresets){
+          $scope.userPresets.push(weights);
+        }
       });
     };
 

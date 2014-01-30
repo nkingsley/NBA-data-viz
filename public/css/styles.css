@@ -48,8 +48,10 @@ box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
 }
 .introContainer{
 padding: 20px;
+margin-top:23px;
 }
 .buttonContainer{
+  margin-top:10px;
 padding:2px;
 }
 .navbar-inner{
@@ -66,7 +68,7 @@ padding:2px;
 .mainButton{
   padding:12px;
   font-family: 'Exo 2', sans-serif;
-  font-size:27px;
+  font-size:23px;
 -webkit-appearance: none;
 border-radius: 8px;
 -moz-border-radius: 8px;
@@ -80,6 +82,72 @@ background-image: -webkit-linear-gradient(top, #EB5909, #f2f2f2);
 background-image: -o-linear-gradient(top, #EB5909, #f2f2f2);
 background-image: linear-gradient(to bottom, #E9D1AE, #EB5909);
   border:1px black;
+}
+
+.a_demo_two,.a_demo_two:hover {
+  cursor:hand;
+background-color: #3bb3e0;
+padding: 10px;
+position: relative;
+font-size: 23px;
+text-decoration: none;
+color: #fff;
+background-image: linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+background-image: -o-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+background-image: -moz-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+background-image: -webkit-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+background-image: -ms-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(44,160,202)), color-stop(1, rgb(62,184,229)) );
+-webkit-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
+-moz-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
+-o-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
+box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+-o-border-radius: 5px;
+border-radius: 5px;
+}
+.a_demo_two::before {
+background-color: #072239;
+content: "";
+display: block;
+position: absolute;
+width: 100%;
+height: 100%;
+padding-left: 2px;
+padding-right: 2px;
+padding-bottom: 4px;
+left: -2px;
+top: 5px;
+z-index: -1;
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+-o-border-radius: 6px;
+border-radius: 6px;
+-webkit-box-shadow: 0px 1px 0px #fff;
+-moz-box-shadow: 0px 1px 0px #fff;
+-o-box-shadow: 0px 1px 0px #fff;
+box-shadow: 0px 1px 0px #fff;
+}
+
+.a_demo_two:active {
+  color:#156785;
+  text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
+  background:rgb(44,160,202);
+  -webkit-box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
+  -moz-box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
+  -o-box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
+  box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
+  top:7px;
+}
+
+.a_demo_two:active::before {
+  top:-2px;
+}
+
+.small, .small:hover{
+  font-size:12px;
+  padding:5px;
 }
 .presetsMenu{
   font-size: 24px;
@@ -156,7 +224,7 @@ body {
 /* Slider Styles
  * ==========================================================================*/
 .slider-container {
-  height:90%;
+  height:83%;
   overflow-y:scroll;
   position:fixed;
   width:380px;
@@ -239,10 +307,12 @@ body {
 .table td.super-slim {
   padding: 0;
 }
-
+.button-shell{
+  cursor:pointer;
+}
 .player-badge-shell {
   margin-top: 10px;
-  margin-bottom: 0;
+  margin-bottom: 5px;
   cursor: pointer;
 }
 .team-badge {
