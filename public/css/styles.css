@@ -84,7 +84,7 @@ background-image: linear-gradient(to bottom, #E9D1AE, #EB5909);
   border:1px black;
 }
 
-.a_demo_two,.a_demo_two:hover {
+.blue3dButton,.blue3dButton:hover {
   cursor:hand;
 background-color: #3bb3e0;
 padding: 10px;
@@ -107,7 +107,7 @@ box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
 -o-border-radius: 5px;
 border-radius: 5px;
 }
-.a_demo_two::before {
+.blue3dButton::before {
 background-color: #072239;
 content: "";
 display: block;
@@ -130,7 +130,7 @@ border-radius: 6px;
 box-shadow: 0px 1px 0px #fff;
 }
 
-.a_demo_two:active {
+.blue3dButton:active {
   color:#156785;
   text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
   background:rgb(44,160,202);
@@ -141,7 +141,7 @@ box-shadow: 0px 1px 0px #fff;
   top:7px;
 }
 
-.a_demo_two:active::before {
+.blue3dButton:active::before {
   top:-2px;
 }
 
@@ -325,8 +325,12 @@ body {
   font-size: 50px;
   border-bottom: 1px solid #ccc;
 }
+.table td .player-head-shot{
+  padding:0px;
+  vertical-align:bottom;
+}
+
 .player-head-shot {
-  vertical-align: middle;
   width: 20%;
   padding: 0px;
 }
@@ -354,7 +358,8 @@ body {
   table-layout:fixed;
   background-color: #fff;
 }
-.player-stats-header {
+
+.player-stats-header{
   border: 1px solid #ccc;
   background-color: #f3f3f3;
 }
