@@ -15,32 +15,41 @@ angular.module('mean.chart')
     $scope.rhoVal = 0;
     $scope.weights = Stats.nestedSliders;
 
-    // Line-Chart variables and request function //  
-    $scope.dt = {};
-    $scope.graphSelected = null;
+    // Line-Chart variables and functions //  
     $scope.timeRequest = Graphrequests.timeRequest;
+    $scope.dt = {};
+    $scope.graphStat = null
+    $scope.graphSelected = null;
     $scope.graphData = [];
     var graphInputData = {};
+    $scope.xAxisTickFormat_Time_Format = function(){
+      return function(d){
+        console.log(d);
+        return d3.time.format('%x')(new Date(d)); 
+      }
+    };
     $scope.getGraphData = function(){
       if (!graphInputData[$scope.graphSelected]){
         $scope.graphRequest = Graphrequests.timeRequest($scope.graphSelected, $scope.dt.startDate, $scope.dt.endDate);
         $scope.graphRequest.then(function(data){
           graphInputData[$scope.graphSelected] = data;
+          $scope.makeGraphData($scope.graphStat);
         })
       }
-
     };
 
     $scope.makeGraphData = function(statName){
-      var playerWindowStat = {}; // e.g. 'Lebron James'
-      playerWindowStat['key'] = data[0].Player
-      playerWindowStat['values'] = [];
-      for (var i = 0; i < data.length; i++){ // for each day in Lebron's window
-        var dayData = [data[i].created, data[i][statName]];
-        playerWindowStat['values'].push(dayData);
+      var entity = $scope.graphSelected;
+      for (var key in graphInputData){
+        var windowStats = {key: null, values: []}; // e.g. 'Lebron James' over a two week span
+          windowStats['key'] = entity;
+        for (var i = 0; i < graphInputData[entity].length; i++){ // for each day in Lebron's window
+          var dayData = [new Date(graphInputData[entity][i].created), graphInputData[entity][i][statName]];
+          windowStats['values'].push(dayData);
+        }
       }
-      $scope.graphData.push(playerWindowStat);
-    };
+      $scope.graphData.push(windowStats);
+      };
 
     $scope.startDate = function() {
       $scope.dt.startDate = new Date();
@@ -141,7 +150,6 @@ angular.module('mean.chart')
             $scope.toggleOpenTeam(team);
           }
           $scope.teamsAndPlayers = $scope.playerStats.concat($scope.teams); // Might be sad code, but it has to run somewhere after playerStats gets defined
-          debugger;
         });
         $scope.loadingTracker.addPromise(playerPromise);
       });
