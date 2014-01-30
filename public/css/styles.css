@@ -54,6 +54,11 @@ margin-top:23px;
   margin-top:10px;
 padding:2px;
 }
+.button-container{
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
 .navbar-inner{
   padding-right:0px;
 }
