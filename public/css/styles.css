@@ -1,249 +1,94 @@
-.logo{
-  margin-left: 40px;
-  font-size: 30px;
-  font-weight: 900;
-  font-family:helvetica;
-}
-.accuracy{
- position: absolute;
- top:35px;
- left:0px;
-}
-.presetName{
-  position:absolute;
-  top:35px;
-  left:200px;
-  width:200px;
-}
-.infoButton{
-  position: absolute;
-  top:10px;
-  left:-10px;
-  padding:0px;
-  font-size:20px;
-  border:0px;
-  border-radius:20px;
-  width:20px;
-  height:20px;
-  background-image: url('../img/basketball.png');
-  background-size:20px 20px;
-  background-repeat:no-repeat;
-}
-.headContainer{
-background-color: #fafafa;
-background-image: -moz-linear-gradient(top, #ffffff, #f2f2f2);
-background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f2f2f2));
-background-image: -webkit-linear-gradient(top, #ffffff, #f2f2f2);
-background-image: -o-linear-gradient(top, #ffffff, #f2f2f2);
-background-image: linear-gradient(to bottom, #ffffff, #f2f2f2);
-background-repeat: repeat-x;
-border: 1px solid #d4d4d4;
--webkit-border-radius: 4px;
--moz-border-radius: 4px;
-border-radius: 4px;
-filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
--webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
--moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
-}
-.introContainer{
-padding: 20px;
-margin-top:23px;
-}
-.buttonContainer{
-  margin-top:10px;
-padding:2px;
-}
-.button-container{
-  text-align: center;
-  margin-bottom: 30px;
-  margin-top: 20px;
-}
-.navbar-inner{
-  padding-right:0px;
-}
-.navbar{
-  position:fixed;
-  margin-bottom:10px;
-  z-index:1;
-  width:940px;
-  margin-left:auto;
-  margin-right:auto;
-}
-.mainButton{
-  padding:12px;
-  font-family: 'Exo 2', sans-serif;
-  font-size:23px;
--webkit-appearance: none;
-border-radius: 8px;
--moz-border-radius: 8px;
--wekkit-border-radius: 8px;
--webkit-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
--moz-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
-background-image: -moz-linear-gradient(top, #EB5909, #f2f2f2);
-background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#EB5909), to(#f2f2f2));
-background-image: -webkit-linear-gradient(top, #EB5909, #f2f2f2);
-background-image: -o-linear-gradient(top, #EB5909, #f2f2f2);
-background-image: linear-gradient(to bottom, #E9D1AE, #EB5909);
-  border:1px black;
-}
-
-.blue3dButton,.blue3dButton:hover {
-  cursor:hand;
-background-color: #3bb3e0;
-padding: 10px;
-position: relative;
-font-size: 23px;
-text-decoration: none;
-color: #fff;
-background-image: linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
-background-image: -o-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
-background-image: -moz-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
-background-image: -webkit-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
-background-image: -ms-linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
-background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, rgb(44,160,202)), color-stop(1, rgb(62,184,229)) );
--webkit-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
--moz-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
--o-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
--webkit-border-radius: 5px;
--moz-border-radius: 5px;
--o-border-radius: 5px;
-border-radius: 5px;
-}
-.blue3dButton::before {
-background-color: #072239;
-content: "";
-display: block;
-position: absolute;
-width: 100%;
-height: 100%;
-padding-left: 2px;
-padding-right: 2px;
-padding-bottom: 4px;
-left: -2px;
-top: 5px;
-z-index: -1;
--webkit-border-radius: 6px;
--moz-border-radius: 6px;
--o-border-radius: 6px;
-border-radius: 6px;
--webkit-box-shadow: 0px 1px 0px #fff;
--moz-box-shadow: 0px 1px 0px #fff;
--o-box-shadow: 0px 1px 0px #fff;
-box-shadow: 0px 1px 0px #fff;
-}
-
-.blue3dButton:active {
-  color:#156785;
-  text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
-  background:rgb(44,160,202);
-  -webkit-box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
-  -moz-box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
-  -o-box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
-  box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
-  top:7px;
-}
-
-.blue3dButton:active::before {
-  top:-2px;
-}
-
-.small, .small:hover{
-  font-size:12px;
-  padding:5px;
-}
-.presetsMenu{
-  font-size: 24px;
-}
 body {
-  font-size:24px;
+  font-size: 24px;
   font-family: 'Exo 2', sans-serif;
   background-color: #f3f3f3;
 }
-.svg-chart{
-  background-color:white;
+.rhoRed {
+  color: #f00;
+  font-weight: 1000;
 }
-.content{
-  display:flex;
-  flex-direction: row;
-  width: 100%;
+.rhoGreen {
+  color: #008000;
+  font-weight: 1000;
 }
-.dot, .team-label{
-  font-size:11px;
+.contains {
+  padding: 20px;
 }
-.chart-container {
-  bottom: 2px;
-  float: left;
-  background-color: #fff;
-  height: 600px;
-  border: 1px solid #ccc;
-  margin-bottom: 20px;
+.rightAligned {
+  float: right;
 }
-.rangeSlider{
-  padding-top:8px;
-  padding-bottom:8px;
-  width: 100%;
+.logo {
+  margin-left: 40px;
+  font-size: 30px;
+  font-weight: 900;
+  font-family: helvetica;
 }
-.power-rank-container {
-  font-family: 'Duru Sans', sans-serif;
-  width:66%;
-  float: left;
-  background-color: #fff;
-  margin-bottom: 20px;
+.accuracy {
+  position: absolute;
+  top: 35px;
+  left: 0px;
 }
-.btn-container {
-  margin: 10px 0;
+.presetName {
+  position: absolute;
+  top: 35px;
+  left: 200px;
+  width: 200px;
 }
-.btn-container .chart-select {
-  margin-left: 1vw;
+.infoButton {
+  position: absolute;
+  top: 10px;
+  left: -10px;
+  padding: 0px;
+  font-size: 20px;
+  border: 0px;
+  border-radius: 20px;
+  width: 20px;
+  height: 20px;
+  background-image: url("../img/basketball.png");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
 }
-
-.axis path, .axis line {
-  fill: none;
-  stroke: #ccc;
-  shape-rendering: crispEdges;
+.headContainer {
+  background-color: #fafafa;
+  background: linear-gradient(top, #fff, #f2f2f2);
+  border: 1px solid #d4d4d4;
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.065);
 }
-.axis .label {
-  font-weight: normal;
+.introContainer {
+  padding: 20px;
+  margin-top: 23px;
 }
-.bar {
-  fill: steelblue;
+.navbar-inner {
+  padding-right: 0px;
 }
-.dot, .team-label {
-  cursor: pointer;
+.navbar {
+  position: fixed;
+  margin-bottom: 10px;
+  z-index: 1;
+  width: 940px;
+  margin-left: auto;
+  margin-right: auto;
 }
-.dot:hover {
-  opacity: 1;
+.presetsMenu {
+  font-size: 24px;
 }
-.team-label {
-  pointer-events: none;
-}
-.diagonal {
-  fill: none;
-  stroke: #999;
-  stroke-width: 3px;
-}
-
-/* Slider Styles
- * ==========================================================================*/
 .slider-container {
-  height:83%;
-  overflow-y:scroll;
-  position:fixed;
-  width:380px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.33)
+  height: 83%;
+  overflow-y: scroll;
+  position: fixed;
+  width: 380px;
+  box-shadow: 0 1px 3px 0 rgba(0,0,0,0.33);
 }
-.slider-text{
-  font-size:25px;
-  margin-bottom:10px;
+.slider-text {
+  font-size: 25px;
+  margin-bottom: 10px;
 }
 .slider-shell {
-  width:100%;
+  width: 100%;
 }
-.oneSlider{
-  padding:10px;
+.oneSlider {
+  padding: 10px;
 }
 .top-slider {
   background-color: #fafafa;
@@ -257,26 +102,97 @@ body {
 .nested-sliders {
   margin-left: 10px;
   padding: 20px;
-  list-style:none;
+  list-style: none;
 }
 .badge {
   border-radius: 5px;
-  padding:5px 10px 5px 10px;
-  margin-left:-5px;
+  padding: 5px 10px 5px 10px;
+  margin-left: -5px;
 }
 .weight {
   margin-left: 5px;
 }
-
-/* Power Rank Table Styles
- * ==========================================================================*/
+.rangeSlider {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  width: 100%;
+}
+input[type="range"] {
+  background-image: -moz-linear-gradient(top, #eb5909, #f2f2f2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eb5909), to(#f2f2f2));
+  background-image: -webkit-linear-gradient(top, #eb5909, #f2f2f2);
+  background-image: -o-linear-gradient(top, #eb5909, #f2f2f2);
+  background-image: linear-gradient(to bottom, #e9d1ae, #eb5909);
+  width: 75%;
+  height: 2px;
+  -webkit-appearance: none;
+  border-radius: 8px;
+  -moz-border-radius: 8px;
+  -wekkit-border-radius: 8px;
+  -webkit-box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.9), 0px 1px 1px 0px rgba(255,255,255,0.13);
+  -moz-box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.9), 0px 1px 1px 0px rgba(255,255,255,0.13);
+  box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.9), 0px 1px 1px 0px rgba(255,255,255,0.13);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none !important;
+  width: 50px;
+  height: 50px;
+  -webkit-appearance: none;
+  border-radius: 60px;
+  -moz-border-radius: 60px;
+  -wekkit-border-radius: 60px;
+  border: 1px solid #000;
+  background-image: url("../img/basketball.png");
+}
+.svg-chart {
+  background-color: #fff;
+}
+.dot,
+.team-label {
+  font-size: 11px;
+}
+.chart-container {
+  bottom: 2px;
+  float: left;
+  background-color: #fff;
+  height: 600px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+}
+.axis .label {
+  font-weight: normal;
+}
+.bar {
+  fill: #4682b4;
+}
+.dot,
+.team-label {
+  cursor: pointer;
+}
+.dot:hover {
+  opacity: 1;
+}
+.team-label {
+  pointer-events: none;
+}
+.diagonal {
+  fill: none;
+  stroke: #999;
+  stroke-width: 3px;
+}
 .teams {
   width: 100%;
   margin-bottom: 0;
   border-radius: 2px;
 }
 .teams-header {
-   background-color: #eee;
+  background-color: #eee;
 }
 .rank {
   font-weight: 900;
@@ -284,36 +200,32 @@ body {
 }
 .star-val {
   color: #777;
-  font-size:22px;
+  font-size: 22px;
 }
 .team {
   background-color: #fff;
 }
-
-/* table row animation styles */
-/* these are not workig */
 .team.ng-enter,
 .team.ng-move,
 .team.ng-leave {
-  -webkit-transition:0.5s linear all;
-  transition:0.5s linear all;
+  -webkit-transition: 0.5s linear all;
+  transition: 0.5s linear all;
 }
-
 .team.ng-enter,
 .team.ng-move,
 .team.ng-leave.ng-leave-active {
-  opacity:0;
+  opacity: 0;
 }
 .team.ng-leave,
 .team.ng-move,
 .team.ng-enter.ng-enter-active {
-  opacity:1;
+  opacity: 1;
 }
 .table td.super-slim {
   padding: 0;
 }
-.button-shell{
-  cursor:pointer;
+.button-shell {
+  cursor: pointer;
 }
 .player-badge-shell {
   margin-top: 10px;
@@ -330,11 +242,10 @@ body {
   font-size: 50px;
   border-bottom: 1px solid #ccc;
 }
-.table td .player-head-shot{
-  padding:0px;
-  vertical-align:bottom;
+.table td .player-head-shot {
+  padding: 0px;
+  vertical-align: bottom;
 }
-
 .player-head-shot {
   width: 20%;
   padding: 0px;
@@ -350,7 +261,7 @@ body {
   font-size: 29px;
 }
 .playerInfoSlidersOpen {
-  font-size:25px;
+  font-size: 25px;
 }
 .player-stats-container {
   font-size: 10px;
@@ -358,32 +269,24 @@ body {
   background-color: #fafafa;
 }
 .player-stats {
-  width:100%;
+  width: 100%;
   border: 1px solid #ccc;
-  table-layout:fixed;
+  table-layout: fixed;
   background-color: #fff;
 }
-
-.player-stats-header{
+.player-stats-header {
   border: 1px solid #ccc;
   background-color: #f3f3f3;
 }
-
-.rhoRed {
-  color: red;
-  font-weight: 1000;
+.power-rank-container {
+  font-family: 'Duru Sans', sans-serif;
+  width: 66%;
+  float: left;
+  background-color: #fff;
+  margin-bottom: 20px;
 }
-
-.rhoGreen {
-  color: green;
-  font-weight: 1000;
-}
-
-.contains{
-  padding: 20px;
-}
-.rightAligned {
-  float: right;
+.team-details {
+  font-size: 30px;
 }
 .table td {
   vertical-align: middle;
@@ -391,36 +294,82 @@ body {
 th {
   text-align: left;
 }
-
-.team-details{
-  font-size:30px;
+.blue3dButton,
+.blue3dButton:hover {
+  cursor: hand;
+  background-color: #3bb3e0;
+  padding: 10px;
+  position: relative;
+  font-size: 23px;
+  text-decoration: none;
+  color: #fff;
+  background-image: linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: -o-linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: -moz-linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: -webkit-linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: -ms-linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #2ca0ca), color-stop(1, #3eb8e5));
+  -webkit-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
+  -moz-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
+  -o-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
+  box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
 }
-input[type="range"]{
-  background-image: -moz-linear-gradient(top, #EB5909, #f2f2f2);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#EB5909), to(#f2f2f2));
-  background-image: -webkit-linear-gradient(top, #EB5909, #f2f2f2);
-  background-image: -o-linear-gradient(top, #EB5909, #f2f2f2);
-  background-image: linear-gradient(to bottom, #E9D1AE, #EB5909);
-  width: 75%;
-  height: 2px;
-  -webkit-appearance: none;
-  border-radius: 8px;
-  -moz-border-radius: 8px;
-  -wekkit-border-radius: 8px;
-  -webkit-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
-  -moz-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
-  box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+.blue3dButton::before {
+  background-color: #072239;
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding-left: 2px;
+  padding-right: 2px;
+  padding-bottom: 4px;
+  left: -2px;
+  top: 5px;
+  z-index: -1;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  -webkit-box-shadow: 0px 1px 0px #fff;
+  -moz-box-shadow: 0px 1px 0px #fff;
+  -o-box-shadow: 0px 1px 0px #fff;
+  box-shadow: 0px 1px 0px #fff;
 }
-
-
-input[type="range"]::-webkit-slider-thumb{
-  -webkit-appearance:none !important;  
-  width:50px;
-  height:50px;
-  -webkit-appearance: none;
-  border-radius: 60px;
-  -moz-border-radius: 60px;
-  -wekkit-border-radius: 60px;
-  border:1px solid black;
-  background-image: url('../img/basketball.png');
+.blue3dButton:active {
+  color: #156785;
+  text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
+  background: #2ca0ca;
+  -webkit-box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
+  -moz-box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
+  -o-box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
+  box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
+  top: 7px;
+}
+.blue3dButton:active::before {
+  top: -2px;
+}
+.small,
+.small:hover {
+  font-size: 12px;
+  padding: 5px;
+}
+.btn-container {
+  margin: 10px 0;
+}
+.btn-container .chart-select {
+  margin-left: 1vw;
+}
+.buttonContainer {
+  margin-top: 10px;
+  padding: 2px;
+}
+.button-container {
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
 }

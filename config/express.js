@@ -5,7 +5,9 @@ var express = require('express'),
     mongoStore = require('connect-mongo')(express),
     flash = require('connect-flash'),
     helpers = require('view-helpers'),
-    config = require('./config');
+    config = require('./config'),
+    stylus = require('stylus'),
+    nib = require('nib');
 
 module.exports = function(app, passport, db) {
     app.set('showStackError', true);    
@@ -20,10 +22,23 @@ module.exports = function(app, passport, db) {
         },
         level: 9
     }));
-
     //Setting the fav icon and static folder
     app.use(express.favicon());
     app.use(express.static(config.root + '/public'));
+    app.use(stylus.middleware({
+      src: config.root + '/public',
+      compile : compile,
+    }));
+    var compile = function(str, path) {
+      return stylus(str)
+        .define('url', stylus.url({
+          paths : [config.root + "/public"],
+          limit : 10000
+        }))
+        .set('filename', path)
+        .set('compress', true)
+        .use(nib());
+    }
 
     //Don't use logger for test env
     if (process.env.NODE_ENV !== 'test') {
