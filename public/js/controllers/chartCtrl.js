@@ -1,7 +1,7 @@
 angular.module('mean.chart')
-  .controller('chartCtrl', ['$scope', '$http', '$timeout', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar', 'Graphrequests',
-    'promiseTracker', 
-    function ($scope, $http, $timeout, Global, Stats, Spearman, Teamstar, Playerstar, Graphrequests, promiseTracker) {
+  .controller('chartCtrl', ['$scope', '$http', '$timeout', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar', 'Graphrequests', 'Graphcalc',
+    'promiseTracker',
+    function ($scope, $http, $timeout, Global, Stats, Spearman, Teamstar, Playerstar, Graphrequests, Graphcalc, promiseTracker) {
     $scope.global = Global;
     $scope.infoShow = 'Hide Info';
     $scope.itemsClass = "span12";
@@ -17,6 +17,8 @@ angular.module('mean.chart')
 
 
     // Line-Chart variables and functions //  
+    $scope.makeGraphData = Graphcalc.makeGraphData;
+    $scope.calculateWindowStats = Graphcalc.calculateWindowStats;
     $scope.timeRequest = Graphrequests.timeRequest;
     $scope.dt = {};
     $scope.graphStat = null;
@@ -34,6 +36,7 @@ angular.module('mean.chart')
         $scope.graphRequest = Graphrequests.timeRequest($scope.graphSelected, $scope.dt.startDate, $scope.dt.endDate);
         $scope.graphRequest.then(function(data){
           graphInputData[$scope.graphSelected] = data;
+          $scope.calculateWindowStats(graphInputData, $scope.weights);
           $scope.makeGraphData($scope.graphStat);
         })
       }
@@ -51,7 +54,9 @@ angular.module('mean.chart')
       }
       $scope.graphData = $scope.graphData.concat([windowStats]);
       };
-
+    $scope.buttonShrink = function(){
+      return $scope.slidersCollapsed ? 'medium' : 'medSmall';
+    }
     $scope.startDate = function() {
       $scope.dt.startDate = new Date();
     };

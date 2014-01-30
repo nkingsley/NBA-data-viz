@@ -149,6 +149,14 @@ box-shadow: 0px 1px 0px #fff;
   font-size:12px;
   padding:5px;
 }
+.medSmall, .medSmall:hover{
+  font-size:14px;
+  padding:7.5px;
+}
+.medium, .medium:hover {
+  font-size:18px;
+  padding: 10px;
+}
 .presetsMenu{
   font-size: 24px;
 }

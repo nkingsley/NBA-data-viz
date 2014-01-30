@@ -36,7 +36,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
         return;
       }
       var weightPlayers = function(players){
-        var totalStatWeights = calculateTotalStatWeights(statWeights);
+        var totalStatWeights = exports.calculateTotalStatWeights(statWeights);
         var result = [];
         for (var player in players){
           if (players[player].Team !== openTeam  && openTeam !== 'ALL'){
@@ -63,7 +63,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
     return d.promise;
   };
 
-  var calculateTotalStatWeights = function(statWeights){
+  exports.calculateTotalStatWeights = function(statWeights){
     var totalValue = 0;
     for (var statName in statWeights){
       if (statName === "__v" || statName === "_id" || statName === "created" 

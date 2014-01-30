@@ -12,6 +12,7 @@ angular.module('mean.chart').factory("Graphrequests", ['$q', '$http', function($
     });
     return d.promise;
   };
+  
   return exports;
   }
 ]);
