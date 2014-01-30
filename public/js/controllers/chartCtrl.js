@@ -1,7 +1,7 @@
 angular.module('mean.chart')
-  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar', 'Graphrequests',
+  .controller('chartCtrl', ['$scope', '$http', '$timeout', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar', 'Graphrequests',
     'promiseTracker', 
-    function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, Graphrequests, promiseTracker) {
+    function ($scope, $http, $timeout, Global, Stats, Spearman, Teamstar, Playerstar, Graphrequests, promiseTracker) {
     $scope.global = Global;
     $scope.infoShow = 'Hide Info';
     $scope.itemsClass = "span12";
@@ -15,10 +15,11 @@ angular.module('mean.chart')
     $scope.rhoVal = 0;
     $scope.weights = Stats.nestedSliders;
 
+
     // Line-Chart variables and functions //  
     $scope.timeRequest = Graphrequests.timeRequest;
     $scope.dt = {};
-    $scope.graphStat = null
+    $scope.graphStat = null;
     $scope.graphSelected = null;
     $scope.graphData = [];
     var graphInputData = {};
@@ -48,7 +49,7 @@ angular.module('mean.chart')
           windowStats['values'].push(dayData);
         }
       }
-      $scope.graphData.push(windowStats);
+      $scope.graphData = $scope.graphData.concat([windowStats]);
       };
 
     $scope.startDate = function() {
@@ -153,6 +154,7 @@ angular.module('mean.chart')
         });
         $scope.loadingTracker.addPromise(playerPromise);
       });
+      return false;
     };
 
 
@@ -207,6 +209,9 @@ angular.module('mean.chart')
       weights.user = Global.user._id;
       $http.post('/highscore',weights).success(function(data){
         console.log(data);
+        if ($scope.userPresets){
+          $scope.userPresets.push(weights);
+        }
       });
     };
 

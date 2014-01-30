@@ -14,7 +14,7 @@ exports.movingAverage = function(rawStats){
     old = utils.toObj(old, "PLAYER_ID");
     var diff = utils.diff(old,rawStats);
     utils.reverseTags(diff);
-    statControl.finish(diff)
+    statControl.finish(diff,false,true)
     .then(function(megaStats){
       megaStats.Pnmovavg = megaStats.Playernorm;
       delete megaStats.Playernorm;

@@ -7,7 +7,7 @@
           <li>
               <div accuracy class= "accuracy" ng-show = "!slidersCollapsed"></div>
               <div class = "presetName" ng-if = "weights.presetName">{{weights.presetName}}</div>
-              <a class="brand" href="/">MoneyBaller</a>
+              <a class="brand" ng-click = "introToggle()">MoneyBaller</a>
               <a ng-click = "introToggle()">
                 <button type="button" class="infoButton">{{introShow}}</button></a>
           </li>

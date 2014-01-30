@@ -1,10 +1,29 @@
-<div data-ng-controller="chartCtrl" data-ng-init = "hideSliderButton = true; slidersCollapsed = false">
+<div data-ng-controller="chartCtrl">
   <div header></div>
   <div class = "row">
-   <div class="span7">
+   <div ng-class="itemsClass">
+     <div class="buttonContainer">
+       <a class = "button-shell medium"><span class="a_demo_two" ng-click="$graphStat = 'Defense'">Defense</span></a>
+       <a class = "button-shell medium"><span class="a_demo_two" ng-click="$graphStat = 'Shooting'">Shooting</span> </a>
+       <a class = "button-shell medium"><span class="a_demo_two" ng-click="$graphStat = 'Rebounding'">Rebounding</span> </a>
+       <a class = "button-shell medium"><span class="a_demo_two" ng-click="$graphStat = 'Possession'">Possession</span> </a>
+       <a class = "button-shell medium"><span class="a_demo_two" ng-click="$graphStat = 'Miscellaneous'">Miscellaneous</span> </a>
+       <a class = "button-shell medium"><span class="a_demo_two" ng-click="$graphStat = 'Baller'">Baller</span></a>
+   </div>
+
+
+
+
+
+
+
+
+
+
+
    <div ng-model="dt.startDate"><div class="select">Start Date: </div>
       <p class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt.startDate" is-open="opened" max="dt.endDate-1" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
+        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt.startDate" is-open="opened" max="dt.endDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
       </p>
     </div>
    <div ng-if="dt.startDate" ng-model="dt.endDate"><div class="select">End Date: </div>
@@ -16,7 +35,7 @@
     <p class="input-group">
       <input type="text" ng-model="graphSelected" typeahead="(datum.name + datum.abbreviation) as (datum.name + datum.franchise) for datum in teamsAndPlayers | filter:$viewValue | limitTo:8" class="form-control"> {{graphSelected}}
     </p>
-    <button type="button" class="btn" ng-click="getGraphData();"> Submit</button>
+    <button type="button" class="btn" ng-click="getGraphData();">Submit</button>
    {{graphData}}
     <nvd3-line-chart
     height="550"
@@ -29,7 +48,7 @@
     hovered="hovered(args)"><nvd3-line-chart>
   </div>
     <div class = "span5">
-    <div slider-block></div>
+    <div slider-block ng-hide="slidersCollapsed"></div>
   </div>
 </div>
 
