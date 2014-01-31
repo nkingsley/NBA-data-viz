@@ -1,3 +1,4 @@
+var maps = require('./map');
 var _ = require('lodash');
 exports.normTeams = function(allStats,map){
   var teams = {};
@@ -21,7 +22,7 @@ exports.normPlayers = function(allStats,map,teams){
   var players = _.cloneDeep(allStats);
   var totalLeagueMinutes = 0;
   for (var team in teams){
-    totalLeagueMinutes += team.MIN;
+    totalLeagueMinutes += teams[team].MIN;
   }
   var cutoff = totalLeagueMinutes/1200;
   toPerMinute(players,map);
@@ -29,7 +30,6 @@ exports.normPlayers = function(allStats,map,teams){
   normalize(players,mmr,map,true);
   widenGap(players,map);
   toTotal(players,map);
-
   return players;
 };
 

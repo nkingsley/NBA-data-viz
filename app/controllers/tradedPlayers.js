@@ -75,7 +75,7 @@ exports.splitData = function(stats,model){
   var d = Q.defer();
   var toSplit = 0, splitComplete = 0;
   //traded players created before this date have no pre-trade data
-  var cutoffDate = utils.dateTimeless('1-29-2014');
+  var cutoffDate = utils.dateTimeless('2-29-2014');
   for (var player in this.tradedPlayers){
     var tp = this.tradedPlayers[player];
     if (tp.created < cutoffDate){

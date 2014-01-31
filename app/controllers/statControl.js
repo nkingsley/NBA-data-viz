@@ -66,7 +66,7 @@ exports.finish = function(allStats,tradedPlayers,skipCallbacks){
     // console.log(teamsNorm.MIA);
     var playersNorm = normalize.normPlayers(allStats,map,teamsNorm);
     for (var id in playersNorm){
-      removeTeamStats(playersNorm[id]);
+      // removeTeamStats(playersNorm[id]);
       addTags(playersNorm[id]);
     }
     for (var id in allStats){

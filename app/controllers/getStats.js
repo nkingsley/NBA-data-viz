@@ -2,7 +2,7 @@ var statModels = require('../models/statModels'),curl = require('curling'),_ = r
 statControl = require('./statControl'),db = require('./database'), utils = require('./utils'),
 ma = require('./movingAverage'), tp = require('./tradedPlayers'), mongoose = require('mongoose'), 
 q = require('q'), playerDetails = require('./playerDetails'), 
-allStats = {}, urlsToGet = 11, urlsGotten = 0, mustRerun = false;
+allStats = {};
 var processComplete = q.defer();
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
 config = require('../../config/config');
@@ -14,7 +14,6 @@ exports.start = function(){
 
 
 var compileStats = function(stats,headers,fix,missingTradeData){
-  urlsGotten++;
   if (fix){
     headers = fixHeaders(headers);
   }
@@ -33,10 +32,11 @@ var compileStats = function(stats,headers,fix,missingTradeData){
     if (action === 'SKIP'){
       continue;
     }
+    allStats[newPId] = allStats[newPId] || {};
+    //stats with missing trade data will always have the correct current team
     if (missingTradeData && tp.tradedPlayers[newPId]){
       allStats[newPId].TEAM_ABBREVIATION = newPlayer.TEAM_ABBREVIATION;
     }
-    allStats[newPId] = allStats[newPId] || {};
     var curPlayerObj = allStats[newPId];
     allStats[newPId] = _.merge(curPlayerObj,newPlayer,
     function(a,b){
@@ -63,7 +63,6 @@ var getAllStats = function(){
         tp.giveNewTeam(allStats);
         playerDetails.getPlayerDetails(allStats)
         .then(function(){
-          console.log('hi');
           statControl.finish(allStats,tp.tradedPlayers)
           .then(function(finishedStats){
             var forMovingAverages = _.cloneDeep(finishedStats.Rawstat);
@@ -107,7 +106,7 @@ var getBasicPlayerStats = function(){
   curl.run("-X GET 'http://stats.nba.com/stats/leaguedashplayerstats?Season=2013-14&SeasonType=Regular+Season&LeagueID=00&MeasureType=Base&PerMode=Totals&PlusMinus=N&PaceAdjust=N&Rank=N&Outcome=&Location=&Month=0&SeasonSegment=&DateFrom=&DateTo=&OpponentTeamID=0&VsConference=&VsDivision=&GameSegment=&Period=0&LastNGames=0&GameScope=&PlayerExperience=&PlayerPosition=&StarterBench='", 
   function(err,result){
     var data = JSON.parse(result.payload).resultSets[0];    
-    compileStats(data.rowSet,data.headers);
+    compileStats(data.rowSet,data.headers,false,true);
     d.resolve();
   });  
   return d.promise;

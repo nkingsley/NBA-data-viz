@@ -34,6 +34,7 @@ There are two ways to visualize:
 * <strong>ODM</strong> - [Mongoose](http://www.mongoosejs.com/)
 
 ### Developed by
+* [Jackson Clowes]('https://github.com/turingtesties')
 * [Kamla Kasichainula](https://github.com/kamalama)
 * [Noah Cason-Zesiger](https://github.com/noahjcz)
 * [Santiago Archila](https://github.com/sarchila)

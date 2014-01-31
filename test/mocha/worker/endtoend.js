@@ -87,7 +87,7 @@ describe('Worker E2E Testing', function() {
     });
   });
   after(function(done) {
-    // mongoose.connection.db.dropDatabase();
+    mongoose.connection.db.dropDatabase();
     done();
   });
 });

@@ -58,6 +58,7 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
         return result;
       };
       exports.teamPlayers = weightPlayers(players);
+      debugger;
       d.resolve(exports.teamPlayers);
     });
     return d.promise;
@@ -100,7 +101,4 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
 
   return exports;
 }]);
-
-
-
 
