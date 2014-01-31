@@ -10,6 +10,7 @@ var
 var runCallbacks = function(player,perGameCalcsComplete){
   for (var stat in player){
     var statMap = map[stat];
+    //some callbacks rely on totals made in perGame callback
     if (!perGameCalcsComplete && statMap.callback === cbs.perGame){
       statMap.callback(player,stat,statMap.compare);
     } else if (perGameCalcsComplete && statMap.callback !== cbs.perGame){
@@ -46,15 +47,17 @@ var removeTeamStats = function(player){
   }
 };
 
-exports.finish = function(allStats,tradedPlayers){
+exports.finish = function(allStats,tradedPlayers,skipCallbacks){
   var d = Q.defer();
   for (var id in allStats){
     cleanUp(allStats[id]);
   }
-  for (var id in allStats){
-    runCallbacks(allStats[id]);
+  if (!skipCallbacks){
+    for (var id in allStats){
+      runCallbacks(allStats[id]);
+    } 
   }
-  tp.splitData(tradedPlayers,allStats,'Rawstat')
+  tradedPlayers && tp.splitData(allStats,'Rawstat')
   .then(function(){
     var teamsNorm = normalize.normTeams(allStats,map);  
     for (var team in teamsNorm){

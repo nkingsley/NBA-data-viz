@@ -109,6 +109,7 @@ exports.presetList = function(req,res){
 };
 
 exports.saveOne = function(item,model){
+  var d = q.defer();
   mongoose.model(model)
   var Model = mongoose.model(model);
   var thing = new Model(item);
@@ -117,7 +118,9 @@ exports.saveOne = function(item,model){
     if(err){
       console.log(err);
     }
+    d.resolve();
   });
+  return d.promise;
 };
 
 exports.presets = function(){

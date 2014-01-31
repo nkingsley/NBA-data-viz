@@ -2,7 +2,6 @@ var curl = require('curling'), q = require('q'), db = require('./database');
 
 exports.getPlayerDetails = function(allStats){
   var d = q.defer();
-  console.log(new Date().getDay());
   if (new Date().getDay !== 0){
     d.resolve();
     return d.promise;
