@@ -3,23 +3,13 @@
   <div class = "row">
    <div ng-class="itemsClass">
      <div class="buttonContainer">
-       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton" ng-click="$graphStat = 'Defense'">Defense</span></a>
-       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton" ng-click="$graphStat = 'Shooting'">Shooting</span> </a>
-       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton" ng-click="$graphStat = 'Rebounding'">Rebounding</span> </a>
-       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton" ng-click="$graphStat = 'Possession'">Possession</span> </a>
-       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton" ng-click="$graphStat = 'Miscellaneous'">Miscellaneous</span> </a>
-       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton" ng-click="$graphStat = 'Baller'">Baller</span></a>
+       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Defense'">Defense</span></a>
+       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Shooting'">Shooting</span> </a>
+       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Rebounding'">Rebounding</span> </a>
+       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Possession'">Possession</span> </a>
+       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Miscellaneous'">Miscellaneous</span> </a>
+       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='baller'">Baller</span></a>
    </div>
-
-
-
-
-
-
-
-
-
-
 
    <div ng-model="dt.startDate"><div class="select">Start Date: </div>
       <p class="input-group">
@@ -33,10 +23,9 @@
     </div>
     <div class="select">Players or Teams: </div>
     <p class="input-group">
-      <input type="text" ng-model="graphSelected" typeahead="(datum.name + datum.abbreviation) as (datum.name + datum.franchise) for datum in teamsAndPlayers | filter:$viewValue | limitTo:8" class="form-control"> {{graphSelected}}
+      <input type="text" ng-model="graphSelected" typeahead="(datum.name + datum.abbreviation) as (datum.name + datum.franchise) for datum in teamsAndPlayers | filter:$viewValue | limitTo:8" class="form-control"> 
     </p>
     <button type="button" class="btn" ng-click="getGraphData();">Submit</button>
-   {{graphData}}
     <nvd3-line-chart
     height="550"
     width="550"

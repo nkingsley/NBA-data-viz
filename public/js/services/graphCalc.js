@@ -1,4 +1,4 @@
-angular.module('mean.chart').factory("GraphCalc", ['Playerstar', function(Playerstar) {
+angular.module('mean.chart').factory("Graphcalc", ['Playerstar', function(Playerstar) {
   var exports = {};
   exports.adjWindowStats = {};
 
@@ -10,9 +10,9 @@ angular.module('mean.chart').factory("GraphCalc", ['Playerstar', function(Player
     "presetName": true,
     "Team": true,
     "score": true,
-    "created": true,
-    "user": true,
     "$$hashKey": true,
+    "PLAYER_ID": true,
+    "Player": true,
   };
 
   var nestMap = {
@@ -25,28 +25,32 @@ angular.module('mean.chart').factory("GraphCalc", ['Playerstar', function(Player
 
   exports.calculateWindowStats = function(graphInputData, statWeights){
     var totalStatWeights = Playerstar.calculateTotalStatWeights(statWeights);
-    debugger;
-    for (var key in graphInputData){
-      exports.adjWindowStats[key] = [];
-      for (var i = 0; i < graphInputData[key].length; i++){
+    for (var player in graphInputData){
+        console.log(player);
+      exports.adjWindowStats[player] = [];
+      for (var i = 0; i < graphInputData[player].length; i++){
         var playerDayObj = {};
-        playerDayObj.totalPlayerStar = 0;
+        playerDayObj.baller = 0;
         // for (var j = 0; j < nestMap.length; j++){
         //   playerDayObj[nestMap[j]] = 0;
         // }
-        var playerDay = graphInputData[key][i];
+        var playerDay = graphInputData[player][i];
         for (var stat in playerDay){
           if (skipStats[stat]){
             continue;
+          } else if (stat === "created"){
+            playerDayObj.created = playerDay[stat];
+            continue;
           }
+          console.log(stat);
           var statStarVal = statWeights[stat].weight * playerDay[stat];
           playerDayObj[stat] = statStarVal/(10*totalStatWeights);
 
           playerDayObj[nestMap[statWeights[stat].cat]] = playerDayObj[nestMap[statWeights[stat].cat]] || 0;
           playerDayObj[nestMap[statWeights[stat].cat]] += statStarVal/(10*totalStatWeights);
-          playerDayObj.totalPlayerStar += statStarVal/(10*totalStatWeights); // makes the star scores a little less arbitrary
+          playerDayObj.baller += statStarVal/(10*totalStatWeights); // makes the star scores a little less arbitrary
         }
-        exports.adjWindowStats[key].push(playerDayObj);
+        exports.adjWindowStats[player].push(playerDayObj);
         }
       }
     };
@@ -56,18 +60,6 @@ angular.module('mean.chart').factory("GraphCalc", ['Playerstar', function(Player
   //   Steve Nash: [{"Nash Object for day1"}, {"Nash Object for day2"}]
   // }
 
-  exports.makeGraphData = function(statName){
-    var entity = $scope.graphSelected;
-    for (var key in graphInputData){
-      var windowStats = {key: null, values: []}; // e.g. 'Lebron James' over a two week span
-        windowStats['key'] = entity;
-      for (var i = 0; i < graphInputData[entity].length; i++){ // for each day in Lebron's window
-        var dayData = [new Date(graphInputData[entity][i].created), graphInputData[entity][i][statName]];
-        windowStats['values'].push(dayData);
-      }
-    }
-    $scope.graphData = $scope.graphData.concat([windowStats]);
-    };
 
    return exports;
    }

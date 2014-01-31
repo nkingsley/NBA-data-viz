@@ -17,17 +17,17 @@ angular.module('mean.chart')
 
 
     // Line-Chart variables and functions //  
+    $scope.adjWindowStats = Graphcalc.adjWindowStats;
     $scope.makeGraphData = Graphcalc.makeGraphData;
     $scope.calculateWindowStats = Graphcalc.calculateWindowStats;
     $scope.timeRequest = Graphrequests.timeRequest;
     $scope.dt = {};
-    $scope.graphStat = null;
+    $scope.graphStat = "baller";
     $scope.graphSelected = null;
     $scope.graphData = [];
     var graphInputData = {};
     $scope.xAxisTickFormat_Time_Format = function(){
       return function(d){
-        console.log(d);
         return d3.time.format('%x')(new Date(d)); 
       }
     };
@@ -44,19 +44,21 @@ angular.module('mean.chart')
 
     $scope.makeGraphData = function(statName){
       var entity = $scope.graphSelected;
-      for (var key in graphInputData){
+      debugger;
+      for (var key in $scope.adjWindowStats){
         var windowStats = {key: null, values: []}; // e.g. 'Lebron James' over a two week span
           windowStats['key'] = entity;
-        for (var i = 0; i < graphInputData[entity].length; i++){ // for each day in Lebron's window
-          var dayData = [new Date(graphInputData[entity][i].created), graphInputData[entity][i][statName]];
+        for (var i = 0; i < $scope.adjWindowStats[entity].length; i++){
+        debugger; // for each day in Lebron's window
+          var dayData = [new Date($scope.adjWindowStats[entity][i].created), $scope.adjWindowStats[entity][i][statName]];
           windowStats['values'].push(dayData);
         }
       }
       $scope.graphData = $scope.graphData.concat([windowStats]);
       };
-    $scope.buttonShrink = function(){
-      return $scope.slidersCollapsed ? 'medium' : 'medSmall';
-    }
+    // $scope.buttonShrink = function(){
+    //   return $scope.slidersCollapsed ? 'medium' : 'small';
+    // }
     $scope.startDate = function() {
       $scope.dt.startDate = new Date();
     };

@@ -70,7 +70,19 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+<<<<<<< HEAD
+.medSmall, .medSmall:hover{
+  font-size:14px;
+  padding:7.5px;
+}
+.medium, .medium:hover {
+  font-size:18px;
+  padding: 10px;
+}
+.presetsMenu{
+=======
 .presetsMenu {
+>>>>>>> a590fd8134c73de5b5523798cd7191a6c392d461
   font-size: 24px;
 }
 .slider-container {
@@ -118,11 +130,19 @@ body {
   width: 100%;
 }
 input[type="range"] {
-  background: linear-gradient(to bottom, #e9d1ae, #eb5909);
+  background-image: -moz-linear-gradient(top, #eb5909, #f2f2f2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eb5909), to(#f2f2f2));
+  background-image: -webkit-linear-gradient(top, #eb5909, #f2f2f2);
+  background-image: -o-linear-gradient(top, #eb5909, #f2f2f2);
+  background-image: linear-gradient(to bottom, #e9d1ae, #eb5909);
   width: 75%;
   height: 2px;
   -webkit-appearance: none;
   border-radius: 8px;
+  -moz-border-radius: 8px;
+  -wekkit-border-radius: 8px;
+  -webkit-box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.9), 0px 1px 1px 0px rgba(255,255,255,0.13);
+  -moz-box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.9), 0px 1px 1px 0px rgba(255,255,255,0.13);
   box-shadow: inset 0px 0px 1px 1px rgba(0,0,0,0.9), 0px 1px 1px 0px rgba(255,255,255,0.13);
 }
 input[type="range"]::-webkit-slider-thumb {
@@ -131,6 +151,8 @@ input[type="range"]::-webkit-slider-thumb {
   height: 50px;
   -webkit-appearance: none;
   border-radius: 60px;
+  -moz-border-radius: 60px;
+  -wekkit-border-radius: 60px;
   border: 1px solid #000;
   background-image: url("../img/basketball.png");
 }
@@ -194,6 +216,22 @@ input[type="range"]::-webkit-slider-thumb {
 }
 .team {
   background-color: #fff;
+}
+.team.ng-enter,
+.team.ng-move,
+.team.ng-leave {
+  -webkit-transition: 0.5s linear all;
+  transition: 0.5s linear all;
+}
+.team.ng-enter,
+.team.ng-move,
+.team.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+.team.ng-leave,
+.team.ng-move,
+.team.ng-enter.ng-enter-active {
+  opacity: 1;
 }
 .table td.super-slim {
   padding: 0;
@@ -268,6 +306,13 @@ input[type="range"]::-webkit-slider-thumb {
 th {
   text-align: left;
 }
+<<<<<<< HEAD
+.select {
+  margin-bottom: 5px;
+}
+.team-details{
+  font-size:30px;
+=======
 .blue3dButton,
 .blue3dButton:hover {
   cursor: hand;
@@ -277,9 +322,21 @@ th {
   font-size: 23px;
   text-decoration: none;
   color: #fff;
-  background: linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: -o-linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: -moz-linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: -webkit-linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: -ms-linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #2ca0ca), color-stop(1, #3eb8e5));
+  -webkit-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
+  -moz-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
+  -o-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
   box-shadow: inset 0px 1px 0px #7fd2f1, 0px 6px 0px #156785;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -o-border-radius: 5px;
   border-radius: 5px;
+>>>>>>> a590fd8134c73de5b5523798cd7191a6c392d461
 }
 .blue3dButton::before {
   background-color: #072239;
@@ -294,13 +351,22 @@ th {
   left: -2px;
   top: 5px;
   z-index: -1;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -o-border-radius: 6px;
   border-radius: 6px;
+  -webkit-box-shadow: 0px 1px 0px #fff;
+  -moz-box-shadow: 0px 1px 0px #fff;
+  -o-box-shadow: 0px 1px 0px #fff;
   box-shadow: 0px 1px 0px #fff;
 }
 .blue3dButton:active {
   color: #156785;
   text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
   background: #2ca0ca;
+  -webkit-box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
+  -moz-box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
+  -o-box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
   box-shadow: inset 0px 1px 0px #7fd2f1, inset 0px -1px 0px #156785;
   top: 7px;
 }
@@ -311,11 +377,6 @@ th {
 .small:hover {
   font-size: 12px;
   padding: 5px;
-}
-.medium,
-.medium:hover {
-  font-size: 14px;
-  padding: 7.5px;
 }
 .btn-container {
   margin: 10px 0;

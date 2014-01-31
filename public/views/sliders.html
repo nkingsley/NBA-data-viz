@@ -1,6 +1,8 @@
 <div class="slider-container scrolling">
+  <div class = "button-container">
   <a class = "button-shell" ng-click = "sendScore(weights)" ng-hide = "!global.authenticated">
     <span class = "blue3dButton">Save New Preset</span></a>
+    </div>
   <div class="slider-shell" ng-repeat="(groupName, group) in nestedSliders">
     <div class="top-slider">
       <label class = "slider-text"><a ng-click="isCollapsed = !isCollapsed">{{groupName}}</a></label>
