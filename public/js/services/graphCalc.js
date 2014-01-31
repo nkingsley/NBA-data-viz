@@ -26,7 +26,6 @@ angular.module('mean.chart').factory("Graphcalc", ['Playerstar', function(Player
   exports.calculateWindowStats = function(graphInputData, statWeights){
     var totalStatWeights = Playerstar.calculateTotalStatWeights(statWeights);
     for (var player in graphInputData){
-        console.log(player);
       exports.adjWindowStats[player] = [];
       for (var i = 0; i < graphInputData[player].length; i++){
         var playerDayObj = {};
@@ -42,7 +41,6 @@ angular.module('mean.chart').factory("Graphcalc", ['Playerstar', function(Player
             playerDayObj.created = playerDay[stat];
             continue;
           }
-          console.log(stat);
           var statStarVal = statWeights[stat].weight * playerDay[stat];
           playerDayObj[stat] = statStarVal/(10*totalStatWeights);
 

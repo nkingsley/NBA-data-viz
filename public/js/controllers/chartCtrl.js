@@ -26,11 +26,8 @@ angular.module('mean.chart')
     $scope.graphSelected = null;
     $scope.graphData = [];
     var graphInputData = {};
-    $scope.xAxisTickFormat_Time_Format = function(){
-      return function(d){
-        return d3.time.format('%x')(new Date(d)); 
-      }
-    };
+
+
     $scope.getGraphData = function(){
       if (!graphInputData[$scope.graphSelected]){
         $scope.graphRequest = Graphrequests.timeRequest($scope.graphSelected, $scope.dt.startDate, $scope.dt.endDate);
@@ -44,21 +41,22 @@ angular.module('mean.chart')
 
     $scope.makeGraphData = function(statName){
       var entity = $scope.graphSelected;
-      debugger;
       for (var key in $scope.adjWindowStats){
         var windowStats = {key: null, values: []}; // e.g. 'Lebron James' over a two week span
           windowStats['key'] = entity;
         for (var i = 0; i < $scope.adjWindowStats[entity].length; i++){
-        debugger; // for each day in Lebron's window
           var dayData = [new Date($scope.adjWindowStats[entity][i].created), $scope.adjWindowStats[entity][i][statName]];
           windowStats['values'].push(dayData);
         }
       }
       $scope.graphData = $scope.graphData.concat([windowStats]);
       };
-    // $scope.buttonShrink = function(){
-    //   return $scope.slidersCollapsed ? 'medium' : 'small';
-    // }
+    
+    $scope.clearGraphData = function(){
+      $scope.graphData = [];
+      console.log("cleared");
+    };
+
     $scope.startDate = function() {
       $scope.dt.startDate = new Date();
     };

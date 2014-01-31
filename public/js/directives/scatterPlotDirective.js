@@ -2,7 +2,7 @@ angular.module('mean.chart')
   .directive('scatterPlot', function(){
   var chart = d3.custom.scatterPlot();
   return {
-    restrict: 'E',
+    restrict: 'EA',
     replace: true,
     template: '<div class="chart"></div>',
     scope:{
