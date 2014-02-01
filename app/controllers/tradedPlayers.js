@@ -69,10 +69,14 @@ exports.giveNewTeam = function(allStats){
   }
 };
 
-exports.splitData = function(stats,model){
+exports.splitData = function(stats,model,skip){
   var map = maps.map;
   var rmap = maps.reverseMap();
   var d = Q.defer();
+  if (skip){
+    d.resolve();
+    return d.promise;
+  }
   var toSplit = 0, splitComplete = 0;
   //traded players created before this date have no pre-trade data
   var cutoffDate = utils.dateTimeless('2-29-2014');

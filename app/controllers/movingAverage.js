@@ -4,15 +4,15 @@ db = require('./database'), statControl = require('./statControl'), q = require(
 exports.movingAverage = function(rawStats){
   var d = q.defer();
   var date = utils.dateTimeless();
-  date.setDate(date.getDate()-1);
+  date.setDate(date.getDate()-2);
   mongoose.model("Rawstat").find({created: date})
-  .exec(function(err,old){
+  .exec(function(err,old){    
     if (old.length === 0){
       d.resolve();
       return d.promise;
     }
     old = utils.toObj(old, "PLAYER_ID");
-    var diff = utils.diff(old,rawStats);
+    var diff = utils.diff(old,rawStats);    
     utils.reverseTags(diff);
     statControl.finish(diff,false,true)
     .then(function(megaStats){
