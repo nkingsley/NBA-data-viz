@@ -1,7 +1,13 @@
 angular.module('mean.chart')
-  .controller('chartCtrl', ['$scope', '$http', '$location', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar', 'Graphrequests', 'Graphcalc',
+<<<<<<< HEAD
+  .controller('chartCtrl', ['$scope', '$http', '$timeout', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar', 'Graphrequests', 'Graphcalc',
     'promiseTracker',
-    function ($scope, $http, $location, Global, Stats, Spearman, Teamstar, Playerstar, Graphrequests, Graphcalc, promiseTracker) {
+    function ($scope, $http, $timeout, Global, Stats, Spearman, Teamstar, Playerstar, Graphrequests, Graphcalc, promiseTracker) {
+=======
+  .controller('chartCtrl', ['$scope', '$http', '$location', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar',
+    'promiseTracker', 
+    function ($scope, $http, $location, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
+>>>>>>> e5dce18b2798f750fd5038f3dba6d8d2abbe30a1
     $scope.global = Global;
     $scope.infoShow = 'Hide Info';
     $scope.currentTeam = false;
@@ -154,9 +160,6 @@ angular.module('mean.chart')
       return result;
     };
 
-    // THIS SHOULD BE SOMEWHERE ELSE
-
-
     $scope.filterTeamOnlySliders = function(stat){
       if (!(stat.weight > -1)){return false;}
       if ($scope.currentTeam === 'ALL'){
@@ -190,8 +193,15 @@ angular.module('mean.chart')
       return false;
     };
 
+<<<<<<< HEAD
+
+    // HEY THIS PROBABLY SHOULD BE SOMEWHERE NICER
     $scope.calculatePlayerStarVals("ALL");
 
+
+
+    Global.stats.then(function(data){
+=======
     var setup = function(data,fromLocal){
       if(!fromLocal){
         if ($scope.showingLastTen){
@@ -200,6 +210,7 @@ angular.module('mean.chart')
           Global.totalSetupHolder = angular.copy(data);
         }
       }
+>>>>>>> e5dce18b2798f750fd5038f3dba6d8d2abbe30a1
       $scope.presets = data.presets;
       $scope.teamStats = data.teamStats;
       $scope.weights = data.cats;

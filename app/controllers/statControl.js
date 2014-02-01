@@ -57,8 +57,9 @@ exports.finish = function(allStats,tradedPlayers,skipCallbacks){
       runCallbacks(allStats[id]);
     } 
   }
-  tradedPlayers && tp.splitData(allStats,'Rawstat')
+  tp.splitData(allStats,'Rawstat',tradedPlayers)
   .then(function(){
+    console.log('hh');
     var teamsNorm = normalize.normTeams(allStats,map);  
     for (var team in teamsNorm){
       addTags(teamsNorm[team]);

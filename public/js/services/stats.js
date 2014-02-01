@@ -39,7 +39,7 @@ angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Gl
             nestedSliders.Possession[statName] = statWeights[statName];
             break;
           case "SHT":
-          case "SHOT_TM":
+          case "SHT_TM":
             nestedSliders.Shooting[statName] = statWeights[statName];
             break;
           case "DEF":
