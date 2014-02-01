@@ -24,6 +24,7 @@ angular.module('mean.chart').factory("Graphcalc", ['Playerstar', function(Player
   };
 
   exports.calculateWindowStats = function(graphInputData, statWeights){
+    debugger;
     var totalStatWeights = Playerstar.calculateTotalStatWeights(statWeights);
     for (var player in graphInputData){
       exports.adjWindowStats[player] = [];

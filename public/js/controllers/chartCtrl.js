@@ -18,7 +18,6 @@ angular.module('mean.chart')
 
     // Line-Chart variables and functions //  
     $scope.adjWindowStats = Graphcalc.adjWindowStats;
-    $scope.makeGraphData = Graphcalc.makeGraphData;
     $scope.calculateWindowStats = Graphcalc.calculateWindowStats;
     $scope.timeRequest = Graphrequests.timeRequest;
     $scope.dt = {};
@@ -29,9 +28,11 @@ angular.module('mean.chart')
 
 
     $scope.getGraphData = function(){
+      $scope.drawChart = true;
       if (!graphInputData[$scope.graphSelected]){
         $scope.graphRequest = Graphrequests.timeRequest($scope.graphSelected, $scope.dt.startDate, $scope.dt.endDate);
         $scope.graphRequest.then(function(data){
+          debugger;
           graphInputData[$scope.graphSelected] = data;
           $scope.calculateWindowStats(graphInputData, $scope.weights);
           $scope.makeGraphData($scope.graphStat);
@@ -40,6 +41,7 @@ angular.module('mean.chart')
     };
 
     $scope.makeGraphData = function(statName){
+      console.log(graphInputData);
       $scope.graphData = [];
       for (var key in $scope.adjWindowStats){
         var entity = key;
@@ -54,6 +56,7 @@ angular.module('mean.chart')
     };
     
     $scope.removeGraphData = function(){
+      $scope.drawChart = false;
       $scope.graphData = [];
       graphInputData = {};
     };

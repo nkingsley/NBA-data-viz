@@ -4,32 +4,28 @@ angular.module('mean.chart')
       restrict: 'E',
       replace: true,
       template: '<div class="graph"</div>',
-      scope: {
-        height: '=height',
-        width: '=width',
-        data: '=data',
-      },
+      
     link: function(scope, element, attrs) {
       var chartEl = d3.select(element[0]);
       chartEl
-      .append("svg")
+      .append("svg:svg")
       .attr("width", 700)
       .attr("height", 500)
       .classed("lineGraph", true)
 
-      // chartEl.height(scope.height);
-      // chartEl.width(scope.width);
-      scope.$watch('data', function (newVal, oldVal){
+      scope.$watch('graphData', function (newVal, oldVal){ // problem is here: newVal ($scope.graphData) keeps every added player
         debugger;
 
         chartEl.selectAll('.nv-lineWrap').empty();
+
         var dataFunc = function (){
           return newVal;
         };
         
         if (newVal.length === 0){
-          chartEl.selectAll('.nv-lineWrap')[0].parentNode.firstChild.remove();
-        } else if (!newVal || newVal === oldVal) {
+          console.log("Empty!");
+          chartEl.selectAll('.path').empty();
+        } else if (newVal === oldVal) {
           return;
         }
 

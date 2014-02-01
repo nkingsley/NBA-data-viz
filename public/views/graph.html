@@ -28,7 +28,7 @@
       <a class = "button-shell">
     <span ng-class="buttonShrink()" class="blue3dbutton small" ng-click="getGraphData();">Submit</span> </a>
       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dbutton small" ng-click="removeGraphData();"> Clear </span></a>
-    <line-graph height="options.height" width="options.width" data="graphData"></line-graph>
+    <line-graph ng-if="drawChart" height="options.height" width="options.width" data="graphData"></line-graph>
   </div>
     <div class = "span5">
     <div slider-block ng-hide="slidersCollapsed"></div>
