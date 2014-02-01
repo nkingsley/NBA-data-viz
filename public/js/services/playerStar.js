@@ -6,13 +6,18 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
   .then(function(stats){
     exports.cats = stats.cats;
   });
-  exports.teamStatReq = function(){
+  exports.teamStatReq = function(lastTen){
     var d = $q.defer();
     if (exports.allPlayers){
       d.resolve(exports.allPlayers);
       return d.promise;
     }
-    $http.get('/players').success(function(data){
+    if (lastTen){
+      var route = "/players/lt";
+    } else{
+      var route = "/players";
+    }
+    $http.get(route).success(function(data){
       exports.allPlayers = data;
       d.resolve(data);
     });
@@ -27,9 +32,9 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
     PSS: "Possession"
   };
 
-  exports.calculatePlayerStarVals = function(statWeights, openTeam){
+  exports.calculatePlayerStarVals = function(statWeights, openTeam, lastTen){
     var d = $q.defer();
-    exports.teamStatReq()
+    exports.teamStatReq(lastTen)
     .then(function(players){
       //for now, just calculate and return the players for the open team
       if (!openTeam){

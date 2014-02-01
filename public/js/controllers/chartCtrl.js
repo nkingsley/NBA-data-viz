@@ -7,6 +7,8 @@ angular.module('mean.chart')
     $scope.currentTeam = false;
     $scope.introCollapsed = true;
     $scope.introShow = 'i';
+    $scope.showingLastTen = Global.showingLastTen;
+    Global.lastTenHolder,Global.totalHolder,Global.lastTenSetupHolder,Global.totalSetupHolder;
     $scope.options = $scope.slidersCollapsed ? {width: 900, height: 600} : {width: 550, height: 430}
     var toggleChart = function(n,o){
       if (n === true){
@@ -36,7 +38,7 @@ angular.module('mean.chart')
       } else {
         $scope.itemsClass = "span7";
       }
-      $scope.sliderShow = $scope.slidersCollapsed ? 'Show Sliders' : 'Hide Sliders';
+      $scope.sliderShow = $scope.slidersCollapsed ? '' : 'pressed';
       Stats.slidersCollapsed = $scope.slidersCollapsed;
     };
 
@@ -111,7 +113,7 @@ angular.module('mean.chart')
         var abbr = "ALL"
       }
       Global.stats.then(function(data){
-        var playerPromise = Playerstar.calculatePlayerStarVals($scope.weights,abbr)
+        var playerPromise = Playerstar.calculatePlayerStarVals($scope.weights,abbr,$scope.showingLastTen);
         playerPromise.then(function(){
           $scope.playerStats = Playerstar.teamPlayers;
           if (click){
@@ -123,7 +125,14 @@ angular.module('mean.chart')
       return false;
     };
 
-    Global.stats.then(function(data){
+    var setup = function(data,fromLocal){
+      if(!fromLocal){
+        if ($scope.showingLastTen){
+          Global.lastTenSetupHolder = angular.copy(data);
+        } else{
+          Global.totalSetupHolder = angular.copy(data);
+        }
+      }
       $scope.presets = data.presets;
       $scope.teamStats = data.teamStats;
       $scope.weights = data.cats;
@@ -131,14 +140,17 @@ angular.module('mean.chart')
       $scope.nestedSliders = Stats.assignNestedSliders($scope.weights);
       Teamstar.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
       $scope.updateRho();
-    });
+    };
+    $scope.updateRho = function (){
+      $scope.rhoVal = $scope.spearman.rho($scope.teams);
+    };
+
     $scope.setWeights = function(preset){
       $scope.weights = preset;
       $scope.nestedSliders = Stats.assignNestedSliders($scope.weights);
       Teamstar.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
       $scope.currentTeam && $scope.calculatePlayerStarVals($scope.currentTeam);
       $scope.updateRho();
-      console.log($scope.weights);
     };
     var appendHackReactorBadge = function (){
       var img = document.createElement('img');
@@ -153,10 +165,6 @@ angular.module('mean.chart')
 
     $scope.loadingTracker = promiseTracker('loadingTracker');
     $scope.loadingTracker.addPromise(Global.stats);
-
-    $scope.updateRho = function (){
-      $scope.rhoVal = $scope.spearman.rho($scope.teams);
-    };
 
     $scope.sendScore = function(weights){
       var name = prompt("Name these Slider Presets");
@@ -180,7 +188,34 @@ angular.module('mean.chart')
         $scope.userPresets = data;
       });
     }
-
+    $scope.lastTen = function(){
+      if($scope.showingLastTen){return;}
+      $scope.showingLastTen = 'pressed';
+      Global.showingLastTen = 'pressed';
+      if(Playerstar.allPlayers){
+        Global.totalHolder = Playerstar.allPlayers;
+        Playerstar.allPlayers = Global.lastTenHolder;
+        $scope.calculatePlayerStarVals($scope.currentTeam,false);
+      }
+      if (Global.lastTenSetupHolder){
+        setup(Global.lastTenSetupHolder,true);
+      } else{
+        var gp = Global.init('lt')
+        gp.then(setup);
+        $scope.loadingTracker.addPromise(gp);
+      }
+    };
+    $scope.total = function(){
+      if(!$scope.showingLastTen){return;}
+      $scope.showingLastTen = '';
+      Global.showingLastTen = '';
+      if(Playerstar.allPlayers){
+        Global.lastTenHolder = Playerstar.allPlayers;
+        Playerstar.allPlayers = Global.totalHolder;
+        $scope.calculatePlayerStarVals($scope.currentTeam,false);
+      }      
+      setup(Global.totalSetupHolder,true);
+    }
     $scope.makeHeadShotUrl = function(name, isCollapsed) {
       
       if(isCollapsed) { return ""; }
@@ -200,4 +235,23 @@ angular.module('mean.chart')
       formatted_name = firstLast.join("_");
       return url + formatted_name.toLowerCase() + '.png';
     };
+
+    $scope.twButtonDepressed = function(buttonName){
+      if(buttonName === 'lt'){
+        return $scope.showingLastTen ? 'pressed' : '';
+      } else{
+        return $scope.showingLastTen ? '' : 'pressed';
+      }
+    }
+
+    //kickoff process
+    if ($scope.showingLastTen){
+      setup(Global.lastTenSetupHolder);    
+    } else{
+      if(Global.totalSetupHolder){
+        setup(Global.totalSetupHolder);
+      } else{
+        Global.stats.then(setup);
+      }
+    }
   }]);

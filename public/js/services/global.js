@@ -3,8 +3,6 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
   var _this = this;
   var statsObj = {};
   var cats = {};
-  var d = $q.defer();
-
   var teams = [
   {
     abbreviation:"ATL",
@@ -336,33 +334,42 @@ angular.module('mean.chart').factory("Global", ['$q', '$http', function($q, $htt
     starVal: 0,
     isCollapsed: true
   }];
-
-  $http.get('/init').success(function(data){
-    var teamStats = data.teams;
-    var winPct = data.winPct;
-    cats = data.cat;
-    for (team in teamStats){
-      statsObj[team] = {};
-      for (stat in teamStats[team]){
-        if(stat === "NA_MIN_NEU"){
-          continue;
-        } else {
-          statName = stat;
-          statsObj[team][statName] = teamStats[team][stat];
+  _this.init = function(lastTen){
+    var d = $q.defer();
+    if (lastTen){
+      var route = '/init/lt';
+    } else{
+      var route = '/init';
+    }
+    $http.get(route).success(function(data){
+      var teamStats = data.teams;
+      var winPct = data.winPct;
+      cats = data.cat;
+      for (team in teamStats){
+        statsObj[team] = {};
+        for (stat in teamStats[team]){
+          if(stat === "NA_MIN_NEU"){
+            continue;
+          } else {
+            statName = stat;
+            statsObj[team][statName] = teamStats[team][stat];
+          }
         }
       }
-    }
-    for (var i = 0; i < teams.length; i++){
-      var teamName = teams[i].franchise;
-      teams[i].winPct = winPct[teamName].winPct;
-    }
-    d.resolve({teamStats: statsObj, cats: cats, teams: teams, presets:data.presets});
-  });
-
+      for (var i = 0; i < teams.length; i++){
+        var teamName = teams[i].franchise;
+        teams[i].winPct = winPct[teamName].winPct;
+      }
+      d.resolve({teamStats: statsObj, cats: cats, teams: teams, presets:data.presets});
+    });
+    return d.promise;
+  };
+  var stats = _this.init();
   _this._data = {
       user: window.user,
       authenticated: !! window.user,
-      stats: d.promise
+      stats: stats,
+      init: _this.init
   };
   return _this._data;
 }]);

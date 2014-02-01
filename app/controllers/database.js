@@ -41,13 +41,17 @@ exports.checkDate = function(date){
 };
 
 exports.players = function(req,res){
+  if(req.params.lt){
+    var model = 'Pnmovavg';
+  } else{
+    var model = 'Playernorm';
+  }
   var date = utils.dateTimeless();
   var d = q.defer();
   var subroutine = function(date){
-    mongoose.model('Playernorm').find({created:date},function(err,data){
+    mongoose.model(model).find({created:date},function(err,data){
       console.log(date,data.length);
       if (data.length === 0){
-        console.log('lame');
         date.setDate(date.getDate()-1);
         if (date < new Date('1-20-2014')){
           d.resolve();
@@ -124,7 +128,12 @@ exports.presets = function(){
 };
 
 exports.init = function(req,res){
-  mongoose.model('Teamnorm')
+  if(req.params.lt){
+    var model = 'Tnmovavg';
+  } else{
+    var model = 'Teamnorm';
+  }
+  mongoose.model(model)
   .find()
   .sort({created:-1})
   .limit(30)
