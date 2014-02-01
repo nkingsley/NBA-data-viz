@@ -2,7 +2,7 @@
 angular.module('mean.chart').factory("Stats", ['$q', 'Global',  function ($q, Global) {
    // Should be renamed to sliders.
   var exports = {};
-
+    exports.slidersCollapsed = true;
     exports.nestedSliders = {
       Possession:{
         main:5,

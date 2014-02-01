@@ -1,10 +1,10 @@
-<div data-ng-controller="chartCtrl" data-ng-init = "calculatePlayerStarVals('ALL',false);currentTeam = 'ALL';">
+<div data-ng-controller="chartCtrl" data-ng-init = "slidersCollased = true;calculatePlayerStarVals('ALL',false);currentTeam = 'ALL';">
   <div header></div>
   <div class = "row">
     <div ng-class = "itemsClass">
       <div players></div>
     </div>
-    <div class = "span5" collapse = "slidersCollapsed">
+    <div class = "span5" ng-hide = "slidersCollapsed">
       <div slider-block></div>
     </div>
   </div>

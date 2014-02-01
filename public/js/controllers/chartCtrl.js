@@ -4,13 +4,18 @@ angular.module('mean.chart')
     function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
     $scope.global = Global;
     $scope.infoShow = 'Hide Info';
-    $scope.itemsClass = "span12";
-    $scope.sliderShow = "Show Sliders";
-    $scope.slidersCollapsed = true;
     $scope.currentTeam = false;
     $scope.introCollapsed = true;
     $scope.introShow = 'i';
-    $scope.options = {width: 550, height: 430};
+    $scope.options = $scope.slidersCollapsed ? {width: 900, height: 600} : {width: 550, height: 430}
+    var toggleChart = function(n,o){
+      if (n === true){
+        $scope.options = {width: 900, height: 600};
+      } else{
+        $scope.options = {width: 550, height: 430};
+      }
+    }
+    $scope.$watch('slidersCollapsed',toggleChart);
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
     $scope.isCollapsed = true;
@@ -32,7 +37,16 @@ angular.module('mean.chart')
         $scope.itemsClass = "span7";
       }
       $scope.sliderShow = $scope.slidersCollapsed ? 'Show Sliders' : 'Hide Sliders';
+      Stats.slidersCollapsed = $scope.slidersCollapsed;
     };
+
+    if(Stats.slidersCollapsed){
+      $scope.sliderToggle();
+    } else{
+      $scope.sliderToggle();
+      $scope.sliderToggle();
+    }
+
     $scope.toggleOpenTeam = function(team){
       if ($scope.currentTeam === team){
         $scope.currentTeam = false;

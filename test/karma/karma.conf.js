@@ -1,3 +1,5 @@
+'use strict';
+
 // Karma configuration
 // Generated on Sat Oct 05 2013 22:00:14 GMT+0700 (ICT)
 
@@ -21,13 +23,19 @@ module.exports = function(config) {
             'public/lib/angular-route/angular-route.js',
             'public/lib/angular-bootstrap/ui-bootstrap-tpls.js',
             'public/lib/angular-bootstrap/ui-bootstrap.js',
+            'public/lib/angular-animate/angular-animate.min.js',
+            'public/lib/angular-touch.min.js',
+            'public/lib/d3/d3.min.js',
+            'public/js/charts/reusable_scatter_plot.js',
+            'public/lib/angular-promise-tracker/promise-tracker.js',
             'public/lib/angular-ui-utils/modules/route/route.js',
+            'public/lib/angular-busy/dist/angular-busy.js',
             'public/js/app.js',
             'public/js/config.js',
-            'public/js/directives.js',
+            'public/js/directives/*.js',
             'public/js/filters.js',
-            'public/js/services/global.js',
-            'public/js/controllers/index.js',
+            'public/js/services/*.js',
+            'public/js/controllers/*.js',
             'public/js/init.js',
             'test/karma/unit/**/*.js'
         ],
@@ -42,15 +50,15 @@ module.exports = function(config) {
         // test results reporter to use
         // possible values: 'dots', 'progress', 'junit', 'growl', 'coverage'
         //reporters: ['progress'],
-        reporters: ['progress', 'coverage'],
+        reporters: ['progress'],
 
         // coverage
         preprocessors: {
             // source files, that you wanna generate coverage for
             // do not include tests or libraries
             // (these files will be instrumented by Istanbul)
-            'public/js/controllers/*.js': ['coverage'],
-            'public/js/services/*.js': ['coverage']
+            // 'public/js/controllers/*.js': ['coverage'],
+            // 'public/js/services/*.js': ['coverage']
         },
 
         coverageReporter: {
@@ -59,7 +67,7 @@ module.exports = function(config) {
         },
 
         // web server port
-        port: 9876,
+        port: 3345,
 
 
         // enable / disable colors in the output (reporters and logs)
@@ -84,6 +92,10 @@ module.exports = function(config) {
         // - PhantomJS
         // - IE (only Windows)
         browsers: ['PhantomJS'],
+        plugins: [
+            'karma-jasmine',
+            'karma-phantomjs-launcher'
+        ],
 
 
         // If browser does not capture in given timeout [ms], kill it

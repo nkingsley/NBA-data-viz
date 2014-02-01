@@ -2,14 +2,14 @@ var curl = require('curling'), q = require('q'), db = require('./database');
 
 exports.getPlayerDetails = function(allStats){
   var d = q.defer();
-  // if (new Date().getDay !== 0){
-  //   db.getPlayerDetails()
-  //   .then(function(deets){
-  //     addPosition(allStats,deets);
-  //     d.resolve();
-  //   });
-  //   return d.promise;
-  // }
+  if (new Date().getDay !== 0){
+    db.getPlayerDetails()
+    .then(function(deets){
+      addPosition(allStats,deets);
+      d.resolve();
+    });
+    return d.promise;
+  }
   var players = [];
   var subroutine = function(index,keys){
     if (index === keys.length -1){
