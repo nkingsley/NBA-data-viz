@@ -20,6 +20,7 @@ angular.module('mean.chart')
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
     $scope.weights = Stats.nestedSliders;
+    $scope.addToggle = false;
 
 
     // Line-Chart variables and functions //  
@@ -38,12 +39,12 @@ angular.module('mean.chart')
       if (!graphInputData[$scope.graphSelected]){
         $scope.graphRequest = Graphrequests.timeRequest($scope.graphSelected, $scope.dt.startDate, $scope.dt.endDate);
         $scope.graphRequest.then(function(data){
-          debugger;
           graphInputData[$scope.graphSelected] = data;
-          $scope.calculateWindowStats(graphInputData, $scope.weights);
+          $scope.calculateWindowStats(graphInputData, $scope.weights, $scope.teamStats);
           $scope.makeGraphData($scope.graphStat);
         })
-      }
+      } else 
+      $scope.makeGraphData($scope.graphStat);
     };
 
     $scope.makeGraphData = function(statName){

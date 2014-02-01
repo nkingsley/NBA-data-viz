@@ -19,16 +19,18 @@ angular.module('mean.chart')
       .classed("lineGraph", true)
 
       scope.$watch('data', function (newVal, oldVal){ // problem is here: newVal ($scope.graphData) keeps every added player
-        chartEl.selectAll('.nv-lineWrap').empty();
+        chartEl.selectAll('.lineGraph').empty();
 
         var dataFunc = function (){
           return newVal;
         };
-        
+        // d3.select('.lineGraph').selectAll('.nv-group').empty();
+        // d3.select('.lineGraph').selectAll('path').exit().remove();
+
+
+
         if (newVal.length === 0){
-          debugger;
           console.log("Empty!");
-          chartEl.selectAll('.nv-group').exit();
           chartEl.selectAll('.nv-group').empty();
         } else if (newVal === oldVal) {
           return;
@@ -39,7 +41,9 @@ angular.module('mean.chart')
           console.log(curLine);
 
         };
-
+        var click = function(element){
+            console.log(element);
+          };
         nv.addGraph(function() {
           var chart = nv.models.cumulativeLineChart()
             .useInteractiveGuideline(true)
@@ -62,15 +66,16 @@ angular.module('mean.chart')
               .tickFormat(d3.format(',.2f'))
               .axisLabel('Score')
                 console.log('submitted to nvd3->',newVal);
-          
-          d3.select('.lineGraph')
+
+          d3.selectAll('.lineGraph')
+              .on("click", click)
               .datum(dataFunc())
               .transition().duration(500)
-              .call(chart);
+              .call(chart)
 
         //TODO: Figure out a good way to do this automatically
           nv.utils.windowResize(chart.update);
-          nv.utils.windowResize()
+
 
           chart.dispatch.on('stateChange', function(e) { nv.log('New State:', JSON.stringify(e)); });
           return chart;

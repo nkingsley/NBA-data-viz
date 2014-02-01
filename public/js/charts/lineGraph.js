@@ -2,7 +2,6 @@ d3.custom = d3.custom || {};
 
 var dispatch = d3.dispatch('customHover', 'datumChange');
 d3.custom.lineGraph = nv.addGraph(function() {
-debugger;
 
    if(this.childElementCount === 0) {
         svg = d3.select(this)

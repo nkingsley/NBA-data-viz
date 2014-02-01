@@ -23,10 +23,15 @@ angular.module('mean.chart').factory("Graphcalc", ['Playerstar', function(Player
     PSS: "Possession"
   };
 
-  exports.calculateWindowStats = function(graphInputData, statWeights){
-    debugger;
+  exports.calculateWindowStats = function(graphInputData, statWeights, teams){
     var totalStatWeights = Playerstar.calculateTotalStatWeights(statWeights);
     for (var player in graphInputData){
+      var divisor = 30;
+      var multiplier = 1;
+      if (teams[player]){
+            // multiplier = 10000;
+            divisor = 1;
+          }
       exports.adjWindowStats[player] = [];
       for (var i = 0; i < graphInputData[player].length; i++){
         var playerDayObj = {};
@@ -42,12 +47,14 @@ angular.module('mean.chart').factory("Graphcalc", ['Playerstar', function(Player
             playerDayObj.created = playerDay[stat];
             continue;
           }
-          var statStarVal = statWeights[stat].weight * playerDay[stat];
-          playerDayObj[stat] = statStarVal/(30*totalStatWeights);
+
+          var statStarVal = statWeights[stat].weight * multiplier * playerDay[stat];
+          debugger;
+          playerDayObj[stat] = statStarVal/(divisor*totalStatWeights);
 
           playerDayObj[nestMap[statWeights[stat].cat]] = playerDayObj[nestMap[statWeights[stat].cat]] || 0;
-          playerDayObj[nestMap[statWeights[stat].cat]] += statStarVal/(30*totalStatWeights);
-          playerDayObj.baller += statStarVal/(30*totalStatWeights); // makes the star scores a little less arbitrary
+          playerDayObj[nestMap[statWeights[stat].cat]] += statStarVal/(divisor*totalStatWeights);
+          playerDayObj.baller += statStarVal/(divisor*totalStatWeights); // makes the star scores a little less arbitrary
         }
         exports.adjWindowStats[player].push(playerDayObj);
         }

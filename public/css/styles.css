@@ -109,6 +109,7 @@ svg .title{font:bold 14px Arial}
 .nvd3 .axis text{text-shadow:0 1px 0 #fff}
 .nvd3 .nv-interactiveGuideLine{pointer-events:none}
 .nvd3 line.nv-guideline{stroke:#ccc}
+input{width:150px}
 .rhoRed{color:#f00;font-weight:1000}
 .rhoGreen{color:#008000;font-weight:1000}
 .contains{padding:20px}
@@ -144,6 +145,8 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none !important;wid
 .dot hover{opacity:1;-ms-filter:none;filter:none}
 .team-label{pointer-events:none}
 .diagonal{fill:none;stroke:#999;stroke-width:3px}
+.playerBar{padding-top:15px}
+.form-control{width:100px}
 .teams{width:100%;margin-bottom:0;-webkit-border-radius:2px;border-radius:2px}
 .teams-header{background-color:#eee}
 .rank{font-weight:900;font-size:24px}
