@@ -1,6 +1,6 @@
 var mongoose = require('mongoose'),
-  map = require('../controllers/map').map;
-
+  maps = require('../controllers/map');
+var map = maps.map;
 var makeSchema = function(map){
   var schema = {}, type,name;
   for (var stat in map){
@@ -29,8 +29,20 @@ schema.Position = String;
 schema.Birthdate = String;
 mongoose.model('Rawmovavg', new mongoose.Schema(schema,{collection: 'Rawmovavgs'}));
 mongoose.model('Rawstat', new mongoose.Schema(schema,{collection: 'rawstats'}));
-mongoose.model('Playernorm', new mongoose.Schema(schema,{collection: 'playernorms'}));
-mongoose.model('Pnmovavg', new mongoose.Schema(schema,{collection: 'Pnmovavgs'}));
+var playersSchema = {};
+for (var stat in schema){
+  var rmap = maps.reverseMap();
+  if(!rmap[stat]){
+    playersSchema[stat] = schema[stat];
+    continue;
+  }
+  if(rmap[stat].team || rmap[stat].cat === "PSS_TM" || rmap[stat].cat === "SHT_TM"){
+    continue;
+  }
+  playersSchema[stat] = schema[stat];
+}
+mongoose.model('Playernorm', new mongoose.Schema(playersSchema,{collection: 'playernorms'}));
+mongoose.model('Pnmovavg', new mongoose.Schema(playersSchema,{collection: 'Pnmovavgs'}));
 
 var tpSchema = {
   PLAYER_ID: Number,

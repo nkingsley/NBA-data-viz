@@ -42,7 +42,7 @@ exports.map = {
   TOP: {},
   CL_TCH: {name:'Close Touches', callback: cbs.perGame, cat: 'PSS_TM', posneg: 'POS'},
   EL_TCH: {name:'Elbow Touches', callback: cbs.perGame, cat: 'PSS_TM', posneg: 'POS'},
-  PTS: {name:'Points', cat: 'SHT_TM', posneg:'POST'},
+  PTS: {name:'Points', cat: 'SHT_TM', posneg:'POS'},
   PTS_TCH: {},
   PTS_HCCT: {},
   TCH_TOT: {name: 'Touches', cat: 'PSS_TM', posneg: 'POS'},
