@@ -40,21 +40,22 @@ angular.module('mean.chart')
     };
 
     $scope.makeGraphData = function(statName){
-      var entity = $scope.graphSelected;
+      $scope.graphData = [];
       for (var key in $scope.adjWindowStats){
+        var entity = key;
         var windowStats = {key: null, values: []}; // e.g. 'Lebron James' over a two week span
           windowStats['key'] = entity;
         for (var i = 0; i < $scope.adjWindowStats[entity].length; i++){
           var dayData = [new Date($scope.adjWindowStats[entity][i].created), $scope.adjWindowStats[entity][i][statName]];
           windowStats['values'].push(dayData);
         }
-      }
       $scope.graphData = $scope.graphData.concat([windowStats]);
-      };
+      }
+    };
     
-    $scope.clearGraphData = function(){
+    $scope.removeGraphData = function(){
       $scope.graphData = [];
-      console.log("cleared");
+      graphInputData = {};
     };
 
     $scope.startDate = function() {
@@ -70,6 +71,8 @@ angular.module('mean.chart')
       Stats.changeSliders(statName,groupName);
       Teamstar.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams);
       $scope.calculatePlayerStarVals($scope.currentTeam,false);
+      $scope.calculateWindowStats(graphInputData, $scope.weights);
+      $scope.makeGraphData($scope.graphStat);
       $scope.updateRho();
     };
     $scope.introToggle = function(){
