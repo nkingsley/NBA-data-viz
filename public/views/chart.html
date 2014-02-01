@@ -1,11 +1,11 @@
-<div data-ng-controller="chartCtrl" data-ng-init = "hideSliderButton = true; slidersCollapsed = false" >
+<div data-ng-controller="chartCtrl">
   <div header></div>
   <div class = "row">
-    <div class = "span7">
-    <scatter-plot height="options.height" width="options.width" data="teams" hovered="hovered(args)">
+    <div ng-class = "itemsClass">
+    <scatter-plot options="options" data="teams" hovered="hovered(args)">
     </scatter-plot>  
     </div>
     <div class = "span5">
-    <div slider-block></div>
+    <div slider-block ng-hide = "slidersCollapsed"></div>
   </div>
 </div>

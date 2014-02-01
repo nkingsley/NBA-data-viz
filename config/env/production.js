@@ -6,7 +6,7 @@ module.exports = {
     facebook: {
         clientID: "701913439842154",
         clientSecret: "5a6c033d867737fa1189b1d437916502",
-        callbackURL: "http://nbastar.herokuapp.com/auth/facebook/callback"
+        callbackURL: "http://www.moneyballer.us/auth/facebook/callback"
     },
     twitter: {
         clientID: "CONSUMER_KEY",

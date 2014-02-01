@@ -4,7 +4,7 @@ db = require('./database'), statControl = require('./statControl'), q = require(
 exports.movingAverage = function(rawStats){
   var d = q.defer();
   var date = utils.dateTimeless();
-  date.setDate(date.getDate()-1);
+  date.setDate(date.getDate()-10);
   mongoose.model("Rawstat").find({created: date})
   .exec(function(err,old){
     if (old.length === 0){
@@ -25,7 +25,7 @@ exports.movingAverage = function(rawStats){
       db.saveAll(megaStats)
       .then(function(){
         d.resolve();
-      })
+      });
     });
   });
   return d.promise;

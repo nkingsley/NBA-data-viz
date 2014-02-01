@@ -50,8 +50,8 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
             }
             var statStarVal = statWeights[stat].weight * p[stat];
             pWeighted.scores[nestMap[statWeights[stat].cat]] = pWeighted.scores[nestMap[statWeights[stat].cat]] || 0;
-            pWeighted.scores[nestMap[statWeights[stat].cat]] += statStarVal/(10*totalStatWeights);
-            pWeighted.totalPlayerStar += statStarVal/(10*totalStatWeights); // makes the star scores a little less arbitrary
+            pWeighted.scores[nestMap[statWeights[stat].cat]] += statStarVal/(30*totalStatWeights);
+            pWeighted.totalPlayerStar += statStarVal/(30*totalStatWeights); // makes the star scores a little less arbitrary
           }
           result.push(pWeighted);
         }
@@ -99,7 +99,4 @@ angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', fun
 
   return exports;
 }]);
-
-
-
 

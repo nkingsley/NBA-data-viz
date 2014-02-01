@@ -25,10 +25,6 @@ module.exports = function(app, passport, db) {
     //Setting the fav icon and static folder
     app.use(express.favicon());
     app.use(express.static(config.root + '/public'));
-    app.use(stylus.middleware({
-      src: config.root + '/public',
-      compile : compile,
-    }));
     var compile = function(str, path) {
       return stylus(str)
         .define('url', stylus.url({
@@ -40,6 +36,10 @@ module.exports = function(app, passport, db) {
         .use(nib());
     }
 
+    app.use(stylus.middleware({
+      src: config.root + '/public',
+      compile : compile,
+    }));
     //Don't use logger for test env
     if (process.env.NODE_ENV !== 'test') {
         app.use(express.logger('dev'));

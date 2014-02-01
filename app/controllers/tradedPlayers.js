@@ -1,6 +1,7 @@
 var mongoose = require('mongoose'), utils =require('./utils'), Q = require('q'),
 Tp = mongoose.model('Tradedplayer'), maps = require('./map');
 exports.tradedPlayers = {};
+
 exports.all = function(){
   var d = Q.defer();
   var currentSeason = new Date();
@@ -30,7 +31,7 @@ exports.create = function(player){
       console.log(err);
     }
   });
-  return tp;
+  return tradedPlayer;
 };
 
 exports.destroy = function(player){
@@ -43,58 +44,52 @@ exports.destroy = function(player){
 };
 
 
-exports.handleTrades = function(player,tradedPlayers,missingTradeData){
-  var traded = tradedPlayers[player.PLAYER_ID];
-  if (traded && player.TEAM_ABBREVIATION === 'TOTAL' && traded.newTeam){
+exports.checkForTrades = function(player){
+  var traded = this.tradedPlayers[player.PLAYER_ID];
+  var total = (player.TEAM_ABBREVIATION === 'TOTAL');
+  if (traded && total && traded.newTeam){
     player.TEAM_ABBREVIATION === traded.newTeam;
   }
-  if (traded && player.TEAM_ABBREVIATION !== 'TOTAL' && !missingTradeData && !traded.newTeam){
-    player.TEAM_ABBREVIATION = 'zzzzzz';
+  if (traded && !total){
+    return 'SKIP';
   }
-  if (!traded && player.TEAM_ABBREVIATION === 'TOTAL'){
+  if (!traded && total){
     delete player.TEAM_ABBREVIATION;
-    exports.create(player);
-    return 'NEWTRADE';
+    this.tradedPlayers[player.PLAYER_ID] = this.create(player);
   }
 };
 
-exports.addNewPlayerTeam = function(tradedPlayers,allStats){
-  var updated = false;
-  for (var player in tradedPlayers){
-    var tp = tradedPlayers[player];
-    if (!tp.newTeam || tp.newTeam === 'TOTAL'){
-      exports.destroy(tp);
-      exports.create(allStats[tp.PLAYER_ID]);
-      updated = true;
+exports.giveNewTeam = function(allStats){
+  for (var player in this.tradedPlayers){
+    var tp = this.tradedPlayers[player];
+    if (!tp.newTeam){
+      tp.newTeam = allStats[tp.PLAYER_ID].TEAM_ABBREVIATION;
+      tp.save();
     }
   }
-  if (updated){return true;}
 };
 
-exports.splitData = function(tradedPlayers,stats,model){
+exports.splitData = function(stats,model){
   var map = maps.map;
   var rmap = maps.reverseMap();
   var d = Q.defer();
-  if (!tradedPlayers){
-    d.resolve();
-    return d.promise;
-  }
   var toSplit = 0, splitComplete = 0;
-  var cutoffDate = utils.dateTimeless('1-22-2014');
-  for (var player in tradedPlayers){
-    var tp = tradedPlayers[player];
+  //traded players created before this date have no pre-trade data
+  var cutoffDate = utils.dateTimeless('2-29-2014');
+  for (var player in this.tradedPlayers){
+    var tp = this.tradedPlayers[player];
     if (tp.created < cutoffDate){
       continue;
     }
     toSplit++;
     mongoose.model(model)
-    .find({created:tp.created,PLAYER_ID:tp.PLAYER_ID})
+    .find({created:tp.created.setDate(tp.created.getDate()-1),PLAYER_ID:tp.PLAYER_ID})
     .limit(1)
     .exec(function(err,oldPlayerStats){
       var op = oldPlayerStats[0];
       if (op){
         var oid = op.PLAYER_ID;
-        var nid = tradedPlayers[oid].newId;
+        var nid = this.tradedPlayers[oid].newId;
         stats[nid] = {};
         for (var stat in stats[oid]){
           if (!map[stat]){
@@ -130,11 +125,6 @@ exports.splitData = function(tradedPlayers,stats,model){
   }
   if ( toSplit === 0 ){
     d.resolve();
-  }
-  for (var player in stats){
-    if (stats[player].TEAM_ABBREVIATION === 'TOTAL'){
-      stats[player].TEAM_ABBREVIATION = tradedPlayers[player].newTeam;
-    }
   }
   return d.promise;
 };

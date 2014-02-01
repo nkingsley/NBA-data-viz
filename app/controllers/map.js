@@ -13,6 +13,8 @@ exports.reverseMap = function(){
 };
 //confusing... name means keep and normalize.  keep means keep but don't normalize
 exports.map = {
+  Birthdate: {keep:'Birthdate'},
+  Position: {keep:'Position'},
   PLAYER_ID: {keep:'PLAYER_ID'},
   PLAYER: {keep: 'Player'},
   FIRST_NAME: {},
