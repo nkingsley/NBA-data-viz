@@ -1,7 +1,7 @@
 angular.module('mean.chart')
-  .controller('chartCtrl', ['$scope', '$http', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar',
+  .controller('chartCtrl', ['$scope', '$http', '$location', 'Global', 'Stats', 'Spearman', 'Teamstar', 'Playerstar',
     'promiseTracker', 
-    function ($scope, $http, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
+    function ($scope, $http, $location, Global, Stats, Spearman, Teamstar, Playerstar, promiseTracker) {
     $scope.global = Global;
     $scope.infoShow = 'Hide Info';
     $scope.currentTeam = false;
@@ -242,8 +242,12 @@ angular.module('mean.chart')
       } else{
         return $scope.showingLastTen ? '' : 'pressed';
       }
+    };
+    $scope.routes = {
+      '/!#/': false,
+      '/': false
     }
-
+    console.log($location.path());
     //kickoff process
     if ($scope.showingLastTen){
       setup(Global.lastTenSetupHolder);    
