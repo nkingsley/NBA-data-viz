@@ -2,15 +2,6 @@
   <div header></div>
   <div class = "row">
    <div ng-class="itemsClass">
-     <div class="buttonContainer smaller">
-       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Defense'">Defense</span></a>
-       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Shooting'">Shooting</span> </a>
-       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Rebounding'">Rebounding</span> </a>
-       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Possession'">Possession</span> </a>
-       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Miscellaneous'">Miscellaneous</span> </a>
-       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='baller'">Baller</span></a>
-   </div>
-
    <div ng-model="dt.startDate"><div class="select">Start Date: </div>
       <p class="input-group">
         <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt.startDate" is-open="opened" max="dt.endDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close"/>
@@ -28,7 +19,15 @@
       <a class = "button-shell">
     <span ng-class="buttonShrink()" class="blue3dbutton small" ng-click="getGraphData();">Submit</span> </a>
       <a class = "button-shell"><span ng-class="buttonShrink()" class="blue3dbutton small" ng-click="removeGraphData();"> Clear </span></a>
-    <line-graph ng-if="drawChart" height="options.height" width="options.width" data="graphData"></line-graph>
+      <div class="buttonContainer smaller">
+       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="getGraphData();graphStat='Defense'">Defense</button></a>
+       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="getGraphData();graphStat='Shooting'">Shooting</button> </a>
+       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="getGraphData();graphStat='Rebounding'">Rebounding</button> </a>
+       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="getGraphData();graphStat='Possession'">Possession</button> </a>
+       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="getGraphData();graphStat='Miscellaneous'">Miscellaneous</button> </a>
+       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="getGraphData();graphStat='baller'">Baller</button></a>
+    </div>
+    <line-graph ng-if="drawChart" options="options" data="graphData"></line-graph>
   </div>
     <div class = "span5">
     <div slider-block ng-hide="slidersCollapsed"></div>

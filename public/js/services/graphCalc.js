@@ -43,11 +43,11 @@ angular.module('mean.chart').factory("Graphcalc", ['Playerstar', function(Player
             continue;
           }
           var statStarVal = statWeights[stat].weight * playerDay[stat];
-          playerDayObj[stat] = statStarVal/(10*totalStatWeights);
+          playerDayObj[stat] = statStarVal/(30*totalStatWeights);
 
           playerDayObj[nestMap[statWeights[stat].cat]] = playerDayObj[nestMap[statWeights[stat].cat]] || 0;
-          playerDayObj[nestMap[statWeights[stat].cat]] += statStarVal/(10*totalStatWeights);
-          playerDayObj.baller += statStarVal/(10*totalStatWeights); // makes the star scores a little less arbitrary
+          playerDayObj[nestMap[statWeights[stat].cat]] += statStarVal/(30*totalStatWeights);
+          playerDayObj.baller += statStarVal/(30*totalStatWeights); // makes the star scores a little less arbitrary
         }
         exports.adjWindowStats[player].push(playerDayObj);
         }

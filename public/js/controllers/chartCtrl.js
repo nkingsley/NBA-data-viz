@@ -8,6 +8,7 @@ angular.module('mean.chart')
     $scope.introCollapsed = true;
     $scope.introShow = 'i';
     $scope.options = $scope.slidersCollapsed ? {width: 900, height: 600} : {width: 550, height: 430}
+
     var toggleChart = function(n,o){
       if (n === true){
         $scope.options = {width: 900, height: 600};
@@ -63,6 +64,7 @@ angular.module('mean.chart')
     $scope.removeGraphData = function(){
       $scope.drawChart = false;
       $scope.graphData = [];
+      $scope.adjWindowStats = Graphcalc.adjWindowStats;
       graphInputData = {};
     };
 

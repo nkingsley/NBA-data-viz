@@ -7,8 +7,8 @@ exports.movingAverage = function(rawStats){
 <<<<<<< HEAD
   date.setDate(date.getDate()-1);
 =======
-  date.setDate(date.getDate()-6);
->>>>>>> 140949d3646f7441f566e441fa07778d35889ef8
+  date.setDate(date.getDate()-10);
+>>>>>>> 5671336d73df14fc6ec75668ba37d8e59571f467
   mongoose.model("Rawstat").find({created: date})
   .exec(function(err,old){
     if (old.length === 0){
@@ -29,7 +29,7 @@ exports.movingAverage = function(rawStats){
       db.saveAll(megaStats)
       .then(function(){
         d.resolve();
-      })
+      });
     });
   });
   return d.promise;
