@@ -23,10 +23,12 @@ var makeSchema = function(map){
 
 var schema = makeSchema(map);
 
-mongoose.model('Rawstat', new mongoose.Schema(schema,{collection: 'rawstats'}));
 mongoose.model('Teamnorm', new mongoose.Schema(schema,{collection: 'teamnorms'}));
 mongoose.model('Tnmovavg', new mongoose.Schema(schema,{collection: 'tnmovavgs'}));
+schema.Position = String;
+schema.Birthdate = String;
 mongoose.model('Rawmovavg', new mongoose.Schema(schema,{collection: 'Rawmovavgs'}));
+mongoose.model('Rawstat', new mongoose.Schema(schema,{collection: 'rawstats'}));
 mongoose.model('Playernorm', new mongoose.Schema(schema,{collection: 'playernorms'}));
 mongoose.model('Pnmovavg', new mongoose.Schema(schema,{collection: 'Pnmovavgs'}));
 

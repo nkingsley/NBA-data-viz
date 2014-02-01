@@ -92,7 +92,7 @@ var widenGap = function(collection,map){
   for (var item in collection){
     for (var stat in collection[item]){
       if (!map[stat].name){continue;}
-      var widerNorm = ((collection[item][stat] - 0.5) * 3) + 0.5;
+      var widerNorm = ((collection[item][stat] - 0.5) * 10) + 0.5;
       collection[item][stat] = widerNorm;
     }
   }

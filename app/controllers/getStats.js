@@ -63,6 +63,7 @@ var getAllStats = function(){
         tp.giveNewTeam(allStats);
         playerDetails.getPlayerDetails(allStats)
         .then(function(){
+          console.log(allStats[2544]);
           statControl.finish(allStats,tp.tradedPlayers)
           .then(function(finishedStats){
             var forMovingAverages = _.cloneDeep(finishedStats.Rawstat);
