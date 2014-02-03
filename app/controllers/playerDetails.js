@@ -2,11 +2,13 @@ var curl = require('curling'), q = require('q'), db = require('./database');
 
 exports.getPlayerDetails = function(allStats){
   var d = q.defer();
+  console.log('hitplayerdetails');
   if (true){//get new player position deets by setting to false
     db.getPlayerDetails()
     .then(function(deets){
+      console.log('deets gotten from db')
       addPosition(allStats,deets);
-      console.log('success');
+      console.log('deets added to players')
       d.resolve();
     });
     return d.promise;
