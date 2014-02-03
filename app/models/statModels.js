@@ -55,6 +55,8 @@ var winLossSchema = {
   teams: [{
     franchise: String,
     winPct: Number,
+    wins: Number,
+    losses: Number
   }],
   created: Date
 };

@@ -91,7 +91,8 @@ var getWinLoss = function(){
     var data = JSON.parse(result.payload).resultSets[0];
     var result = []
     for (var i = 0 ; i < data.rowSet.length ; i++){
-      result.push({franchise:data.rowSet[i][1],winPct:data.rowSet[i][5]});
+      var team = data.rowSet[i];
+      result.push({franchise:team[1],wins:team[3],losses:team[4],winPct:team[5]});
     }
     db.saveOne({teams:result},'Winloss')
     .then(function(){
