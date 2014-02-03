@@ -1,5 +1,5 @@
-angular.module('mean', ['ngCookies', 'ngResource', 'ngRoute', 'ngAnimate',
-  'ui.bootstrap', 'ui.route', 'ngTouch', 'nvd3ChartDirectives',
+angular.module('mean', ['ngCookies', 'ngResource', 'ngRoute',
+  'ui.bootstrap', 'ui.route', 'ngTouch',
   'mean.system',
   'mean.chart'
   ]);
