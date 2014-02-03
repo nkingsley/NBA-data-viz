@@ -60,6 +60,7 @@ var getAllStats = function(){
       .then(getTrackingData)
       .then(getOppShots)
       .then(function(){
+        console.log('finished stats apis');
         tp.giveNewTeam(allStats);
         playerDetails.getPlayerDetails(allStats)
         .then(function(){
