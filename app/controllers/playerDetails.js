@@ -6,6 +6,7 @@ exports.getPlayerDetails = function(allStats){
     db.getPlayerDetails()
     .then(function(deets){
       addPosition(allStats,deets);
+      console.log('success');
       d.resolve();
     });
     return d.promise;
