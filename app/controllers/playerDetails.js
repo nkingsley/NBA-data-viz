@@ -6,8 +6,8 @@ exports.getPlayerDetails = function(allStats){
   if (true){//get new player position deets by setting to false
     db.getPlayerDetails()
     .then(function(deets){
-      addPosition(allStats,deets);
-      console.log('deets added to players')
+      // addPosition(allStats,deets);
+      // console.log('deets added to players')
       d.resolve();
     });
     return d.promise;
@@ -49,7 +49,7 @@ exports.getPlayerDetails = function(allStats){
 var addPosition = function(stats,details){
   for (var i = 0 ; i < details.length ; i++){
     var player = stats[details[i].PERSON_ID];
-    console.log('player->',player,'details->',details[i]);
+    // console.log('player->',player,'details->',details[i]);
     player.Position = details[i].POSITION;
     player.Birthdate = details[i].BIRTHDATE;
   }
