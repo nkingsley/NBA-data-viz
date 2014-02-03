@@ -3,7 +3,7 @@ var curl = require('curling'), q = require('q'), db = require('./database');
 exports.getPlayerDetails = function(allStats){
   var d = q.defer();
   console.log('hitplayerdetails');
-  if (true){//get new player position deets by setting to false
+  if (false){//get new player position deets by setting to false
     db.getPlayerDetails()
     .then(function(deets){
       addPosition(allStats,deets);
@@ -49,7 +49,7 @@ exports.getPlayerDetails = function(allStats){
 var addPosition = function(stats,details){
   for (var i = 0 ; i < details.length ; i++){
     var player = stats[details[i].PERSON_ID];
-    console.log(player,details[i]);
+    console.log('player->',player,'details->',details[i]);
     player.Position = details[i].POSITION;
     player.Birthdate = details[i].BIRTHDATE;
   }
