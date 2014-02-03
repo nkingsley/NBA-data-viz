@@ -13,7 +13,6 @@
     "d3": "3.3.5",
     "angular-busy": "2.2.0",
     "nvd3": "~1.1.15-beta",
-    "angularjs-nvd3-directives": "~0.0.5-beta",
     "angular-promise-tracker": "~1.4"
   },
   "resolutions": {
