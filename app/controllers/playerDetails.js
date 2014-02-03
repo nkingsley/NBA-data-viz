@@ -3,7 +3,7 @@ var curl = require('curling'), q = require('q'), db = require('./database');
 exports.getPlayerDetails = function(allStats){
   var d = q.defer();
   console.log('hitplayerdetails');
-  if (false){//get new player position deets by setting to false
+  if (true){//get new player position deets by setting to false
     db.getPlayerDetails()
     .then(function(deets){
       addPosition(allStats,deets);
