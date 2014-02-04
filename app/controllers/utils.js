@@ -44,10 +44,10 @@ exports.toObj = function(array,key){
 
 exports.diff = function(startData,endData){
   var diff = {};
-  for (var item in startData){
+  for (var item in endData){
     diff[item] = diff[item] || {};
-    for (var stat in startData[item]){
-      if (!reverseMap[stat] || typeof startData[item][stat] === 'function'){continue;}
+    for (var stat in endData[item]){
+      if (!reverseMap[stat] || typeof endData[item][stat] === 'function' || !startData[item]){continue;}
       if (reverseMap[stat].name || stat === 'MIN' || stat === 'GP'){
         diff[item][stat] = endData[item][stat] - startData[item][stat];      
       }else if (reverseMap[stat].keep){

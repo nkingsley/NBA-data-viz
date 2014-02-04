@@ -48,39 +48,39 @@ var compileStats = function(stats,headers,fix,missingTradeData){
 var getAllStats = function(){
   tp.all()
   .then(function(){
-    db.checkDate(utils.dateTimeless())
-    .then(function(needStatsToday){      
-      if (!needStatsToday){
-        console.log('process stopped.  Stats already gotten today');
-        processComplete.resolve();
-        mongoose.connection.close();
-        return;
-      }
-      getBasicPlayerStats()
-      .then(getTrackingData)
-      .then(getOppShots)
-      .then(function(){
-        console.log('finished stats apis');
-        tp.giveNewTeam(allStats);
-        playerDetails.getPlayerDetails(allStats)
-        .then(function(){
-          statControl.finish(allStats,tp.tradedPlayers)
-          .then(function(finishedStats){
-            var forMovingAverages = _.cloneDeep(finishedStats.Rawstat);
-            ma.movingAverage(forMovingAverages)
-            .then(function(){
-              db.saveAll(finishedStats)
-              .then(function(){
-                getWinLoss()
-                .then(function(){
-                  mongoose.connection.close();
-                  processComplete.resolve();
-                });
-              });
-            });
-          });
-        });
-      });
+    return db.checkDate(utils.dateTimeless());
+  })
+  .then(function(needStatsToday){      
+    if (!needStatsToday){
+      console.log('process stopped.  Stats already gotten today');
+      processComplete.resolve();
+      mongoose.connection.close();
+      return;
+    }
+    getBasicPlayerStats()
+    .then(getTrackingData)
+    .then(getOppShots)
+    .then(function(){
+      console.log('finished stats apis');
+      tp.giveNewTeam(allStats);
+      return playerDetails.getPlayerDetails(allStats);
+    })
+    .then(function(){
+      return statControl.finish(allStats,tp.tradedPlayers)
+    })
+    .then(function(finishedStats){
+      var forMovingAverages = _.cloneDeep(finishedStats.Rawstat);
+      return ma.movingAverage(forMovingAverages);
+    })
+    .then(function(){
+      return db.saveAll(finishedStats);
+    })
+    .then(function(){
+      getWinLoss();
+    })
+    .then(function(){
+      mongoose.connection.close();
+      processComplete.resolve();
     });
   });
 };
