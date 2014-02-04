@@ -1,10 +1,10 @@
 <div class = " buttonContainer">
 <a href='/#!/'>
-  <button class = "blue3dButton">Power Ranking</button></a>
+  <button class = "blue3dButton" ng-class = "isPressed('/')">Power Ranking</button></a>
 <a href='/#!/scatter'>
-  <button class = "blue3dButton">Scatter Plot</button></a>
+  <button class = "blue3dButton" ng-class = "isPressed('/scatter')">Scatter Plot</button></a>
 <a href='/#!/players'>
-  <button class = "blue3dButton">Top 25 Players</button></a>
+  <button class = "blue3dButton" ng-class = "isPressed('/players')">Top 25 Players</button></a>
 <a class = "button-shell" ng-click = "sliderToggle()">
   <button class = "blue3dButton" ng-class = "sliderShow" >Show Sliders</button></a>
 </div>

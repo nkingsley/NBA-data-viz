@@ -310,11 +310,16 @@ angular.module('mean.chart')
         return $scope.showingLastTen ? '' : 'pressed';
       }
     };
-    $scope.routes = {
-      '/!#/': false,
-      '/': false
-    }
-    console.log($location.path());
+    $scope.routes = {};
+    $scope.routes[$location.path()] = true;
+
+    $scope.isPressed = function(route){
+      if($scope.routes[route]){
+        return 'pressed';
+      } 
+      return '';
+    };
+
     //kickoff process
     if ($scope.showingLastTen){
       setup(Global.lastTenSetupHolder);    
