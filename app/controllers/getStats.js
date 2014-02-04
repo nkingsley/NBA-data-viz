@@ -70,18 +70,19 @@ var getAllStats = function(){
     })
     .then(function(finishedStats){
       var forMovingAverages = _.cloneDeep(finishedStats.Rawstat);
-      return ma.movingAverage(forMovingAverages);
+      ma.movingAverage(forMovingAverages)
+      .then(function(){
+        db.saveAll(finishedStats)   
+        .then(function(){
+          return getWinLoss();
+        })
+        .then(function(){
+          mongoose.connection.close();
+          console.log('success!');
+          processComplete.resolve();
+        });
+      })
     })
-    .then(function(){
-      return db.saveAll(finishedStats);
-    })
-    .then(function(){
-      getWinLoss();
-    })
-    .then(function(){
-      mongoose.connection.close();
-      processComplete.resolve();
-    });
   });
 };
 

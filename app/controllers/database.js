@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'), utils =require('./utils'), q = require('q'), 
-statControl = require('./statControl'), maps = require('./map');
+ maps = require('./map');
 
 exports.newHighScore = function(req,res){
   var Catobj = mongoose.model('Catobj');

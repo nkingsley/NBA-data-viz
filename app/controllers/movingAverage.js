@@ -1,4 +1,4 @@
-
+//also for backfilling
 var statModels = require('../models/statModels');
 
 var utils = require('./utils'), mongoose = require('mongoose'),
@@ -20,7 +20,7 @@ exports.movingAverage = function(rawStats, offset){
   console.log('old stats from->',date);
   var datePlus = new Date(date);
   datePlus.setDate(date.getDate()+1);
-  mongoose.model("Rawstat").find({created: {$gte:date,$lte:datePlus}})
+  mongoose.model("Rawstat").find({created: date})
   .exec(function(err,old){
     if (old.length === 0){
       console.log('nothin!');
