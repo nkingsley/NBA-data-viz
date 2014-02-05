@@ -124,7 +124,7 @@ input{width:150px}
 .navbar-inner{padding-right:0}
 .navbar{position:fixed;margin-bottom:10px;z-index:1;width:940px;margin-left:auto;margin-right:auto}
 .presetsMenu{font-size:24px}
-.slider-container{height:83%;overflow-y:scroll;position:fixed;width:380px;-webkit-box-shadow:0 1px 3px 0 rgba(0,0,0,0.33);box-shadow:0 1px 3px 0 rgba(0,0,0,0.33)}
+.slider-container{height:78%;overflow-y:scroll;position:fixed;width:380px;-webkit-box-shadow:0 1px 3px 0 rgba(0,0,0,0.33);box-shadow:0 1px 3px 0 rgba(0,0,0,0.33)}
 .slider-text{font-size:25px;margin-bottom:10px}
 .slider-shell{width:100%}
 .oneSlider{padding:10px}
@@ -151,23 +151,12 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none !important;wid
 .teams{width:100%;margin-bottom:0;-webkit-border-radius:2px;border-radius:2px}
 .teams-header{background-color:#eee}
 .rank{font-weight:900;font-size:24px}
-.star-val{color:#777;font-size:22px}
+.star-val{color:#777}
 .team{background-color:#fff}
 .table td.super-slim{padding:0}
 .button-shell{cursor:pointer}
-.player-badge-shell{margin-top:10px;margin-bottom:5px;cursor:pointer}
 .team-badge{width:50px}
 .team-badge img{width:50px}
-.player-details{font-size:50px;border-bottom:1px solid #ccc}
-.table td .player-head-shot{padding:0;vertical-align:bottom}
-.player-head-shot{width:20%;padding:0}
-.headshotSlidersCollapsed{width:100%}
-.playerInfo{font-size:25px;padding-bottom:2px}
-.playerInfoSlidersCollapsed{font-size:29px}
-.playerInfoSlidersOpen{font-size:25px}
-.player-stats-container{font-size:10px;padding:8px;background-color:#fafafa}
-.player-stats{width:100%;border:1px solid #ccc;table-layout:fixed;background-color:#fff}
-.player-stats-header{border:1px solid #ccc;background-color:#f3f3f3}
 .power-rank-container{font-family:'Duru Sans',sans-serif;width:66%;float:left;background-color:#fff;margin-bottom:20px}
 .team-details{font-size:30px}
 .table td{vertical-align:middle}
@@ -175,8 +164,21 @@ th{text-align:left}
 .blue3dButton,.blue3dButton:hover{cursor:hand;border:0;background-color:#3bb3e0;padding:10px;font-family:'Exo 2',sans-serif;position:relative;font-size:23px;text-decoration:none;color:#fff;background:-webkit-linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);background:-moz-linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);background:-o-linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);background:-ms-linear-gradient(bottom, #2ca0ca 0%, #3eb8e5 100%);background:linear-gradient(to top, #2ca0ca 0%, #3eb8e5 100%);-webkit-box-shadow:inset 0 1px 0 #7fd2f1,0 6px 0 #156785;box-shadow:inset 0 1px 0 #7fd2f1,0 6px 0 #156785;-webkit-border-radius:5px;border-radius:5px}
 .blue3dButton:active,.pressed,.pressed:hover{color:#156785;text-shadow:0 1px 1px rgba(255,255,255,0.3);background:#2ca0ca;-webkit-box-shadow:inset 0 1px 0 #7fd2f1,inset 0 -1px 0 #156785;box-shadow:inset 0 1px 0 #7fd2f1,inset 0 -1px 0 #156785;top:5px}
 .small,.small:hover{font-size:12px;padding:5px}
+.blue3dButton:after{content:'';position:absolute;top:-10px;bottom:-10px;left:-10px;right:-10px}
 .short,.short:hover{font-size:12px;padding:3px 20px 3px 20px;line-height:12px}
 .btn-container{margin:10px 0}
 .btn-container .chart-select{margin-left:1vw}
 .buttonContainer{padding:2px}
 .button-container{text-align:center;margin-bottom:30px;margin-top:20px}
+.player-badge-shell{margin-top:10px;margin-bottom:5px;cursor:pointer}
+.player-details{font-size:50px;border-bottom:1px solid #ccc}
+.player-info{display:-webkit-box;display:-moz-box;display:-webkit-flex;display:-ms-flexbox;display:box;display:flex;-webkit-box-orient:horizontal;-moz-box-orient:horizontal;-o-box-orient:horizontal;-webkit-flex-flow:row;-ms-flex-flow:row;flex-flow:row;font-size:25px;margin-top:8px;padding:0 0 2px 20px}
+.playerInfoSlidersCollapsed{font-size:29px}
+.playerHolder{display:-webkit-box;display:-moz-box;display:-webkit-flex;display:-ms-flexbox;display:box;display:flex;-webkit-box-orient:horizontal;-moz-box-orient:horizontal;-o-box-orient:horizontal;-webkit-flex-flow:row;-ms-flex-flow:row;flex-flow:row}
+.player-container{width:80%}
+.totalScore{color:#777;padding-left:30px}
+.player-stats-container{display:-webkit-box;display:-moz-box;display:-webkit-flex;display:-ms-flexbox;display:box;display:flex;-webkit-box-orient:horizontal;-moz-box-orient:horizontal;-o-box-orient:horizontal;-webkit-flex-flow:row;-ms-flex-flow:row;flex-flow:row;font-size:10px;padding:8px;background-color:#fafafa}
+.tableSlidersCollapsed{font-size:20px}
+.player-stats{width:100%;border:1px solid #ccc;table-layout:fixed;background-color:#fff;padding:12px 0 12px 0;text-align:center}
+.player-stats-header{border:1px solid #ccc;background-color:#f3f3f3}
+.one-stat-stat{font-size:27px}
