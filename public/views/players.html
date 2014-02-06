@@ -1,6 +1,6 @@
 <div cg-busy="{tracker:'loadingTracker'}">
   <div class="playerHolder" ng-repeat="p in playerStats | orderBy: '-totalPlayerStar' | limitTo: 25 track by p.name" >
-      <div class="player-headshot" ng-class="{tableSlidersCollapsed: slidersCollapsed}"><img ng-src="{{makeHeadShotUrl(p.name, !currentTeam)}}" width = "130px" ></div>
+      <div class="player-headshot" ng-class="{tableSlidersCollapsed: slidersCollapsed}"><img ng-src="{{makeHeadShotUrl(p.name, !global.currentTeam)}}" width = "130px" ></div>
       <div class="player-container" ng-class="{playerSlidersCollapsed: slidersCollapsed}">
         <div class = "player-info" ng-class="{playerInfoSlidersCollapsed: slidersCollapsed}">
           <div class = "player-name"> {{p.name}} </div>

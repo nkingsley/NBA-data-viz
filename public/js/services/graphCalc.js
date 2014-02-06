@@ -1,4 +1,4 @@
-angular.module('mean.chart').factory("Graphcalc", ['Playerstar', function(Playerstar) {
+angular.module('MoneyBaller').factory("Graphcalc", ['Players', function(Players) {
   var exports = {};
   exports.adjWindowStats = {};
 
@@ -24,7 +24,7 @@ angular.module('mean.chart').factory("Graphcalc", ['Playerstar', function(Player
   };
 
   exports.calculateWindowStats = function(graphInputData, statWeights, teams){
-    var totalStatWeights = Playerstar.calculateTotalStatWeights(statWeights);
+    var totalStatWeights = Players.calculateTotalStatWeights(statWeights);
     for (var player in graphInputData){
       var divisor = 30;
       var multiplier = 1;

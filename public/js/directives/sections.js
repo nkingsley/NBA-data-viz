@@ -1,4 +1,4 @@
-angular.module('mean.chart')
+angular.module('MoneyBaller')
   .directive('sliderBlock', function(){
     return{
       templateUrl: 'views/sliders.html'
@@ -6,7 +6,7 @@ angular.module('mean.chart')
   })
   .directive('accuracy', function(){
     return{
-      template: '<div ng-class = "redGreen(rhoVal)"><span class = "rank">Accuracy:{{rhoVal | number:3}}</span> </div>'
+      template: '<div ng-class = "spearman.redGreen(rhoVal)"><span class = "rank">Accuracy:{{rhoVal | number:3}}</span> </div>'
     }
   })
   .directive('buttons', function(){

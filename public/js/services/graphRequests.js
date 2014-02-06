@@ -1,4 +1,4 @@
-angular.module('mean.chart').factory("Graphrequests", ['$q', '$http', function($q, $http) {
+angular.module('MoneyBaller').factory("Graphrequests", ['$q', '$http', function($q, $http) {
   var exports = {};
 
   exports.timeRequest = function(selectedName, startDate, endDate){

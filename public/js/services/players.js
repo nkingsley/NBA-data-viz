@@ -1,4 +1,4 @@
-angular.module('mean.chart').factory("Playerstar", ['$q', '$http', 'Global', function($q, $http, Global) {
+angular.module('MoneyBaller').factory("Players", ['$q', '$http', 'Global', function($q, $http, Global) {
 
   var exports = {};
   exports.teamPlayers = {};

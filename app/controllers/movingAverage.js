@@ -4,12 +4,9 @@ var statModels = require('../models/statModels');
 var utils = require('./utils'), mongoose = require('mongoose'),
 db = require('./database'), statControl = require('./statControl'), q = require('q');
 
-//for backfilling;
+//for backfilling
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
 config = require('../../config/config');
-
-
-
 
 
 exports.movingAverage = function(rawStats, offset){
@@ -61,10 +58,7 @@ var makeAllMovingAverages = function(date){
   date && date.setDate(date.getDate()-1);
   date = date || utils.dateTimeless();
   console.log(counter,date);
-  var datePlus = new Date(date);
-  datePlus.setDate(date.getDate()+1);
-
-  mongoose.model('Rawstat').find({created:{$gte:date,$lte:datePlus}})
+  mongoose.model('Rawstat').find({created:date})
   .exec(function(err,stats){
     exports.movingAverage(utils.toObj(stats, "PLAYER_ID"),counter)
     .then(function(){
@@ -74,8 +68,8 @@ var makeAllMovingAverages = function(date){
   });
 };
 
+exports.start = function(){
+  var counter = 0;
+  mongoose.connect(config.db, makeAllMovingAverages);
+};
 
-//uncomment to back fill moving averages
-
-// var counter = 0;
-// mongoose.connect(config.db, makeAllMovingAverages);

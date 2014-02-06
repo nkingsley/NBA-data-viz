@@ -1,8 +1,3 @@
-angular.module('mean', ['ngCookies', 'ngResource', 'ngRoute',
-  'ui.bootstrap', 'ui.route', 'ngTouch',
-  'mean.system',
-  'mean.chart'
+angular.module('MoneyBaller', ['ngCookies', 'ngResource', 'ngRoute',
+  'ui.bootstrap', 'ui.route', 'ngTouch', 'ajoslin.promise-tracker', 'cgBusy'
   ]);
-
-angular.module('mean.system', []);
-angular.module('mean.chart', ['ajoslin.promise-tracker', 'cgBusy']);

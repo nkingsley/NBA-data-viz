@@ -1,5 +1,5 @@
 
-angular.module('mean.chart').factory("Teamstar", ['$q', function ($q) {
+angular.module('MoneyBaller').factory("Teamstar", ['$q', function ($q) {
 
 var exports = {};
 

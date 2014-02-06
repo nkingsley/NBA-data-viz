@@ -44,3 +44,25 @@
 th 
   text-align  left
 
+.table-bordered tbody:first-child tr:first-child > th:last-child {
+  border-top-right-radius: 4px;
+}
+.table th, .table td {
+  padding: 8px;
+  line-height: 20px;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid #dddddd;
+}
+
+.table-bordered th, .table-bordered td {
+  border-left: 1px solid #dddddd;
+}
+
+.table-bordered {
+  border-collapse: separate;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
