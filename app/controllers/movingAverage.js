@@ -36,6 +36,7 @@ exports.movingAverage = function(rawStats, offset){
     utils.reverseTags(diff);
     statControl.finish(diff,false,true)
     .then(function(megaStats){
+      console.log(megaStats.Playernorm[2544]);
       megaStats.Pnmovavg = megaStats.Playernorm;
       delete megaStats.Playernorm;
       megaStats.Tnmovavg = megaStats.Teamnorm;
@@ -67,9 +68,7 @@ var makeAllMovingAverages = function(date){
     });
   });
 };
-
+var counter = 0;
 exports.start = function(){
-  var counter = 0;
   mongoose.connect(config.db, makeAllMovingAverages);
 };
-
