@@ -7,7 +7,7 @@ db = require('./database'), statControl = require('./statControl'), q = require(
 //for backfilling
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development',
 config = require('../../config/config');
-
+var counter = 0;
 
 exports.movingAverage = function(rawStats, offset){
   offset = offset || 0;
@@ -68,7 +68,6 @@ var makeAllMovingAverages = function(date){
     });
   });
 };
-var counter = 0;
 exports.start = function(){
   mongoose.connect(config.db, makeAllMovingAverages);
 };

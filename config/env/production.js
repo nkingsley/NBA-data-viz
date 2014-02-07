@@ -1,11 +1,11 @@
 module.exports = {
-    db: "mongodb://noah:noah@ds061218.mongolab.com:61218/heroku_app21047036",
+    db: process.env.DBCONNECTION,
     app: {
         name: "MoneyBaller"
     },
     facebook: {
-        clientID: "701913439842154",
-        clientSecret: "5a6c033d867737fa1189b1d437916502",
+        clientID: process.env.FBCLIENT,
+        clientSecret: process.env.FBSECRET,
         callbackURL: "http://www.moneyballer.us/auth/facebook/callback"
     },
     twitter: {
