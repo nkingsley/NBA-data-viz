@@ -77,14 +77,6 @@ angular.module('MoneyBaller')
       $scope.updateRho();
     };
 
-    $scope.toggleOpenTeam = function(team){
-      if ($scope.global.currentTeam === team){
-        $scope.global.currentTeam = false;
-      } else {
-        $scope.global.currentTeam = team;
-      }
-    };
-
     $scope.calculatePlayerStarVals = function(team, click){
       if (!team){
         return;
@@ -99,7 +91,7 @@ angular.module('MoneyBaller')
         playerPromise.then(function(){
           $scope.playerStats = Players.teamPlayers;
           if (click){
-            $scope.toggleOpenTeam(team);
+            Global.toggleOpenTeam(team);
           }
         });
         $scope.loadingTracker.addPromise(playerPromise);
@@ -110,7 +102,7 @@ angular.module('MoneyBaller')
 
     var setup = function(data,fromLocal){
       if(!fromLocal){
-        if ($scope.showingLastTen){
+        if (Global.showingLastTen){
           Global.lastTenSetupHolder = angular.copy(data.teamStats);
         } else{
           Global.totalSetupHolder = angular.copy(data.teamStats);
@@ -182,6 +174,7 @@ angular.module('MoneyBaller')
       }
     };
     $scope.total = function(){
+      debugger;
       if(!Global.showingLastTen){return;}
       Global.showingLastTen = false;
       if(Players.allPlayers){
@@ -215,7 +208,7 @@ angular.module('MoneyBaller')
     $scope.routes[$location.path()] = true;
 
     //kickoff process
-    if ($scope.showingLastTen){
+    if (Global.showingLastTen){
       setup(Global.lastTenSetupHolder, 'local');    
     } else{
       if(Global.totalSetupHolder){

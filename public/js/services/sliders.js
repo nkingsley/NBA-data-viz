@@ -83,7 +83,6 @@ angular.module('MoneyBaller').factory("Sliders", ['$q', 'Global',  function ($q,
           nestedSliders.Miscellaneous.main+= weight;
           break;
         case "TM_DEF":
-          debugger
           nestedSliders.Defense["Team Defense"][statName] = statWeights[statName];
           nestedSliders.Defense["Team Defense"].oldMain++;
           nestedSliders.Defense["Team Defense"].main += weight;
@@ -131,7 +130,6 @@ angular.module('MoneyBaller').factory("Sliders", ['$q', 'Global',  function ($q,
       exports.nestedSliders.Defense["Team Defense"].main = exports.nestedSliders.Defense.main;
       exports.changeSliders("Team Defense");
     }
-    debugger;
   };
     return exports;
   }]);

@@ -1,10 +1,9 @@
 //Global service for global variables
 angular.module('MoneyBaller').factory("Global", ['$q', '$http', 'teamsList', function($q, $http, teamsList) {
-  var _this = this;
   var statsObj = {};
   var cats = {};
   var teams = teamsList;
-  _this.init = function(lastTen){
+  var init = function(lastTen){
     var d = $q.defer();
     if (lastTen){
       var route = '/init/lt';
@@ -34,12 +33,12 @@ angular.module('MoneyBaller').factory("Global", ['$q', '$http', 'teamsList', fun
     });
     return d.promise;
   };
-  var stats = _this.init();
-  _this._data = {
+  var stats = init();
+  var data = {
       user: window.user,
       authenticated: !! window.user,
       stats: stats,
-      init: _this.init,
+      init: init,
       showingLastTen: false,
       lastTenHolder: false,
       totalHolder: false,
@@ -47,5 +46,13 @@ angular.module('MoneyBaller').factory("Global", ['$q', '$http', 'teamsList', fun
       totalSetupHolder: false,
       currentTeam: false
   };
-  return _this._data;
+  data.toggleOpenTeam = function(team){
+      if (data.currentTeam === team){
+        data.currentTeam = false;
+      } else {
+        data.currentTeam = team;
+      }
+    };
+
+  return data;
 }]);
