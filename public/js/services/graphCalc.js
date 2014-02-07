@@ -49,7 +49,6 @@ angular.module('mean.chart').factory("Graphcalc", ['Playerstar', function(Player
           }
 
           var statStarVal = statWeights[stat].weight * multiplier * playerDay[stat];
-          debugger;
           playerDayObj[stat] = statStarVal/(divisor*totalStatWeights);
 
           playerDayObj[nestMap[statWeights[stat].cat]] = playerDayObj[nestMap[statWeights[stat].cat]] || 0;

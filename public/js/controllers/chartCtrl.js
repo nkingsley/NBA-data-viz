@@ -84,7 +84,7 @@ angular.module('mean.chart')
       Stats.changeSliders(statName,groupName);
       Teamstar.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams);
       $scope.calculatePlayerStarVals($scope.currentTeam,false);
-      $scope.calculateWindowStats(graphInputData, $scope.weights);
+      $scope.calculateWindowStats(graphInputData, $scope.weights, $scope.teams);
       $scope.makeGraphData($scope.graphStat);
       $scope.updateRho();
     };
