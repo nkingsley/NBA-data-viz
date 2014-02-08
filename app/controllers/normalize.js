@@ -22,8 +22,11 @@ exports.normPlayers = function(allStats,map,teams){
   var players = _.cloneDeep(allStats);
   var totalLeagueMinutes = 0;
   for (var team in teams){
+    if(!teams[team].MIN){
+      continue;
+    }
     totalLeagueMinutes += teams[team].MIN;
-    if (totalLeagueMinutes === NaN){
+    if (!totalLeagueMinutes){
       console.log(teams[team]);
     }
   }
