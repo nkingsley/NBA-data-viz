@@ -76,7 +76,6 @@ angular.module('MoneyBaller')
       groupName && Sliders.changeSliders(groupName);
       Teamstar.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams);
       Players.startPlayerCalc(false, $scope.weights);
-      //TODO: only if requested by current instance of controller
       if ($location.path() === '/graph'){
         $scope.teamsAndPlayers = Players.teamPlayers.concat($scope.teams);
         $scope.calculateWindowStats(graphInputData, $scope.weights);

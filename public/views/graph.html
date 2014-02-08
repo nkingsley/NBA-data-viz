@@ -1,7 +1,7 @@
 <div data-ng-controller="mainController">
   <div header></div>
   <div class = "row">
-   <div ng-class="itemsClass">
+   <div ng-class="sl.itemsClass">
      <!-- <button class="blue3dButton medium" ng-click="addToggle = !addToggle">Date</button> -->
      <div class="dateSelect">
    <span ng-model="dt.startDate"><span class="select">Start Date: </span>
@@ -32,7 +32,7 @@
     <line-graph ng-if="drawChart" options="scatter.options" data="graphData"></line-graph>
   </div>
     <div class = "span5">
-    <div slider-block ng-hide="slidersCollapsed"></div>
+    <div slider-block ng-hide="sl.slidersCollapsed"></div>
   </div>
 </div>
 
