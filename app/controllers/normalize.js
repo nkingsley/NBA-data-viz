@@ -22,6 +22,9 @@ exports.normPlayers = function(allStats,map,teams){
   var players = _.cloneDeep(allStats);
   var totalLeagueMinutes = 0;
   for (var team in teams){
+    if (teams[team].MIN === NaN){
+      console.log(teams[team]);
+    }
     totalLeagueMinutes += teams[team].MIN;
   }
   var cutoff = totalLeagueMinutes/1200;
@@ -75,7 +78,11 @@ var toPerMinute = function(collection,map){
   for (var item in collection){
     for (var stat in collection[item]){
       if (!map[stat].name){continue;}
-      collection[item][stat] = collection[item][stat]/collection[item].MIN || 0;
+      if (collection[item].MIN < 1){
+        collection[item][stat] = 0;
+        continue;
+      }
+      collection[item][stat] = collection[item][stat]/collection[item].MIN;
     }
   }
 };
