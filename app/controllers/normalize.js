@@ -22,10 +22,10 @@ exports.normPlayers = function(allStats,map,teams){
   var players = _.cloneDeep(allStats);
   var totalLeagueMinutes = 0;
   for (var team in teams){
-    if (teams[team].MIN === NaN){
+    totalLeagueMinutes += teams[team].MIN;
+    if (totalLeagueMinutes === NaN){
       console.log(teams[team]);
     }
-    totalLeagueMinutes += teams[team].MIN;
   }
   var cutoff = totalLeagueMinutes/1200;
   toPerMinute(players,map);
