@@ -1,4 +1,4 @@
-angular.module('MoneyBaller').factory("Players", ['$q', '$http', 'Global', function($q, $http, Global) {
+angular.module('MoneyBaller').factory("Players", ['$q', '$http', 'Global', 'promiseTracker', function($q, $http, Global, promiseTracker) {
 
   var exports = {};
   exports.teamPlayers = {};
@@ -6,13 +6,13 @@ angular.module('MoneyBaller').factory("Players", ['$q', '$http', 'Global', funct
   .then(function(stats){
     exports.cats = stats.cats;
   });
-  exports.teamStatReq = function(lastTen){
+  exports.teamStatReq = function(){
     var d = $q.defer();
     if (exports.allPlayers){
       d.resolve(exports.allPlayers);
       return d.promise;
     }
-    if (lastTen){
+    if (Global.showingLastTen){
       var route = "/players/lt";
     } else{
       var route = "/players";
@@ -32,14 +32,15 @@ angular.module('MoneyBaller').factory("Players", ['$q', '$http', 'Global', funct
     PSS: "Possession"
   };
 
-  exports.calculatePlayerStarVals = function(statWeights, openTeam, lastTen){
+  exports.calculatePlayerStarVals = function(statWeights){
     var d = $q.defer();
-    exports.teamStatReq(lastTen)
+    exports.teamStatReq()
     .then(function(players){
-      //for now, just calculate and return the players for the open team
-      if (!openTeam){
+      if (!Global.currentTeam){
+        d.resolve();
         return;
       }
+      var openTeam = Global.currentTeam.abbreviation || Global.currentTeam;
       var weightPlayers = function(players){
         var totalStatWeights = exports.calculateTotalStatWeights(statWeights);
         var result = [];
@@ -100,6 +101,27 @@ angular.module('MoneyBaller').factory("Players", ['$q', '$http', 'Global', funct
       }
     }
     nest.oldMain = parseFloat(nest.main);
+  };
+
+  exports.startPlayerCalc = function(team, weights){
+    //this bit of tapdancing handles both powerrank players by team and all players calcs
+    if (team){
+      if (Global.currentTeam === team){
+        Global.currentTeam = false;
+        return d.promise;
+      }
+      Global.currentTeam = team;
+    }
+    team = team || Global.currentTeam;
+    var d = $q.defer();
+    promiseTracker('loadingTracker').addPromise(d.promise);
+    Global.stats.then(function(data){
+      var playerPromise = exports.calculatePlayerStarVals(weights);
+      playerPromise.then(function(){
+        d.resolve();
+      });
+    });
+    return d.promise;
   };
 
   return exports;

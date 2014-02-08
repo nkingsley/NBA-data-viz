@@ -1,17 +1,22 @@
 angular.module('MoneyBaller')
   .controller('mainController', ['$scope', '$http', '$location', 'Global', 'Sliders', 'Scatter',
     'Spearman', 'Teamstar', 'Players', 'Graphrequests', 'Graphcalc', 'promiseTracker', 'Header',
-    'Coupling',
-    function ($scope, $http, $location, Global, Sliders, Scatter, Spearman, Teamstar, Players, Graphrequests, Graphcalc, promiseTracker, Header, Coupling) {
+    'Coupling', 'Presets',
+    function ($scope, $http, $location, Global, Sliders, Scatter, Spearman, Teamstar, Players, Graphrequests, Graphcalc, promiseTracker, Header, Coupling, Presets) {
+    $scope.players = Players;
     $scope.global = Global;
+    $scope.presets = Presets;
     $scope.coupling = Coupling;
     $scope.sl = Sliders;
     $scope.head = Header;
     $scope.scatter = Scatter;
-    $scope.$watch('sl.slidersCollapsed',$scope.scatter.toggleChart);
+    $scope.loadingTracker = promiseTracker('loadingTracker');
+    $scope.$watch('sl.slidersCollapsed',Scatter.toggleChart);
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
     $scope.weights = Sliders.nestedSliders;
+
+
 
     // Line-Chart variables and functions //  
     $scope.adjWindowStats = Graphcalc.adjWindowStats;
@@ -70,33 +75,14 @@ angular.module('MoneyBaller')
     $scope.recalculate = function(groupName){
       groupName && Sliders.changeSliders(groupName);
       Teamstar.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams);
-      $scope.calculatePlayerStarVals($scope.global.currentTeam,false);
+      Players.startPlayerCalc(false, $scope.weights);
       //TODO: only if requested by current instance of controller
-      $scope.calculateWindowStats(graphInputData, $scope.weights);
-      $scope.makeGraphData($scope.graphStat);
+      if ($location.path() === '/graph'){
+        $scope.teamsAndPlayers = Players.teamPlayers.concat($scope.teams);
+        $scope.calculateWindowStats(graphInputData, $scope.weights);
+        $scope.makeGraphData($scope.graphStat);
+      }
       $scope.updateRho();
-    };
-
-    $scope.calculatePlayerStarVals = function(team, click){
-      if (!team){
-        return;
-      }
-      if (team !== "ALL"){
-        var abbr = team.abbreviation;
-      } else{
-        var abbr = "ALL"
-      }
-      Global.stats.then(function(data){
-        var playerPromise = Players.calculatePlayerStarVals($scope.weights,abbr,$scope.showingLastTen);
-        playerPromise.then(function(){
-          $scope.playerStats = Players.teamPlayers;
-          if (click){
-            Global.toggleOpenTeam(team);
-          }
-        });
-        $scope.loadingTracker.addPromise(playerPromise);
-      });
-      return false;
     };
 
 
@@ -116,8 +102,7 @@ angular.module('MoneyBaller')
         $scope.presets = stats.presets;
         $scope.weights = stats.cats;
         $scope.nestedSliders = Sliders.assignNestedSliders($scope.weights);
-        Teamstar.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
-        $scope.updateRho();
+        $scope.recalculate();
       });
     };
 
@@ -128,42 +113,17 @@ angular.module('MoneyBaller')
     $scope.setWeights = function(preset){
       $scope.weights = preset;
       $scope.nestedSliders = Sliders.assignNestedSliders($scope.weights);
-      Teamstar.calculateTeamStarVals($scope.teamStats, $scope.weights, $scope.teams);
-      $scope.global.currentTeam && $scope.calculatePlayerStarVals($scope.global.currentTeam);
-      $scope.updateRho();
+      $scope.recalculate();
     };
 
-    $scope.loadingTracker = promiseTracker('loadingTracker');
     $scope.loadingTracker.addPromise(Global.stats);
 
-    $scope.sendScore = function(weights){
-      var name = prompt("Name these Slider Presets");
-      if (!name){return;}
-      $scope.updateRho();
-      delete weights._id;
-      delete weights.created;
-      weights.score = $scope.rhoVal;
-      weights.presetName = name;
-      weights.user = Global.user._id;
-      $http.post('/highscore',weights).success(function(data){
-        if ($scope.userPresets){
-          $scope.userPresets.push(weights);
-        }
-      });
-    };
-
-    if(Global.user){
-      $http.get('/presets').success(function(data){
-        $scope.userPresets = data;
-      });
-    }
     $scope.lastTen = function(){
       if(Global.showingLastTen){return;}
       Global.showingLastTen = true;
       if(Players.allPlayers){
         Global.totalHolder = Players.allPlayers;
         Players.allPlayers = Global.lastTenHolder;
-        $scope.calculatePlayerStarVals($scope.global.currentTeam,false);
       }
       if (Global.lastTenSetupHolder){
         setup(Global.lastTenSetupHolder,true);
@@ -174,13 +134,11 @@ angular.module('MoneyBaller')
       }
     };
     $scope.total = function(){
-      debugger;
       if(!Global.showingLastTen){return;}
       Global.showingLastTen = false;
       if(Players.allPlayers){
         Global.lastTenHolder = Players.allPlayers;
         Players.allPlayers = Global.totalHolder;
-        $scope.calculatePlayerStarVals($scope.global.currentTeam,false);
       }      
       setup(Global.totalSetupHolder,true);
     }
