@@ -105,6 +105,7 @@ angular.module('MoneyBaller').factory("Players", ['$q', '$http', 'Global', 'prom
 
   exports.startPlayerCalc = function(team, weights){
     //this bit of tapdancing handles both powerrank players by team and all players calcs
+    var d = $q.defer();
     if (team){
       if (Global.currentTeam === team){
         Global.currentTeam = false;
@@ -113,7 +114,6 @@ angular.module('MoneyBaller').factory("Players", ['$q', '$http', 'Global', 'prom
       Global.currentTeam = team;
     }
     team = team || Global.currentTeam;
-    var d = $q.defer();
     promiseTracker('loadingTracker').addPromise(d.promise);
     Global.stats.then(function(data){
       var playerPromise = exports.calculatePlayerStarVals(weights);
