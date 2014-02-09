@@ -26,14 +26,10 @@ exports.normPlayers = function(allStats,map,teams){
       continue;
     }
     totalLeagueMinutes += teams[team].MIN;
-    if (!totalLeagueMinutes){
-      console.log(teams[team]);
-    }
   }
   var cutoff = totalLeagueMinutes/1200;
   toPerMinute(players,map);
   var mmr = maxMinRange(players,cutoff);
-  console.log('mmr is->',mmr,'cutoff is->',cutoff);
   normalize(players,mmr,map,true);
   widenGap(players,map);
   toTotal(players,map);
