@@ -51,7 +51,8 @@ exports.diff = function(startData,endData){
       if (reverseMap[stat].name || stat === 'MIN' || stat === 'GP'){
         diff[item][stat] = endData[item][stat] - startData[item][stat];   
         if (diff[item][stat] < 0){
-          console.log('effed up here->',stat,'new->',endData[item][stat],'old->',startData[item][stat],'diff->',diff[item][stat]);
+          diff[item][stat] = 0;
+          //because of per game nature of stats, often very small negative diffs will show up which should be zero
         } 
       }else if (reverseMap[stat].keep){
         diff[item][stat] = startData[item][stat];
