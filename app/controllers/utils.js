@@ -51,7 +51,7 @@ exports.diff = function(startData,endData){
       if (reverseMap[stat].name || stat === 'MIN' || stat === 'GP'){
         diff[item][stat] = endData[item][stat] - startData[item][stat];   
         if (diff[item][stat] < 0){
-          console.log('effed up here->',item,'new->',endData[item],'old->',startData[item],'diff->',diff[item]);
+          console.log('effed up here->',stat,'new->',endData[item][stat],'old->',startData[item][stat],'diff->',diff[item][stat]);
         } 
       }else if (reverseMap[stat].keep){
         diff[item][stat] = startData[item][stat];
