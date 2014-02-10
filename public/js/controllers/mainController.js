@@ -5,16 +5,19 @@ angular.module('MoneyBaller')
     function ($scope, $http, $location, Global, Sliders, Scatter, Spearman, Teamstar, Players, Graphrequests, Graphcalc, promiseTracker, Header, Coupling, Presets) {
     $scope.players = Players;
     $scope.global = Global;
+    $scope.userPresets = Presets.userPresets;
     $scope.sendScore = Presets.sendScore;
     $scope.coupling = Coupling;
     $scope.sl = Sliders;
+    $scope.$watch('Sliders.weights',function(){
+      $scope.weights = Sliders.weights;
+    });
     $scope.head = Header;
     $scope.scatter = Scatter;
     $scope.loadingTracker = promiseTracker('loadingTracker');
     $scope.$watch('sl.slidersCollapsed',Scatter.toggleChart);
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
-    $scope.weights = Sliders.nestedSliders;
     // Line-Chart variables and functions //  
     $scope.adjWindowStats = Graphcalc.adjWindowStats;
     $scope.calculateWindowStats = Graphcalc.calculateWindowStats;
@@ -94,14 +97,17 @@ angular.module('MoneyBaller')
           Global.totalSetupHolder = angular.copy(data.teamStats);
         }
         $scope.teamStats = data.teamStats;
+        Sliders.weights = data.cats;
+        $scope.weights = data.cats;
+        $scope.nestedSliders = Sliders.assignNestedSliders(Sliders.weights);
       } else{
         $scope.teamStats = data;
+        $scope.weights = Sliders.weights;
+        $scope.nestedSliders = Sliders.assignNestedSliders(Sliders.weights);
       }
       Global.stats.then(function(stats){
         $scope.teams = stats.teams;
         $scope.presets = stats.presets;
-        $scope.weights = stats.cats;
-        $scope.nestedSliders = Sliders.assignNestedSliders($scope.weights);
         $scope.recalculate();
       });
     };
@@ -111,7 +117,7 @@ angular.module('MoneyBaller')
     };
 
     $scope.setWeights = function(preset){
-      $scope.weights = preset;
+      Sliders.weights = preset;
       $scope.nestedSliders = Sliders.assignNestedSliders($scope.weights);
       $scope.recalculate();
     };
@@ -121,10 +127,8 @@ angular.module('MoneyBaller')
     $scope.lastTen = function(){
       if(Global.showingLastTen){return;}
       Global.showingLastTen = true;
-      if(Players.allPlayers){
-        Global.totalHolder = Players.allPlayers;
-        Players.allPlayers = Global.lastTenHolder;
-      }
+      Global.totalHolder = Players.allPlayers;
+      Players.allPlayers = Global.lastTenHolder;
       if (Global.lastTenSetupHolder){
         setup(Global.lastTenSetupHolder,true);
       } else{
@@ -136,10 +140,8 @@ angular.module('MoneyBaller')
     $scope.total = function(){
       if(!Global.showingLastTen){return;}
       Global.showingLastTen = false;
-      if(Players.allPlayers){
-        Global.lastTenHolder = Players.allPlayers;
-        Players.allPlayers = Global.totalHolder;
-      }      
+      Global.lastTenHolder = Players.allPlayers;
+      Players.allPlayers = Global.totalHolder;
       setup(Global.totalSetupHolder,true);
     }
     $scope.makeHeadShotUrl = function(name, isCollapsed) {
