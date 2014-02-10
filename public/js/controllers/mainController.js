@@ -5,7 +5,7 @@ angular.module('MoneyBaller')
     function ($scope, $http, $location, Global, Sliders, Scatter, Spearman, Teamstar, Players, Graphrequests, Graphcalc, promiseTracker, Header, Coupling, Presets) {
     $scope.players = Players;
     $scope.global = Global;
-    $scope.presets = Presets;
+    $scope.sendScore = Presets.sendScore;
     $scope.coupling = Coupling;
     $scope.sl = Sliders;
     $scope.head = Header;
@@ -15,9 +15,6 @@ angular.module('MoneyBaller')
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
     $scope.weights = Sliders.nestedSliders;
-
-
-
     // Line-Chart variables and functions //  
     $scope.adjWindowStats = Graphcalc.adjWindowStats;
     $scope.calculateWindowStats = Graphcalc.calculateWindowStats;
@@ -83,7 +80,7 @@ angular.module('MoneyBaller')
       }
       $scope.updateRho();
     };
-    
+
     $scope.go = function(path){
       $scope.routes[path] = true;
       $location.path(path);
