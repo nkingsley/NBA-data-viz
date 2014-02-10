@@ -1,0 +1,66 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'node', '/usr/local/bin/npm', 'install', 'nvd3' ]
+2 info using npm@1.3.23
+3 info using node@v0.10.22
+4 verbose node symlink /usr/local/bin/node
+5 warn package.json crypto@0.0.3 crypto is also the name of a node core module.
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'nvd3', null ]
+8 verbose cache add name=undefined spec="nvd3" args=["nvd3",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'nvd3',
+9 verbose parsed url   path: 'nvd3',
+9 verbose parsed url   href: 'nvd3' }
+10 silly lockFile 4782f44d-nvd3 nvd3
+11 verbose lock nvd3 /Users/jacksonclowes/.npm/4782f44d-nvd3.lock
+12 silly lockFile 4782f44d-nvd3 nvd3
+13 silly lockFile 4782f44d-nvd3 nvd3
+14 verbose addNamed [ 'nvd3', '' ]
+15 verbose addNamed [ null, '*' ]
+16 silly lockFile e549aec4-nvd3 nvd3@
+17 verbose lock nvd3@ /Users/jacksonclowes/.npm/e549aec4-nvd3.lock
+18 silly addNameRange { name: 'nvd3', range: '*', hasData: false }
+19 verbose url raw nvd3
+20 verbose url resolving [ 'https://registry.npmjs.org/', './nvd3' ]
+21 verbose url resolved https://registry.npmjs.org/nvd3
+22 info trying registry request attempt 1 at 15:46:03
+23 http GET https://registry.npmjs.org/nvd3
+24 http 404 https://registry.npmjs.org/nvd3
+25 silly registry.get cb [ 404,
+25 silly registry.get   { date: 'Sat, 01 Feb 2014 23:46:04 GMT',
+25 silly registry.get     server: 'CouchDB/1.5.0 (Erlang OTP/R16B)',
+25 silly registry.get     'content-type': 'application/json',
+25 silly registry.get     via: '1.1 varnish',
+25 silly registry.get     'cache-control': 'max-age=0',
+25 silly registry.get     'content-length': '52',
+25 silly registry.get     'accept-ranges': 'bytes',
+25 silly registry.get     age: '0',
+25 silly registry.get     'x-served-by': 'cache-v44-ASH, cache-lax1425-LAX',
+25 silly registry.get     'x-cache': 'MISS, MISS',
+25 silly registry.get     'x-cache-hits': '0, 0',
+25 silly registry.get     'x-timer': 'S1391298363.958463192,VS0,VS32,VE51,VE83',
+25 silly registry.get     'keep-alive': 'timeout=10, max=50',
+25 silly registry.get     connection: 'Keep-Alive' } ]
+26 silly lockFile e549aec4-nvd3 nvd3@
+27 silly lockFile e549aec4-nvd3 nvd3@
+28 error 404 'nvd3' is not in the npm registry.
+28 error 404 You should bug the author to publish it
+28 error 404 It was specified as a dependency of 'NBAViz'
+28 error 404
+28 error 404 Note that you can also install from a
+28 error 404 tarball, folder, or http url, or git url.
+29 error System Darwin 12.5.0
+30 error command "node" "/usr/local/bin/npm" "install" "nvd3"
+31 error cwd /Users/jacksonclowes/Desktop/NBAViz
+32 error node -v v0.10.22
+33 error npm -v 1.3.23
+34 error code E404
+35 verbose exit [ 1, true ]

@@ -128,7 +128,6 @@ svg .title{font:bold 14px Arial}
 .nvd3 .axis text{text-shadow:0 1px 0 #fff}
 .nvd3 .nv-interactiveGuideLine{pointer-events:none}
 .nvd3 line.nv-guideline{stroke:#ccc}
-input{width:150px}
 .rhoRed{color:#f00;font-weight:1000}
 .rhoGreen{color:#008000;font-weight:1000}
 .timeWindowContainer{position:absolute;top:32px;left:400px}
@@ -197,6 +196,7 @@ table{border-collapse:collapse;border-spacing:0}
 .btn-container{margin:10px 0}
 .btn-container .chart-select{margin-left:1vw}
 .buttonContainer{padding:2px}
+.blue3dButtonOpenSliders{margin-top:10px}
 .button-container{text-align:center;margin-bottom:30px;margin-top:20px}
 .player-badge-shell{margin-top:10px;margin-bottom:5px;cursor:pointer}
 .player-details{font-size:50px;border-bottom:1px solid #ccc}
