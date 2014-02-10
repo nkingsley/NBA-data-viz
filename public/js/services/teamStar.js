@@ -1,4 +1,3 @@
-
 angular.module('MoneyBaller').factory("Teamstar", ['$q', function ($q) {
 
 var exports = {};
