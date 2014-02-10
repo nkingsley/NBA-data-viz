@@ -83,7 +83,11 @@ angular.module('MoneyBaller')
       }
       $scope.updateRho();
     };
-
+    
+    $scope.go = function(path){
+      $scope.routes[path] = true;
+      $location.path(path);
+    }
 
     var setup = function(data,fromLocal){
       if(!fromLocal){
