@@ -34,7 +34,7 @@ module.exports = function(app, passport, db) {
         .set('filename', path)
         .set('compress', true)
         .use(nib());
-    }
+    };
 
     app.use(stylus.middleware({
       src: config.root + '/public',

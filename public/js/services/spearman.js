@@ -1,4 +1,4 @@
-angular.module('mean.chart').factory('Spearman', ['Global', 'Teamstar', function (Global, Teamstar) {
+angular.module('MoneyBaller').factory('Spearman', ['Global', 'Teamstar', function (Global, Teamstar) {
   var exports = {};
   var rankBy = function (theTeams, rankBy){
     theTeams.sort(function(a, b){
@@ -13,6 +13,13 @@ angular.module('mean.chart').factory('Spearman', ['Global', 'Teamstar', function
     rankBy(data.teams,"winPct");
   });
 
+  exports.redGreen = function(rhoVal){
+    if (rhoVal > 0.8){
+      return 'rhoGreen';
+    } else{
+      return 'rhoRed';
+    }
+  };
   exports.rho = function (teams){
     rankBy(teams,"starVal");
     teams.forEach(function (team){

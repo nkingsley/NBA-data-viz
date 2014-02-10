@@ -1,18 +1,19 @@
 <div cg-busy="{tracker:'loadingTracker'}">
-  <table class="player-details" ng-repeat="p in playerStats | orderBy: '-totalPlayerStar' | limitTo: 25 track by p.name" >
-    <tr>
-      <td class="player-head-shot" ng-class="{tableSlidersCollapsed: slidersCollapsed}"><img ng-src="{{makeHeadShotUrl(p.name, !currentTeam)}}" ng-class="{headshotSlidersCollapsed: slidersCollapsed}"></td>
-      <td class="player-stats-container" ng-class="{tableSlidersCollapsed: slidersCollapsed}">
-        <div class = "normal playerInfo" ng-class="{playerInfoSlidersCollapsed: slidersCollapsed}">{{p.name}} <span class='rightAligned'> Star Value: <span ng-bind="p.totalPlayerStar | number:1"></span></span></div>
-        <table class="player-stats normal" ng-class="{tableSlidersCollapsed: slidersCollapsed}">
-          <tr class="player-stats-header smaller">
-            <th ng-repeat="(name, score) in p.scores track by name"><span>{{name}}</span></th>
-          </tr>
-          <tr>
-            <td ng-class="{playerInfoSlidersCollapsed: slidersCollapsed,playerInfoSlidersOpen: !slidersCollapsed}" ng-repeat="(name, score) in p.scores track by name">{{score | number:2}}</td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
+  <div class="playerHolder" ng-repeat="p in players.teamPlayers | orderBy: '-totalPlayerStar' | limitTo: 25 track by p.name" >
+      <div class="player-headshot" ng-class="{tableSlidersCollapsed: sl.slidersCollapsed}"><img ng-src="{{makeHeadShotUrl(p.name, !global.currentTeam)}}" width = "130px" ></div>
+      <div class="player-container" ng-class="{playerSlidersCollapsed: sl.slidersCollapsed}">
+        <div class = "player-info" ng-class="{playerInfoSlidersCollapsed: sl.slidersCollapsed}">
+          <div class = "player-name"> {{p.name}} </div>
+          <div class='totalScore'> Score: 
+            <span ng-bind="p.totalPlayerStar | number:1"></span>
+          </div>
+        </div>
+        <div class="player-stats-container" ng-class="{tableSlidersCollapsed: sl.slidersCollapsed}">
+          <div class = "player-stats" ng-repeat="(name, score) in p.scores track by name">
+            <div class = "one-stat-head">{{name}}</div>
+            <div class = "one-stat-stat">{{score | number:2}}</div>
+          </div>
+        </div>
+      </div>
+  </div>
 </div>

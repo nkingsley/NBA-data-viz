@@ -1,4 +1,4 @@
-angular.module('mean.chart').factory("Graphcalc", ['Playerstar', function(Playerstar) {
+angular.module('MoneyBaller').factory("Graphcalc", ['Players', function(Players) {
   var exports = {};
   exports.adjWindowStats = {};
 
@@ -23,15 +23,10 @@ angular.module('mean.chart').factory("Graphcalc", ['Playerstar', function(Player
     PSS: "Possession"
   };
 
-  exports.calculateWindowStats = function(graphInputData, statWeights, teams){
-    var totalStatWeights = Playerstar.calculateTotalStatWeights(statWeights);
+
+  exports.calculateWindowStats = function(graphInputData, statWeights){
+    var totalStatWeights = Players.calculateTotalStatWeights(statWeights);
     for (var player in graphInputData){
-      var divisor = 30;
-      var multiplier = 1;
-      if (teams[player]){
-            // multiplier = 10000;
-            divisor = 1;
-          }
       exports.adjWindowStats[player] = [];
       for (var i = 0; i < graphInputData[player].length; i++){
         var playerDayObj = {};

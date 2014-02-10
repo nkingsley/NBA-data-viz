@@ -12,7 +12,6 @@
 
 .star-val 
   color  #777
-  font-size 22px
 
 .team 
   background-color  #fff
@@ -23,59 +22,12 @@
 .button-shell
   cursor pointer
 
-.player-badge-shell 
-  margin-top  10px
-  margin-bottom  5px
-  cursor  pointer
-
 .team-badge 
   width  50px
 
 .team-badge img 
   width  50px
-
-.player-details 
-  font-size  50px
-  border-bottom  1px solid #ccc
-
-.table td .player-head-shot
-  padding 0px
-  vertical-align bottom
-
-
-.player-head-shot 
-  width  20%
-  padding  0px
-
-.headshotSlidersCollapsed 
-  width  100%
-
-.playerInfo 
-  font-size  25px
-  padding-bottom  2px
-
-.playerInfoSlidersCollapsed 
-  font-size  29px
-
-.playerInfoSlidersOpen 
-  font-size 25px
-
-.player-stats-container 
-  font-size  10px
-  padding  8px
-  background-color  #fafafa
-
-.player-stats 
-  width 100%
-  border  1px solid #ccc
-  table-layout fixed
-  background-color  #fff
-
-
-.player-stats-header
-  border  1px solid #ccc
-  background-color  #f3f3f3
-
+  
 .power-rank-container 
   font-family  'Duru Sans', sans-serif
   width 66%
@@ -92,3 +44,25 @@
 th 
   text-align  left
 
+.table-bordered tbody:first-child tr:first-child > th:last-child {
+  border-top-right-radius: 4px;
+}
+.table th, .table td {
+  padding: 8px;
+  line-height: 20px;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid #dddddd;
+}
+
+.table-bordered th, .table-bordered td {
+  border-left: 1px solid #dddddd;
+}
+
+.table-bordered {
+  border-collapse: separate;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}

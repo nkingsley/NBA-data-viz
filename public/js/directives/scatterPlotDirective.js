@@ -1,4 +1,4 @@
-angular.module('mean.chart')
+angular.module('MoneyBaller')
   .directive('scatterPlot', function(){
   var chart = d3.custom.scatterPlot();
   return {
@@ -27,7 +27,6 @@ angular.module('mean.chart')
         chart.height(newVal.height);
         chart.width(newVal.width);
         if (newVal !== oldVal){
-          console.log('hi');
           chartEl.call(chart);
         }
       }, true);

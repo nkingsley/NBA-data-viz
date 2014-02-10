@@ -1,4 +1,4 @@
-angular.module('mean.chart')
+angular.module('MoneyBaller')
   .directive('lineGraph', function () {
     return {
       restrict: 'E',

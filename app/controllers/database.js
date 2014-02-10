@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'), utils =require('./utils'), q = require('q'), 
-statControl = require('./statControl'), maps = require('./map');
+ maps = require('./map');
 
 exports.newHighScore = function(req,res){
   var Catobj = mongoose.model('Catobj');
@@ -164,8 +164,10 @@ exports.init = function(req,res){
   });
 };
 
-exports.create = function(model,collection){
+exports.create = function(model,collection,offset){
+  offset = offset || 0;
   var date = utils.dateTimeless();
+  date.setDate(date.getDate() - offset);
   var Model = mongoose.model(model);
   var d = q.defer();
   var done = 0, total= Object.keys(collection).length;
@@ -185,12 +187,12 @@ exports.create = function(model,collection){
   return d.promise;
 }
 
-exports.saveAll = function(finishedStats){
+exports.saveAll = function(finishedStats,offset){
   var d = q.defer();
   var total= Object.keys(finishedStats).length;
   var done = 0;
   for (var model in finishedStats){
-    exports.create(model,finishedStats[model])
+    exports.create(model,finishedStats[model],offset)
     .then(function(){
       done++;
       if (done === total){

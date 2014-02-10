@@ -1,8 +1,8 @@
-<div data-ng-controller="chartCtrl" >
+<div data-ng-controller="mainController" data-ng-init = "global.currentTeam = false">
 <div class = "container">
   <div header></div>
   <div class = "row">
-    <div ng-class="itemsClass">
+    <div ng-class="sl.itemsClass">
       <table class="table table-bordered" cg-busy="{tracker:'loadingTracker'}">
         <tr class="teams-header">
           <th>Rank</th>
@@ -14,7 +14,7 @@
           <td class="team-rank">
             <span class="rank">{{$index + 1}}</span>
             <p class="player-badge-shell">
-             <button ng-click="calculatePlayerStarVals(team,true);" class="blue3dButton small">Players</button>
+             <button ng-click="players.startPlayerCalc(team,weights);" class="blue3dButton small" ng-class = "{pressed: global.currentTeam === team}">Players</button>
             </p>
           </td>
           <td class = "winLoss">
@@ -28,13 +28,14 @@
         </tr>
         <tr ng-repeat-end>
           <td colspan="5" class="super-slim">
-            <div players ng-if="team === currentTeam">
+            <div players ng-if="team === global.currentTeam">
             </div>
           </td>
         </tr>
       </table>
     </div>
-    <div slider-block class = "span5" ng-hide = "slidersCollapsed"></div>
+    <div collapsed = "!sl.slidersCollapsed"
+    <div slider-block class = "span5"></div>
   </div>
 </div>
 

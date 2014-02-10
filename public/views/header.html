@@ -1,18 +1,13 @@
 <div style = "height:120px">
 <div class = "navbar nav">
   <div class="navbar-inner">
-
       <ul class="nav">
-
           <li>
-              <div accuracy class= "accuracy" ng-show = "!slidersCollapsed"></div>
+              <div accuracy class= "accuracy" ng-show = "!sl.slidersCollapsed"></div>
               <div class = "presetName" ng-if = "weights.presetName">{{weights.presetName}}</div>
-              <a class="brand" ng-click = "introToggle()">MoneyBaller</a>
-              <a ng-click = "introToggle()">
-                <button type="button" class="infoButton">{{introShow}}</button></a>
-          </li>
-          <li data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
-              <a href="#!/{{item.link}}">{{item.title}}</a>
+              <a class="brand" ng-click = "head.introToggle()">MoneyBaller</a>
+              <a ng-click = "head.introToggle()">
+                <button type="button" class="infoButton">{{head.introShow}}</button></a>
           </li>
       </ul>
       <ul class="nav pull-right" data-ng-hide="global.authenticated">
@@ -47,7 +42,7 @@
           <span class="presetMenu">My Custom Presets</span><b class="caret"></b>
     </a>
           <ul class="dropdown-menu">
-              <li ng-repeat = "preset in userPresets">
+              <li ng-repeat = "preset in presets.userPresets">
                 <a ng-click = "setWeights(preset)">{{preset.presetName}}</a>
               </li>
           </ul>
@@ -55,8 +50,8 @@
   </ul>
   </div>
   <div class = "timeWindowContainer">
-    <button class = "blue3dButton short" ng-class = "twButtonDepressed('lt')" ng-click = "lastTen()">Last 10</button>
-    <button class = "blue3dButton short" ng-class = "twButtonDepressed('tt')" ng-click = "total()">Total</button>
+    <button class = "blue3dButton short" ng-class = "{'pressed': global.showingLastTen}" ng-click = "lastTen()">Last 10</button>
+    <button class = "blue3dButton short" ng-class = "{'pressed': !global.showingLastTen}" ng-click = "total()">Total</button>
   </div>
   <div buttons></div> 
 </div>

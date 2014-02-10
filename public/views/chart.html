@@ -1,11 +1,11 @@
-<div data-ng-controller="chartCtrl">
+<div data-ng-controller="mainController" data-ng-init = "global.currentTeam = false">
   <div header></div>
   <div class = "row">
-    <div ng-class = "itemsClass">
-    <scatter-plot options="options" data="teams" hovered="hovered(args)">
-    </scatter-plot>  
+    <div ng-class = "sl.itemsClass">
+      <scatter-plot options="scatter.options" data="teams" hovered="hovered(args)">
+      </scatter-plot>  
     </div>
     <div class = "span5">
-    <div slider-block ng-hide = "slidersCollapsed"></div>
+      <div slider-block ng-hide = "sl.slidersCollapsed"></div>
   </div>
 </div>

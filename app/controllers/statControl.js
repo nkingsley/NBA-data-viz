@@ -31,7 +31,7 @@ var cleanUp = function(player){
 var addTags = function(player){
   for (var stat in player){
     if (map[stat].name){
-      map[stat].name = map[stat].name;//.replace(/ /g,'_');
+      map[stat].name = map[stat].name;
     }
     var key = map[stat].name || map[stat].keep || stat;
     player[key] = player[stat];
@@ -39,13 +39,6 @@ var addTags = function(player){
   }
 };
 
-var removeTeamStats = function(player){
-  for (var stat in player){
-    if (map[stat].team){
-      delete player[stat]
-    }
-  }
-};
 
 exports.finish = function(allStats,tradedPlayers,skipCallbacks){
   var d = Q.defer();
@@ -59,7 +52,6 @@ exports.finish = function(allStats,tradedPlayers,skipCallbacks){
   }
   tp.splitData(allStats,'Rawstat',tradedPlayers)
   .then(function(){
-    console.log('hh');
     var teamsNorm = normalize.normTeams(allStats,map);  
     for (var team in teamsNorm){
       addTags(teamsNorm[team]);
@@ -67,7 +59,6 @@ exports.finish = function(allStats,tradedPlayers,skipCallbacks){
     // console.log(teamsNorm.MIA);
     var playersNorm = normalize.normPlayers(allStats,map,teamsNorm);
     for (var id in playersNorm){
-      // removeTeamStats(playersNorm[id]);
       addTags(playersNorm[id]);
     }
     for (var id in allStats){

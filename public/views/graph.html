@@ -1,39 +1,25 @@
-<div data-ng-controller="chartCtrl">
+<div data-ng-controller="mainController">
   <div header></div>
   <div class = "row">
-   <div ng-class="itemsClass">
-     <!-- <button class="blue3dButton medium" ng-click="addToggle = !addToggle">Date</button> -->
-     <div class="dateSelect">
-   <span ng-model="dt.startDate"><span class="select">Start Date: </span>
-      <span class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt.startDate" is-open="opened" max="dt.endDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close"/>
-      </span>
-    </span>
-   <span ng-if="dt.startDate" ng-model="dt.endDate"><span class="select">End Date: </span>
-      <span class="input-group">
-        <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt.endDate" is-open="opened" min="dt.startDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="false" close-text="Close"/>
-      </span>
-    </span>
-  </div>
+   <div ng-class="sl.itemsClass">
       <div class="buttonContainer smaller">
-       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Defense'; getGraphData();">Defense</button></a>
-       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Shooting'; getGraphData();">Shooting</button> </a>
-       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Rebounding'; getGraphData()">Rebounding</button> </a>
-       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Possession'; getGraphData()">Possession</button> </a>
-       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='Miscellaneous'; getGraphData()">Miscellaneous</button> </a>
-       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="graphStat='baller'; getGraphData();">Baller</button></a>
-       <a class = "button-shell"><button ng-class="buttonShrink()" class="blue3dButton medium" ng-click="getGraphData();">Submit</button></a>
+       <a class = "button-shell"><button class="blue3dButton medium" ng-click="graphStat='Defense'; getGraphData(graphEntity, graphStat);">Defense</button></a>
+       <a class = "button-shell"><button class="blue3dButton medium" ng-click="graphStat='Shooting'; getGraphData(graphEntity, graphStat);">Shooting</button> </a>
+       <a class = "button-shell"><button class="blue3dButton medium" ng-click="graphStat='Rebounding'; getGraphData(graphEntity, graphStat)">Rebounding</button> </a>
+       <a class = "button-shell"><button class="blue3dButton medium" ng-click="graphStat='Possession'; getGraphData(graphEntity, graphStat)">Possession</button> </a>
+       <a class = "button-shell"><button ng-class="{blue3dButtonOpenSliders: !sl.slidersCollapsed}" class="blue3dButton medium" ng-click="graphStat='Miscellaneous'; getGraphData(graphEntity, graphStat)">Miscellaneous</button> </a>
+       <a class = "button-shell"><button ng-class="{blue3dButtonOpenSliders: !sl.slidersCollapsed}" class="blue3dButton medium" ng-click="graphStat='baller'; getGraphData(graphEntity, graphStat);">Baller</button></a>
+       <a class = "button-shell"><button ng-class="{blue3dButtonOpenSliders: !sl.slidersCollapsed}" class="blue3dButton medium" ng-click="getGraphData(graphEntity, graphStat);">Submit</button></a>
     </div>
     <div class="select playerBar">Players or Teams:
     <!-- <p class="input-group"> -->
-      <input type="text" ng-model="graphSelected" typeahead="(datum.name + datum.abbreviation) as (datum.name + datum.franchise) for datum in teamsAndPlayers | filter:$viewValue | limitTo:8" class="form-control"> 
+      <input type="text" ng-model="graphEntity" typeahead="(datum.name + datum.abbreviation) as (datum.name + datum.franchise) for datum in teamsAndPlayers | filter:$viewValue | limitTo:8" class="form-control"> 
    <!--  </p> -->
     </div>
-    <line-graph ng-if="drawChart" options="options" data="graphData"></line-graph>
+    <line-graph ng-if="drawChart" options="scatter.options" data="graphData"></line-graph>
   </div>
     <div class = "span5">
-    <div slider-block ng-hide="slidersCollapsed"></div>
+    <div slider-block ng-hide="sl.slidersCollapsed"></div>
   </div>
 </div>
 
-<!-- ng-click="playerRequest(selected, dateRange); -->

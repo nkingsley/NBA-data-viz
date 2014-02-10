@@ -48,39 +48,41 @@ var compileStats = function(stats,headers,fix,missingTradeData){
 var getAllStats = function(){
   tp.all()
   .then(function(){
-    db.checkDate(utils.dateTimeless())
-    .then(function(needStatsToday){      
-      if (!needStatsToday){
-        console.log('process stopped.  Stats already gotten today');
-        processComplete.resolve();
-        mongoose.connection.close();
-        return;
-      }
-      getBasicPlayerStats()
-      .then(getTrackingData)
-      .then(getOppShots)
+    return db.checkDate(utils.dateTimeless());
+  })
+  .then(function(needStatsToday){      
+    if (!needStatsToday){
+      console.log('process stopped.  Stats already gotten today');
+      processComplete.resolve();
+      mongoose.connection.close();
+      return;
+    }
+    getBasicPlayerStats()
+    .then(getTrackingData)
+    .then(getOppShots)
+    .then(function(){
+      console.log('finished stats apis');
+      tp.giveNewTeam(allStats);
+      return playerDetails.getPlayerDetails(allStats);
+    })
+    .then(function(){
+      return statControl.finish(allStats,tp.tradedPlayers)
+    })
+    .then(function(finishedStats){
+      var forMovingAverages = _.cloneDeep(finishedStats.Rawstat);
+      ma.movingAverage(forMovingAverages)
       .then(function(){
-        tp.giveNewTeam(allStats);
-        playerDetails.getPlayerDetails(allStats)
+        db.saveAll(finishedStats)   
         .then(function(){
-          statControl.finish(allStats,tp.tradedPlayers)
-          .then(function(finishedStats){
-            var forMovingAverages = _.cloneDeep(finishedStats.Rawstat);
-            ma.movingAverage(forMovingAverages)
-            .then(function(){
-              db.saveAll(finishedStats)
-              .then(function(){
-                getWinLoss()
-                .then(function(){
-                  mongoose.connection.close();
-                  processComplete.resolve();
-                });
-              });
-            });
-          });
+          return getWinLoss();
+        })
+        .then(function(){
+          mongoose.connection.close();
+          console.log('success!');
+          processComplete.resolve();
         });
-      });
-    });
+      })
+    })
   });
 };
 
@@ -91,7 +93,8 @@ var getWinLoss = function(){
     var data = JSON.parse(result.payload).resultSets[0];
     var result = []
     for (var i = 0 ; i < data.rowSet.length ; i++){
-      result.push({franchise:data.rowSet[i][1],winPct:data.rowSet[i][5]});
+      var team = data.rowSet[i];
+      result.push({franchise:team[1],wins:team[3],losses:team[4],winPct:team[5]});
     }
     db.saveOne({teams:result},'Winloss')
     .then(function(){

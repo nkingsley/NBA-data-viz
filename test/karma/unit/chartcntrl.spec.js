@@ -35,7 +35,7 @@
 
                 scope = $rootScope.$new();
 
-                ChartController = $controller('chartCtrl', {
+                ChartController = $controller('mainController', {
                     $scope: scope
                 });
 
