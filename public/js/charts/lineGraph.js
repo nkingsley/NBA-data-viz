@@ -13,14 +13,14 @@ d3.custom.lineGraph = nv.addGraph(function() {
              .rightAlignYAxis(true)
              .margin({right:90})
              .x(function(d) { return d[0] })
-             .y(function(d) { return d[1]/100 })
+             .y(function(d) { return d[1] })
              .color(d3.scale.category10().range())
              .average(function(d) { return d.mean/100; })
-             .clipVoronoi(false);
+             .clipVoronoi(true);
 
    chart.xAxis
       .tickFormat(function(d) {
-          return d3.time.format('%m/%d/%y')(new Date(d))
+          return d3.time.format('%d/%m')(new Date(d))
         });
 
   chart.yAxis

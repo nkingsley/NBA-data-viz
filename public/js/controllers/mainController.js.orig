@@ -14,9 +14,20 @@ angular.module('MoneyBaller')
     });
     $scope.head = Header;
     $scope.scatter = Scatter;
-    $scope.getGraphData = Graph.getGraphData;
+    $scope.makeGraphData = Graph.makeGraphData;
     $scope.loadingTracker = promiseTracker('loadingTracker');
+<<<<<<< HEAD
     $scope.$watch('sl.slidersCollapsed', Scatter.toggleChart, Graph.toggleChart);
+=======
+    $scope.$watch('sl.slidersCollapsed',Scatter.toggleChart);
+    $scope.spearman = Spearman;
+    $scope.rhoVal = 0;
+    // Line-Chart variables and functions //  
+    $scope.adjWindowStats = Graphcalc.adjWindowStats;
+    $scope.calculateWindowStats = Graphcalc.calculateWindowStats;
+    $scope.timeRequest = Graphrequests.timeRequest;
+    $scope.dt = {};
+>>>>>>> 74e7231e969dc2ba4ad08cbeedb4f20482ca497b
     $scope.graphStat = "baller";
     $scope.graphEntity = null;
     $scope.drawChart = Graph.drawChart;
@@ -34,8 +45,8 @@ angular.module('MoneyBaller')
       Teamstar.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams);
       Players.startPlayerCalc(false, $scope.weights);
       if ($location.path() === '/graph'){
-        // $scope.calculateWindowStats(inputnputData, $scope.weights);
-        $scope.getGraphData($scope.graphStat);
+        $scope.calculateWindowStats(graphInputData, $scope.weights);
+        $scope.makeGraphData($scope.graphStat);
       }
       $scope.updateRho();
     };
