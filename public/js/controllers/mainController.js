@@ -9,9 +9,6 @@ angular.module('MoneyBaller')
     $scope.sendScore = Presets.sendScore;
     $scope.coupling = Coupling;
     $scope.sl = Sliders;
-    $scope.$watch('Sliders.weights',function(){
-      $scope.weights = Sliders.weights;
-    });
     $scope.head = Header;
     $scope.scatter = Scatter;
     $scope.getGraphData = Graph.getGraphData;
@@ -81,6 +78,7 @@ angular.module('MoneyBaller')
 
     $scope.setWeights = function(preset){
       Sliders.weights = preset;
+      $scope.weights = preset;
       $scope.nestedSliders = Sliders.assignNestedSliders($scope.weights);
       $scope.recalculate();
     };

@@ -8,7 +8,7 @@ angular.module('MoneyBaller').factory("Graph", ['$q', '$http', 'Sliders', 'Graph
   exports.drawChart = false;
 
   var inputData = inputData || {};
-  var weights = Sliders.nestedSliders;
+  var weights = Sliders.weights;
   var adjWindowStats = Graphcalc.adjWindowStats;
   var calculateWindowStats = Graphcalc.calculateWindowStats;
 
@@ -44,7 +44,7 @@ angular.module('MoneyBaller').factory("Graph", ['$q', '$http', 'Sliders', 'Graph
         var dayData = [new Date(adjWindowStats[entity][i].created), adjWindowStats[entity][i][statName]];
         windowStats['values'].push(dayData);
       }
-    exports.graphData = graphData.concat([windowStats]);
+    exports.graphData = exports.graphData.concat([windowStats]);
     }
   };
   
