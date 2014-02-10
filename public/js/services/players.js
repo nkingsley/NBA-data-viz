@@ -8,6 +8,10 @@ angular.module('MoneyBaller').factory("Players", ['$q', '$http', 'Global', 'prom
   });
   exports.teamStatReq = function(){
     var d = $q.defer();
+    if(!Global.currentTeam){
+      d.resolve();
+      return d.promise;
+    }
     if (exports.allPlayers){
       d.resolve(exports.allPlayers);
       return d.promise;

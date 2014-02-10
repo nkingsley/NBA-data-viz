@@ -1,10 +1,7 @@
 <div class = " buttonContainer">
-<a href='/#!/'>
-  <button class = "blue3dButton" ng-click = "routes['/']=true" ng-class = "{pressed:routes['/']}">Power Ranking</button></a>
-<a href='/#!/scatter'>
-  <button class = "blue3dButton" ng-click = "routes['/scatter']=true" ng-class = "{pressed:routes['/scatter']}">Scatter Plot</button></a>
-<a href='/#!/players'>
-  <button class = "blue3dButton" ng-click = "routes['/players']=true" ng-class = "{pressed:routes['/players']}">Top 25 Players</button></a>
+<button class = "blue3dButton" ng-click = "go('/')" ng-class = "{pressed:routes['/']}">Power Ranking</button>
+<button class = "blue3dButton" ng-click = "go('/scatter')" ng-class = "{pressed:routes['/scatter']}">Scatter Plot</button>
+<button class = "blue3dButton" ng-click = "go('/players')" ng-class = "{pressed:routes['/players']}">Top 25 Players</button>
 <a class = "button-shell" ng-click = "sl.sliderToggle()">
   <button class = "blue3dButton" ng-class = "{'pressed': !sl.slidersCollapsed}" >Show Sliders</button></a>
 </div>

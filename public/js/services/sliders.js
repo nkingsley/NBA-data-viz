@@ -2,6 +2,7 @@ angular.module('MoneyBaller').factory("Sliders", ['$q', 'Global',  function ($q,
   var exports = {};
   exports.slidersCollapsed = true;
   exports.itemsClass = "span12";
+  exports.weights = {};
   resetMains = function(){
     for (var nest in exports.nestedSliders){
       var n = exports.nestedSliders[nest];

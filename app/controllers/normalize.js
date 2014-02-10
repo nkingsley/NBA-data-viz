@@ -22,15 +22,14 @@ exports.normPlayers = function(allStats,map,teams){
   var players = _.cloneDeep(allStats);
   var totalLeagueMinutes = 0;
   for (var team in teams){
-    if (teams[team].MIN === NaN){
-      console.log(teams[team]);
+    if(!teams[team].MIN){
+      continue;
     }
     totalLeagueMinutes += teams[team].MIN;
   }
   var cutoff = totalLeagueMinutes/1200;
   toPerMinute(players,map);
   var mmr = maxMinRange(players,cutoff);
-  console.log('mmr is->',mmr,'cutoff is->',cutoff);
   normalize(players,mmr,map,true);
   widenGap(players,map);
   toTotal(players,map);
