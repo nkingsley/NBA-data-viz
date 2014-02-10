@@ -64,8 +64,14 @@ angular.module('MoneyBaller')
       Global.stats.then(function(stats){
         $scope.teams = stats.teams;
         $scope.presets = stats.presets;
+        if ($location.path() === "/graph"){
+          Global.currentTeam = "ALL";
+          Players.startPlayerCalc(false, $scope.weights)
+          .then(function(){
+            $scope.teamsAndPlayers = Players.teamPlayers.concat($scope.teams);
+          })
+        }
         $scope.recalculate();
-        $scope.teamsAndPlayers = Players.teamPlayers.concat($scope.teams);
       });
     };
 

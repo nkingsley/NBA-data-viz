@@ -48,14 +48,14 @@ angular.module('MoneyBaller').factory("Graph", ['$q', '$http', 'Sliders', 'Graph
     }
   };
   
-  exports.getGraphData = function(statName, graphEntity){
+  exports.getGraphData = function(graphEntity, statName){
     exports.drawChart = true;
     if (!inputData[graphEntity]){
       graphRequest(graphEntity).then(function(data){
         inputData[graphEntity] = data;
         calculateWindowStats(inputData, weights);
         makeGraphData(statName);
-      })
+      });
     } else {
       calculateWindowStats(inputData, weights);
       makeGraphData(statName);
