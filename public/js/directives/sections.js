@@ -11,12 +11,17 @@ angular.module('MoneyBaller')
   })
   .directive('buttons', function(){
     return {
-      templateUrl: 'views/infoAndButtons.html'
+      templateUrl: 'views/buttons.html'
     }
   })
   .directive('players', function(){
     return{
       templateUrl: 'views/players.html'
+    }
+  })
+  .directive('info', function(){
+    return{
+      templateUrl: 'views/info.html'
     }
   })
   .directive('header',function(){

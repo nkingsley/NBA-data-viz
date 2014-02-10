@@ -1,0 +1,16 @@
+<div collapse = "head.introCollapsed">
+<div class = "headContainer introContainer" >
+    <p class = "infoQuestion">Q: Where do the rankings come from?</p>
+    <p>A: The rankings are calculated by normalizing every available NBA stat, then allowing users to assign a weight to that stat.</p>
+    <p class = "infoQuestion">Q: What is normalizing?</p>
+    <p>A: Our Normalizing process: <br />1. Calculate the per minute rate of a stat like, say, steals.
+    <br />2. Look at the whole league, find the best rate of steals/minute, the worst, and the range.
+    <br />3. Assign everyone a number from -1 to +1 , 1 being best in league, -1 being worst, 0 being average.</p>
+    <p class = "infoQuestion">Q: So where do the player scores come from?</p>
+    <p>A: After we get the normalized number, we add back in the minutes played and multiply by the user-selected (or preset) weights in each statistic, then do a little more math to keep the numbers fairly stable.  An average player will score zero no matter how many minutes they play.  A good player will get a higher score for playing more minutes, and a bad one will go negative.</p>
+    <p class = "infoQuestion">Q: What about estimated win percentage?</p>
+    <p>A: The system returns a number that estimates what percent above or below average the team is.  We've found that in most cases, 1% of skill difference amounts to about 3% of win percentage, so we multiply by 3!  If the system notices an outlier, it falls back to using pure skill differences.</p>
+    <p class = "infoQuestion">Q: How is accuracy determined?</p>
+    <p>A: We use linear regression to compare actual team W/L to Baller W/L.</p>
+    <p>This is an open source project.  View and contribute on <a href="https://github.com/hackreactor/MoneyBaller">Github</a>.
+</div>
