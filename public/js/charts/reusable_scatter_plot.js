@@ -46,8 +46,8 @@ d3.custom.scatterPlot = function module() {
           .classed('x-axis-group axis', true)
           .append("text")
           .attr("class", "label")
-          .attr("x", width / 2 - 30)
-          .attr("y", 40)
+          .attr("x", width / 2)
+          .attr("y", 30)
           .style("text-anchor", "end")
           .text("Baller W/L");
 

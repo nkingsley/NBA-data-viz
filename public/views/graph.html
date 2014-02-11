@@ -2,9 +2,10 @@
   <div header></div>
   <div class = "row">
    <div ng-class="sl.itemsClass">
-    <div class="select playerBar">Players or Teams:
+   <div info></div>
+    <div class="select playerBar">Enter Players or Teams:
       <input type="text" ng-model="graphEntity" typeahead="(datum.name + datum.abbreviation) as (datum.name + datum.franchise) for datum in teamsAndPlayers | filter:$viewValue | limitTo:8" class="form-control"> 
-      <a class = "button-shell"><button class="blue3dButton small" ng-click="getGraphData(graphEntity, graphStat);">Submit</button></a>
+      <a class = "button-shell"><button class="blue3dButton small higher" ng-click="getGraphData(graphEntity, graphStat);">Submit</button></a>
     <button class="blue3dButton small" ng-hide = "true" ng-click = "graph.removeGraphData()">Clear</button>
     </div>
     <line-graph ng-if="graph.drawChart" options="scatter.options" data="graph.graphData"></line-graph>
@@ -13,4 +14,3 @@
     <div slider-block ng-hide="sl.slidersCollapsed"></div>
   </div>
 </div>
-
