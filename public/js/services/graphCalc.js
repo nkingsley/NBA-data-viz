@@ -40,11 +40,11 @@ angular.module('MoneyBaller').factory("Graphcalc", ['Players', function (Players
           }
 
           var statStarVal = statWeights[stat].weight * playerDay[stat];
-          playerDayObj[stat] = statStarVal/totalStatWeights;
+          playerDayObj[stat] = statStarVal/(totalStatWeights*30);
 
           playerDayObj[nestMap[statWeights[stat].cat]] = playerDayObj[nestMap[statWeights[stat].cat]] || 0;
-          playerDayObj[nestMap[statWeights[stat].cat]] += statStarVal/totalStatWeights;
-          playerDayObj.baller += statStarVal/totalStatWeights;
+          playerDayObj[nestMap[statWeights[stat].cat]] += statStarVal/(totalStatWeights*30);
+          playerDayObj.baller += statStarVal/(totalStatWeights*30);
         }
         exports.adjWindowStats[player].push(playerDayObj);
         }

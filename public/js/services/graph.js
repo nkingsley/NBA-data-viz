@@ -8,7 +8,6 @@ angular.module('MoneyBaller').factory("Graph", ['$q', '$http', 'Sliders', 'Graph
   exports.drawChart = false;
 
   var inputData = inputData || {};
-  var weights = Sliders.weights;
   var adjWindowStats = Graphcalc.adjWindowStats;
   var calculateWindowStats = Graphcalc.calculateWindowStats;
 
@@ -42,22 +41,40 @@ angular.module('MoneyBaller').factory("Graph", ['$q', '$http', 'Sliders', 'Graph
         windowStats['key'] = entity;
       for (var i = 0; i < adjWindowStats[entity].length; i++){
         var dayData = [new Date(adjWindowStats[entity][i].created), adjWindowStats[entity][i][statName]];
-        windowStats['values'].push(dayData);
+        windowStats.values.push(dayData);
       }
+      windowStats.values.sort(function(a,b){
+        if (a[0] > b[0]){
+          return -1;
+        } else{
+          return 1;
+        }
+      });
     exports.graphData = exports.graphData.concat([windowStats]);
     }
   };
   
-  exports.getGraphData = function(graphEntity, statName){
+  exports.getGraphData = function(graphEntity,statName){
+    if (!graphEntity){
+      return;
+    }
     exports.drawChart = true;
     if (!inputData[graphEntity]){
       graphRequest(graphEntity).then(function(data){
+    var totals = [];
+        for (var i = 0 ; i < data.length ; i++){
+          totals[i] = 0;
+          for (var stat in data[i]){
+            if (typeof data[i][stat] === 'number')
+              totals[i] += data[i][stat];
+          }
+        }
         inputData[graphEntity] = data;
-        calculateWindowStats(inputData, weights);
+        calculateWindowStats(inputData, Sliders.weights);
         makeGraphData(statName);
       });
     } else {
-      calculateWindowStats(inputData, weights);
+      calculateWindowStats(inputData, Sliders.weights);
       makeGraphData(statName);
     }
   };

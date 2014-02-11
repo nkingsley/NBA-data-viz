@@ -16,11 +16,8 @@ angular.module('MoneyBaller')
     $scope.$watch('sl.slidersCollapsed', Scatter.toggleChart, Graph.toggleChart);
     $scope.graphStat = "baller";
     $scope.graphEntity = null;
-    $scope.drawChart = Graph.drawChart;
-    $scope.graphData = Graph.graphData;
+    $scope.graph = Graph;
     
-
-
     $scope.spearman = Spearman;
     $scope.rhoVal = 0;
     $scope.weights = Sliders.nestedSliders;
@@ -32,7 +29,7 @@ angular.module('MoneyBaller')
       Players.startPlayerCalc(false, $scope.weights);
       if ($location.path() === '/graph'){
         // $scope.calculateWindowStats(inputnputData, $scope.weights);
-        $scope.getGraphData($scope.graphStat);
+        $scope.getGraphData($scope.graphEntity, $scope.graphStat);
       }
       $scope.updateRho();
     };
