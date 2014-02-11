@@ -13,7 +13,8 @@ angular.module('MoneyBaller')
     $scope.scatter = Scatter;
     $scope.getGraphData = Graph.getGraphData;
     $scope.loadingTracker = promiseTracker('loadingTracker');
-    $scope.$watch('sl.slidersCollapsed', Scatter.toggleChart, Graph.toggleChart);
+    $scope.$watch('sl.slidersCollapsed', Scatter.toggleChart);
+    $scope.$watch('sl.slidersCollapsed', Graph.toggleChart);
     $scope.graphStat = "baller";
     $scope.graphEntity = null;
     $scope.graph = Graph;

@@ -24,7 +24,7 @@ angular.module('MoneyBaller').factory("Graph", ['$q', '$http', 'Sliders', 'Graph
   var graphRequest = function(graphEntity){
     var d = $q.defer();
     var chosenUrl = '/team-window/' + graphEntity;
-    if (graphEntity.indexOf(" ") > -1){ // absolutely terrible, it probably needs to check for an exact match in the list of team abbreviations
+    if (graphEntity.indexOf(" ") > -1){ // :(
       chosenUrl = '/player-window/' + graphEntity;
     }
     $http.get(chosenUrl).success(function(data){
@@ -55,7 +55,6 @@ angular.module('MoneyBaller').factory("Graph", ['$q', '$http', 'Sliders', 'Graph
   };
   
   exports.getGraphData = function(graphEntity,statName){
-    debugger;
     if (!graphEntity){
       return;
     }
@@ -72,7 +71,6 @@ angular.module('MoneyBaller').factory("Graph", ['$q', '$http', 'Sliders', 'Graph
         }
         inputData[graphEntity] = data;
         calculateWindowStats(inputData, Sliders.weights);
-        debugger;
         makeGraphData(statName);
       });
     } else {
@@ -82,9 +80,7 @@ angular.module('MoneyBaller').factory("Graph", ['$q', '$http', 'Sliders', 'Graph
   };
 
   exports.removeGraphData = function(){
-    Graphcalc.adjWindowStats = {};
-    exports.graphData = [];
-    makeGraphData('baller');
+    //todo: figure this out
   };
 
   return exports;
