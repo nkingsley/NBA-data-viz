@@ -27,6 +27,9 @@ angular.module('MoneyBaller').factory("Graphcalc", ['Players', function (Players
     var totalStatWeights = Players.calculateTotalStatWeights(statWeights);
     for (var player in graphInputData){
       exports.adjWindowStats[player] = [];
+      if(!graphInputData[player][0].Player){
+        var team = true;
+      }
       for (var i = 0; i < graphInputData[player].length; i++){
         var playerDayObj = {};
         playerDayObj.baller = 0;
@@ -38,13 +41,20 @@ angular.module('MoneyBaller').factory("Graphcalc", ['Players', function (Players
             playerDayObj.created = playerDay[stat];
             continue;
           }
-
           var statStarVal = statWeights[stat].weight * playerDay[stat];
-          playerDayObj[stat] = statStarVal/(totalStatWeights*30);
-
-          playerDayObj[nestMap[statWeights[stat].cat]] = playerDayObj[nestMap[statWeights[stat].cat]] || 0;
-          playerDayObj[nestMap[statWeights[stat].cat]] += statStarVal/(totalStatWeights*30);
-          playerDayObj.baller += statStarVal/(totalStatWeights*30);
+          if (team){
+            playerDayObj.baller += statStarVal;
+          } else {
+            playerDayObj.baller += statStarVal/(totalStatWeights * 30);
+          }
+        }
+        if(team){
+          var newBaller = (playerDayObj.baller/totalStatWeights - 0.5) * 3 + 0.5;
+          if (newBaller > 1 || newBaller < 0){
+            newBaller = playerDayObj.baller/totalStatWeights;
+            //hacky presentation fix
+          }
+          playerDayObj.baller = newBaller;
         }
         exports.adjWindowStats[player].push(playerDayObj);
         }
