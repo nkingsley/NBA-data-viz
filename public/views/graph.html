@@ -3,13 +3,13 @@
   <div class = "row">
    <div ng-class="sl.itemsClass">
       <div class="buttonContainer smaller">
-       <a class = "button-shell"><button class="blue3dButton medium" ng-click="graphStat='Defense'; getGraphData(graphEntity, weights, graphStat);">Defense</button></a>
-       <a class = "button-shell"><button class="blue3dButton medium" ng-click="graphStat='Shooting'; getGraphData(graphEntity, weights, graphStat);">Shooting</button> </a>
-       <a class = "button-shell"><button class="blue3dButton medium" ng-click="graphStat='Rebounding'; getGraphData(graphEntity, weights, graphStat)">Rebounding</button> </a>
-       <a class = "button-shell"><button class="blue3dButton medium" ng-click="graphStat='Possession'; getGraphData(graphEntity, weights, graphStat)">Possession</button> </a>
-       <a class = "button-shell"><button ng-class="{blue3dButtonOpenSliders: !sl.slidersCollapsed}" class="blue3dButton medium" ng-click="graphStat='Miscellaneous'; getGraphData(graphEntity, weights, graphStat)">Miscellaneous</button> </a>
-       <a class = "button-shell"><button ng-class="{blue3dButtonOpenSliders: !sl.slidersCollapsed}" class="blue3dButton medium" ng-click="graphStat='baller'; getGraphData(graphEntity, weights, graphStat);">Baller</button></a>
-       <a class = "button-shell"><button ng-class="{blue3dButtonOpenSliders: !sl.slidersCollapsed}" class="blue3dButton medium" ng-click="getGraphData(graphEntity, weights, graphStat);">Submit</button></a>
+       <a class = "button-shell"><button class="blue3dButton medium" ng-click="graphStat='Defense'; getGraphData(graphEntity, graphStat);">Defense</button></a>
+       <a class = "button-shell"><button class="blue3dButton medium" ng-click="graphStat='Shooting'; getGraphData(graphEntity, graphStat);">Shooting</button> </a>
+       <a class = "button-shell"><button class="blue3dButton medium" ng-click="graphStat='Rebounding'; getGraphData(graphEntity, graphStat)">Rebounding</button> </a>
+       <a class = "button-shell"><button class="blue3dButton medium" ng-click="graphStat='Possession'; getGraphData(graphEntity, graphStat)">Possession</button> </a>
+       <a class = "button-shell"><button ng-class="{blue3dButtonOpenSliders: !sl.slidersCollapsed}" class="blue3dButton medium" ng-click="graphStat='Miscellaneous'; getGraphData(graphEntity, graphStat)">Miscellaneous</button> </a>
+       <a class = "button-shell"><button ng-class="{blue3dButtonOpenSliders: !sl.slidersCollapsed}" class="blue3dButton medium" ng-click="graphStat='baller'; getGraphData(graphEntity, graphStat);">Baller</button></a>
+       <a class = "button-shell"><button ng-class="{blue3dButtonOpenSliders: !sl.slidersCollapsed}" class="blue3dButton medium" ng-click="getGraphData(graphEntity, graphStat);">Submit</button></a>
     </div>
     <div class="select playerBar">Players or Teams:
     <!-- <p class="input-group"> -->

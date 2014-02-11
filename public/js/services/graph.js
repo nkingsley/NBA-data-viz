@@ -55,6 +55,7 @@ angular.module('MoneyBaller').factory("Graph", ['$q', '$http', 'Sliders', 'Graph
   };
   
   exports.getGraphData = function(graphEntity,statName){
+    debugger;
     if (!graphEntity){
       return;
     }
@@ -71,6 +72,7 @@ angular.module('MoneyBaller').factory("Graph", ['$q', '$http', 'Sliders', 'Graph
         }
         inputData[graphEntity] = data;
         calculateWindowStats(inputData, Sliders.weights);
+        debugger;
         makeGraphData(statName);
       });
     } else {
