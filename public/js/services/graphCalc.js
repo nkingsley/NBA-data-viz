@@ -26,9 +26,10 @@ angular.module('MoneyBaller').factory("Graphcalc", ['Players', function (Players
   exports.calculateWindowStats = function(graphInputData, statWeights){
     var totalStatWeights = Players.calculateTotalStatWeights(statWeights);
     for (var player in graphInputData){
+      var team = false;
       exports.adjWindowStats[player] = [];
       if(!graphInputData[player][0].Player){
-        var team = true;
+        team = true;
       }
       for (var i = 0; i < graphInputData[player].length; i++){
         var playerDayObj = {};
