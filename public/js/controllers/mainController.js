@@ -76,7 +76,7 @@ angular.module('MoneyBaller')
 
     $scope.setWeights = function(preset){
       Sliders.weights = preset;
-      $scope.weights = preset;
+      $scope.weights = angular.copy(preset);
       $scope.nestedSliders = Sliders.assignNestedSliders($scope.weights);
       $scope.recalculate();
     };

@@ -14,8 +14,6 @@ exports.movingAverage = function(rawStats, offset){
   var d = q.defer();
   var date = utils.dateTimeless();
   date.setDate(date.getDate()-10 - offset);
-  var datePlus = new Date(date);
-  datePlus.setDate(date.getDate()+1);
   mongoose.model("Rawstat").find({created: date})
   .exec(function(err,old){
     if (old.length === 0){
