@@ -29,11 +29,7 @@ angular.module('MoneyBaller')
       Players.startPlayerCalc(false, $scope.weights);
       if ($location.path() === '/graph'){
         // $scope.calculateWindowStats(inputnputData, $scope.weights);
-<<<<<<< HEAD
         $scope.getGraphData($scope.graphEntity, $scope.graphStat);
-=======
-        $scope.getGraphData($scope.graphStat, $scope.weights);
->>>>>>> f4942890bf6496cd423ab96ab44c75864063b658
       }
       $scope.updateRho();
     };
