@@ -19,7 +19,7 @@ angular.module('MoneyBaller')
       .classed("lineGraph", true)
 
       scope.$watch('data', function (newVal, oldVal){ // problem is here: newVal ($scope.graphData) keeps every added player
-        chartEl.selectAll('.lineGraph').empty();
+        // chartEl.selectAll('.lineGraph').empty();
 
         var dataFunc = function (){
           return newVal;
@@ -45,15 +45,12 @@ angular.module('MoneyBaller')
             console.log(element);
           };
         nv.addGraph(function() {
-          var chart = nv.models.cumulativeLineChart()
-            .useInteractiveGuideline(true)
+          var chart = nv.models.lineChart()
             .rightAlignYAxis(false)
             .margin({left:90})
             .x(function(d) { return d[0]; })
             .y(function(d) { return d[1]; })
             .color(d3.scale.category10().range())
-            .average(function(d) { return d.mean/100; })
-            .clipVoronoi(true);
 
 
 

@@ -82,9 +82,9 @@ angular.module('MoneyBaller').factory("Graph", ['$q', '$http', 'Sliders', 'Graph
   };
 
   exports.removeGraphData = function(){
-    exports.drawChart = false;
+    Graphcalc.adjWindowStats = {};
     exports.graphData = [];
-    inputData = {};
+    makeGraphData('baller');
   };
 
   return exports;
