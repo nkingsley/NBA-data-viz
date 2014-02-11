@@ -48,8 +48,8 @@ angular.module('MoneyBaller')
           Global.totalSetupHolder = angular.copy(data.teamStats);
         }
         $scope.teamStats = data.teamStats;
-        Sliders.weights = data.cats;
-        $scope.weights = data.cats;
+        Sliders.weights = angular.copy(data.cats);
+        $scope.weights = Sliders.weights;
         $scope.nestedSliders = Sliders.assignNestedSliders(Sliders.weights);
       } else{
         $scope.teamStats = data;
@@ -75,8 +75,8 @@ angular.module('MoneyBaller')
     };
 
     $scope.setWeights = function(preset){
-      Sliders.weights = preset;
-      $scope.weights = angular.copy(preset);
+      Sliders.weights = angluar.copy(preset);
+      $scope.weights = Sliders.weights;
       $scope.nestedSliders = Sliders.assignNestedSliders($scope.weights);
       $scope.recalculate();
     };
