@@ -29,7 +29,6 @@ angular.module('MoneyBaller')
       Teamstar.calculateTeamStarVals($scope.teamStats,$scope.weights,$scope.teams);
       Players.startPlayerCalc(false, $scope.weights);
       if ($location.path() === '/graph'){
-        // $scope.calculateWindowStats(inputnputData, $scope.weights);
         $scope.getGraphData($scope.graphEntity, $scope.graphStat);
       }
       $scope.updateRho();
@@ -82,7 +81,7 @@ angular.module('MoneyBaller')
     };
 
     $scope.loadingTracker.addPromise(Global.stats);
-
+    
     $scope.lastTen = function(){
       if(Global.showingLastTen){return;}
       Global.showingLastTen = true;

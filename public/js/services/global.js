@@ -53,6 +53,19 @@ angular.module('MoneyBaller').factory("Global", ['$q', '$http', 'teamsList', fun
         data.currentTeam = team;
       }
     };
+    
+  data.skipStats = {
+    "MIN": true,
+    "GP": true,
+    "__v": true,
+    "_id": true,
+    "presetName": true,
+    "Team": true,
+    "score": true,
+    "created": true,
+    "user": true,
+    "$$hashKey": true,
+  }
 
   return data;
 }]);

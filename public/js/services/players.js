@@ -76,35 +76,11 @@ angular.module('MoneyBaller').factory("Players", ['$q', '$http', 'Global', 'prom
   exports.calculateTotalStatWeights = function(statWeights){
     var totalValue = 0;
     for (var statName in statWeights){
-      if (statName === "__v" || statName === "_id" || statName === "created" 
-        || statName === "score" || statWeights[statName].cat === "TM_DEF" 
-        || statName === "presetName" || statName === "$$hashKey" || statName === "user"){
-        continue;
-      }
+      if (Global.skipStats[statName]){continue;}
       if (!nestMap[statWeights[statName].cat]){continue;}
       totalValue+=parseFloat(statWeights[statName].weight);
-      if (!totalValue && totalValue !== 0){
-      }
     }
     return totalValue;
-  };
-
-  exports.changeSliders = function(nestedSliders, groupName) {
-    var nest = nestedSliders[groupName];
-    for (var statName in nest){
-      var stat = nest[statName];
-      if (statName === "main" || statName === "oldMain"){
-        continue;
-      }
-      stat.weight = parseFloat(stat.weight) + (parseFloat(nest.main) - parseFloat(nest.oldMain));
-      if (stat.weight < 0){
-        stat.weight = 0;
-      }
-      if (stat.weight > 10){
-        stat.weight = 10;
-      }
-    }
-    nest.oldMain = parseFloat(nest.main);
   };
 
   exports.startPlayerCalc = function(team, weights){

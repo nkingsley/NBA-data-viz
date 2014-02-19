@@ -1,4 +1,4 @@
-angular.module('MoneyBaller').factory("Teamstar", ['$q', function ($q) {
+angular.module('MoneyBaller').factory("Teamstar", ['$q', 'Global', function ($q, Global) {
 
 var exports = {};
 
@@ -10,22 +10,11 @@ var exports = {};
     }
     return weightedStats;
   };
-  var skipStats = {
-    "MIN": true,
-    "GP": true,
-    "__v": true,
-    "_id": true,
-    "presetName": true,
-    "Team": true,
-    "score": true,
-    "created": true,
-    "user": true,
-    "$$hashKey": true,
-  }
+
   exports.totalStatWeights = function(statWeights){
     var totalValue = 0;
     for (var statName in statWeights){
-      if (skipStats[statName]){
+      if (Global.skipStats[statName]){
           continue;
         }
       totalValue += parseFloat(statWeights[statName].weight);
@@ -59,24 +48,6 @@ var exports = {};
     return nestedSliders;
   };
 
-  exports.changeSliders = function(nestedSliders, groupName) {
-    var nest = nestedSliders[groupName];
-    for (var statName in nest){
-      var stat = nest[statName];
-      if (statName === "main" || statName === "oldMain"){
-        continue;
-      }
-      stat.weight = parseFloat(stat.weight) + (parseFloat(nest.main) - parseFloat(nest.oldMain));
-      if (stat.weight < 0){
-        stat.weight = 0;
-      }
-      if (stat.weight > 10){
-        stat.weight = 10;
-      }
-    }
-    nest.oldMain = parseFloat(nest.main);
-  };
-
   exports.calculateTeamStarVals = function(teamStats, statWeights, teams, multiplier){
     var team, teamName, rawStar, stat;
     var totalStatWeights = exports.totalStatWeights(statWeights);
@@ -85,7 +56,7 @@ var exports = {};
       teamName = teams[team].abbreviation;
       rawStar = 0;
       for (stat in teamStats[teamName]){
-        if (skipStats[stat]){
+        if (Global.skipStats[stat]){
           continue;
         }
           statStarVal = statWeights[stat]['weight'] * teamStats[teamName][stat];

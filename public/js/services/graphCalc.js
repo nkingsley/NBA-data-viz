@@ -1,19 +1,6 @@
-angular.module('MoneyBaller').factory("Graphcalc", ['Players', function (Players) {
+angular.module('MoneyBaller').factory("Graphcalc", ['Players', 'Global', function (Players, Global) {
   var exports = {};
   exports.adjWindowStats = {};
-
-  var skipStats = {
-    "MIN": true,
-    "GP": true,
-    "__v": true,
-    "_id": true,
-    "presetName": true,
-    "Team": true,
-    "score": true,
-    "$$hashKey": true,
-    "PLAYER_ID": true,
-    "Player": true,
-  };
 
   var nestMap = {
     DEF: "Defense",
@@ -36,7 +23,7 @@ angular.module('MoneyBaller').factory("Graphcalc", ['Players', function (Players
         playerDayObj.baller = 0;
         var playerDay = graphInputData[player][i];
         for (var stat in playerDay){
-          if (skipStats[stat]){
+          if (Global.skipStats[stat]){
             continue;
           } else if (stat === "created"){
             playerDayObj.created = playerDay[stat];
