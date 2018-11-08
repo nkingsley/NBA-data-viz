@@ -19,7 +19,7 @@ There are four ways to visualize:
 * <strong>Database</strong> - [MongoDB](http://www.mongodb.org/)
 
 <strong>Testing</strong>
-* <strong>Back End/E2E</strong> - [Mocha.js](http://visionmedia.github.io/mocha/)
+* <strong>Back End/E2E</strong> - [Mocha.js](http://mochajs.org/)
 
 ### Developed by
 * [Jackson Clowes](https://github.com/turingtesties)
