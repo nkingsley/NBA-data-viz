@@ -1,4 +1,4 @@
-combines classic NBA statistics with new player tracking data to allow users to create their own custom power rankings and MVP races.  By changing presets or moving sliders, users can watch their favorite teams and players rise and fall in real time.
+Combines classic NBA statistics with new player tracking data to allow users to create their own custom power rankings and MVP races.  By changing presets or moving sliders, users can watch their favorite teams and players rise and fall in real time.
 
 The accuracy of the settings is calculated using linear regression against actual team win/loss records, and registered users can save their settings as new presets.
 
